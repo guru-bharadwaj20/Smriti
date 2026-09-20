@@ -1,0 +1,15 @@
+.task-commit-lock/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+build/
+dist/
+*.egg-info/
+.smriti/
+.coverage
+htmlcov/
+bench/data/
+bench/checkouts/
