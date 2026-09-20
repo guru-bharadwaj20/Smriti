@@ -63,7 +63,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
 | ✅ Done | P00.01 | Create contribution workflow and status legend | Workflow and status rules in this document |
-| ❌ Pending | P00.02 | Write short project title and idea in README | — |
+| ✅ Done | P00.02 | Write short project title and idea in README | README.md |
 | ❌ Pending | P00.03 | Add MIT license with project copyright | — |
 | ✅ Done | P00.04 | Record mandatory minor-change commit policy | Workflow and status rules in this document |
 
