@@ -301,7 +301,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
-| ❌ Pending | P09.01 | Implement memory fact creation | — |
+| ✅ Done | P09.01 | Implement memory fact creation | smriti/memory/__init__.py; unittest restart validation |
 | ❌ Pending | P09.02 | Store user, session, and tool provenance | — |
 | ❌ Pending | P09.03 | Validate confidence and source metadata | — |
 | ❌ Pending | P09.04 | Attach explicit symbol anchors | — |
