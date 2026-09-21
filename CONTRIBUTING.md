@@ -73,7 +73,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
-| ❌ Pending | P01.01 | Define MVP language support starting with Python | — |
+| ✅ Done | P01.01 | Define MVP language support starting with Python | docs/design.md language scope reviewed against proposal |
 | ❌ Pending | P01.02 | Record architecture boundaries and data flow | — |
 | ❌ Pending | P01.03 | Define stable symbol identity and repository identity | — |
 | ❌ Pending | P01.04 | Specify graph node and edge schemas | — |
