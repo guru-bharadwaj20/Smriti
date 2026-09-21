@@ -1,0 +1,13 @@
+from hashlib import sha256
+
+from smriti.merkle import hash_content, hash_file
+
+
+def test_file_hash_is_content_only(tmp_path):
+    a = tmp_path / "a.py"
+    b = tmp_path / "b.py"
+    a.write_bytes(b"hello\r\n")
+    b.write_bytes(a.read_bytes())
+    assert hash_file(a) == hash_file(b) == sha256(a.read_bytes()).hexdigest()
+    assert hash_content(b"hello\n") != hash_file(a)
+    assert hash_content(b"") == sha256(b"").hexdigest()

@@ -73,7 +73,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
-| ❌ Pending | P01.01 | Define MVP language support starting with Python | — |
+| ✅ Done | P01.01 | Define MVP language support starting with Python | docs/design.md language scope reviewed against proposal |
 | ❌ Pending | P01.02 | Record architecture boundaries and data flow | — |
 | ❌ Pending | P01.03 | Define stable symbol identity and repository identity | — |
 | ❌ Pending | P01.04 | Specify graph node and edge schemas | — |
@@ -97,7 +97,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
-| ❌ Pending | P02.01 | Implement file content hashing | — |
+| ✅ Done | P02.01 | Implement file content hashing | smriti/merkle; pytest tests/test_merkle.py: 1 passed |
 | ❌ Pending | P02.02 | Implement deterministic directory child ordering | — |
 | ❌ Pending | P02.03 | Implement directory hash composition | — |
 | ❌ Pending | P02.04 | Persist Merkle snapshots | — |
@@ -301,7 +301,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
-| ❌ Pending | P09.01 | Implement memory fact creation | — |
+| ✅ Done | P09.01 | Implement memory fact creation | smriti/memory/__init__.py; unittest restart validation |
 | ❌ Pending | P09.02 | Store user, session, and tool provenance | — |
 | ❌ Pending | P09.03 | Validate confidence and source metadata | — |
 | ❌ Pending | P09.04 | Attach explicit symbol anchors | — |
