@@ -21,6 +21,13 @@ class MemoryTests(unittest.TestCase):
             store.remember("bad", source="")
         store.close()
 
+    def test_anchors(self):
+        from smriti.memory import Anchor
+        store = MemoryStore(":memory:")
+        fact = store.remember("anchored", anchors=[Anchor("parser.parse")])
+        self.assertEqual(store.recall(), [fact])
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"
