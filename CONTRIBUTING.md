@@ -186,7 +186,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
-| ❌ Pending | P05.01 | Split snake_case identifiers | — |
+| ✅ Done | P05.01 | Split snake_case identifiers | smriti/lexical/tokenizer.py; snake assertion passed |
 | ❌ Pending | P05.02 | Split camelCase and acronym boundaries | — |
 | ❌ Pending | P05.03 | Retain complete identifier tokens | — |
 | ❌ Pending | P05.04 | Normalize case consistently | — |
