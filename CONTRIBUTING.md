@@ -303,7 +303,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | --- | --- | --- | --- |
 | ✅ Done | P09.01 | Implement memory fact creation | smriti/memory/__init__.py; unittest restart validation |
 | ✅ Done | P09.02 | Store user, session, and tool provenance | smriti/memory/__init__.py; test_provenance |
-| ❌ Pending | P09.03 | Validate confidence and source metadata | — |
+| ✅ Done | P09.03 | Validate confidence and source metadata | smriti\memory\__init__.py; P09.03 regression in tests\test_memory.py |
 | ❌ Pending | P09.04 | Attach explicit symbol anchors | — |
 | ❌ Pending | P09.05 | Record anchor content hashes | — |
 | ❌ Pending | P09.06 | Infer anchors from selected source context | — |

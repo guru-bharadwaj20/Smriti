@@ -12,6 +12,15 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual(fact.user, "alice")
         store.close()
 
+    def test_confidence(self):
+        store = MemoryStore(":memory:")
+        for confidence in (-1, 2, float("nan")):
+            with self.assertRaises(ValueError):
+                store.remember("bad", confidence=confidence)
+        with self.assertRaises(ValueError):
+            store.remember("bad", source="")
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"
