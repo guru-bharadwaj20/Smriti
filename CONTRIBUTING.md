@@ -76,7 +76,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P01.01 | Define MVP language support starting with Python | docs/design.md language scope reviewed against proposal |
 | ✅ Done | P01.02 | Record architecture boundaries and data flow | docs/design.md architecture boundaries |
 | ✅ Done | P01.03 | Define stable symbol identity and repository identity | smriti/identity.py; python -m tests.test_identity passed |
-| ❌ Pending | P01.04 | Specify graph node and edge schemas | — |
+| ✅ Done | P01.04 | Specify graph node and edge schemas | smriti/models.py; constructor smoke check passed; tests/test_models.py |
 | ❌ Pending | P01.05 | Specify memory fact and anchor schemas | — |
 | ❌ Pending | P01.06 | Specify retrieval and context response contracts | — |
 | ❌ Pending | P01.07 | Create Python 3.12 package configuration | — |
@@ -98,7 +98,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
 | ✅ Done | P02.01 | Implement file content hashing | smriti/merkle; pytest tests/test_merkle.py: 1 passed |
-| ❌ Pending | P02.02 | Implement deterministic directory child ordering | — |
+| ✅ Done | P02.02 | Implement deterministic directory child ordering | smriti/merkle; pytest tests/test_merkle.py passed |
 | ❌ Pending | P02.03 | Implement directory hash composition | — |
 | ❌ Pending | P02.04 | Persist Merkle snapshots | — |
 | ❌ Pending | P02.05 | Implement initial repository scan | — |
@@ -186,7 +186,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
-| ❌ Pending | P05.01 | Split snake_case identifiers | — |
+| ✅ Done | P05.01 | Split snake_case identifiers | smriti/lexical/tokenizer.py; snake assertion passed |
 | ❌ Pending | P05.02 | Split camelCase and acronym boundaries | — |
 | ❌ Pending | P05.03 | Retain complete identifier tokens | — |
 | ❌ Pending | P05.04 | Normalize case consistently | — |
@@ -304,7 +304,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P09.01 | Implement memory fact creation | smriti/memory/__init__.py; unittest restart validation |
 | ✅ Done | P09.02 | Store user, session, and tool provenance | smriti/memory/__init__.py; test_provenance |
 | ✅ Done | P09.03 | Validate confidence and source metadata | smriti\memory\__init__.py; P09.03 regression in tests\test_memory.py |
-| ❌ Pending | P09.04 | Attach explicit symbol anchors | — |
+| ✅ Done | P09.04 | Attach explicit symbol anchors | smriti\memory\__init__.py; P09.04 regression in tests\test_memory.py |
 | ❌ Pending | P09.05 | Record anchor content hashes | — |
 | ❌ Pending | P09.06 | Infer anchors from selected source context | — |
 | ❌ Pending | P09.07 | Define behavior for unanchored project facts | — |

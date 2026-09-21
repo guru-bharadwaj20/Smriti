@@ -16,3 +16,8 @@ def hash_file(path: str | Path) -> str:
         for block in iter(lambda: stream.read(1024 * 1024), b""):
             digest.update(block)
     return digest.hexdigest()
+
+
+def ordered_children(children: dict[str, str]) -> list[tuple[str, str]]:
+    """Sort by exact UTF-8 names, independent of insertion or filesystem order."""
+    return sorted(children.items(), key=lambda pair: pair[0].encode("utf-8"))
