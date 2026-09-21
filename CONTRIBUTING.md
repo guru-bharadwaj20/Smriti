@@ -74,8 +74,8 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
 | ✅ Done | P01.01 | Define MVP language support starting with Python | docs/design.md language scope reviewed against proposal |
-| ❌ Pending | P01.02 | Record architecture boundaries and data flow | — |
-| ❌ Pending | P01.03 | Define stable symbol identity and repository identity | — |
+| ✅ Done | P01.02 | Record architecture boundaries and data flow | docs/design.md architecture boundaries |
+| ✅ Done | P01.03 | Define stable symbol identity and repository identity | smriti/identity.py; python -m tests.test_identity passed |
 | ❌ Pending | P01.04 | Specify graph node and edge schemas | — |
 | ❌ Pending | P01.05 | Specify memory fact and anchor schemas | — |
 | ❌ Pending | P01.06 | Specify retrieval and context response contracts | — |
@@ -302,8 +302,8 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
 | ✅ Done | P09.01 | Implement memory fact creation | smriti/memory/__init__.py; unittest restart validation |
-| ❌ Pending | P09.02 | Store user, session, and tool provenance | — |
-| ❌ Pending | P09.03 | Validate confidence and source metadata | — |
+| ✅ Done | P09.02 | Store user, session, and tool provenance | smriti/memory/__init__.py; test_provenance |
+| ✅ Done | P09.03 | Validate confidence and source metadata | smriti\memory\__init__.py; P09.03 regression in tests\test_memory.py |
 | ❌ Pending | P09.04 | Attach explicit symbol anchors | — |
 | ❌ Pending | P09.05 | Record anchor content hashes | — |
 | ❌ Pending | P09.06 | Infer anchors from selected source context | — |

@@ -5,6 +5,22 @@ from smriti.memory import MemoryStore
 
 
 class MemoryTests(unittest.TestCase):
+    def test_provenance(self):
+        store = MemoryStore(":memory:")
+        fact = store.remember("rule", user="alice", session="s1", tool="mcp", source="review")
+        self.assertEqual(store.recall()[0].source, "review")
+        self.assertEqual(fact.user, "alice")
+        store.close()
+
+    def test_confidence(self):
+        store = MemoryStore(":memory:")
+        for confidence in (-1, 2, float("nan")):
+            with self.assertRaises(ValueError):
+                store.remember("bad", confidence=confidence)
+        with self.assertRaises(ValueError):
+            store.remember("bad", source="")
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"
