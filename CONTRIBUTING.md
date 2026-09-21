@@ -75,7 +75,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | --- | --- | --- | --- |
 | ✅ Done | P01.01 | Define MVP language support starting with Python | docs/design.md language scope reviewed against proposal |
 | ✅ Done | P01.02 | Record architecture boundaries and data flow | docs/design.md architecture boundaries |
-| ❌ Pending | P01.03 | Define stable symbol identity and repository identity | — |
+| ✅ Done | P01.03 | Define stable symbol identity and repository identity | smriti/identity.py; python -m tests.test_identity passed |
 | ❌ Pending | P01.04 | Specify graph node and edge schemas | — |
 | ❌ Pending | P01.05 | Specify memory fact and anchor schemas | — |
 | ❌ Pending | P01.06 | Specify retrieval and context response contracts | — |
