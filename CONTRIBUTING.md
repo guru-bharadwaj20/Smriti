@@ -98,7 +98,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
 | ✅ Done | P02.01 | Implement file content hashing | smriti/merkle; pytest tests/test_merkle.py: 1 passed |
-| ❌ Pending | P02.02 | Implement deterministic directory child ordering | — |
+| ✅ Done | P02.02 | Implement deterministic directory child ordering | smriti/merkle; pytest tests/test_merkle.py passed |
 | ❌ Pending | P02.03 | Implement directory hash composition | — |
 | ❌ Pending | P02.04 | Persist Merkle snapshots | — |
 | ❌ Pending | P02.05 | Implement initial repository scan | — |
