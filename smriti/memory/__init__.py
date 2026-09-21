@@ -9,6 +9,10 @@ import uuid
 class Fact:
     id: str
     text: str
+    user: str | None = None
+    session: str | None = None
+    tool: str | None = None
+    source: str | None = None
 
 
 class MemoryStore:
@@ -22,10 +26,10 @@ class MemoryStore:
     def close(self):
         self.db.close()
 
-    def remember(self, text: str, *, fact_id=None) -> Fact:
+    def remember(self, text: str, *, fact_id=None, user=None, session=None, tool=None, source=None) -> Fact:
         if not isinstance(text, str) or not text.strip():
             raise ValueError("Fact text must be nonempty")
-        fact = Fact(fact_id or uuid.uuid4().hex, text)
+        fact = Fact(fact_id or uuid.uuid4().hex, text, user, session, tool, source)
         with self.db:
             self.db.execute("INSERT INTO facts VALUES (?, ?)", (fact.id, json.dumps(asdict(fact))))
         return fact
