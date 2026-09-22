@@ -18,7 +18,8 @@ def git(*args: str) -> str:
     result = subprocess.run(
         ['git', '-c', 'user.name=guru-bharadwaj20',
          '-c', 'user.email=gururb20@gmail.com', *args],
-        cwd=ROOT, text=True, capture_output=True,
+        cwd=ROOT, text=True, capture_output=True, timeout=120,
+        env={**os.environ, 'GIT_TERMINAL_PROMPT': '0'},
     )
     if result.returncode:
         raise RuntimeError(result.stderr.strip() or result.stdout.strip())
@@ -52,16 +53,24 @@ def main() -> None:
                 raise ValueError('Only project files may be staged')
             paths.append(path.relative_to(ROOT).as_posix())
         checklist = ROOT / 'CONTRIBUTING.md'
-        text = checklist.read_text(encoding='utf-8')
+        original_text = checklist.read_text(encoding='utf-8')
+        text = original_text
         pattern = re.compile(r'^\| ❌ Pending \| ' + re.escape(args.task) + r' \| ([^|]+) \| [^|]*\|$', re.MULTILINE)
         if len(pattern.findall(text)) != 1:
             raise ValueError(f'Expected one pending checklist row for {args.task}')
         evidence = args.evidence.replace('|', '/')
         text = pattern.sub(lambda match: f'| ✅ Done | {args.task} | {match.group(1).strip()} | {evidence} |', text)
         checklist.write_text(text, encoding='utf-8', newline='\n')
-        git('add', '--', *paths, 'CONTRIBUTING.md')
-        git('diff', '--cached', '--check')
-        print(git('commit', '-m', f'{args.task}: {args.message}'), flush=True)
+        try:
+            git('add', '--', *paths, 'CONTRIBUTING.md')
+            git('diff', '--cached', '--check')
+            print(git('commit', '-m', f'{args.task}: {args.message}'), flush=True)
+        except Exception:
+            # The index was empty on entry. Restore only this task's own staging
+            # and checklist edit so other contributors can keep making progress.
+            git('reset', '--', *paths, 'CONTRIBUTING.md')
+            checklist.write_text(original_text, encoding='utf-8', newline='\n')
+            raise
         # A failed push stops this worker; never silently accumulate local commits.
         print(git('push'), flush=True)
     finally:

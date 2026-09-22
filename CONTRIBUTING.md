@@ -99,7 +99,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | --- | --- | --- | --- |
 | ✅ Done | P02.01 | Implement file content hashing | smriti/merkle; pytest tests/test_merkle.py: 1 passed |
 | ✅ Done | P02.02 | Implement deterministic directory child ordering | smriti/merkle; pytest tests/test_merkle.py passed |
-| ❌ Pending | P02.03 | Implement directory hash composition | — |
+| ✅ Done | P02.03 | Implement directory hash composition | smriti/merkle; pytest tests/test_merkle.py passed |
 | ❌ Pending | P02.04 | Persist Merkle snapshots | — |
 | ❌ Pending | P02.05 | Implement initial repository scan | — |
 | ❌ Pending | P02.06 | Honor repository ignore rules | — |
@@ -187,8 +187,8 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
 | ✅ Done | P05.01 | Split snake_case identifiers | smriti/lexical/tokenizer.py; snake assertion passed |
-| ❌ Pending | P05.02 | Split camelCase and acronym boundaries | — |
-| ❌ Pending | P05.03 | Retain complete identifier tokens | — |
+| ✅ Done | P05.02 | Split camelCase and acronym boundaries | smriti/lexical/tokenizer.py; smriti/lexical/__init__.py; executable assertions passed |
+| ✅ Done | P05.03 | Retain complete identifier tokens | smriti/lexical/tokenizer.py; executable assertions passed |
 | ❌ Pending | P05.04 | Normalize case consistently | — |
 | ❌ Pending | P05.05 | Define language keyword stop lists | — |
 | ❌ Pending | P05.06 | Handle operators and numeric tokens | — |
