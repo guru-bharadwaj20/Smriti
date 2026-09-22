@@ -222,7 +222,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P06.06 | Cache embeddings by content and model version | — |
 | ✅ Done | P06.07 | Normalize vectors for chosen distance metric | smriti/vector/math.py; smriti/vector/__init__.py; executable assertions passed |
 | ✅ Done | P06.08 | Persist vectors in memory-mapped storage | smriti/vector/storage.py; executable assertions passed |
-| ❌ Pending | P06.09 | Implement exact nearest-neighbor oracle | — |
+| ✅ Done | P06.09 | Implement exact nearest-neighbor oracle | smriti/vector/math.py; executable assertions passed |
 | ❌ Pending | P06.10 | Implement seeded random level assignment | — |
 | ❌ Pending | P06.11 | Implement HNSW entry point management | — |
 | ❌ Pending | P06.12 | Implement upper-layer greedy descent | — |
