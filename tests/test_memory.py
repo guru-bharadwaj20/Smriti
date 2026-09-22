@@ -24,8 +24,15 @@ class MemoryTests(unittest.TestCase):
     def test_anchors(self):
         from smriti.memory import Anchor
         store = MemoryStore(":memory:")
-        fact = store.remember("anchored", anchors=[Anchor("parser.parse")])
+        fact = store.remember("anchored", anchors=[Anchor("parser.parse", "abc")])
         self.assertEqual(store.recall(), [fact])
+        store.close()
+
+    def test_anchor_hashes(self):
+        from smriti.memory import Anchor
+        store = MemoryStore(":memory:")
+        with self.assertRaises(ValueError):
+            store.remember("bad", anchors=[Anchor("p")])
         store.close()
 
     def test_fact_survives_restart(self):

@@ -46,6 +46,8 @@ class MemoryStore:
         anchors = tuple(Anchor(**a) if isinstance(a, dict) else a for a in anchors)
         if any(not isinstance(a, Anchor) or not a.symbol_id for a in anchors):
             raise ValueError("Anchors require symbol IDs")
+        if any(not a.content_hash or not isinstance(a.content_hash, str) for a in anchors):
+            raise ValueError("Anchors require content hashes")
         fact = Fact(fact_id or uuid.uuid4().hex, text, user, session, tool, source, float(confidence), anchors)
         with self.db:
             self.db.execute("INSERT INTO facts VALUES (?, ?)", (fact.id, json.dumps(asdict(fact))))
@@ -60,3 +62,5 @@ class MemoryStore:
         data = json.loads(payload)
         data["anchors"] = tuple(Anchor(**a) for a in data.get("anchors", ()))
         return Fact(**data)
+
+# P09.05
