@@ -192,7 +192,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P05.04 | Normalize case consistently | smriti/lexical/tokenizer.py; executable assertions passed |
 | ✅ Done | P05.05 | Define language keyword stop lists | smriti/lexical/tokenizer.py; executable assertions passed |
 | ✅ Done | P05.06 | Handle operators and numeric tokens | smriti/lexical/tokenizer.py; executable assertions passed |
-| ❌ Pending | P05.07 | Separate signature, docstring, and body fields | — |
+| ✅ Done | P05.07 | Separate signature, docstring, and body fields | smriti/lexical/fields.py; executable assertions passed |
 | ❌ Pending | P05.08 | Build inverted postings lists | — |
 | ❌ Pending | P05.09 | Maintain document frequency counts | — |
 | ❌ Pending | P05.10 | Maintain document lengths and field averages | — |
