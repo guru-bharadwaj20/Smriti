@@ -33,3 +33,13 @@ def test_snapshot_persistence(tmp_path):
     snapshot.save(path)
     assert MerkleSnapshot.load(path) == snapshot
     assert not path.with_suffix(".json.tmp").exists()
+
+
+def test_initial_repository_scan(tmp_path):
+    from smriti.merkle import RepositoryScanner
+    (tmp_path / "pkg").mkdir()
+    (tmp_path / "pkg" / "a.py").write_bytes(b"a")
+    snapshot = RepositoryScanner().scan(tmp_path)
+    assert snapshot.files == {"pkg/a.py": hash_content(b"a")}
+    assert set(snapshot.directories) == {"", "pkg"}
+    assert snapshot.root_hash != hash_content(b"a")

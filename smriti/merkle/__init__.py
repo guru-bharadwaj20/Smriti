@@ -68,3 +68,24 @@ class MerkleSnapshot:
                 if len(value) != 64 or len(bytes.fromhex(value)) != 32:
                     raise ValueError("Malformed content hash")
         return cls(data["files"], data["directories"])
+
+
+class RepositoryScanner:
+    def scan(self, root: str | Path) -> MerkleSnapshot:
+        root = Path(root).resolve()
+        snapshot = MerkleSnapshot()
+
+        def walk(directory: Path) -> str:
+            children = {}
+            for child in sorted(directory.iterdir(), key=lambda p: p.name.encode("utf-8")):
+                relative = child.relative_to(root).as_posix()
+                if child.is_dir():
+                    children[child.name] = walk(child)
+                elif child.is_file():
+                    children[child.name] = snapshot.files[relative] = hash_file(child)
+            relative = directory.relative_to(root).as_posix()
+            snapshot.directories["" if relative == "." else relative] = hash_directory(children)
+            return snapshot.directories["" if relative == "." else relative]
+
+        walk(root)
+        return snapshot
