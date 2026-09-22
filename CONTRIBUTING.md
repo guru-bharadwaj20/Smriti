@@ -78,7 +78,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P01.03 | Define stable symbol identity and repository identity | smriti/identity.py; python -m tests.test_identity passed |
 | ✅ Done | P01.04 | Specify graph node and edge schemas | smriti/models.py; constructor smoke check passed; tests/test_models.py |
 | ✅ Done | P01.05 | Specify memory fact and anchor schemas | docs/memory-schema.md; syntax/format reviewed |
-| ❌ Pending | P01.06 | Specify retrieval and context response contracts | — |
+| ✅ Done | P01.06 | Specify retrieval and context response contracts | smriti/contracts.py; syntax/format reviewed |
 | ❌ Pending | P01.07 | Create Python 3.12 package configuration | — |
 | ❌ Pending | P01.08 | Create module directories from the proposal | — |
 | ❌ Pending | P01.09 | Configure strict type checking | — |
@@ -191,7 +191,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P05.03 | Retain complete identifier tokens | smriti/lexical/tokenizer.py; executable assertions passed |
 | ✅ Done | P05.04 | Normalize case consistently | smriti/lexical/tokenizer.py; executable assertions passed |
 | ✅ Done | P05.05 | Define language keyword stop lists | smriti/lexical/tokenizer.py; executable assertions passed |
-| ❌ Pending | P05.06 | Handle operators and numeric tokens | — |
+| ✅ Done | P05.06 | Handle operators and numeric tokens | smriti/lexical/tokenizer.py; executable assertions passed |
 | ❌ Pending | P05.07 | Separate signature, docstring, and body fields | — |
 | ❌ Pending | P05.08 | Build inverted postings lists | — |
 | ❌ Pending | P05.09 | Maintain document frequency counts | — |
@@ -221,7 +221,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P06.05 | Batch symbol embedding requests | — |
 | ❌ Pending | P06.06 | Cache embeddings by content and model version | — |
 | ✅ Done | P06.07 | Normalize vectors for chosen distance metric | smriti/vector/math.py; smriti/vector/__init__.py; executable assertions passed |
-| ❌ Pending | P06.08 | Persist vectors in memory-mapped storage | — |
+| ✅ Done | P06.08 | Persist vectors in memory-mapped storage | smriti/vector/storage.py; executable assertions passed |
 | ❌ Pending | P06.09 | Implement exact nearest-neighbor oracle | — |
 | ❌ Pending | P06.10 | Implement seeded random level assignment | — |
 | ❌ Pending | P06.11 | Implement HNSW entry point management | — |

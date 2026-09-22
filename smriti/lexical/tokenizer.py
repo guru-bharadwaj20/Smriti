@@ -12,4 +12,4 @@ def identifier_tokens(text: str) -> list[str]:
 STOP_WORDS = {"python": frozenset("def class return pass import from as if else elif for while try except finally with yield lambda global nonlocal del assert raise break continue and or not in is None True False".casefold().split()), "typescript": frozenset("function class return let const var import export interface type new extends implements".split()), "java": frozenset("public private protected static final class return new extends implements package import void".split())}
 
 def code_tokens(text: str, language: str = "python") -> list[str]:
-    return [word for word in identifier_tokens(text) if word not in STOP_WORDS.get(language, frozenset())]
+    return [word for word in identifier_tokens(text) if word not in STOP_WORDS.get(language, frozenset())] + re.findall(r"==|!=|<=|>=|:=|\*\*|//|->|[+*/%<>=!-]", text)
