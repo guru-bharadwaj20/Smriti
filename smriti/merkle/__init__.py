@@ -32,3 +32,39 @@ def hash_directory(children: dict[str, str]) -> str:
         digest.update(encoded)
         digest.update(bytes.fromhex(value))
     return digest.hexdigest()
+
+
+import json
+import os
+from dataclasses import dataclass, field
+
+
+@dataclass
+class MerkleSnapshot:
+    files: dict[str, str] = field(default_factory=dict)
+    directories: dict[str, str] = field(default_factory=dict)
+
+    @property
+    def root_hash(self) -> str:
+        return self.directories.get("", hash_directory({}))
+
+    def save(self, path: str | Path) -> None:
+        path = Path(path)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        temporary = path.with_suffix(path.suffix + ".tmp")
+        with temporary.open("w", encoding="utf-8") as stream:
+            json.dump({"version": 1, "files": self.files, "directories": self.directories}, stream, sort_keys=True)
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.replace(temporary, path)
+
+    @classmethod
+    def load(cls, path: str | Path) -> "MerkleSnapshot":
+        data = json.loads(Path(path).read_text(encoding="utf-8"))
+        if data.get("version") != 1:
+            raise ValueError("Unsupported Merkle snapshot version")
+        for collection in (data["files"], data["directories"]):
+            for value in collection.values():
+                if len(value) != 64 or len(bytes.fromhex(value)) != 32:
+                    raise ValueError("Malformed content hash")
+        return cls(data["files"], data["directories"])
