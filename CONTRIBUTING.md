@@ -426,7 +426,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | --- | --- | --- | --- |
 | ✅ Done | P13.01 | Pin SWE-bench Lite dataset revision | bench/datasets.json; Hugging Face API SHA 6ec7bb89b9342f664a54a6e0a6ea6501d3437cc2 |
 | ✅ Done | P13.02 | Pin SWE-bench Verified dataset revision | bench/datasets.json; Hugging Face API SHA c104f840cc67f8b6eec6f759ebc8b2693d585d4a |
-| ❌ Pending | P13.03 | Create isolated base-commit checkouts | — |
+| ✅ Done | P13.03 | Create isolated base-commit checkouts | bench/swebench/checkout.py; base-commit isolation test passed |
 | ❌ Pending | P13.04 | Validate task repository and commit identity | — |
 | ❌ Pending | P13.05 | Extract patch ground truth outside indexed tree | — |
 | ❌ Pending | P13.06 | Map changed functions to base-commit symbols | — |
