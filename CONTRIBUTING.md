@@ -102,7 +102,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P02.03 | Implement directory hash composition | smriti/merkle; pytest tests/test_merkle.py passed |
 | ✅ Done | P02.04 | Persist Merkle snapshots | smriti/merkle; pytest tests/test_merkle.py passed |
 | ✅ Done | P02.05 | Implement initial repository scan | smriti/merkle; pytest tests/test_merkle.py passed |
-| ❌ Pending | P02.06 | Honor repository ignore rules | — |
+| ✅ Done | P02.06 | Honor repository ignore rules | smriti/merkle; pytest tests/test_merkle.py passed |
 | ❌ Pending | P02.07 | Handle symlinks without recursive traversal | — |
 | ❌ Pending | P02.08 | Diff old and new trees by subtree hash | — |
 | ❌ Pending | P02.09 | Detect created files | — |
@@ -338,7 +338,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P10.07 | Record corrections as additive versions | — |
 | ❌ Pending | P10.08 | Reject invalid temporal intervals | — |
 | ✅ Done | P10.09 | Define canonical operation serialization | smriti\memory\operations.py; P10.09 regression in tests\test_memory_operations.py |
-| ❌ Pending | P10.10 | Hash operations for content addressing | — |
+| ✅ Done | P10.10 | Hash operations for content addressing | smriti\memory\operations.py; P10.10 regression in tests\test_memory_operations.py |
 | ❌ Pending | P10.11 | Link operations to parent history | — |
 | ❌ Pending | P10.12 | Implement add operation replay | — |
 | ❌ Pending | P10.13 | Implement update operation replay | — |
@@ -425,7 +425,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
 | ✅ Done | P13.01 | Pin SWE-bench Lite dataset revision | bench/datasets.json; Hugging Face API SHA 6ec7bb89b9342f664a54a6e0a6ea6501d3437cc2 |
-| ❌ Pending | P13.02 | Pin SWE-bench Verified dataset revision | — |
+| ✅ Done | P13.02 | Pin SWE-bench Verified dataset revision | bench/datasets.json; Hugging Face API SHA c104f840cc67f8b6eec6f759ebc8b2693d585d4a |
 | ❌ Pending | P13.03 | Create isolated base-commit checkouts | — |
 | ❌ Pending | P13.04 | Validate task repository and commit identity | — |
 | ❌ Pending | P13.05 | Extract patch ground truth outside indexed tree | — |
