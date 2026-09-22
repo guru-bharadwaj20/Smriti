@@ -100,7 +100,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P02.01 | Implement file content hashing | smriti/merkle; pytest tests/test_merkle.py: 1 passed |
 | ✅ Done | P02.02 | Implement deterministic directory child ordering | smriti/merkle; pytest tests/test_merkle.py passed |
 | ✅ Done | P02.03 | Implement directory hash composition | smriti/merkle; pytest tests/test_merkle.py passed |
-| ❌ Pending | P02.04 | Persist Merkle snapshots | — |
+| ✅ Done | P02.04 | Persist Merkle snapshots | smriti/merkle; pytest tests/test_merkle.py passed |
 | ❌ Pending | P02.05 | Implement initial repository scan | — |
 | ❌ Pending | P02.06 | Honor repository ignore rules | — |
 | ❌ Pending | P02.07 | Handle symlinks without recursive traversal | — |
@@ -189,7 +189,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P05.01 | Split snake_case identifiers | smriti/lexical/tokenizer.py; snake assertion passed |
 | ✅ Done | P05.02 | Split camelCase and acronym boundaries | smriti/lexical/tokenizer.py; smriti/lexical/__init__.py; executable assertions passed |
 | ✅ Done | P05.03 | Retain complete identifier tokens | smriti/lexical/tokenizer.py; executable assertions passed |
-| ❌ Pending | P05.04 | Normalize case consistently | — |
+| ✅ Done | P05.04 | Normalize case consistently | smriti/lexical/tokenizer.py; executable assertions passed |
 | ❌ Pending | P05.05 | Define language keyword stop lists | — |
 | ❌ Pending | P05.06 | Handle operators and numeric tokens | — |
 | ❌ Pending | P05.07 | Separate signature, docstring, and body fields | — |
@@ -305,7 +305,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P09.02 | Store user, session, and tool provenance | smriti/memory/__init__.py; test_provenance |
 | ✅ Done | P09.03 | Validate confidence and source metadata | smriti\memory\__init__.py; P09.03 regression in tests\test_memory.py |
 | ✅ Done | P09.04 | Attach explicit symbol anchors | smriti\memory\__init__.py; P09.04 regression in tests\test_memory.py |
-| ❌ Pending | P09.05 | Record anchor content hashes | — |
+| ✅ Done | P09.05 | Record anchor content hashes | smriti\memory\__init__.py; P09.05 regression in tests\test_memory.py |
 | ❌ Pending | P09.06 | Infer anchors from selected source context | — |
 | ❌ Pending | P09.07 | Define behavior for unanchored project facts | — |
 | ❌ Pending | P09.08 | Persist fact-to-anchor relationships | — |

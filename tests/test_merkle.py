@@ -24,3 +24,12 @@ def test_directory_hash_composition():
     assert hash_directory({"x": a, "y": b}) == hash_directory({"y": b, "x": a})
     assert hash_directory({"x": a}) != hash_directory({"y": a})
     assert hash_directory({}) != hash_content(b"")
+
+
+def test_snapshot_persistence(tmp_path):
+    from smriti.merkle import MerkleSnapshot
+    snapshot = MerkleSnapshot({"a.py": hash_content(b"a")}, {"": hash_content(b"root")})
+    path = tmp_path / "snapshot.json"
+    snapshot.save(path)
+    assert MerkleSnapshot.load(path) == snapshot
+    assert not path.with_suffix(".json.tmp").exists()
