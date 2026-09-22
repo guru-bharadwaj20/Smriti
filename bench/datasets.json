@@ -1,0 +1,14 @@
+{
+  "princeton-nlp/SWE-bench_Lite": {
+    "revision": "6ec7bb89b9342f664a54a6e0a6ea6501d3437cc2",
+    "source": "https://huggingface.co/datasets/princeton-nlp/SWE-bench_Lite",
+    "license": null,
+    "split": "test",
+    "retrieval_input": "problem_statement",
+    "gold_only": [
+      "patch",
+      "test_patch"
+    ],
+    "indexed_commit": "base_commit"
+  }
+}

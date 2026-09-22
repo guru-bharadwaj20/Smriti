@@ -424,7 +424,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
-| ❌ Pending | P13.01 | Pin SWE-bench Lite dataset revision | — |
+| ✅ Done | P13.01 | Pin SWE-bench Lite dataset revision | bench/datasets.json; Hugging Face API SHA 6ec7bb89b9342f664a54a6e0a6ea6501d3437cc2 |
 | ❌ Pending | P13.02 | Pin SWE-bench Verified dataset revision | — |
 | ❌ Pending | P13.03 | Create isolated base-commit checkouts | — |
 | ❌ Pending | P13.04 | Validate task repository and commit identity | — |
