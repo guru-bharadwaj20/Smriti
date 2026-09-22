@@ -35,7 +35,7 @@ class MemoryStore:
     def close(self):
         self.db.close()
 
-    def remember(self, text: str, *, fact_id=None, user=None, session=None, tool=None, source=None, confidence=1.0, anchors=()) -> Fact:
+    def remember(self, text: str, *, fact_id=None, user=None, session=None, tool=None, source=None, confidence=1.0, anchors=(), selected_context=()) -> Fact:
         if not isinstance(text, str) or not text.strip():
             raise ValueError("Fact text must be nonempty")
         if not isinstance(confidence, (float, int)) or not math.isfinite(confidence) or not 0 <= confidence <= 1:
@@ -43,6 +43,8 @@ class MemoryStore:
         for value in (user, session, tool, source):
             if value is not None and (not isinstance(value, str) or not value.strip()):
                 raise ValueError("Provenance values must be nonempty strings")
+        if not anchors:
+            anchors = tuple(Anchor(s['symbol_id'], s['content_hash']) if isinstance(s, dict) else Anchor(s.id, s.content_hash) for s in selected_context)
         anchors = tuple(Anchor(**a) if isinstance(a, dict) else a for a in anchors)
         if any(not isinstance(a, Anchor) or not a.symbol_id for a in anchors):
             raise ValueError("Anchors require symbol IDs")
@@ -64,3 +66,5 @@ class MemoryStore:
         return Fact(**data)
 
 # P09.05
+
+# P09.06
