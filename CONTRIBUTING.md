@@ -188,7 +188,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | --- | --- | --- | --- |
 | ✅ Done | P05.01 | Split snake_case identifiers | smriti/lexical/tokenizer.py; snake assertion passed |
 | ✅ Done | P05.02 | Split camelCase and acronym boundaries | smriti/lexical/tokenizer.py; smriti/lexical/__init__.py; executable assertions passed |
-| ❌ Pending | P05.03 | Retain complete identifier tokens | — |
+| ✅ Done | P05.03 | Retain complete identifier tokens | smriti/lexical/tokenizer.py; executable assertions passed |
 | ❌ Pending | P05.04 | Normalize case consistently | — |
 | ❌ Pending | P05.05 | Define language keyword stop lists | — |
 | ❌ Pending | P05.06 | Handle operators and numeric tokens | — |
