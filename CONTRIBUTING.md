@@ -338,7 +338,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P10.07 | Record corrections as additive versions | — |
 | ❌ Pending | P10.08 | Reject invalid temporal intervals | — |
 | ✅ Done | P10.09 | Define canonical operation serialization | smriti\memory\operations.py; P10.09 regression in tests\test_memory_operations.py |
-| ❌ Pending | P10.10 | Hash operations for content addressing | — |
+| ✅ Done | P10.10 | Hash operations for content addressing | smriti\memory\operations.py; P10.10 regression in tests\test_memory_operations.py |
 | ❌ Pending | P10.11 | Link operations to parent history | — |
 | ❌ Pending | P10.12 | Implement add operation replay | — |
 | ❌ Pending | P10.13 | Implement update operation replay | — |
