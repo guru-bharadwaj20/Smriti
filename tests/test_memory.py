@@ -35,6 +35,12 @@ class MemoryTests(unittest.TestCase):
             store.remember("bad", anchors=[Anchor("p")])
         store.close()
 
+    def test_infer_anchors(self):
+        store = MemoryStore(":memory:")
+        f = store.remember("rule", selected_context=[{"symbol_id": "x", "content_hash": "a"}])
+        self.assertEqual(f.anchors[0].symbol_id, "x")
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"

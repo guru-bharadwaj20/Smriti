@@ -306,7 +306,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P09.03 | Validate confidence and source metadata | smriti\memory\__init__.py; P09.03 regression in tests\test_memory.py |
 | ✅ Done | P09.04 | Attach explicit symbol anchors | smriti\memory\__init__.py; P09.04 regression in tests\test_memory.py |
 | ✅ Done | P09.05 | Record anchor content hashes | smriti\memory\__init__.py; P09.05 regression in tests\test_memory.py |
-| ❌ Pending | P09.06 | Infer anchors from selected source context | — |
+| ✅ Done | P09.06 | Infer anchors from selected source context | smriti\memory\__init__.py; P09.06 regression in tests\test_memory.py |
 | ❌ Pending | P09.07 | Define behavior for unanchored project facts | — |
 | ❌ Pending | P09.08 | Persist fact-to-anchor relationships | — |
 | ❌ Pending | P09.09 | Mark changed anchors possibly stale | — |
@@ -329,7 +329,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
-| ❌ Pending | P10.01 | Define valid-time interval semantics | — |
+| ✅ Done | P10.01 | Define valid-time interval semantics | smriti\memory\temporal.py; P10.01 regression in tests\test_memory_temporal.py |
 | ❌ Pending | P10.02 | Define transaction-time interval semantics | — |
 | ❌ Pending | P10.03 | Store timezone-aware timestamps | — |
 | ❌ Pending | P10.04 | Represent open-ended intervals | — |
@@ -426,7 +426,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | --- | --- | --- | --- |
 | ✅ Done | P13.01 | Pin SWE-bench Lite dataset revision | bench/datasets.json; Hugging Face API SHA 6ec7bb89b9342f664a54a6e0a6ea6501d3437cc2 |
 | ✅ Done | P13.02 | Pin SWE-bench Verified dataset revision | bench/datasets.json; Hugging Face API SHA c104f840cc67f8b6eec6f759ebc8b2693d585d4a |
-| ❌ Pending | P13.03 | Create isolated base-commit checkouts | — |
+| ✅ Done | P13.03 | Create isolated base-commit checkouts | bench/swebench/checkout.py; base-commit isolation test passed |
 | ❌ Pending | P13.04 | Validate task repository and commit identity | — |
 | ❌ Pending | P13.05 | Extract patch ground truth outside indexed tree | — |
 | ❌ Pending | P13.06 | Map changed functions to base-commit symbols | — |
