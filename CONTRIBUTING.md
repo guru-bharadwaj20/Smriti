@@ -103,7 +103,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P02.04 | Persist Merkle snapshots | smriti/merkle; pytest tests/test_merkle.py passed |
 | ✅ Done | P02.05 | Implement initial repository scan | smriti/merkle; pytest tests/test_merkle.py passed |
 | ✅ Done | P02.06 | Honor repository ignore rules | smriti/merkle; pytest tests/test_merkle.py passed |
-| ❌ Pending | P02.07 | Handle symlinks without recursive traversal | — |
+| ✅ Done | P02.07 | Handle symlinks without recursive traversal | smriti/merkle; pytest tests/test_merkle.py passed |
 | ❌ Pending | P02.08 | Diff old and new trees by subtree hash | — |
 | ❌ Pending | P02.09 | Detect created files | — |
 | ❌ Pending | P02.10 | Detect modified files | — |
@@ -129,7 +129,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
 | ✅ Done | P03.01 | Integrate tree-sitter parser lifecycle | smriti/parse; pytest tests/test_parse.py passed |
-| ❌ Pending | P03.02 | Extract Python module scopes | — |
+| ✅ Done | P03.02 | Extract Python module scopes | smriti/parse; pytest tests/test_parse.py passed |
 | ❌ Pending | P03.03 | Extract Python class definitions | — |
 | ❌ Pending | P03.04 | Extract Python functions and methods | — |
 | ❌ Pending | P03.05 | Extract signatures and docstrings | — |
@@ -247,7 +247,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
-| ❌ Pending | P07.01 | Define query normalization | — |
+| ✅ Done | P07.01 | Define query normalization | smriti/rank/__init__.py; smriti/rank/hybrid.py; executable assertions passed |
 | ❌ Pending | P07.02 | Retrieve lexical candidates | — |
 | ❌ Pending | P07.03 | Retrieve vector candidates | — |
 | ❌ Pending | P07.04 | Implement reciprocal rank fusion | — |
@@ -339,7 +339,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P10.08 | Reject invalid temporal intervals | — |
 | ✅ Done | P10.09 | Define canonical operation serialization | smriti\memory\operations.py; P10.09 regression in tests\test_memory_operations.py |
 | ✅ Done | P10.10 | Hash operations for content addressing | smriti\memory\operations.py; P10.10 regression in tests\test_memory_operations.py |
-| ❌ Pending | P10.11 | Link operations to parent history | — |
+| ✅ Done | P10.11 | Link operations to parent history | smriti\memory\operations.py; P10.11 regression in tests\test_memory_operations.py |
 | ❌ Pending | P10.12 | Implement add operation replay | — |
 | ❌ Pending | P10.13 | Implement update operation replay | — |
 | ❌ Pending | P10.14 | Implement invalidate operation replay | — |

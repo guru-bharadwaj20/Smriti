@@ -56,3 +56,16 @@ def test_ignore_rules(tmp_path):
     assert "skip.log" not in snapshot.files
     assert "important.log" in snapshot.files
     assert ".git/secret" not in snapshot.files
+
+
+def test_symlinks_are_never_followed(tmp_path):
+    import os
+    import pytest
+    from smriti.merkle import RepositoryScanner
+    try:
+        os.symlink(tmp_path, tmp_path / "cycle", target_is_directory=True)
+    except OSError as error:
+        pytest.skip("Windows symlink privilege unavailable: " + str(error))
+    snapshot = RepositoryScanner().scan(tmp_path)
+    assert set(snapshot.files) == {"cycle"}
+    assert set(snapshot.directories) == {""}

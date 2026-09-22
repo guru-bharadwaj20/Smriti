@@ -97,7 +97,9 @@ class RepositoryScanner:
                         ignored = result
                 if ignored:
                     continue
-                if child.is_dir():
+                if child.is_symlink():
+                    children[child.name] = snapshot.files[relative] = hash_content(b"symlink\0" + os.fsencode(os.readlink(child)))
+                elif child.is_dir():
                     children[child.name] = walk(child, rules)
                 elif child.is_file():
                     children[child.name] = snapshot.files[relative] = hash_file(child)
