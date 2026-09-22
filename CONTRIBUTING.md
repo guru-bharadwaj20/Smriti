@@ -129,7 +129,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
 | ✅ Done | P03.01 | Integrate tree-sitter parser lifecycle | smriti/parse; pytest tests/test_parse.py passed |
-| ❌ Pending | P03.02 | Extract Python module scopes | — |
+| ✅ Done | P03.02 | Extract Python module scopes | smriti/parse; pytest tests/test_parse.py passed |
 | ❌ Pending | P03.03 | Extract Python class definitions | — |
 | ❌ Pending | P03.04 | Extract Python functions and methods | — |
 | ❌ Pending | P03.05 | Extract signatures and docstrings | — |

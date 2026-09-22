@@ -31,7 +31,13 @@ class SourceParser:
         return result
 
     def _extract(self, result: ParseResult, language: str) -> None:
-        pass
+        path = result.path
+        name = PurePosixPath(path).stem
+        module = path.removesuffix(".py").replace("/", ".").removesuffix(".__init__")
+        root = result.tree.root_node
+        result.symbols.append(Symbol(sha256((path + ":module").encode()).hexdigest(), path, name,
+            module, "module", 1, max(1, len(result.source.splitlines())), 0, len(result.source),
+            body=result.source.decode("utf-8"), content_hash=sha256(result.source).hexdigest()))
 
 
 def parse_file(path: str, source: bytes | str) -> ParseResult:
