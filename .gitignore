@@ -1,4 +1,5 @@
 .task-commit-lock/
+.task-commit-queue/
 __pycache__/
 *.py[cod]
 .pytest_cache/

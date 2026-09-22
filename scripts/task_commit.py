@@ -8,10 +8,34 @@ from pathlib import Path
 import re
 import subprocess
 import time
+import uuid
 
 
 ROOT = Path(__file__).resolve().parents[1]
 LOCK = ROOT / '.task-commit-lock'
+QUEUE = ROOT / '.task-commit-queue'
+
+
+def acquire_lock() -> Path:
+    """FIFO tickets prevent fast workers from starving waiting contributors."""
+    QUEUE.mkdir(exist_ok=True)
+    ticket = QUEUE / f'{time.time_ns():020d}-{os.getpid()}-{uuid.uuid4().hex}'
+    ticket.write_text(str(os.getpid()), encoding='utf-8')
+    deadline = time.monotonic() + 1800
+    try:
+        while True:
+            if min(QUEUE.iterdir(), key=lambda path: path.name) == ticket:
+                try:
+                    LOCK.mkdir()
+                    return ticket
+                except FileExistsError:
+                    pass
+            if time.monotonic() > deadline:
+                raise RuntimeError('Commit lock timed out; inspect owner before removal')
+            time.sleep(0.25)
+    except BaseException:
+        ticket.unlink(missing_ok=True)
+        raise
 
 
 def git(*args: str) -> str:
@@ -33,15 +57,7 @@ def main() -> None:
     parser.add_argument('--evidence', required=True)
     parser.add_argument('--files', nargs='+', required=True)
     args = parser.parse_args()
-    deadline = time.monotonic() + 300
-    while True:
-        try:
-            LOCK.mkdir()
-            break
-        except FileExistsError:
-            if time.monotonic() > deadline:
-                raise RuntimeError('Commit lock timed out; inspect owner before removal')
-            time.sleep(0.25)
+    ticket = acquire_lock()
     try:
         (LOCK / 'owner').write_text(str(os.getpid()), encoding='utf-8')
         if git('diff', '--cached', '--name-only'):
@@ -76,6 +92,9 @@ def main() -> None:
     finally:
         (LOCK / 'owner').unlink(missing_ok=True)
         LOCK.rmdir()
+        ticket.unlink(missing_ok=True)
+        # Give already-waiting workers a chance before this worker starts again.
+        time.sleep(1)
 
 
 if __name__ == '__main__':
