@@ -247,7 +247,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
-| ❌ Pending | P07.01 | Define query normalization | — |
+| ✅ Done | P07.01 | Define query normalization | smriti/rank/__init__.py; smriti/rank/hybrid.py; executable assertions passed |
 | ❌ Pending | P07.02 | Retrieve lexical candidates | — |
 | ❌ Pending | P07.03 | Retrieve vector candidates | — |
 | ❌ Pending | P07.04 | Implement reciprocal rank fusion | — |
