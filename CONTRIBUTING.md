@@ -89,7 +89,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P01.14 | Define ignored paths and local data directory | — |
 | ❌ Pending | P01.15 | Create small repository fixtures with known symbols | — |
 | ❌ Pending | P01.16 | Document setup and contributor commands | — |
-| ❌ Pending | P01.17 | Record comparison with Aider, Cursor, Mem0, and Zep | — |
+| ✅ Done | P01.17 | Record comparison with Aider, Cursor, Mem0, and Zep | docs/prior-work.md; primary sources reviewed |
 
 ### P02 — Merkle tree and incremental indexing
 
@@ -101,7 +101,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P02.02 | Implement deterministic directory child ordering | smriti/merkle; pytest tests/test_merkle.py passed |
 | ✅ Done | P02.03 | Implement directory hash composition | smriti/merkle; pytest tests/test_merkle.py passed |
 | ✅ Done | P02.04 | Persist Merkle snapshots | smriti/merkle; pytest tests/test_merkle.py passed |
-| ❌ Pending | P02.05 | Implement initial repository scan | — |
+| ✅ Done | P02.05 | Implement initial repository scan | smriti/merkle; pytest tests/test_merkle.py passed |
 | ❌ Pending | P02.06 | Honor repository ignore rules | — |
 | ❌ Pending | P02.07 | Handle symlinks without recursive traversal | — |
 | ❌ Pending | P02.08 | Diff old and new trees by subtree hash | — |
@@ -337,7 +337,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P10.06 | Query beliefs as of transaction time | — |
 | ❌ Pending | P10.07 | Record corrections as additive versions | — |
 | ❌ Pending | P10.08 | Reject invalid temporal intervals | — |
-| ❌ Pending | P10.09 | Define canonical operation serialization | — |
+| ✅ Done | P10.09 | Define canonical operation serialization | smriti\memory\operations.py; P10.09 regression in tests\test_memory_operations.py |
 | ❌ Pending | P10.10 | Hash operations for content addressing | — |
 | ❌ Pending | P10.11 | Link operations to parent history | — |
 | ❌ Pending | P10.12 | Implement add operation replay | — |
