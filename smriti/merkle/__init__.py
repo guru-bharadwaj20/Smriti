@@ -71,16 +71,34 @@ class MerkleSnapshot:
 
 
 class RepositoryScanner:
+    def __init__(self, ignored: tuple[str, ...] = (".git", ".venv", ".smriti", "__pycache__", ".pytest_cache")):
+        self.ignored = frozenset(ignored)
+
     def scan(self, root: str | Path) -> MerkleSnapshot:
         root = Path(root).resolve()
         snapshot = MerkleSnapshot()
 
-        def walk(directory: Path) -> str:
+        from pathspec import GitIgnoreSpec
+
+        def walk(directory: Path, rules=()) -> str:
+            ignore_file = directory / ".gitignore"
+            if ignore_file.is_file():
+                rules = (*rules, (directory, GitIgnoreSpec.from_lines(ignore_file.read_text(encoding="utf-8").splitlines())))
             children = {}
             for child in sorted(directory.iterdir(), key=lambda p: p.name.encode("utf-8")):
                 relative = child.relative_to(root).as_posix()
+                if child.name in self.ignored:
+                    continue
+                ignored = False
+                for base, spec in rules:
+                    value = child.relative_to(base).as_posix() + ("/" if child.is_dir() else "")
+                    result = spec.check_file(value).include
+                    if result is not None:
+                        ignored = result
+                if ignored:
+                    continue
                 if child.is_dir():
-                    children[child.name] = walk(child)
+                    children[child.name] = walk(child, rules)
                 elif child.is_file():
                     children[child.name] = snapshot.files[relative] = hash_file(child)
             relative = directory.relative_to(root).as_posix()

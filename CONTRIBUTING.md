@@ -102,7 +102,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P02.03 | Implement directory hash composition | smriti/merkle; pytest tests/test_merkle.py passed |
 | ✅ Done | P02.04 | Persist Merkle snapshots | smriti/merkle; pytest tests/test_merkle.py passed |
 | ✅ Done | P02.05 | Implement initial repository scan | smriti/merkle; pytest tests/test_merkle.py passed |
-| ❌ Pending | P02.06 | Honor repository ignore rules | — |
+| ✅ Done | P02.06 | Honor repository ignore rules | smriti/merkle; pytest tests/test_merkle.py passed |
 | ❌ Pending | P02.07 | Handle symlinks without recursive traversal | — |
 | ❌ Pending | P02.08 | Diff old and new trees by subtree hash | — |
 | ❌ Pending | P02.09 | Detect created files | — |

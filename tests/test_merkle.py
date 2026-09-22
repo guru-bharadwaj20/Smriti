@@ -43,3 +43,16 @@ def test_initial_repository_scan(tmp_path):
     assert snapshot.files == {"pkg/a.py": hash_content(b"a")}
     assert set(snapshot.directories) == {"", "pkg"}
     assert snapshot.root_hash != hash_content(b"a")
+
+
+def test_ignore_rules(tmp_path):
+    from smriti.merkle import RepositoryScanner
+    (tmp_path / ".git").mkdir()
+    (tmp_path / ".git" / "secret").write_text("hidden")
+    (tmp_path / ".gitignore").write_text("*.log\n!important.log\n")
+    (tmp_path / "skip.log").write_text("skip")
+    (tmp_path / "important.log").write_text("keep")
+    snapshot = RepositoryScanner().scan(tmp_path)
+    assert "skip.log" not in snapshot.files
+    assert "important.log" in snapshot.files
+    assert ".git/secret" not in snapshot.files
