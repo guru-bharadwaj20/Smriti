@@ -79,8 +79,8 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P01.04 | Specify graph node and edge schemas | smriti/models.py; constructor smoke check passed; tests/test_models.py |
 | ✅ Done | P01.05 | Specify memory fact and anchor schemas | docs/memory-schema.md; syntax/format reviewed |
 | ✅ Done | P01.06 | Specify retrieval and context response contracts | smriti/contracts.py; syntax/format reviewed |
-| ❌ Pending | P01.07 | Create Python 3.12 package configuration | — |
-| ❌ Pending | P01.08 | Create module directories from the proposal | — |
+| ✅ Done | P01.07 | Create Python 3.12 package configuration | pyproject.toml; syntax/format reviewed |
+| ✅ Done | P01.08 | Create module directories from the proposal | smriti/__init__.py; smriti/py.typed; smriti/server/__init__.py; smriti/ui/__init__.py; bench/__init__.py; bench/swebench/__init__.py; bench/longmem/__init__.py; syntax/format reviewed |
 | ❌ Pending | P01.09 | Configure strict type checking | — |
 | ❌ Pending | P01.10 | Configure formatting and linting | — |
 | ❌ Pending | P01.11 | Configure pytest and Hypothesis | — |
@@ -192,7 +192,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P05.04 | Normalize case consistently | smriti/lexical/tokenizer.py; executable assertions passed |
 | ✅ Done | P05.05 | Define language keyword stop lists | smriti/lexical/tokenizer.py; executable assertions passed |
 | ✅ Done | P05.06 | Handle operators and numeric tokens | smriti/lexical/tokenizer.py; executable assertions passed |
-| ❌ Pending | P05.07 | Separate signature, docstring, and body fields | — |
+| ✅ Done | P05.07 | Separate signature, docstring, and body fields | smriti/lexical/fields.py; executable assertions passed |
 | ❌ Pending | P05.08 | Build inverted postings lists | — |
 | ❌ Pending | P05.09 | Maintain document frequency counts | — |
 | ❌ Pending | P05.10 | Maintain document lengths and field averages | — |
@@ -222,7 +222,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P06.06 | Cache embeddings by content and model version | — |
 | ✅ Done | P06.07 | Normalize vectors for chosen distance metric | smriti/vector/math.py; smriti/vector/__init__.py; executable assertions passed |
 | ✅ Done | P06.08 | Persist vectors in memory-mapped storage | smriti/vector/storage.py; executable assertions passed |
-| ❌ Pending | P06.09 | Implement exact nearest-neighbor oracle | — |
+| ✅ Done | P06.09 | Implement exact nearest-neighbor oracle | smriti/vector/math.py; executable assertions passed |
 | ❌ Pending | P06.10 | Implement seeded random level assignment | — |
 | ❌ Pending | P06.11 | Implement HNSW entry point management | — |
 | ❌ Pending | P06.12 | Implement upper-layer greedy descent | — |

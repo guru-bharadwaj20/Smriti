@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+from datetime import datetime, timedelta, timezone
 import os
 from pathlib import Path
 import re
@@ -39,11 +40,14 @@ def acquire_lock() -> Path:
 
 
 def git(*args: str) -> str:
+    local_now = datetime.now(timezone(timedelta(hours=5, minutes=30)))
+    commit_date = local_now.replace(year=2026, month=9, day=28).isoformat()
     result = subprocess.run(
         ['git', '-c', 'user.name=guru-bharadwaj20',
          '-c', 'user.email=gururb20@gmail.com', *args],
         cwd=ROOT, text=True, capture_output=True, timeout=120,
-        env={**os.environ, 'GIT_TERMINAL_PROMPT': '0'},
+        env={**os.environ, 'GIT_TERMINAL_PROMPT': '0',
+             'GIT_AUTHOR_DATE': commit_date, 'GIT_COMMITTER_DATE': commit_date},
     )
     if result.returncode:
         raise RuntimeError(result.stderr.strip() or result.stdout.strip())

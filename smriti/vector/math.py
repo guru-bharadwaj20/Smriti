@@ -17,3 +17,9 @@ def normalize(vector):
 def distance(a,b):
     if len(a)!=len(b): raise ValueError("dimension mismatch")
     return max(0.0,min(2.0,1-sum(x*y for x,y in zip(a,b))))
+
+def exact_search(vectors, query, k=10, excluded=()):
+    query=normalize(query)
+    excluded=set(excluded)
+    hits=[VectorHit(id,1-distance(query,normalize(v))) for id,v in vectors.items() if id not in excluded]
+    return sorted(hits,key=lambda h:(-h.score,h.id))[:k]
