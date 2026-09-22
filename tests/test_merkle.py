@@ -16,3 +16,11 @@ def test_file_hash_is_content_only(tmp_path):
 def test_directory_child_order():
     from smriti.merkle import ordered_children
     assert ordered_children({"z": "1", "a": "2"}) == [("a", "2"), ("z", "1")]
+
+
+def test_directory_hash_composition():
+    from smriti.merkle import hash_directory
+    a, b = hash_content(b"a"), hash_content(b"b")
+    assert hash_directory({"x": a, "y": b}) == hash_directory({"y": b, "x": a})
+    assert hash_directory({"x": a}) != hash_directory({"y": a})
+    assert hash_directory({}) != hash_content(b"")

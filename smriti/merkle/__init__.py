@@ -21,3 +21,14 @@ def hash_file(path: str | Path) -> str:
 def ordered_children(children: dict[str, str]) -> list[tuple[str, str]]:
     """Sort by exact UTF-8 names, independent of insertion or filesystem order."""
     return sorted(children.items(), key=lambda pair: pair[0].encode("utf-8"))
+
+
+def hash_directory(children: dict[str, str]) -> str:
+    """Domain-separated length framing prevents ambiguous concatenations."""
+    digest = sha256(b"smriti-directory-v1\0")
+    for name, value in ordered_children(children):
+        encoded = name.encode("utf-8")
+        digest.update(len(encoded).to_bytes(8, "big"))
+        digest.update(encoded)
+        digest.update(bytes.fromhex(value))
+    return digest.hexdigest()
