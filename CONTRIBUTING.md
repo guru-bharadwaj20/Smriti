@@ -80,7 +80,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P01.05 | Specify memory fact and anchor schemas | docs/memory-schema.md; syntax/format reviewed |
 | ✅ Done | P01.06 | Specify retrieval and context response contracts | smriti/contracts.py; syntax/format reviewed |
 | ✅ Done | P01.07 | Create Python 3.12 package configuration | pyproject.toml; syntax/format reviewed |
-| ❌ Pending | P01.08 | Create module directories from the proposal | — |
+| ✅ Done | P01.08 | Create module directories from the proposal | smriti/__init__.py; smriti/py.typed; smriti/server/__init__.py; smriti/ui/__init__.py; bench/__init__.py; bench/swebench/__init__.py; bench/longmem/__init__.py; syntax/format reviewed |
 | ❌ Pending | P01.09 | Configure strict type checking | — |
 | ❌ Pending | P01.10 | Configure formatting and linting | — |
 | ❌ Pending | P01.11 | Configure pytest and Hypothesis | — |
