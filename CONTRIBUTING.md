@@ -128,7 +128,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
-| ❌ Pending | P03.01 | Integrate tree-sitter parser lifecycle | — |
+| ✅ Done | P03.01 | Integrate tree-sitter parser lifecycle | smriti/parse; pytest tests/test_parse.py passed |
 | ❌ Pending | P03.02 | Extract Python module scopes | — |
 | ❌ Pending | P03.03 | Extract Python class definitions | — |
 | ❌ Pending | P03.04 | Extract Python functions and methods | — |
@@ -408,7 +408,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P12.15 | Expose symbol and graph MCP tools | — |
 | ❌ Pending | P12.16 | Expose memory CRUD MCP tools | — |
 | ❌ Pending | P12.17 | Expose memory history MCP tools | — |
-| ❌ Pending | P12.18 | Serve immutable index snapshots to queries | — |
+| ✅ Done | P12.18 | Serve immutable index snapshots to queries | smriti/server/snapshots.py; snapshot immutability and stale-writer tests passed |
 | ❌ Pending | P12.19 | Move indexing to background worker process | — |
 | ❌ Pending | P12.20 | Keep async server responsive during indexing | — |
 | ❌ Pending | P12.21 | Handle cancellation and worker errors | — |
@@ -424,7 +424,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
-| ❌ Pending | P13.01 | Pin SWE-bench Lite dataset revision | — |
+| ✅ Done | P13.01 | Pin SWE-bench Lite dataset revision | bench/datasets.json; Hugging Face API SHA 6ec7bb89b9342f664a54a6e0a6ea6501d3437cc2 |
 | ❌ Pending | P13.02 | Pin SWE-bench Verified dataset revision | — |
 | ❌ Pending | P13.03 | Create isolated base-commit checkouts | — |
 | ❌ Pending | P13.04 | Validate task repository and commit identity | — |
@@ -436,7 +436,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P13.10 | Implement lexical-only baseline | — |
 | ❌ Pending | P13.11 | Implement embedding-only baseline | — |
 | ❌ Pending | P13.12 | Implement Aider-style repo-map baseline | — |
-| ❌ Pending | P13.13 | Compute file recall at k | — |
+| ✅ Done | P13.13 | Compute file recall at k | bench/swebench/metrics.py; independent duplicate and empty-gold checks passed |
 | ❌ Pending | P13.14 | Compute function recall at k | — |
 | ❌ Pending | P13.15 | Compute packed budget recall at 4k tokens | — |
 | ❌ Pending | P13.16 | Compute packed budget recall at 8k tokens | — |
