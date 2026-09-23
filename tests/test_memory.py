@@ -53,6 +53,13 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual(store.db.execute("SELECT fact_id FROM fact_anchors WHERE symbol_id='x'").fetchone()[0], f.id)
         store.close()
 
+    def test_changed_anchor(self):
+        from smriti.memory import Anchor
+        store = MemoryStore(":memory:")
+        store.remember("rule", anchors=[Anchor("x", "old")])
+        self.assertEqual(store.refresh({"x": "new"})[0].freshness, "stale")
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"

@@ -1,5 +1,5 @@
 """Durable, repository-local facts for coding agents."""
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, asdict, replace
 import json
 import sqlite3
 import uuid
@@ -22,6 +22,7 @@ class Fact:
     source: str | None = None
     confidence: float = 1.0
     anchors: tuple[Anchor, ...] = ()
+    freshness: str = 'fresh'
 
     @property
     def scope(self):
@@ -78,3 +79,16 @@ class MemoryStore:
 # P09.07
 
 # P09.08
+    def _save(self, fact):
+        with self.db:
+            self.db.execute("UPDATE facts SET payload=? WHERE id=?", (json.dumps(asdict(fact)), fact.id))
+        return fact
+
+    def refresh(self, symbols):
+        """symbols maps stable symbol IDs to current content hashes."""
+        changes = []
+        for fact in self.recall():
+            if any(a.symbol_id in symbols and symbols[a.symbol_id] != a.content_hash for a in fact.anchors):
+                changes.append(self._save(replace(fact, freshness="stale")))
+        return changes
+# P09.09
