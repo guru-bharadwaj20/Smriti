@@ -1,0 +1,13 @@
+"""Budgeted symbol representations with multiple-choice knapsack selection."""
+from dataclasses import dataclass,field
+
+@dataclass(frozen=True)
+class Representation:
+    id: str
+    level: str
+    text: str
+    cost: int
+    value: float
+
+def omitted(symbol):
+    return Representation(symbol.id,'omit','',0,0.0)

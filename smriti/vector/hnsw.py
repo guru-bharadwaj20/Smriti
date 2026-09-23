@@ -22,3 +22,19 @@ class HNSWIndex:
             value=distance(query,self.vectors[candidate])
             if value>=best_dist: return best
             best,best_dist=candidate,value
+
+    def _layer_search(self,query,entries,ef,layer):
+        visited=set(entries)
+        candidates=[(distance(query,self.vectors[id]),id) for id in entries]
+        heapq.heapify(candidates)
+        best=[(-d,id) for d,id in candidates]; heapq.heapify(best)
+        while candidates:
+            d,id=heapq.heappop(candidates)
+            if len(best)>=ef and d > -best[0][0]: break
+            for neighbor in sorted(self.graph[id].get(layer,())):
+                if neighbor in visited: continue
+                visited.add(neighbor); nd=distance(query,self.vectors[neighbor])
+                if len(best)<ef or nd < -best[0][0]:
+                    heapq.heappush(candidates,(nd,neighbor)); heapq.heappush(best,(-nd,neighbor))
+                    if len(best)>ef: heapq.heappop(best)
+        return sorted([( -d,id) for d,id in best])

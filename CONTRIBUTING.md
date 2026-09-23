@@ -130,7 +130,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | --- | --- | --- | --- |
 | ✅ Done | P03.01 | Integrate tree-sitter parser lifecycle | smriti/parse; pytest tests/test_parse.py passed |
 | ✅ Done | P03.02 | Extract Python module scopes | smriti/parse; pytest tests/test_parse.py passed |
-| ❌ Pending | P03.03 | Extract Python class definitions | — |
+| ✅ Done | P03.03 | Extract Python class definitions | smriti/parse; pytest tests/test_parse.py passed |
 | ❌ Pending | P03.04 | Extract Python functions and methods | — |
 | ❌ Pending | P03.05 | Extract signatures and docstrings | — |
 | ❌ Pending | P03.06 | Capture byte offsets and source line ranges | — |
@@ -226,7 +226,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P06.10 | Implement seeded random level assignment | smriti/vector/hnsw.py; executable assertions passed |
 | ✅ Done | P06.11 | Implement HNSW entry point management | smriti/vector/hnsw.py; executable assertions passed |
 | ✅ Done | P06.12 | Implement upper-layer greedy descent | smriti/vector/hnsw.py; executable assertions passed |
-| ❌ Pending | P06.13 | Implement candidate queue search | — |
+| ✅ Done | P06.13 | Implement candidate queue search | smriti/vector/hnsw.py; executable assertions passed |
 | ❌ Pending | P06.14 | Implement neighbor selection heuristic | — |
 | ❌ Pending | P06.15 | Implement bidirectional graph insertion | — |
 | ❌ Pending | P06.16 | Enforce neighbor count limits | — |
@@ -272,7 +272,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
-| ❌ Pending | P08.01 | Define omitted symbol representation | — |
+| ✅ Done | P08.01 | Define omitted symbol representation | smriti/pack/__init__.py; smriti/pack/packer.py; executable assertions passed |
 | ❌ Pending | P08.02 | Define name and path representation | — |
 | ❌ Pending | P08.03 | Define signature and docstring representation | — |
 | ❌ Pending | P08.04 | Define full-body representation | — |
