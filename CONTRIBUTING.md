@@ -83,7 +83,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P01.08 | Create module directories from the proposal | smriti/__init__.py; smriti/py.typed; smriti/server/__init__.py; smriti/ui/__init__.py; bench/__init__.py; bench/swebench/__init__.py; bench/longmem/__init__.py; syntax/format reviewed |
 | ✅ Done | P01.09 | Configure strict type checking | mypy.ini; syntax/format reviewed |
 | ✅ Done | P01.10 | Configure formatting and linting | pyproject.toml; syntax/format reviewed |
-| ❌ Pending | P01.11 | Configure pytest and Hypothesis | — |
+| ✅ Done | P01.11 | Configure pytest and Hypothesis | pyproject.toml; tests/conftest.py; syntax/format reviewed |
 | ❌ Pending | P01.12 | Configure CI for supported platforms | — |
 | ❌ Pending | P01.13 | Define config file and environment precedence | — |
 | ❌ Pending | P01.14 | Define ignored paths and local data directory | — |
