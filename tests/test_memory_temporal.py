@@ -27,3 +27,7 @@ class TemporalTests(unittest.TestCase):
         self.assertEqual(timestamp("2025-01-01T05:30:00+05:30"), datetime(2025, 1, 1, tzinfo=timezone.utc))
         with self.assertRaises(ValueError):
             timestamp(datetime(2025, 1, 1))
+
+    def test_open_ended(self):
+        a = datetime(2025, 1, 1, tzinfo=timezone.utc)
+        self.assertTrue(ValidInterval(a).contains(datetime(2200, 1, 1, tzinfo=timezone.utc)))
