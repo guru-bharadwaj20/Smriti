@@ -14,3 +14,10 @@ def test_module_scope():
     assert result.symbols[0].kind == "module"
     assert result.symbols[0].qualname == "pkg"
     assert result.symbols[0].body == "x=1"
+
+
+def test_class_definitions():
+    result = parse_file("a.py", "class A:\n    class B:\n        pass\n")
+    classes = [s for s in result.symbols if s.kind == "class"]
+    assert [s.qualname for s in classes] == ["a.A", "a.A.B"]
+    assert classes[1].parent_id == classes[0].id

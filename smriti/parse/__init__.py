@@ -39,6 +39,21 @@ class SourceParser:
             module, "module", 1, max(1, len(result.source.splitlines())), 0, len(result.source),
             body=result.source.decode("utf-8"), content_hash=sha256(result.source).hexdigest()))
 
+        def walk(node, parent):
+            if node.type == "class_definition":
+                name_node = node.child_by_field_name("name")
+                name = result.source[name_node.start_byte:name_node.end_byte].decode("utf-8")
+                qualname = parent.qualname + "." + name
+                body = result.source[node.start_byte:node.end_byte]
+                symbol = Symbol(sha256((path + ":class:" + qualname).encode()).hexdigest(), path,
+                    name, qualname, "class", node.start_point.row + 1, node.end_point.row + 1,
+                    node.start_byte, node.end_byte, body=body.decode("utf-8"),
+                    content_hash=sha256(body).hexdigest(), parent_id=parent.id)
+                result.symbols.append(symbol)
+                parent = symbol
+            for child in node.named_children:
+                walk(child, parent)
+        walk(root, result.symbols[0])
 
 def parse_file(path: str, source: bytes | str) -> ParseResult:
     return SourceParser().parse(path, source)
