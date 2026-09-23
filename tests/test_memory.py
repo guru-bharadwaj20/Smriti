@@ -60,6 +60,13 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual(store.refresh({"x": "new"})[0].freshness, "stale")
         store.close()
 
+    def test_deleted_anchor(self):
+        from smriti.memory import Anchor
+        store = MemoryStore(":memory:")
+        store.remember("rule", anchors=[Anchor("x", "old")])
+        self.assertEqual(store.refresh({})[0].freshness, "orphaned")
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"

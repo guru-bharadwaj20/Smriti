@@ -38,3 +38,10 @@ class BM25Index:
     def averages(self):
         fields = {f for doc in self.documents.values() for f in doc}
         return {f:sum(doc.get(f,0) for doc in self.lengths.values()) / max(1,len(self.documents)) for f in fields}
+
+
+def bm25_score(tf, df, count, length, average, k1=1.2, b=0.75):
+    import math
+    if not tf or not average: return 0.0
+    idf=math.log(1+(count-df+0.5)/(df+0.5))
+    return idf*tf*(k1+1)/(tf+k1*(1-b+b*length/average))

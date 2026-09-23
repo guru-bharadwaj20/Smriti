@@ -196,7 +196,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P05.08 | Build inverted postings lists | smriti/lexical/index.py; executable assertions passed |
 | ✅ Done | P05.09 | Maintain document frequency counts | smriti/lexical/index.py; executable assertions passed |
 | ✅ Done | P05.10 | Maintain document lengths and field averages | smriti/lexical/index.py; executable assertions passed |
-| ❌ Pending | P05.11 | Implement BM25 scoring formula | — |
+| ✅ Done | P05.11 | Implement BM25 scoring formula | smriti/lexical/index.py; executable assertions passed |
 | ❌ Pending | P05.12 | Implement BM25F field weighting | — |
 | ❌ Pending | P05.13 | Encode posting deltas | — |
 | ❌ Pending | P05.14 | Implement variable-byte encoding | — |
@@ -310,7 +310,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P09.07 | Define behavior for unanchored project facts | smriti\memory\__init__.py; P09.07 regression in tests\test_memory.py |
 | ✅ Done | P09.08 | Persist fact-to-anchor relationships | smriti\memory\__init__.py; P09.08 regression in tests\test_memory.py |
 | ✅ Done | P09.09 | Mark changed anchors possibly stale | smriti\memory\__init__.py; P09.09 regression in tests\test_memory.py |
-| ❌ Pending | P09.10 | Mark deleted anchors orphaned | — |
+| ✅ Done | P09.10 | Mark deleted anchors orphaned | smriti\memory\__init__.py; P09.10 regression in tests\test_memory.py |
 | ❌ Pending | P09.11 | Follow verified symbol renames | — |
 | ❌ Pending | P09.12 | Record freshness reason and triggering commit | — |
 | ❌ Pending | P09.13 | Define policy for memories with multiple anchors | — |
@@ -391,7 +391,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
-| ❌ Pending | P12.01 | Create Typer CLI entry point | — |
+| ✅ Done | P12.01 | Create Typer CLI entry point | smriti/server/cli.py; CLI version test passed |
 | ❌ Pending | P12.02 | Implement index command | — |
 | ❌ Pending | P12.03 | Implement index status command | — |
 | ❌ Pending | P12.04 | Implement context command with budget | — |

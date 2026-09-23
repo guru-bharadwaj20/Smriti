@@ -88,7 +88,11 @@ class MemoryStore:
         """symbols maps stable symbol IDs to current content hashes."""
         changes = []
         for fact in self.recall():
-            if any(a.symbol_id in symbols and symbols[a.symbol_id] != a.content_hash for a in fact.anchors):
+            if any(a.symbol_id not in symbols for a in fact.anchors):
+                changes.append(self._save(replace(fact, freshness='orphaned')))
+            elif any(a.symbol_id in symbols and symbols[a.symbol_id] != a.content_hash for a in fact.anchors):
                 changes.append(self._save(replace(fact, freshness="stale")))
         return changes
 # P09.09
+
+# P09.10
