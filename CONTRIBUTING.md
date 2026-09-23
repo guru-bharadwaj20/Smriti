@@ -391,7 +391,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
-| ❌ Pending | P12.01 | Create Typer CLI entry point | — |
+| ✅ Done | P12.01 | Create Typer CLI entry point | smriti/server/cli.py; CLI version test passed |
 | ❌ Pending | P12.02 | Implement index command | — |
 | ❌ Pending | P12.03 | Implement index status command | — |
 | ❌ Pending | P12.04 | Implement context command with budget | — |
