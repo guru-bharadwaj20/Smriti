@@ -272,7 +272,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
-| ❌ Pending | P08.01 | Define omitted symbol representation | — |
+| ✅ Done | P08.01 | Define omitted symbol representation | smriti/pack/__init__.py; smriti/pack/packer.py; executable assertions passed |
 | ❌ Pending | P08.02 | Define name and path representation | — |
 | ❌ Pending | P08.03 | Define signature and docstring representation | — |
 | ❌ Pending | P08.04 | Define full-body representation | — |
