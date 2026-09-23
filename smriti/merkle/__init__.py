@@ -109,3 +109,15 @@ class RepositoryScanner:
 
         walk(root)
         return snapshot
+
+
+def changed_paths(old: MerkleSnapshot, new: MerkleSnapshot) -> set[str]:
+    """Skip equal subtrees, comparing file leaves only under changed directories."""
+    if old.root_hash == new.root_hash:
+        return set()
+    unchanged = {directory for directory, digest in old.directories.items()
+                 if new.directories.get(directory) == digest}
+    def skip(path: str) -> bool:
+        return any(path.startswith(directory + "/") for directory in unchanged if directory)
+    return {path for path in old.files.keys() | new.files.keys()
+            if not skip(path) and old.files.get(path) != new.files.get(path)}

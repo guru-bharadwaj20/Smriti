@@ -69,3 +69,16 @@ def test_symlinks_are_never_followed(tmp_path):
     snapshot = RepositoryScanner().scan(tmp_path)
     assert set(snapshot.files) == {"cycle"}
     assert set(snapshot.directories) == {""}
+
+
+def test_diff_skips_equal_subtrees(tmp_path):
+    from smriti.merkle import RepositoryScanner, changed_paths
+    (tmp_path / "a").mkdir()
+    (tmp_path / "a" / "f.py").write_text("unchanged")
+    (tmp_path / "b.py").write_text("old")
+    scanner = RepositoryScanner()
+    old = scanner.scan(tmp_path)
+    (tmp_path / "b.py").write_text("new")
+    new = scanner.scan(tmp_path)
+    assert changed_paths(old, new) == {"b.py"}
+    assert changed_paths(new, new) == set()
