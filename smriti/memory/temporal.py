@@ -17,3 +17,15 @@ class ValidInterval:
     def contains(self, point):
         return self.start <= point < self.end
 # P10.01
+@dataclass(frozen=True)
+class TransactionInterval(ValidInterval):
+    """The period during which Smriti believed a version."""
+
+
+@dataclass(frozen=True)
+class TemporalVersion:
+    fact_id: str
+    payload: dict[str, Any]
+    valid: ValidInterval
+    transaction: TransactionInterval
+# P10.02

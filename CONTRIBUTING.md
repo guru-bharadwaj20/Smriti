@@ -81,7 +81,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P01.06 | Specify retrieval and context response contracts | smriti/contracts.py; syntax/format reviewed |
 | ✅ Done | P01.07 | Create Python 3.12 package configuration | pyproject.toml; syntax/format reviewed |
 | ✅ Done | P01.08 | Create module directories from the proposal | smriti/__init__.py; smriti/py.typed; smriti/server/__init__.py; smriti/ui/__init__.py; bench/__init__.py; bench/swebench/__init__.py; bench/longmem/__init__.py; syntax/format reviewed |
-| ❌ Pending | P01.09 | Configure strict type checking | — |
+| ✅ Done | P01.09 | Configure strict type checking | mypy.ini; syntax/format reviewed |
 | ❌ Pending | P01.10 | Configure formatting and linting | — |
 | ❌ Pending | P01.11 | Configure pytest and Hypothesis | — |
 | ❌ Pending | P01.12 | Configure CI for supported platforms | — |
@@ -224,7 +224,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P06.08 | Persist vectors in memory-mapped storage | smriti/vector/storage.py; executable assertions passed |
 | ✅ Done | P06.09 | Implement exact nearest-neighbor oracle | smriti/vector/math.py; executable assertions passed |
 | ✅ Done | P06.10 | Implement seeded random level assignment | smriti/vector/hnsw.py; executable assertions passed |
-| ❌ Pending | P06.11 | Implement HNSW entry point management | — |
+| ✅ Done | P06.11 | Implement HNSW entry point management | smriti/vector/hnsw.py; executable assertions passed |
 | ❌ Pending | P06.12 | Implement upper-layer greedy descent | — |
 | ❌ Pending | P06.13 | Implement candidate queue search | — |
 | ❌ Pending | P06.14 | Implement neighbor selection heuristic | — |
@@ -330,7 +330,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
 | ✅ Done | P10.01 | Define valid-time interval semantics | smriti\memory\temporal.py; P10.01 regression in tests\test_memory_temporal.py |
-| ❌ Pending | P10.02 | Define transaction-time interval semantics | — |
+| ✅ Done | P10.02 | Define transaction-time interval semantics | smriti\memory\temporal.py; P10.02 regression in tests\test_memory_temporal.py |
 | ❌ Pending | P10.03 | Store timezone-aware timestamps | — |
 | ❌ Pending | P10.04 | Represent open-ended intervals | — |
 | ❌ Pending | P10.05 | Query facts valid at a historical time | — |
