@@ -29,3 +29,12 @@ class BM25Index:
     @property
     def document_frequency(self):
         return {term:len(postings) for term,postings in self.postings.items()}
+
+    @property
+    def lengths(self):
+        return {id:{field:sum(counts.values()) for field,counts in fields.items()} for id,fields in self.documents.items()}
+
+    @property
+    def averages(self):
+        fields = {f for doc in self.documents.values() for f in doc}
+        return {f:sum(doc.get(f,0) for doc in self.lengths.values()) / max(1,len(self.documents)) for f in fields}

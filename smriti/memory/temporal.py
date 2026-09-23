@@ -15,16 +15,16 @@ def timestamp(value):
 @dataclass(frozen=True)
 class ValidInterval:
     start: datetime
-    end: datetime
+    end: datetime | None = None
 
     def __post_init__(self):
         object.__setattr__(self, 'start', timestamp(self.start))
-        object.__setattr__(self, 'end', timestamp(self.end))
-        if self.end <= self.start:
+        object.__setattr__(self, 'end', timestamp(self.end) if self.end is not None else None)
+        if self.end is not None and self.end <= self.start:
             raise ValueError("Interval end must be after start")
 
     def contains(self, point):
-        return self.start <= timestamp(point) < self.end
+        return self.start <= timestamp(point) and (self.end is None or timestamp(point) < self.end)
 # P10.01
 @dataclass(frozen=True)
 class TransactionInterval(ValidInterval):
@@ -40,3 +40,5 @@ class TemporalVersion:
 # P10.02
 
 # P10.03
+
+# P10.04
