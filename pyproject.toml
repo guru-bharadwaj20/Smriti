@@ -25,3 +25,14 @@ include = ["smriti*"]
 
 [tool.setuptools.package-data]
 smriti = ["py.typed", "ui/static/*"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+include = ["smriti/**/*.py", "tests/**/*.py", "bench/**/*.py", "scripts/task_commit.py"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I", "UP", "B"]
+
+[tool.ruff.format]
+quote-style = "single"

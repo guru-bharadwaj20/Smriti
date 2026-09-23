@@ -82,7 +82,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P01.07 | Create Python 3.12 package configuration | pyproject.toml; syntax/format reviewed |
 | ✅ Done | P01.08 | Create module directories from the proposal | smriti/__init__.py; smriti/py.typed; smriti/server/__init__.py; smriti/ui/__init__.py; bench/__init__.py; bench/swebench/__init__.py; bench/longmem/__init__.py; syntax/format reviewed |
 | ✅ Done | P01.09 | Configure strict type checking | mypy.ini; syntax/format reviewed |
-| ❌ Pending | P01.10 | Configure formatting and linting | — |
+| ✅ Done | P01.10 | Configure formatting and linting | pyproject.toml; syntax/format reviewed |
 | ❌ Pending | P01.11 | Configure pytest and Hypothesis | — |
 | ❌ Pending | P01.12 | Configure CI for supported platforms | — |
 | ❌ Pending | P01.13 | Define config file and environment precedence | — |
@@ -225,7 +225,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P06.09 | Implement exact nearest-neighbor oracle | smriti/vector/math.py; executable assertions passed |
 | ✅ Done | P06.10 | Implement seeded random level assignment | smriti/vector/hnsw.py; executable assertions passed |
 | ✅ Done | P06.11 | Implement HNSW entry point management | smriti/vector/hnsw.py; executable assertions passed |
-| ❌ Pending | P06.12 | Implement upper-layer greedy descent | — |
+| ✅ Done | P06.12 | Implement upper-layer greedy descent | smriti/vector/hnsw.py; executable assertions passed |
 | ❌ Pending | P06.13 | Implement candidate queue search | — |
 | ❌ Pending | P06.14 | Implement neighbor selection heuristic | — |
 | ❌ Pending | P06.15 | Implement bidirectional graph insertion | — |
@@ -248,7 +248,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
 | ✅ Done | P07.01 | Define query normalization | smriti/rank/__init__.py; smriti/rank/hybrid.py; executable assertions passed |
-| ❌ Pending | P07.02 | Retrieve lexical candidates | — |
+| ✅ Done | P07.02 | Retrieve lexical candidates | smriti/rank/hybrid.py; executable assertions passed |
 | ❌ Pending | P07.03 | Retrieve vector candidates | — |
 | ❌ Pending | P07.04 | Implement reciprocal rank fusion | — |
 | ❌ Pending | P07.05 | Define graph edge type weights | — |

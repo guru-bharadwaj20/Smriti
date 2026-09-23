@@ -14,3 +14,11 @@ class HNSWIndex:
 
     def _refresh_entry(self):
         self.entry=min(self.levels,key=lambda id:(-self.levels[id],id)) if self.levels else None
+
+    def _greedy(self,query,entry,layer):
+        best=entry; best_dist=distance(query,self.vectors[best])
+        while True:
+            candidate=min([best,*self.graph[best].get(layer,())],key=lambda id:(distance(query,self.vectors[id]),id))
+            value=distance(query,self.vectors[candidate])
+            if value>=best_dist: return best
+            best,best_dist=candidate,value
