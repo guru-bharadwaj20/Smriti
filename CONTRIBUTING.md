@@ -193,7 +193,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P05.05 | Define language keyword stop lists | smriti/lexical/tokenizer.py; executable assertions passed |
 | ✅ Done | P05.06 | Handle operators and numeric tokens | smriti/lexical/tokenizer.py; executable assertions passed |
 | ✅ Done | P05.07 | Separate signature, docstring, and body fields | smriti/lexical/fields.py; executable assertions passed |
-| ❌ Pending | P05.08 | Build inverted postings lists | — |
+| ✅ Done | P05.08 | Build inverted postings lists | smriti/lexical/index.py; executable assertions passed |
 | ❌ Pending | P05.09 | Maintain document frequency counts | — |
 | ❌ Pending | P05.10 | Maintain document lengths and field averages | — |
 | ❌ Pending | P05.11 | Implement BM25 scoring formula | — |
@@ -223,7 +223,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P06.07 | Normalize vectors for chosen distance metric | smriti/vector/math.py; smriti/vector/__init__.py; executable assertions passed |
 | ✅ Done | P06.08 | Persist vectors in memory-mapped storage | smriti/vector/storage.py; executable assertions passed |
 | ✅ Done | P06.09 | Implement exact nearest-neighbor oracle | smriti/vector/math.py; executable assertions passed |
-| ❌ Pending | P06.10 | Implement seeded random level assignment | — |
+| ✅ Done | P06.10 | Implement seeded random level assignment | smriti/vector/hnsw.py; executable assertions passed |
 | ❌ Pending | P06.11 | Implement HNSW entry point management | — |
 | ❌ Pending | P06.12 | Implement upper-layer greedy descent | — |
 | ❌ Pending | P06.13 | Implement candidate queue search | — |
@@ -307,7 +307,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P09.04 | Attach explicit symbol anchors | smriti\memory\__init__.py; P09.04 regression in tests\test_memory.py |
 | ✅ Done | P09.05 | Record anchor content hashes | smriti\memory\__init__.py; P09.05 regression in tests\test_memory.py |
 | ✅ Done | P09.06 | Infer anchors from selected source context | smriti\memory\__init__.py; P09.06 regression in tests\test_memory.py |
-| ❌ Pending | P09.07 | Define behavior for unanchored project facts | — |
+| ✅ Done | P09.07 | Define behavior for unanchored project facts | smriti\memory\__init__.py; P09.07 regression in tests\test_memory.py |
 | ❌ Pending | P09.08 | Persist fact-to-anchor relationships | — |
 | ❌ Pending | P09.09 | Mark changed anchors possibly stale | — |
 | ❌ Pending | P09.10 | Mark deleted anchors orphaned | — |
