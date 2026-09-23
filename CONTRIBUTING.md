@@ -330,7 +330,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
 | ✅ Done | P10.01 | Define valid-time interval semantics | smriti\memory\temporal.py; P10.01 regression in tests\test_memory_temporal.py |
-| ❌ Pending | P10.02 | Define transaction-time interval semantics | — |
+| ✅ Done | P10.02 | Define transaction-time interval semantics | smriti\memory\temporal.py; P10.02 regression in tests\test_memory_temporal.py |
 | ❌ Pending | P10.03 | Store timezone-aware timestamps | — |
 | ❌ Pending | P10.04 | Represent open-ended intervals | — |
 | ❌ Pending | P10.05 | Query facts valid at a historical time | — |

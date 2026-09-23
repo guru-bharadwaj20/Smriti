@@ -12,3 +12,12 @@ class TemporalTests(unittest.TestCase):
         span = ValidInterval(a, b)
         self.assertTrue(span.contains(a))
         self.assertFalse(span.contains(b))
+
+    def test_independent_transaction_time(self):
+        from smriti.memory.temporal import TransactionInterval, TemporalVersion
+        a = datetime(2025, 1, 1, tzinfo=timezone.utc)
+        b = datetime(2025, 2, 1, tzinfo=timezone.utc)
+        c = datetime(2025, 3, 1, tzinfo=timezone.utc)
+        v = TemporalVersion("x", {"text": "known later"}, ValidInterval(a, b), TransactionInterval(b, c))
+        self.assertTrue(v.valid.contains(a))
+        self.assertFalse(v.transaction.contains(a))
