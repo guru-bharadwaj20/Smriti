@@ -225,7 +225,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P06.09 | Implement exact nearest-neighbor oracle | smriti/vector/math.py; executable assertions passed |
 | ✅ Done | P06.10 | Implement seeded random level assignment | smriti/vector/hnsw.py; executable assertions passed |
 | ✅ Done | P06.11 | Implement HNSW entry point management | smriti/vector/hnsw.py; executable assertions passed |
-| ❌ Pending | P06.12 | Implement upper-layer greedy descent | — |
+| ✅ Done | P06.12 | Implement upper-layer greedy descent | smriti/vector/hnsw.py; executable assertions passed |
 | ❌ Pending | P06.13 | Implement candidate queue search | — |
 | ❌ Pending | P06.14 | Implement neighbor selection heuristic | — |
 | ❌ Pending | P06.15 | Implement bidirectional graph insertion | — |
