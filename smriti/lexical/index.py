@@ -25,3 +25,7 @@ class BM25Index:
             for field, counts in fields.items():
                 for term, count in counts.items():
                     self.postings.setdefault(term, {}).setdefault(id, {})[field] = count
+
+    @property
+    def document_frequency(self):
+        return {term:len(postings) for term,postings in self.postings.items()}

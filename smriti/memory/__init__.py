@@ -34,6 +34,7 @@ class MemoryStore:
     def __init__(self, db_path):
         self.db = sqlite3.connect(str(db_path))
         self.db.execute("CREATE TABLE IF NOT EXISTS facts (id TEXT PRIMARY KEY, payload TEXT NOT NULL)")
+        self.db.execute('CREATE TABLE IF NOT EXISTS fact_anchors (fact_id TEXT, symbol_id TEXT, content_hash TEXT, PRIMARY KEY (fact_id, symbol_id))')
         self.db.commit()
 
     def close(self):
@@ -57,6 +58,7 @@ class MemoryStore:
         fact = Fact(fact_id or uuid.uuid4().hex, text, user, session, tool, source, float(confidence), anchors)
         with self.db:
             self.db.execute("INSERT INTO facts VALUES (?, ?)", (fact.id, json.dumps(asdict(fact))))
+            self.db.executemany('INSERT INTO fact_anchors VALUES (?, ?, ?)', [(fact.id, a.symbol_id, a.content_hash) for a in anchors])
         return fact
 
     def recall(self, query="") -> list[Fact]:
@@ -74,3 +76,5 @@ class MemoryStore:
 # P09.06
 
 # P09.07
+
+# P09.08

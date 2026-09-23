@@ -5,17 +5,26 @@ from datetime import datetime, timezone
 from typing import Any
 
 
+def timestamp(value):
+    point = datetime.fromisoformat(value) if isinstance(value, str) else value
+    if not isinstance(point, datetime) or point.tzinfo is None or point.utcoffset() is None:
+        raise ValueError('Timestamp must be timezone-aware')
+    return point.astimezone(timezone.utc)
+
+
 @dataclass(frozen=True)
 class ValidInterval:
     start: datetime
     end: datetime
 
     def __post_init__(self):
+        object.__setattr__(self, 'start', timestamp(self.start))
+        object.__setattr__(self, 'end', timestamp(self.end))
         if self.end <= self.start:
             raise ValueError("Interval end must be after start")
 
     def contains(self, point):
-        return self.start <= point < self.end
+        return self.start <= timestamp(point) < self.end
 # P10.01
 @dataclass(frozen=True)
 class TransactionInterval(ValidInterval):
@@ -29,3 +38,5 @@ class TemporalVersion:
     valid: ValidInterval
     transaction: TransactionInterval
 # P10.02
+
+# P10.03

@@ -194,7 +194,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P05.06 | Handle operators and numeric tokens | smriti/lexical/tokenizer.py; executable assertions passed |
 | ✅ Done | P05.07 | Separate signature, docstring, and body fields | smriti/lexical/fields.py; executable assertions passed |
 | ✅ Done | P05.08 | Build inverted postings lists | smriti/lexical/index.py; executable assertions passed |
-| ❌ Pending | P05.09 | Maintain document frequency counts | — |
+| ✅ Done | P05.09 | Maintain document frequency counts | smriti/lexical/index.py; executable assertions passed |
 | ❌ Pending | P05.10 | Maintain document lengths and field averages | — |
 | ❌ Pending | P05.11 | Implement BM25 scoring formula | — |
 | ❌ Pending | P05.12 | Implement BM25F field weighting | — |
@@ -308,7 +308,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P09.05 | Record anchor content hashes | smriti\memory\__init__.py; P09.05 regression in tests\test_memory.py |
 | ✅ Done | P09.06 | Infer anchors from selected source context | smriti\memory\__init__.py; P09.06 regression in tests\test_memory.py |
 | ✅ Done | P09.07 | Define behavior for unanchored project facts | smriti\memory\__init__.py; P09.07 regression in tests\test_memory.py |
-| ❌ Pending | P09.08 | Persist fact-to-anchor relationships | — |
+| ✅ Done | P09.08 | Persist fact-to-anchor relationships | smriti\memory\__init__.py; P09.08 regression in tests\test_memory.py |
 | ❌ Pending | P09.09 | Mark changed anchors possibly stale | — |
 | ❌ Pending | P09.10 | Mark deleted anchors orphaned | — |
 | ❌ Pending | P09.11 | Follow verified symbol renames | — |
@@ -331,7 +331,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | --- | --- | --- | --- |
 | ✅ Done | P10.01 | Define valid-time interval semantics | smriti\memory\temporal.py; P10.01 regression in tests\test_memory_temporal.py |
 | ✅ Done | P10.02 | Define transaction-time interval semantics | smriti\memory\temporal.py; P10.02 regression in tests\test_memory_temporal.py |
-| ❌ Pending | P10.03 | Store timezone-aware timestamps | — |
+| ✅ Done | P10.03 | Store timezone-aware timestamps | smriti\memory\temporal.py; P10.03 regression in tests\test_memory_temporal.py |
 | ❌ Pending | P10.04 | Represent open-ended intervals | — |
 | ❌ Pending | P10.05 | Query facts valid at a historical time | — |
 | ❌ Pending | P10.06 | Query beliefs as of transaction time | — |

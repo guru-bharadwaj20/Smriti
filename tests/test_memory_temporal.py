@@ -21,3 +21,9 @@ class TemporalTests(unittest.TestCase):
         v = TemporalVersion("x", {"text": "known later"}, ValidInterval(a, b), TransactionInterval(b, c))
         self.assertTrue(v.valid.contains(a))
         self.assertFalse(v.transaction.contains(a))
+
+    def test_aware_timestamps(self):
+        from smriti.memory.temporal import timestamp
+        self.assertEqual(timestamp("2025-01-01T05:30:00+05:30"), datetime(2025, 1, 1, tzinfo=timezone.utc))
+        with self.assertRaises(ValueError):
+            timestamp(datetime(2025, 1, 1))
