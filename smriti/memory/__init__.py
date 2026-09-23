@@ -23,6 +23,10 @@ class Fact:
     confidence: float = 1.0
     anchors: tuple[Anchor, ...] = ()
 
+    @property
+    def scope(self):
+        return 'symbol' if self.anchors else 'project'
+
 
 class MemoryStore:
     """SQLite-backed fact store. Each write is atomic and survives restart."""
@@ -68,3 +72,5 @@ class MemoryStore:
 # P09.05
 
 # P09.06
+
+# P09.07

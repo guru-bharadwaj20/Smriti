@@ -41,6 +41,11 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual(f.anchors[0].symbol_id, "x")
         store.close()
 
+    def test_project_fact(self):
+        store = MemoryStore(":memory:")
+        self.assertEqual(store.remember("Uses SQLite").scope, "project")
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"
