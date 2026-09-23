@@ -83,7 +83,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P01.08 | Create module directories from the proposal | smriti/__init__.py; smriti/py.typed; smriti/server/__init__.py; smriti/ui/__init__.py; bench/__init__.py; bench/swebench/__init__.py; bench/longmem/__init__.py; syntax/format reviewed |
 | ✅ Done | P01.09 | Configure strict type checking | mypy.ini; syntax/format reviewed |
 | ✅ Done | P01.10 | Configure formatting and linting | pyproject.toml; syntax/format reviewed |
-| ❌ Pending | P01.11 | Configure pytest and Hypothesis | — |
+| ✅ Done | P01.11 | Configure pytest and Hypothesis | pyproject.toml; tests/conftest.py; syntax/format reviewed |
 | ❌ Pending | P01.12 | Configure CI for supported platforms | — |
 | ❌ Pending | P01.13 | Define config file and environment precedence | — |
 | ❌ Pending | P01.14 | Define ignored paths and local data directory | — |
@@ -104,7 +104,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P02.05 | Implement initial repository scan | smriti/merkle; pytest tests/test_merkle.py passed |
 | ✅ Done | P02.06 | Honor repository ignore rules | smriti/merkle; pytest tests/test_merkle.py passed |
 | ✅ Done | P02.07 | Handle symlinks without recursive traversal | smriti/merkle; pytest tests/test_merkle.py passed |
-| ❌ Pending | P02.08 | Diff old and new trees by subtree hash | — |
+| ✅ Done | P02.08 | Diff old and new trees by subtree hash | smriti/merkle; pytest tests/test_merkle.py passed |
 | ❌ Pending | P02.09 | Detect created files | — |
 | ❌ Pending | P02.10 | Detect modified files | — |
 | ❌ Pending | P02.11 | Detect deleted files | — |
@@ -249,7 +249,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | --- | --- | --- | --- |
 | ✅ Done | P07.01 | Define query normalization | smriti/rank/__init__.py; smriti/rank/hybrid.py; executable assertions passed |
 | ✅ Done | P07.02 | Retrieve lexical candidates | smriti/rank/hybrid.py; executable assertions passed |
-| ❌ Pending | P07.03 | Retrieve vector candidates | — |
+| ✅ Done | P07.03 | Retrieve vector candidates | smriti/rank/hybrid.py; executable assertions passed |
 | ❌ Pending | P07.04 | Implement reciprocal rank fusion | — |
 | ❌ Pending | P07.05 | Define graph edge type weights | — |
 | ❌ Pending | P07.06 | Include resolution confidence in weights | — |

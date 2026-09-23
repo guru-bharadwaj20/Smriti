@@ -5,3 +5,6 @@ def normalize_query(query):
 
 def lexical_candidates(index,query,k=50):
     return index.search(normalize_query(query),k)
+
+def vector_candidates(index,embed,query,k=50):
+    return index.search(embed(normalize_query(query)),k)
