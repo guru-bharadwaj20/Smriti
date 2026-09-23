@@ -11,3 +11,6 @@ class HNSWIndex:
         self.vectors={}; self.levels={}; self.graph={}; self.entry=None; self.deleted=set()
     def random_level(self):
         return min(32,int(-math.log(max(self.random.random(),1e-15))/math.log(self.m)))
+
+    def _refresh_entry(self):
+        self.entry=min(self.levels,key=lambda id:(-self.levels[id],id)) if self.levels else None
