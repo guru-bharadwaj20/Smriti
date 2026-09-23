@@ -308,7 +308,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P09.05 | Record anchor content hashes | smriti\memory\__init__.py; P09.05 regression in tests\test_memory.py |
 | ✅ Done | P09.06 | Infer anchors from selected source context | smriti\memory\__init__.py; P09.06 regression in tests\test_memory.py |
 | ✅ Done | P09.07 | Define behavior for unanchored project facts | smriti\memory\__init__.py; P09.07 regression in tests\test_memory.py |
-| ❌ Pending | P09.08 | Persist fact-to-anchor relationships | — |
+| ✅ Done | P09.08 | Persist fact-to-anchor relationships | smriti\memory\__init__.py; P09.08 regression in tests\test_memory.py |
 | ❌ Pending | P09.09 | Mark changed anchors possibly stale | — |
 | ❌ Pending | P09.10 | Mark deleted anchors orphaned | — |
 | ❌ Pending | P09.11 | Follow verified symbol renames | — |

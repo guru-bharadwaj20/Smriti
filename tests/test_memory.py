@@ -46,6 +46,13 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual(store.remember("Uses SQLite").scope, "project")
         store.close()
 
+    def test_anchor_relationships(self):
+        from smriti.memory import Anchor
+        store = MemoryStore(":memory:")
+        f = store.remember("rule", anchors=[Anchor("x", "h")])
+        self.assertEqual(store.db.execute("SELECT fact_id FROM fact_anchors WHERE symbol_id='x'").fetchone()[0], f.id)
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"
