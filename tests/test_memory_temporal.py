@@ -31,3 +31,12 @@ class TemporalTests(unittest.TestCase):
     def test_open_ended(self):
         a = datetime(2025, 1, 1, tzinfo=timezone.utc)
         self.assertTrue(ValidInterval(a).contains(datetime(2200, 1, 1, tzinfo=timezone.utc)))
+
+    def test_valid_time_query(self):
+        from smriti.memory.temporal import Timeline, TemporalVersion, TransactionInterval
+        a = datetime(2025, 1, 1, tzinfo=timezone.utc)
+        b = datetime(2025, 2, 1, tzinfo=timezone.utc)
+        version = TemporalVersion("x", {"text": "old"}, ValidInterval(a, b), TransactionInterval(a))
+        timeline = Timeline([version])
+        self.assertEqual(timeline.valid_at(a), [version])
+        self.assertEqual(timeline.valid_at(b), [])

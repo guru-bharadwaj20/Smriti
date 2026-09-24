@@ -333,7 +333,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P10.02 | Define transaction-time interval semantics | smriti\memory\temporal.py; P10.02 regression in tests\test_memory_temporal.py |
 | ✅ Done | P10.03 | Store timezone-aware timestamps | smriti\memory\temporal.py; P10.03 regression in tests\test_memory_temporal.py |
 | ✅ Done | P10.04 | Represent open-ended intervals | smriti\memory\temporal.py; P10.04 regression in tests\test_memory_temporal.py |
-| ❌ Pending | P10.05 | Query facts valid at a historical time | — |
+| ✅ Done | P10.05 | Query facts valid at a historical time | smriti\memory\temporal.py; P10.05 regression in tests\test_memory_temporal.py |
 | ❌ Pending | P10.06 | Query beliefs as of transaction time | — |
 | ❌ Pending | P10.07 | Record corrections as additive versions | — |
 | ❌ Pending | P10.08 | Reject invalid temporal intervals | — |

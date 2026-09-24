@@ -42,3 +42,12 @@ class TemporalVersion:
 # P10.03
 
 # P10.04
+class Timeline:
+    """In-memory bitemporal oracle, also used by persistent log replay."""
+    def __init__(self, versions=()):
+        self.rows = list(versions)
+
+    def valid_at(self, point):
+        point = timestamp(point)
+        return [v for v in self.rows if v.valid.contains(point)]
+# P10.05
