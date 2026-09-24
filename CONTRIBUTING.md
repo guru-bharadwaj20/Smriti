@@ -105,7 +105,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P02.06 | Honor repository ignore rules | smriti/merkle; pytest tests/test_merkle.py passed |
 | ✅ Done | P02.07 | Handle symlinks without recursive traversal | smriti/merkle; pytest tests/test_merkle.py passed |
 | ✅ Done | P02.08 | Diff old and new trees by subtree hash | smriti/merkle; pytest tests/test_merkle.py passed |
-| ❌ Pending | P02.09 | Detect created files | — |
+| ✅ Done | P02.09 | Detect created files | smriti/merkle; pytest tests/test_merkle.py passed |
 | ❌ Pending | P02.10 | Detect modified files | — |
 | ❌ Pending | P02.11 | Detect deleted files | — |
 | ❌ Pending | P02.12 | Detect unchanged-content file moves | — |

@@ -60,6 +60,8 @@ def main() -> None:
     parser.add_argument('message')
     parser.add_argument('--evidence', required=True)
     parser.add_argument('--files', nargs='+', required=True)
+    parser.add_argument('--no-checklist', action='store_true',
+                        help='Use the same commit/push queue for a follow-up fix')
     args = parser.parse_args()
     ticket = acquire_lock()
     try:
@@ -74,22 +76,24 @@ def main() -> None:
             paths.append(path.relative_to(ROOT).as_posix())
         checklist = ROOT / 'CONTRIBUTING.md'
         original_text = checklist.read_text(encoding='utf-8')
-        text = original_text
-        pattern = re.compile(r'^\| ❌ Pending \| ' + re.escape(args.task) + r' \| ([^|]+) \| [^|]*\|$', re.MULTILINE)
-        if len(pattern.findall(text)) != 1:
-            raise ValueError(f'Expected one pending checklist row for {args.task}')
-        evidence = args.evidence.replace('|', '/')
-        text = pattern.sub(lambda match: f'| ✅ Done | {args.task} | {match.group(1).strip()} | {evidence} |', text)
-        checklist.write_text(text, encoding='utf-8', newline='\n')
+        staged_paths = paths if args.no_checklist else [*paths, 'CONTRIBUTING.md']
+        if not args.no_checklist:
+            pattern = re.compile(r'^\| ❌ Pending \| ' + re.escape(args.task) + r' \| ([^|]+) \| [^|]*\|$', re.MULTILINE)
+            if len(pattern.findall(original_text)) != 1:
+                raise ValueError(f'Expected one pending checklist row for {args.task}')
+            evidence = args.evidence.replace('|', '/')
+            text = pattern.sub(lambda match: f'| ✅ Done | {args.task} | {match.group(1).strip()} | {evidence} |', original_text)
+            checklist.write_text(text, encoding='utf-8', newline='\n')
         try:
-            git('add', '--', *paths, 'CONTRIBUTING.md')
+            git('add', '--', *staged_paths)
             git('diff', '--cached', '--check')
             print(git('commit', '-m', f'{args.task}: {args.message}'), flush=True)
         except Exception:
             # The index was empty on entry. Restore only this task's own staging
             # and checklist edit so other contributors can keep making progress.
-            git('reset', '--', *paths, 'CONTRIBUTING.md')
-            checklist.write_text(original_text, encoding='utf-8', newline='\n')
+            git('reset', '--', *staged_paths)
+            if not args.no_checklist:
+                checklist.write_text(original_text, encoding='utf-8', newline='\n')
             raise
         # A failed push stops this worker; never silently accumulate local commits.
         print(git('push'), flush=True)
