@@ -214,7 +214,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
-| ❌ Pending | P06.01 | Select and record embedding model license | — |
+| ✅ Done | P06.01 | Select and record embedding model license | docs/embeddings.md; executable assertions passed |
 | ❌ Pending | P06.02 | Pin model artifact and checksum | — |
 | ❌ Pending | P06.03 | Configure ONNX CPU inference | — |
 | ❌ Pending | P06.04 | Evaluate int8 embedding quality | — |
