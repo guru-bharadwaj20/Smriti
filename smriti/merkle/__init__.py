@@ -121,3 +121,14 @@ def changed_paths(old: MerkleSnapshot, new: MerkleSnapshot) -> set[str]:
         return any(path.startswith(directory + "/") for directory in unchanged if directory)
     return {path for path in old.files.keys() | new.files.keys()
             if not skip(path) and old.files.get(path) != new.files.get(path)}
+
+
+@dataclass(frozen=True)
+class FileChange:
+    kind: str
+    path: str
+    old_path: str | None = None
+
+
+def created_files(old: MerkleSnapshot, new: MerkleSnapshot) -> list[FileChange]:
+    return [FileChange("created", path) for path in sorted(new.files.keys() - old.files.keys())]

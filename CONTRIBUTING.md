@@ -84,7 +84,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P01.09 | Configure strict type checking | mypy.ini; syntax/format reviewed |
 | ✅ Done | P01.10 | Configure formatting and linting | pyproject.toml; syntax/format reviewed |
 | ✅ Done | P01.11 | Configure pytest and Hypothesis | pyproject.toml; tests/conftest.py; syntax/format reviewed |
-| ❌ Pending | P01.12 | Configure CI for supported platforms | — |
+| ✅ Done | P01.12 | Configure CI for supported platforms | .github/workflows/ci.yml; syntax/format reviewed |
 | ❌ Pending | P01.13 | Define config file and environment precedence | — |
 | ❌ Pending | P01.14 | Define ignored paths and local data directory | — |
 | ❌ Pending | P01.15 | Create small repository fixtures with known symbols | — |
@@ -105,7 +105,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P02.06 | Honor repository ignore rules | smriti/merkle; pytest tests/test_merkle.py passed |
 | ✅ Done | P02.07 | Handle symlinks without recursive traversal | smriti/merkle; pytest tests/test_merkle.py passed |
 | ✅ Done | P02.08 | Diff old and new trees by subtree hash | smriti/merkle; pytest tests/test_merkle.py passed |
-| ❌ Pending | P02.09 | Detect created files | — |
+| ✅ Done | P02.09 | Detect created files | smriti/merkle; pytest tests/test_merkle.py passed |
 | ❌ Pending | P02.10 | Detect modified files | — |
 | ❌ Pending | P02.11 | Detect deleted files | — |
 | ❌ Pending | P02.12 | Detect unchanged-content file moves | — |
@@ -214,7 +214,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
-| ❌ Pending | P06.01 | Select and record embedding model license | — |
+| ✅ Done | P06.01 | Select and record embedding model license | docs/embeddings.md; executable assertions passed |
 | ❌ Pending | P06.02 | Pin model artifact and checksum | — |
 | ❌ Pending | P06.03 | Configure ONNX CPU inference | — |
 | ❌ Pending | P06.04 | Evaluate int8 embedding quality | — |
@@ -333,7 +333,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P10.02 | Define transaction-time interval semantics | smriti\memory\temporal.py; P10.02 regression in tests\test_memory_temporal.py |
 | ✅ Done | P10.03 | Store timezone-aware timestamps | smriti\memory\temporal.py; P10.03 regression in tests\test_memory_temporal.py |
 | ✅ Done | P10.04 | Represent open-ended intervals | smriti\memory\temporal.py; P10.04 regression in tests\test_memory_temporal.py |
-| ❌ Pending | P10.05 | Query facts valid at a historical time | — |
+| ✅ Done | P10.05 | Query facts valid at a historical time | smriti\memory\temporal.py; P10.05 regression in tests\test_memory_temporal.py |
 | ❌ Pending | P10.06 | Query beliefs as of transaction time | — |
 | ❌ Pending | P10.07 | Record corrections as additive versions | — |
 | ❌ Pending | P10.08 | Reject invalid temporal intervals | — |

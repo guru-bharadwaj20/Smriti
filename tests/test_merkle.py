@@ -82,3 +82,9 @@ def test_diff_skips_equal_subtrees(tmp_path):
     new = scanner.scan(tmp_path)
     assert changed_paths(old, new) == {"b.py"}
     assert changed_paths(new, new) == set()
+
+
+def test_created_files():
+    from smriti.merkle import MerkleSnapshot, created_files
+    changes = created_files(MerkleSnapshot(), MerkleSnapshot({"new.py": hash_content(b"n")}))
+    assert [(event.kind, event.path) for event in changes] == [("created", "new.py")]
