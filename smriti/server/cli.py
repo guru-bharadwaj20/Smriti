@@ -1,6 +1,9 @@
 """Smriti command line interface."""
 
 import typer
+from pathlib import Path
+from dataclasses import asdict
+import json
 
 from smriti import __version__
 
@@ -16,3 +19,12 @@ def main() -> None:
 def version() -> None:
     """Print the installed engine version."""
     typer.echo(__version__)
+
+
+@app.command('index')
+def index_repository(root: Path = typer.Option(Path('.'), '--root')) -> None:
+    """Index supported source files and atomically publish a query snapshot."""
+    from smriti.server.service import SmritiService
+
+    result = SmritiService(root).index()
+    typer.echo(json.dumps(asdict(result)))
