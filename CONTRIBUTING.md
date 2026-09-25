@@ -403,7 +403,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P12.10 | Implement memory revert command | — |
 | ❌ Pending | P12.11 | Implement memory branch and merge commands | — |
 | ❌ Pending | P12.12 | Integrate official MCP Python SDK | — |
-| ❌ Pending | P12.13 | Define validated MCP tool schemas | — |
+| ✅ Done | P12.13 | Define validated MCP tool schemas | smriti/server/schemas.py; invalid budgets anchors confidence and forget-target tests passed |
 | ❌ Pending | P12.14 | Expose context MCP tool | — |
 | ❌ Pending | P12.15 | Expose symbol and graph MCP tools | — |
 | ❌ Pending | P12.16 | Expose memory CRUD MCP tools | — |
