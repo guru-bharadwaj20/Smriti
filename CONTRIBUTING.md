@@ -315,7 +315,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P09.12 | Record freshness reason and triggering commit | smriti\memory\__init__.py; P09.12 regression in tests\test_memory.py |
 | ✅ Done | P09.13 | Define policy for memories with multiple anchors | smriti\memory\__init__.py; P09.13 regression in tests\test_memory.py |
 | ✅ Done | P09.14 | Rank stale facts lower during recall | smriti\memory\__init__.py; P09.14 regression in tests\test_memory.py |
-| ❌ Pending | P09.15 | Show freshness state in recall results | — |
+| ✅ Done | P09.15 | Show freshness state in recall results | smriti\memory\__init__.py; P09.15 regression in tests\test_memory.py |
 | ❌ Pending | P09.16 | Handle revalidation without losing history | — |
 | ❌ Pending | P09.17 | Detect contradiction candidates by subject | — |
 | ❌ Pending | P09.18 | Combine embedding similarity with anchor overlap | — |
