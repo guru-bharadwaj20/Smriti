@@ -201,7 +201,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P05.13 | Encode posting deltas | smriti/lexical/codec.py; executable assertions passed |
 | ✅ Done | P05.14 | Implement variable-byte encoding | smriti/lexical/codec.py; executable assertions passed |
 | ✅ Done | P05.15 | Implement posting decoding | smriti/lexical/codec.py; executable assertions passed |
-| ❌ Pending | P05.16 | Add symbols incrementally | — |
+| ✅ Done | P05.16 | Add symbols incrementally | smriti/lexical/index.py; executable assertions passed |
 | ❌ Pending | P05.17 | Remove symbols and update statistics | — |
 | ❌ Pending | P05.18 | Persist and reload lexical index | — |
 | ❌ Pending | P05.19 | Define deterministic tie breaking | — |
@@ -263,7 +263,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P07.14 | Include associated tests and configuration | — |
 | ❌ Pending | P07.15 | Cache ranking with index-version keys | — |
 | ❌ Pending | P07.16 | Invalidate cache after index updates | — |
-| ❌ Pending | P07.17 | Tune fusion weights on validation data only | — |
+| ✅ Done | P07.17 | Tune fusion weights on validation data only | scripts/fusion_tuning.py; bench/fusion/validation.json; validation-only grid search, separate held-out IDs |
 | ❌ Pending | P07.18 | Emit per-candidate selection explanations | — |
 
 ### P08 — Token-budgeted context packing
@@ -427,7 +427,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P13.01 | Pin SWE-bench Lite dataset revision | bench/datasets.json; Hugging Face API SHA 6ec7bb89b9342f664a54a6e0a6ea6501d3437cc2 |
 | ✅ Done | P13.02 | Pin SWE-bench Verified dataset revision | bench/datasets.json; Hugging Face API SHA c104f840cc67f8b6eec6f759ebc8b2693d585d4a |
 | ✅ Done | P13.03 | Create isolated base-commit checkouts | bench/swebench/checkout.py; base-commit isolation test passed |
-| ❌ Pending | P13.04 | Validate task repository and commit identity | — |
+| ✅ Done | P13.04 | Validate task repository and commit identity | bench/swebench/validation.py; wrong-repo commit and dirty-checkout tests passed |
 | ✅ Done | P13.05 | Extract patch ground truth outside indexed tree | bench/swebench/ground_truth.py; changed-context and added-file tests passed |
 | ❌ Pending | P13.06 | Map changed functions to base-commit symbols | — |
 | ❌ Pending | P13.07 | Define handling of added and deleted functions | — |

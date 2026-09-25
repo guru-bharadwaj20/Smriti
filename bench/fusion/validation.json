@@ -1,0 +1,91 @@
+{
+  "fixture": {
+    "kind": "synthetic rank fixture, not SWE-bench",
+    "validation": [
+      {
+        "lexical": [
+          "v1",
+          "v2",
+          "v3"
+        ],
+        "vector": [
+          "v2",
+          "v1",
+          "v3"
+        ],
+        "gold": [
+          "v1"
+        ]
+      },
+      {
+        "lexical": [
+          "v4",
+          "v5",
+          "v6"
+        ],
+        "vector": [
+          "v5",
+          "v4",
+          "v6"
+        ],
+        "gold": [
+          "v4"
+        ]
+      },
+      {
+        "lexical": [
+          "v7",
+          "v8",
+          "v9"
+        ],
+        "vector": [
+          "v8",
+          "v7",
+          "v9"
+        ],
+        "gold": [
+          "v8"
+        ]
+      }
+    ],
+    "held_out": [
+      {
+        "lexical": [
+          "t1",
+          "t2",
+          "t3"
+        ],
+        "vector": [
+          "t2",
+          "t1",
+          "t3"
+        ],
+        "gold": [
+          "t1"
+        ]
+      },
+      {
+        "lexical": [
+          "t4",
+          "t5",
+          "t6"
+        ],
+        "vector": [
+          "t5",
+          "t4",
+          "t6"
+        ],
+        "gold": [
+          "t5"
+        ]
+      }
+    ]
+  },
+  "selected_weights": [
+    0.25,
+    0.25
+  ],
+  "validation_mrr": 0.8333333333333334,
+  "held_out_mrr": 0.75,
+  "limitation": "Synthetic fusion implementation check; do not adopt these weights for real retrieval without representative validation."
+}
