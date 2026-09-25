@@ -105,3 +105,22 @@ def test_incremental_and_fresh_symbol_equivalence(tmp_path):
     updated = apply_file_symbols(symbols, {path: parser.parse(path, (tmp_path / path).read_bytes()).symbols for path in parse}, set(deleted))
     fresh = [s for path in sorted(new.files) for s in SourceParser().parse(path, (tmp_path / path).read_bytes()).symbols]
     assert updated == fresh
+
+
+def test_refresh_hashes_only_affected_leaf(tmp_path, monkeypatch):
+    import smriti.watch as watch
+    from smriti.merkle import RepositoryScanner
+    (tmp_path / "a.py").write_text("old")
+    (tmp_path / "b.py").write_text("same")
+    scanner = RepositoryScanner()
+    old = scanner.scan(tmp_path)
+    (tmp_path / "a.py").write_text("new")
+    original = watch.hash_file
+    reads = []
+    def tracked(path):
+        reads.append(path.name)
+        return original(path)
+    monkeypatch.setattr(watch, "hash_file", tracked)
+    refreshed = watch.refresh_snapshot(tmp_path, old, ["a.py"])
+    assert reads == ["a.py"]
+    assert refreshed == scanner.scan(tmp_path)

@@ -157,3 +157,79 @@ def apply_file_symbols(current: list[Symbol], replacements: dict[str, list[Symbo
     result = [symbol for symbol in current if symbol.path not in changed_paths]
     result.extend(symbol for symbols in replacements.values() for symbol in symbols)
     return sorted(result, key=lambda s: (s.path, s.start_byte, s.qualname))
+
+
+from smriti.merkle import MerkleSnapshot, hash_file, hash_content, hash_directory
+from pathlib import PurePosixPath
+
+
+def refresh_snapshot(root: str | Path, old: MerkleSnapshot, paths: list[str]) -> MerkleSnapshot:
+    """Read only affected leaves, rebuilding their ancestor hashes bottom-up."""
+    import os
+    root = Path(root).resolve()
+    snapshot = MerkleSnapshot(dict(old.files), dict(old.directories))
+    affected = {""}
+    for name in paths:
+        relative = PurePosixPath(name)
+        if relative.is_absolute() or ".." in relative.parts or not relative.parts:
+            raise ValueError("Expected repository-relative file path")
+        path = root / name
+        if not path.parent.resolve().is_relative_to(root):
+            raise ValueError("Path traverses an external symlink")
+        if path.is_symlink():
+            snapshot.files[name] = hash_content(b"symlink\0" + os.fsencode(os.readlink(path)))
+        elif path.is_file():
+            snapshot.files[name] = hash_file(path)
+        else:
+            snapshot.files.pop(name, None)
+        for parent in relative.parents:
+            affected.add("" if str(parent) == "." else parent.as_posix())
+    for directory in sorted(affected, key=lambda p: (p.count("/") + bool(p), p), reverse=True):
+        target = root / directory
+        if directory and not target.is_dir():
+            snapshot.directories.pop(directory, None)
+            continue
+        children = {}
+        for path, digest in snapshot.files.items():
+            parent = PurePosixPath(path).parent.as_posix()
+            if ("" if parent == "." else parent) == directory:
+                children[PurePosixPath(path).name] = digest
+        for path, digest in snapshot.directories.items():
+            if not path or path == directory:
+                continue
+            parent = PurePosixPath(path).parent.as_posix()
+            if ("" if parent == "." else parent) == directory:
+                children[PurePosixPath(path).name] = digest
+        snapshot.directories[directory] = hash_directory(children)
+    return snapshot
+
+
+def measure_incremental_update(root: str | Path, path: str, repeats: int = 31) -> dict:
+    import platform
+    import os
+    import statistics
+    from time import perf_counter
+    from smriti.parse import SourceParser
+    from smriti.merkle import RepositoryScanner
+    root = Path(root)
+    source = (root / path).read_bytes()
+    scanner, parser = RepositoryScanner(), SourceParser()
+    snapshot = scanner.scan(root)
+    parser.parse(path, source)
+    timings = []
+    try:
+        for index in range(repeats):
+            edited = source.replace(b"return 0", f"return {index + 1}".encode())
+            (root / path).write_bytes(edited)
+            started = perf_counter()
+            snapshot = refresh_snapshot(root, snapshot, [path])
+            parser.parse(path, edited)
+            timings.append((perf_counter() - started) * 1000)
+            if snapshot != scanner.scan(root):
+                raise AssertionError("Incremental and fresh snapshots differ")
+    finally:
+        (root / path).write_bytes(source)
+    return {"files": len(snapshot.files), "repeats": repeats, "p50_ms": statistics.median(timings),
+        "p95_ms": sorted(timings)[max(0, int(len(timings) * .95) - 1)],
+        "cpu": platform.processor(), "cpu_count": os.cpu_count(), "os": platform.platform(),
+        "python": platform.python_version(), "samples_ms": timings}
