@@ -146,3 +146,15 @@ class MemoryStore:
             return []
         return [f for f in self.recall() if f.id != fact.id and f.subject == fact.subject and f.text != fact.text]
 # P09.17
+    @staticmethod
+    def relatedness(left, right, left_vector, right_vector):
+        if len(left_vector) != len(right_vector) or not left_vector:
+            raise ValueError("Embedding dimensions must match and be nonempty")
+        if not all(math.isfinite(x) for x in (*left_vector, *right_vector)):
+            raise ValueError("Embeddings must be finite")
+        norm = math.sqrt(sum(x*x for x in left_vector) * sum(x*x for x in right_vector))
+        cosine = sum(x*y for x, y in zip(left_vector, right_vector)) / norm if norm else 0.0
+        a, b = {x.symbol_id for x in left.anchors}, {x.symbol_id for x in right.anchors}
+        overlap = len(a & b) / len(a | b) if a | b else 0.0
+        return 0.7 * max(0.0, cosine) + 0.3 * overlap
+# P09.18
