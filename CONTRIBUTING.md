@@ -238,7 +238,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P06.22 | Persist and reload HNSW graph | — |
 | ❌ Pending | P06.23 | Validate graph invariants after updates | — |
 | ❌ Pending | P06.24 | Compare recall at 10 against exact search | — |
-| ❌ Pending | P06.25 | Compare quality and throughput with hnswlib | — |
+| ✅ Done | P06.25 | Compare quality and throughput with hnswlib | bench/vector/hnsw_reference.py; bench/vector/hnsw_reference.json; real exact-oracle recall and throughput |
 | ❌ Pending | P06.26 | Measure memory and CPU query latency | — |
 
 ### P07 — Hybrid retrieval and graph ranking
@@ -255,7 +255,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P07.06 | Include resolution confidence in weights | smriti/rank/pagerank.py; executable assertions passed |
 | ✅ Done | P07.07 | Build sparse adjacency representation | smriti/rank/pagerank.py; executable assertions passed |
 | ✅ Done | P07.08 | Normalize transitions and handle dangling nodes | smriti/rank/pagerank.py; executable assertions passed |
-| ❌ Pending | P07.09 | Seed personalized restart distribution | — |
+| ✅ Done | P07.09 | Seed personalized restart distribution | smriti/rank/pagerank.py; executable assertions passed |
 | ❌ Pending | P07.10 | Implement PageRank power iteration | — |
 | ❌ Pending | P07.11 | Specify convergence and iteration limits | — |
 | ❌ Pending | P07.12 | Test ranking on a hand-computed graph | — |
@@ -437,7 +437,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P13.11 | Implement embedding-only baseline | — |
 | ❌ Pending | P13.12 | Implement Aider-style repo-map baseline | — |
 | ✅ Done | P13.13 | Compute file recall at k | bench/swebench/metrics.py; independent duplicate and empty-gold checks passed |
-| ❌ Pending | P13.14 | Compute function recall at k | — |
+| ✅ Done | P13.14 | Compute function recall at k | bench/swebench/function_metrics.py; duplicate missing empty and negative-k tests passed |
 | ❌ Pending | P13.15 | Compute packed budget recall at 4k tokens | — |
 | ❌ Pending | P13.16 | Compute packed budget recall at 8k tokens | — |
 | ❌ Pending | P13.17 | Compute packed budget recall at 16k tokens | — |
