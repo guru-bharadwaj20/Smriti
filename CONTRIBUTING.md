@@ -116,7 +116,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P02.17 | Diff old and new symbol sets | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ✅ Done | P02.18 | Preserve symbol IDs for verified renames | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ✅ Done | P02.19 | Remove dangling graph references after deletion | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
-| ❌ Pending | P02.20 | Update postings and vectors for changed symbols | — |
+| ✅ Done | P02.20 | Update postings and vectors for changed symbols | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ❌ Pending | P02.21 | Commit index changes atomically | — |
 | ❌ Pending | P02.22 | Recover from interrupted indexing | — |
 | ❌ Pending | P02.23 | Verify incremental and fresh-index equivalence | — |

@@ -133,3 +133,18 @@ def preserve_symbol_ids(old: list[Symbol], new: list[Symbol]) -> tuple[list[Symb
 def prune_edges(edges: list[Edge], removed_ids: set[str]) -> list[Edge]:
     """Remove both incoming and outgoing references to deleted symbols."""
     return [edge for edge in edges if edge.source not in removed_ids and edge.target not in removed_ids]
+
+
+def update_search_indexes(delta: SymbolDelta, *, lexical_upsert, lexical_delete,
+                          vector_upsert, vector_delete) -> None:
+    """Run both index adapters for exactly the affected IDs.
+
+    The caller must stage these callbacks in its atomic generation transaction.
+    Identical symbols are never embedded again. A callback failure propagates.
+    """
+    for symbol in delta.removed:
+        lexical_delete(symbol.id)
+        vector_delete(symbol.id)
+    for symbol in [*delta.added, *delta.changed]:
+        lexical_upsert(symbol)
+        vector_upsert(symbol)
