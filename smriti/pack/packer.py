@@ -17,3 +17,6 @@ def name_text(symbol):
 
 def signature_text(symbol):
     return name_text(symbol)+symbol.signature+'\n'+((symbol.docstring+'\n') if symbol.docstring else '')
+
+def body_text(symbol):
+    return name_text(symbol)+'```python\n'+symbol.body+'\n```\n'

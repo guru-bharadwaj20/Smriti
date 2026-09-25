@@ -83,6 +83,14 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual((f.freshness_reason, f.triggering_commit), ("anchor_changed", "deadbeef"))
         store.close()
 
+    def test_multiple_anchor_policy(self):
+        from smriti.memory import Anchor
+        store = MemoryStore(":memory:")
+        f = store.remember("rule", anchors=[Anchor("a", "1"), Anchor("b", "2")])
+        self.assertEqual(store.anchor_states(f.id, {"a": "1", "b": "3"}), {"a": "fresh", "b": "stale"})
+        self.assertEqual(store.refresh({"a": "1"})[0].freshness, "orphaned")
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"
