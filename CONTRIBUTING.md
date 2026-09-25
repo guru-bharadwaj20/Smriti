@@ -263,7 +263,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P07.14 | Include associated tests and configuration | — |
 | ❌ Pending | P07.15 | Cache ranking with index-version keys | — |
 | ❌ Pending | P07.16 | Invalidate cache after index updates | — |
-| ❌ Pending | P07.17 | Tune fusion weights on validation data only | — |
+| ✅ Done | P07.17 | Tune fusion weights on validation data only | scripts/fusion_tuning.py; bench/fusion/validation.json; validation-only grid search, separate held-out IDs |
 | ❌ Pending | P07.18 | Emit per-candidate selection explanations | — |
 
 ### P08 — Token-budgeted context packing
