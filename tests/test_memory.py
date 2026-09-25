@@ -107,6 +107,16 @@ class MemoryTests(unittest.TestCase):
         self.assertFalse(f.to_dict()["requires_revalidation"])
         store.close()
 
+    def test_revalidation_audit(self):
+        from smriti.memory import Anchor
+        store = MemoryStore(":memory:")
+        f = store.remember("rule", anchors=[Anchor("x", "old")])
+        store.refresh({"x": "new"})
+        self.assertEqual(store.revalidate(f.id, {"x": "new"}).freshness, "fresh")
+        self.assertEqual(store.audit(f.id)[0]["before"].anchors[0].content_hash, "old")
+        self.assertEqual(len(store.audit(f.id)), 2)
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"

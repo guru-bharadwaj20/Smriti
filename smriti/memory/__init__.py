@@ -41,6 +41,7 @@ class MemoryStore:
         self.db = sqlite3.connect(str(db_path))
         self.db.execute("CREATE TABLE IF NOT EXISTS facts (id TEXT PRIMARY KEY, payload TEXT NOT NULL)")
         self.db.execute('CREATE TABLE IF NOT EXISTS fact_anchors (fact_id TEXT, symbol_id TEXT, content_hash TEXT, PRIMARY KEY (fact_id, symbol_id))')
+        self.db.execute('CREATE TABLE IF NOT EXISTS fact_audit (seq INTEGER PRIMARY KEY, fact_id TEXT, before_payload TEXT, after_payload TEXT)')
         self.db.commit()
 
     def close(self):
@@ -87,6 +88,8 @@ class MemoryStore:
 # P09.08
     def _save(self, fact):
         with self.db:
+            previous = self.db.execute("SELECT payload FROM facts WHERE id=?", (fact.id,)).fetchone()
+            self.db.execute("INSERT INTO fact_audit(fact_id,before_payload,after_payload) VALUES (?,?,?)", (fact.id, previous[0] if previous else None, json.dumps(asdict(fact))))
             self.db.execute("UPDATE facts SET payload=? WHERE id=?", (json.dumps(asdict(fact)), fact.id))
         return fact
 
@@ -121,3 +124,15 @@ class MemoryStore:
 # P09.14
 
 # P09.15
+    def revalidate(self, fact_id, symbols, *, commit=None):
+        fact = next((f for f in self.recall() if f.id == fact_id), None)
+        if fact is None:
+            raise KeyError(fact_id)
+        if any(a.symbol_id not in symbols for a in fact.anchors):
+            raise ValueError("Cannot revalidate a deleted anchor")
+        anchors = tuple(Anchor(a.symbol_id, symbols[a.symbol_id]) for a in fact.anchors)
+        return self._save(replace(fact, anchors=anchors, freshness="fresh", freshness_reason="revalidated", triggering_commit=commit))
+
+    def audit(self, fact_id):
+        return [{"before": self._decode(before) if before else None, "after": self._decode(after)} for before, after in self.db.execute("SELECT before_payload,after_payload FROM fact_audit WHERE fact_id=? ORDER BY seq", (fact_id,))]
+# P09.16
