@@ -202,7 +202,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P05.14 | Implement variable-byte encoding | smriti/lexical/codec.py; executable assertions passed |
 | ✅ Done | P05.15 | Implement posting decoding | smriti/lexical/codec.py; executable assertions passed |
 | ✅ Done | P05.16 | Add symbols incrementally | smriti/lexical/index.py; executable assertions passed |
-| ❌ Pending | P05.17 | Remove symbols and update statistics | — |
+| ✅ Done | P05.17 | Remove symbols and update statistics | tests/test_lexical_index.py; executable assertions passed |
 | ❌ Pending | P05.18 | Persist and reload lexical index | — |
 | ❌ Pending | P05.19 | Define deterministic tie breaking | — |
 | ❌ Pending | P05.20 | Validate scoring against hand-computed examples | — |
@@ -278,7 +278,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P08.04 | Define full-body representation | smriti/pack/packer.py; executable assertions passed |
 | ✅ Done | P08.05 | Integrate chosen model tokenizer | smriti/pack/tokens.py; executable assertions passed |
 | ✅ Done | P08.06 | Count rendering overhead and metadata tokens | smriti/pack/packer.py; executable assertions passed |
-| ❌ Pending | P08.07 | Reserve budget for memory and response framing | — |
+| ✅ Done | P08.07 | Reserve budget for memory and response framing | smriti/pack/packer.py; executable assertions passed |
 | ❌ Pending | P08.08 | Assign values to representation levels | — |
 | ❌ Pending | P08.09 | Implement multiple-choice knapsack dynamic program | — |
 | ❌ Pending | P08.10 | Implement bucketed budget option | — |
@@ -316,7 +316,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P09.13 | Define policy for memories with multiple anchors | smriti\memory\__init__.py; P09.13 regression in tests\test_memory.py |
 | ✅ Done | P09.14 | Rank stale facts lower during recall | smriti\memory\__init__.py; P09.14 regression in tests\test_memory.py |
 | ✅ Done | P09.15 | Show freshness state in recall results | smriti\memory\__init__.py; P09.15 regression in tests\test_memory.py |
-| ❌ Pending | P09.16 | Handle revalidation without losing history | — |
+| ✅ Done | P09.16 | Handle revalidation without losing history | smriti\memory\__init__.py; P09.16 regression in tests\test_memory.py |
 | ❌ Pending | P09.17 | Detect contradiction candidates by subject | — |
 | ❌ Pending | P09.18 | Combine embedding similarity with anchor overlap | — |
 | ❌ Pending | P09.19 | Implement source-priority conflict rules | — |
