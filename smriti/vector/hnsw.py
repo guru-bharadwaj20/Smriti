@@ -82,3 +82,8 @@ class HNSWIndex:
 
     def remove(self,id):
         if id in self.vectors: self.deleted.add(id)
+
+    def rebuild(self):
+        live={id:v for id,v in self.vectors.items() if id not in self.deleted}
+        self.vectors={}; self.levels={}; self.graph={}; self.entry=None; self.deleted=set(); self.random=random.Random(self.seed)
+        for id in sorted(live): self.add(id,live[id])

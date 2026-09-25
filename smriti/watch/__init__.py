@@ -128,3 +128,8 @@ def preserve_symbol_ids(old: list[Symbol], new: list[Symbol]) -> tuple[list[Symb
             mapping[targets[0].id] = sources[0].id
     renamed = [replace(s, id=mapping.get(s.id, s.id), parent_id=mapping.get(s.parent_id, s.parent_id)) for s in new]
     return renamed, mapping
+
+
+def prune_edges(edges: list[Edge], removed_ids: set[str]) -> list[Edge]:
+    """Remove both incoming and outgoing references to deleted symbols."""
+    return [edge for edge in edges if edge.source not in removed_ids and edge.target not in removed_ids]

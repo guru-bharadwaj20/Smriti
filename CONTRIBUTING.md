@@ -115,7 +115,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P02.16 | Schedule affected-file indexing jobs | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ✅ Done | P02.17 | Diff old and new symbol sets | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ✅ Done | P02.18 | Preserve symbol IDs for verified renames | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
-| ❌ Pending | P02.19 | Remove dangling graph references after deletion | — |
+| ✅ Done | P02.19 | Remove dangling graph references after deletion | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ❌ Pending | P02.20 | Update postings and vectors for changed symbols | — |
 | ❌ Pending | P02.21 | Commit index changes atomically | — |
 | ❌ Pending | P02.22 | Recover from interrupted indexing | — |
@@ -233,7 +233,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P06.17 | Implement efConstruction configuration | docs/retrieval.md; executable assertions passed |
 | ✅ Done | P06.18 | Implement efSearch configuration | smriti/vector/hnsw.py; executable assertions passed |
 | ✅ Done | P06.19 | Exclude tombstoned vectors from results | smriti/vector/hnsw.py; executable assertions passed |
-| ❌ Pending | P06.20 | Implement deletion repair or rebuild strategy | — |
+| ✅ Done | P06.20 | Implement deletion repair or rebuild strategy | smriti/vector/hnsw.py; executable assertions passed |
 | ❌ Pending | P06.21 | Update embeddings after source edits | — |
 | ❌ Pending | P06.22 | Persist and reload HNSW graph | — |
 | ❌ Pending | P06.23 | Validate graph invariants after updates | — |
@@ -279,7 +279,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P08.05 | Integrate chosen model tokenizer | smriti/pack/tokens.py; executable assertions passed |
 | ✅ Done | P08.06 | Count rendering overhead and metadata tokens | smriti/pack/packer.py; executable assertions passed |
 | ✅ Done | P08.07 | Reserve budget for memory and response framing | smriti/pack/packer.py; executable assertions passed |
-| ❌ Pending | P08.08 | Assign values to representation levels | — |
+| ✅ Done | P08.08 | Assign values to representation levels | smriti/pack/packer.py; executable assertions passed |
 | ❌ Pending | P08.09 | Implement multiple-choice knapsack dynamic program | — |
 | ❌ Pending | P08.10 | Implement bucketed budget option | — |
 | ❌ Pending | P08.11 | Implement greedy marginal-value baseline | — |

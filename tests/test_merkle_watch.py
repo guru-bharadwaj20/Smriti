@@ -66,3 +66,10 @@ def test_verified_rename_preserves_id():
     assert mapping[new[1].id] == old[1].id
     different = parse_file("a.py", "def third(value):\n    return value + 2\n").symbols
     assert preserve_symbol_ids(old, different)[1] == {}
+
+
+def test_graph_deletion_prunes_both_directions():
+    from smriti.watch import prune_edges
+    from smriti.models import Edge
+    edges = [Edge("a", "b", "calls"), Edge("b", "c", "calls"), Edge("c", "a", "calls")]
+    assert prune_edges(edges, {"b"}) == [edges[2]]
