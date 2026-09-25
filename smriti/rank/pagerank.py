@@ -16,3 +16,9 @@ def adjacency(nodes,edges):
 
 def transitions(graph):
     return {node:{other:weight/sum(links.values()) for other,weight in links.items()} if links else {} for node,links in graph.items()}
+
+def restart_distribution(nodes,seeds):
+    nodes=list(nodes)
+    values={id:max(0.0,seeds.get(id,0.0)) for id in nodes}
+    total=sum(values.values())
+    return {id:value/total if total else 1/len(nodes) for id,value in values.items()}
