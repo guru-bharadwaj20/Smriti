@@ -199,7 +199,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P05.11 | Implement BM25 scoring formula | smriti/lexical/index.py; executable assertions passed |
 | ✅ Done | P05.12 | Implement BM25F field weighting | smriti/lexical/index.py; executable assertions passed |
 | ✅ Done | P05.13 | Encode posting deltas | smriti/lexical/codec.py; executable assertions passed |
-| ❌ Pending | P05.14 | Implement variable-byte encoding | — |
+| ✅ Done | P05.14 | Implement variable-byte encoding | smriti/lexical/codec.py; executable assertions passed |
 | ❌ Pending | P05.15 | Implement posting decoding | — |
 | ❌ Pending | P05.16 | Add symbols incrementally | — |
 | ❌ Pending | P05.17 | Remove symbols and update statistics | — |
