@@ -53,3 +53,16 @@ def test_symbol_delta_detects_edits_and_deletion():
     assert [s.name for s in delta.removed] == ["b"]
     assert {s.name for s in delta.changed} == {"a", "a"}
     assert not delta.added
+
+
+def test_verified_rename_preserves_id():
+    from smriti.watch import preserve_symbol_ids
+    from smriti.parse import parse_file
+    old = parse_file("a.py", "def first(value):\n    return value + 1\n").symbols
+    new = parse_file("a.py", "def second(value):\n    return value + 1\n").symbols
+    renamed, mapping = preserve_symbol_ids(old, new)
+    assert renamed[1].id == old[1].id
+    assert renamed[1].name == "second"
+    assert mapping[new[1].id] == old[1].id
+    different = parse_file("a.py", "def third(value):\n    return value + 2\n").symbols
+    assert preserve_symbol_ids(old, different)[1] == {}
