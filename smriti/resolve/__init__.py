@@ -32,6 +32,8 @@ class Resolver:
             elif parent and self.symbols[parent].kind == "class":
                 parent = self.parents.get(parent)
             return self.resolve_name(name, parent, visited) if parent else None
+        if name.startswith(("self.", "cls.")) and self.symbols[scope].kind == "method":
+            return self.children.get(self.parents[scope], {}).get(name.split(".", 1)[1])
         binding = self.bindings.get((scope, name), "@missing")
         if binding is None:
             return None
@@ -145,3 +147,7 @@ class Resolver:
                 return "external:" + ".".join(part for part in [declaration["module"], declaration["name"], *tail] if part)
             owner = self.parents.get(owner)
         return "dynamic:" + scope + ":" + name
+
+
+    def own_method(self, class_id: str, name: str) -> str | None:
+        return self.children.get(class_id, {}).get(name)
