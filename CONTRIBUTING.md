@@ -280,7 +280,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P08.06 | Count rendering overhead and metadata tokens | smriti/pack/packer.py; executable assertions passed |
 | ✅ Done | P08.07 | Reserve budget for memory and response framing | smriti/pack/packer.py; executable assertions passed |
 | ✅ Done | P08.08 | Assign values to representation levels | smriti/pack/packer.py; executable assertions passed |
-| ❌ Pending | P08.09 | Implement multiple-choice knapsack dynamic program | — |
+| ✅ Done | P08.09 | Implement multiple-choice knapsack dynamic program | smriti/pack/packer.py; executable assertions passed |
 | ❌ Pending | P08.10 | Implement bucketed budget option | — |
 | ❌ Pending | P08.11 | Implement greedy marginal-value baseline | — |
 | ❌ Pending | P08.12 | Require minimum class context for methods | — |
