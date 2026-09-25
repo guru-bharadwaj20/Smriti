@@ -106,7 +106,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P02.07 | Handle symlinks without recursive traversal | smriti/merkle; pytest tests/test_merkle.py passed |
 | ✅ Done | P02.08 | Diff old and new trees by subtree hash | smriti/merkle; pytest tests/test_merkle.py passed |
 | ✅ Done | P02.09 | Detect created files | smriti/merkle; pytest tests/test_merkle.py passed |
-| ❌ Pending | P02.10 | Detect modified files | — |
+| ✅ Done | P02.10 | Detect modified files | smriti/merkle; pytest tests/test_merkle.py passed |
 | ❌ Pending | P02.11 | Detect deleted files | — |
 | ❌ Pending | P02.12 | Detect unchanged-content file moves | — |
 | ✅ Done | P02.13 | Connect filesystem watcher | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
@@ -251,7 +251,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P07.02 | Retrieve lexical candidates | smriti/rank/hybrid.py; executable assertions passed |
 | ✅ Done | P07.03 | Retrieve vector candidates | smriti/rank/hybrid.py; executable assertions passed |
 | ✅ Done | P07.04 | Implement reciprocal rank fusion | smriti/rank/hybrid.py; executable assertions passed |
-| ❌ Pending | P07.05 | Define graph edge type weights | — |
+| ✅ Done | P07.05 | Define graph edge type weights | smriti/rank/pagerank.py; executable assertions passed |
 | ❌ Pending | P07.06 | Include resolution confidence in weights | — |
 | ❌ Pending | P07.07 | Build sparse adjacency representation | — |
 | ❌ Pending | P07.08 | Normalize transitions and handle dangling nodes | — |
@@ -392,7 +392,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
 | ✅ Done | P12.01 | Create Typer CLI entry point | smriti/server/cli.py; CLI version test passed |
-| ❌ Pending | P12.02 | Implement index command | — |
+| ✅ Done | P12.02 | Implement index command | smriti/server/service.py; create/restart/update/delete integration test passed |
 | ❌ Pending | P12.03 | Implement index status command | — |
 | ❌ Pending | P12.04 | Implement context command with budget | — |
 | ❌ Pending | P12.05 | Implement find-symbol command | — |
