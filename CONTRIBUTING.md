@@ -335,7 +335,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P10.04 | Represent open-ended intervals | smriti\memory\temporal.py; P10.04 regression in tests\test_memory_temporal.py |
 | ✅ Done | P10.05 | Query facts valid at a historical time | smriti\memory\temporal.py; P10.05 regression in tests\test_memory_temporal.py |
 | ✅ Done | P10.06 | Query beliefs as of transaction time | smriti\memory\temporal.py; P10.06 regression in tests\test_memory_temporal.py |
-| ❌ Pending | P10.07 | Record corrections as additive versions | — |
+| ✅ Done | P10.07 | Record corrections as additive versions | smriti\memory\temporal.py; P10.07 regression in tests\test_memory_temporal.py |
 | ❌ Pending | P10.08 | Reject invalid temporal intervals | — |
 | ✅ Done | P10.09 | Define canonical operation serialization | smriti\memory\operations.py; P10.09 regression in tests\test_memory_operations.py |
 | ✅ Done | P10.10 | Hash operations for content addressing | smriti\memory\operations.py; P10.10 regression in tests\test_memory_operations.py |

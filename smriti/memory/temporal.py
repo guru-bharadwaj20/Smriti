@@ -55,3 +55,24 @@ class Timeline:
         as_of = timestamp(as_of)
         return [v for v in self.valid_at(valid_at) if v.transaction.contains(as_of)]
 # P10.06
+    def correct(self, fact_id, payload, valid, recorded_at):
+        """Correct the overlap, retaining both old beliefs and unaffected times."""
+        recorded_at = timestamp(recorded_at)
+        additions = []
+        rows = []
+        for old in self.rows:
+            overlap = (old.valid.end is None or valid.start < old.valid.end) and (valid.end is None or old.valid.start < valid.end)
+            if old.fact_id != fact_id or old.transaction.end is not None or not overlap:
+                rows.append(old)
+                continue
+            if recorded_at <= old.transaction.start:
+                raise ValueError("Corrections must advance transaction time")
+            rows.append(replace(old, transaction=TransactionInterval(old.transaction.start, recorded_at)))
+            if old.valid.start < valid.start:
+                additions.append(TemporalVersion(fact_id, dict(old.payload), ValidInterval(old.valid.start, valid.start), TransactionInterval(recorded_at)))
+            if valid.end is not None and (old.valid.end is None or valid.end < old.valid.end):
+                additions.append(TemporalVersion(fact_id, dict(old.payload), ValidInterval(valid.end, old.valid.end), TransactionInterval(recorded_at)))
+        additions.append(TemporalVersion(fact_id, dict(payload), valid, TransactionInterval(recorded_at)))
+        self.rows = rows + additions
+        return additions[-1]
+# P10.07
