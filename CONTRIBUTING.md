@@ -156,7 +156,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
-| ❌ Pending | P04.01 | Build scope parent links | — |
+| ✅ Done | P04.01 | Build scope parent links | smriti/resolve; pytest tests/test_resolve.py passed |
 | ❌ Pending | P04.02 | Resolve local bindings | — |
 | ❌ Pending | P04.03 | Resolve enclosing-scope bindings | — |
 | ❌ Pending | P04.04 | Resolve module-level names | — |
@@ -216,7 +216,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | --- | --- | --- | --- |
 | ✅ Done | P06.01 | Select and record embedding model license | docs/embeddings.md; executable assertions passed |
 | ✅ Done | P06.02 | Pin model artifact and checksum | smriti/vector/model_manifest.json; smriti/vector/download.py; executable assertions passed |
-| ❌ Pending | P06.03 | Configure ONNX CPU inference | — |
+| ✅ Done | P06.03 | Configure ONNX CPU inference | smriti/vector/embedding.py; executable assertions passed |
 | ❌ Pending | P06.04 | Evaluate int8 embedding quality | — |
 | ❌ Pending | P06.05 | Batch symbol embedding requests | — |
 | ❌ Pending | P06.06 | Cache embeddings by content and model version | — |
@@ -312,7 +312,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P09.09 | Mark changed anchors possibly stale | smriti\memory\__init__.py; P09.09 regression in tests\test_memory.py |
 | ✅ Done | P09.10 | Mark deleted anchors orphaned | smriti\memory\__init__.py; P09.10 regression in tests\test_memory.py |
 | ✅ Done | P09.11 | Follow verified symbol renames | smriti\memory\__init__.py; P09.11 regression in tests\test_memory.py |
-| ❌ Pending | P09.12 | Record freshness reason and triggering commit | — |
+| ✅ Done | P09.12 | Record freshness reason and triggering commit | smriti\memory\__init__.py; P09.12 regression in tests\test_memory.py |
 | ❌ Pending | P09.13 | Define policy for memories with multiple anchors | — |
 | ❌ Pending | P09.14 | Rank stale facts lower during recall | — |
 | ❌ Pending | P09.15 | Show freshness state in recall results | — |
@@ -335,7 +335,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P10.04 | Represent open-ended intervals | smriti\memory\temporal.py; P10.04 regression in tests\test_memory_temporal.py |
 | ✅ Done | P10.05 | Query facts valid at a historical time | smriti\memory\temporal.py; P10.05 regression in tests\test_memory_temporal.py |
 | ✅ Done | P10.06 | Query beliefs as of transaction time | smriti\memory\temporal.py; P10.06 regression in tests\test_memory_temporal.py |
-| ❌ Pending | P10.07 | Record corrections as additive versions | — |
+| ✅ Done | P10.07 | Record corrections as additive versions | smriti\memory\temporal.py; P10.07 regression in tests\test_memory_temporal.py |
 | ❌ Pending | P10.08 | Reject invalid temporal intervals | — |
 | ✅ Done | P10.09 | Define canonical operation serialization | smriti\memory\operations.py; P10.09 regression in tests\test_memory_operations.py |
 | ✅ Done | P10.10 | Hash operations for content addressing | smriti\memory\operations.py; P10.10 regression in tests\test_memory_operations.py |

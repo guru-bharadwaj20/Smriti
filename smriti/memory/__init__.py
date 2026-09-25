@@ -23,6 +23,8 @@ class Fact:
     confidence: float = 1.0
     anchors: tuple[Anchor, ...] = ()
     freshness: str = 'fresh'
+    freshness_reason: str | None = None
+    triggering_commit: str | None = None
 
     @property
     def scope(self):
@@ -84,7 +86,7 @@ class MemoryStore:
             self.db.execute("UPDATE facts SET payload=? WHERE id=?", (json.dumps(asdict(fact)), fact.id))
         return fact
 
-    def refresh(self, symbols, *, renames=None):
+    def refresh(self, symbols, *, renames=None, commit=None):
         """symbols maps stable symbol IDs to current content hashes."""
         renames = renames or {}
         changes = []
@@ -94,12 +96,14 @@ class MemoryStore:
                 fact = self._save(replace(fact, anchors=moved))
                 changes.append(fact)
             if any(a.symbol_id not in symbols for a in fact.anchors):
-                changes.append(self._save(replace(fact, freshness='orphaned')))
+                changes.append(self._save(replace(fact, freshness='orphaned', freshness_reason='anchor_deleted', triggering_commit=commit)))
             elif any(a.symbol_id in symbols and symbols[a.symbol_id] != a.content_hash for a in fact.anchors):
-                changes.append(self._save(replace(fact, freshness="stale")))
+                changes.append(self._save(replace(fact, freshness="stale", freshness_reason="anchor_changed", triggering_commit=commit)))
         return changes
 # P09.09
 
 # P09.10
 
 # P09.11
+
+# P09.12

@@ -49,3 +49,18 @@ class TemporalTests(unittest.TestCase):
         timeline = Timeline([version])
         self.assertEqual(timeline.query(a, a), [])
         self.assertEqual(timeline.query(a, b), [version])
+
+    def test_additive_correction(self):
+        from smriti.memory.temporal import Timeline, TemporalVersion, TransactionInterval
+        a = datetime(2025, 1, 1, tzinfo=timezone.utc)
+        b = datetime(2025, 2, 1, tzinfo=timezone.utc)
+        c = datetime(2025, 3, 1, tzinfo=timezone.utc)
+        d = datetime(2025, 4, 1, tzinfo=timezone.utc)
+        old = TemporalVersion("x", {"text": "old"}, ValidInterval(a), TransactionInterval(a))
+        timeline = Timeline([old])
+        timeline.correct("x", {"text": "new"}, ValidInterval(b, c), d)
+        self.assertEqual(timeline.query(b, c)[0].payload["text"], "old")
+        self.assertEqual(timeline.query(b, d)[0].payload["text"], "new")
+        self.assertEqual(timeline.query(a, d)[0].payload["text"], "old")
+        self.assertEqual(timeline.query(c, d)[0].payload["text"], "old")
+        self.assertEqual(len(timeline.rows), 4)

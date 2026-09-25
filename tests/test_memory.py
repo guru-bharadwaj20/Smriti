@@ -75,6 +75,14 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual(store.recall()[0].anchors[0].symbol_id, "new")
         store.close()
 
+    def test_freshness_reason(self):
+        from smriti.memory import Anchor
+        store = MemoryStore(":memory:")
+        store.remember("rule", anchors=[Anchor("x", "old")])
+        f = store.refresh({"x": "new"}, commit="deadbeef")[0]
+        self.assertEqual((f.freshness_reason, f.triggering_commit), ("anchor_changed", "deadbeef"))
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"
