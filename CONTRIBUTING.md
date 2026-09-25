@@ -204,7 +204,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P05.16 | Add symbols incrementally | smriti/lexical/index.py; executable assertions passed |
 | ✅ Done | P05.17 | Remove symbols and update statistics | tests/test_lexical_index.py; executable assertions passed |
 | ✅ Done | P05.18 | Persist and reload lexical index | smriti/lexical/index.py; executable assertions passed |
-| ❌ Pending | P05.19 | Define deterministic tie breaking | — |
+| ✅ Done | P05.19 | Define deterministic tie breaking | tests/test_lexical_index.py; executable assertions passed |
 | ❌ Pending | P05.20 | Validate scoring against hand-computed examples | — |
 | ❌ Pending | P05.21 | Benchmark lexical query time and storage | — |
 
