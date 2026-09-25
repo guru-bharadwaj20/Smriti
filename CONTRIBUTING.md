@@ -228,7 +228,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P06.12 | Implement upper-layer greedy descent | smriti/vector/hnsw.py; executable assertions passed |
 | ✅ Done | P06.13 | Implement candidate queue search | smriti/vector/hnsw.py; executable assertions passed |
 | ✅ Done | P06.14 | Implement neighbor selection heuristic | smriti/vector/hnsw.py; executable assertions passed |
-| ❌ Pending | P06.15 | Implement bidirectional graph insertion | — |
+| ✅ Done | P06.15 | Implement bidirectional graph insertion | smriti/vector/hnsw.py; executable assertions passed |
 | ❌ Pending | P06.16 | Enforce neighbor count limits | — |
 | ❌ Pending | P06.17 | Implement efConstruction configuration | — |
 | ❌ Pending | P06.18 | Implement efSearch configuration | — |

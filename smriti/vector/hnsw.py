@@ -46,3 +46,21 @@ class HNSWIndex:
             else: rejected.append(id)
             if len(selected)==limit: return selected
         return (selected+rejected)[:limit]
+
+    def add(self,id,vector):
+        value=normalize(vector)
+        if self.vectors and len(value)!=len(next(iter(self.vectors.values()))): raise ValueError('dimension mismatch')
+        if id in self.vectors:
+            self.vectors[id]=value; self.deleted.discard(id); self.rebuild(); return
+        level=self.random_level(); self.vectors[id]=value; self.levels[id]=level
+        self.graph[id]={layer:set() for layer in range(level+1)}
+        if self.entry is None: self.entry=id; return
+        entry=self.entry; max_level=self.levels[entry]
+        for layer in range(max_level,level,-1): entry=self._greedy(value,entry,layer)
+        for layer in range(min(level,max_level),-1,-1):
+            candidates=self._layer_search(value,[entry],self.ef_construction,layer)
+            neighbors=self._select(value,candidates,self.m)
+            for other in neighbors:
+                self.graph[id][layer].add(other); self.graph[other][layer].add(id)
+            if candidates: entry=candidates[0][1]
+        if level>max_level: self.entry=id
