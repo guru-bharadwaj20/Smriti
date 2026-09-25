@@ -62,3 +62,10 @@ def test_inheritance_declarations():
     result = parse_file("a.py", "class A(Base, pkg.Other):\n    pass\n")
     assert [base["name"] for base in result.inheritance] == ["Base", "pkg.Other"]
     assert all(base["class"] == result.symbols[1].id for base in result.inheritance)
+
+
+def test_nested_and_comprehension_scopes():
+    result = parse_file("a.py", "def outer():\n    def inner():\n        return [x for x in range(3)]\n    return inner()\n")
+    assert result.symbols[2].parent_id == result.symbols[1].id
+    assert result.symbols[2].qualname == "a.outer.inner"
+    assert result.comprehensions[0]["parent"] == result.symbols[2].id
