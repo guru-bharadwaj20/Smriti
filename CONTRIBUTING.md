@@ -197,7 +197,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P05.09 | Maintain document frequency counts | smriti/lexical/index.py; executable assertions passed |
 | ✅ Done | P05.10 | Maintain document lengths and field averages | smriti/lexical/index.py; executable assertions passed |
 | ✅ Done | P05.11 | Implement BM25 scoring formula | smriti/lexical/index.py; executable assertions passed |
-| ❌ Pending | P05.12 | Implement BM25F field weighting | — |
+| ✅ Done | P05.12 | Implement BM25F field weighting | smriti/lexical/index.py; executable assertions passed |
 | ❌ Pending | P05.13 | Encode posting deltas | — |
 | ❌ Pending | P05.14 | Implement variable-byte encoding | — |
 | ❌ Pending | P05.15 | Implement posting decoding | — |

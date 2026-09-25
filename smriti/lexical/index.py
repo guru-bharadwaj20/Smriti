@@ -45,3 +45,18 @@ def bm25_score(tf, df, count, length, average, k1=1.2, b=0.75):
     if not tf or not average: return 0.0
     idf=math.log(1+(count-df+0.5)/(df+0.5))
     return idf*tf*(k1+1)/(tf+k1*(1-b+b*length/average))
+
+def _search(self, query, k=20):
+    import math
+    if k < 0: raise ValueError("k must be nonnegative")
+    scores = {}
+    averages, lengths = self.averages, self.lengths
+    for term in set(code_tokens(query)):
+        posting = self.postings.get(term, {})
+        idf=math.log(1+(len(self.documents)-len(posting)+0.5)/(len(posting)+0.5))
+        for id, fields in posting.items():
+            tf=sum(self.weights.get(f,1)*count/(1-self.b+self.b*lengths[id][f]/(averages[f] or 1)) for f,count in fields.items())
+            scores[id]=scores.get(id,0)+idf*tf*(self.k1+1)/(tf+self.k1)
+    return [SearchHit(id,score) for id,score in sorted(scores.items(), key=lambda item:(-item[1],item[0]))[:k]]
+
+BM25Index.search = _search
