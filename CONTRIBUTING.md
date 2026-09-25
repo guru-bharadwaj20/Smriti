@@ -437,7 +437,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P13.11 | Implement embedding-only baseline | — |
 | ❌ Pending | P13.12 | Implement Aider-style repo-map baseline | — |
 | ✅ Done | P13.13 | Compute file recall at k | bench/swebench/metrics.py; independent duplicate and empty-gold checks passed |
-| ❌ Pending | P13.14 | Compute function recall at k | — |
+| ✅ Done | P13.14 | Compute function recall at k | bench/swebench/function_metrics.py; duplicate missing empty and negative-k tests passed |
 | ❌ Pending | P13.15 | Compute packed budget recall at 4k tokens | — |
 | ❌ Pending | P13.16 | Compute packed budget recall at 8k tokens | — |
 | ❌ Pending | P13.17 | Compute packed budget recall at 16k tokens | — |
