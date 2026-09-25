@@ -430,7 +430,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P13.04 | Validate task repository and commit identity | bench/swebench/validation.py; wrong-repo commit and dirty-checkout tests passed |
 | ✅ Done | P13.05 | Extract patch ground truth outside indexed tree | bench/swebench/ground_truth.py; changed-context and added-file tests passed |
 | ✅ Done | P13.06 | Map changed functions to base-commit symbols | bench/swebench/mapping.py; neighboring nested and added-function cases passed |
-| ❌ Pending | P13.07 | Define handling of added and deleted functions | — |
+| ✅ Done | P13.07 | Define handling of added and deleted functions | docs/evaluation-labels.md; base-commit label policy reviewed |
 | ❌ Pending | P13.08 | Prevent patch and post-fix code leakage | — |
 | ❌ Pending | P13.09 | Implement issue-word grep baseline | — |
 | ❌ Pending | P13.10 | Implement lexical-only baseline | — |
