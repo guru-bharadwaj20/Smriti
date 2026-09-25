@@ -16,3 +16,12 @@ def test_native_watcher_delivers_file_event(tmp_path):
     finally:
         watcher.stop()
     assert watcher.observer is None
+
+
+def test_debounce_coalesces_events(tmp_path):
+    watcher = ChangeWatcher(tmp_path)
+    watcher.feed("modified", "a.py")
+    watcher.feed("modified", "a.py")
+    assert watcher.poll() == []
+    assert len(watcher.poll(force=True)) == 1
+    assert watcher.poll(force=True) == []
