@@ -257,7 +257,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P07.08 | Normalize transitions and handle dangling nodes | smriti/rank/pagerank.py; executable assertions passed |
 | ✅ Done | P07.09 | Seed personalized restart distribution | smriti/rank/pagerank.py; executable assertions passed |
 | ✅ Done | P07.10 | Implement PageRank power iteration | smriti/rank/pagerank.py; executable assertions passed |
-| ❌ Pending | P07.11 | Specify convergence and iteration limits | — |
+| ✅ Done | P07.11 | Specify convergence and iteration limits | smriti/rank/pagerank.py; executable assertions passed |
 | ❌ Pending | P07.12 | Test ranking on a hand-computed graph | — |
 | ❌ Pending | P07.13 | Expand candidate set with callers | — |
 | ❌ Pending | P07.14 | Include associated tests and configuration | — |
