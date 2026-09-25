@@ -409,7 +409,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P12.16 | Expose memory CRUD MCP tools | — |
 | ❌ Pending | P12.17 | Expose memory history MCP tools | — |
 | ✅ Done | P12.18 | Serve immutable index snapshots to queries | smriti/server/snapshots.py; snapshot immutability and stale-writer tests passed |
-| ❌ Pending | P12.19 | Move indexing to background worker process | — |
+| ✅ Done | P12.19 | Move indexing to background worker process | smriti/server/jobs.py; spawned-worker persisted-snapshot integration test passed |
 | ❌ Pending | P12.20 | Keep async server responsive during indexing | — |
 | ❌ Pending | P12.21 | Handle cancellation and worker errors | — |
 | ❌ Pending | P12.22 | Implement graceful shutdown and recovery | — |
