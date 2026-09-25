@@ -64,3 +64,15 @@ class TemporalTests(unittest.TestCase):
         self.assertEqual(timeline.query(a, d)[0].payload["text"], "old")
         self.assertEqual(timeline.query(c, d)[0].payload["text"], "old")
         self.assertEqual(len(timeline.rows), 4)
+
+    def test_invalid_intervals(self):
+        from smriti.memory.temporal import Timeline, TemporalVersion, TransactionInterval
+        a = datetime(2025, 1, 1, tzinfo=timezone.utc)
+        with self.assertRaises(ValueError):
+            ValidInterval(a, a)
+        with self.assertRaises(ValueError):
+            ValidInterval(a, datetime(2024, 1, 1, tzinfo=timezone.utc))
+        timeline = Timeline([TemporalVersion("x", {}, ValidInterval(a), TransactionInterval(a))])
+        with self.assertRaises(ValueError):
+            timeline.correct("x", {}, ValidInterval(a), a)
+        self.assertEqual(len(timeline.rows), 1)
