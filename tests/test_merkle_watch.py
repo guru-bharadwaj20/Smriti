@@ -86,3 +86,22 @@ def test_lexical_and_vector_updates_match_symbol_delta():
         lexical_upsert=lambda s: calls.append(("lex+", s.id)), lexical_delete=lambda i: calls.append(("lex-", i)),
         vector_upsert=lambda s: calls.append(("vec+", s.id)), vector_delete=lambda i: calls.append(("vec-", i)))
     assert calls == [("lex-", "old"), ("vec-", "old"), ("lex+", "new"), ("vec+", "new")]
+
+
+def test_incremental_and_fresh_symbol_equivalence(tmp_path):
+    from smriti.parse import SourceParser
+    from smriti.merkle import RepositoryScanner, diff_snapshots
+    from smriti.watch import apply_file_symbols, affected_file_jobs
+    scanner, parser = RepositoryScanner(), SourceParser()
+    (tmp_path / "a.py").write_text("def a():\n    return 1\n")
+    (tmp_path / "b.py").write_text("def b():\n    return 2\n")
+    old = scanner.scan(tmp_path)
+    symbols = [s for path in sorted(old.files) for s in parser.parse(path, (tmp_path / path).read_bytes()).symbols]
+    (tmp_path / "a.py").write_text("def a():\n    return 3\n")
+    (tmp_path / "b.py").unlink()
+    (tmp_path / "c.py").write_text("def c():\n    return 4\n")
+    new = scanner.scan(tmp_path)
+    parse, deleted, _ = affected_file_jobs(diff_snapshots(old, new))
+    updated = apply_file_symbols(symbols, {path: parser.parse(path, (tmp_path / path).read_bytes()).symbols for path in parse}, set(deleted))
+    fresh = [s for path in sorted(new.files) for s in SourceParser().parse(path, (tmp_path / path).read_bytes()).symbols]
+    assert updated == fresh

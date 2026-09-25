@@ -119,7 +119,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P02.20 | Update postings and vectors for changed symbols | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ❌ Pending | P02.21 | Commit index changes atomically | — |
 | ❌ Pending | P02.22 | Recover from interrupted indexing | — |
-| ❌ Pending | P02.23 | Verify incremental and fresh-index equivalence | — |
+| ✅ Done | P02.23 | Verify incremental and fresh-index equivalence | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ❌ Pending | P02.24 | Measure one-line update latency on stated hardware | — |
 
 ### P03 — Parsing and symbol extraction

@@ -148,3 +148,12 @@ def update_search_indexes(delta: SymbolDelta, *, lexical_upsert, lexical_delete,
     for symbol in [*delta.added, *delta.changed]:
         lexical_upsert(symbol)
         vector_upsert(symbol)
+
+
+def apply_file_symbols(current: list[Symbol], replacements: dict[str, list[Symbol]],
+                       deleted_paths: set[str] = frozenset()) -> list[Symbol]:
+    """Replace affected files only; stable ordering agrees with a full scan."""
+    changed_paths = replacements.keys() | deleted_paths
+    result = [symbol for symbol in current if symbol.path not in changed_paths]
+    result.extend(symbol for symbols in replacements.values() for symbol in symbols)
+    return sorted(result, key=lambda s: (s.path, s.start_byte, s.qualname))
