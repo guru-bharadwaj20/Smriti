@@ -133,7 +133,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P03.03 | Extract Python class definitions | smriti/parse; pytest tests/test_parse.py passed |
 | ✅ Done | P03.04 | Extract Python functions and methods | smriti/parse; pytest tests/test_parse.py passed |
 | ✅ Done | P03.05 | Extract signatures and docstrings | smriti/parse; pytest tests/test_parse.py passed |
-| ❌ Pending | P03.06 | Capture byte offsets and source line ranges | — |
+| ✅ Done | P03.06 | Capture byte offsets and source line ranges | smriti/parse; pytest tests/test_parse.py passed |
 | ❌ Pending | P03.07 | Extract import declarations | — |
 | ❌ Pending | P03.08 | Extract call expression candidates | — |
 | ❌ Pending | P03.09 | Extract inheritance declarations | — |

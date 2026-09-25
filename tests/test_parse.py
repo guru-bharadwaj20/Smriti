@@ -34,3 +34,11 @@ def test_signatures_and_docstrings():
     symbol = result.symbols[1]
     assert symbol.signature == "def f(x: int = 1) -> str"
     assert symbol.docstring == "description"
+
+
+def test_source_offsets():
+    from smriti.parse import source_slice
+    result = parse_file("a.py", "# header\ndef f():\n    return 1\n")
+    symbol = result.symbols[1]
+    assert (symbol.start_line, symbol.end_line) == (2, 3)
+    assert source_slice(result, symbol).decode() == symbol.body
