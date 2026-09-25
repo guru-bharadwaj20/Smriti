@@ -25,6 +25,7 @@ class Fact:
     freshness: str = 'fresh'
     freshness_reason: str | None = None
     triggering_commit: str | None = None
+    subject: str | None = None
 
     def to_dict(self):
         return {**asdict(self), 'scope': self.scope, 'requires_revalidation': self.freshness != 'fresh'}
@@ -47,7 +48,7 @@ class MemoryStore:
     def close(self):
         self.db.close()
 
-    def remember(self, text: str, *, fact_id=None, user=None, session=None, tool=None, source=None, confidence=1.0, anchors=(), selected_context=()) -> Fact:
+    def remember(self, text: str, *, fact_id=None, user=None, session=None, tool=None, source=None, confidence=1.0, anchors=(), selected_context=(), subject=None) -> Fact:
         if not isinstance(text, str) or not text.strip():
             raise ValueError("Fact text must be nonempty")
         if not isinstance(confidence, (float, int)) or not math.isfinite(confidence) or not 0 <= confidence <= 1:
@@ -63,6 +64,7 @@ class MemoryStore:
         if any(not a.content_hash or not isinstance(a.content_hash, str) for a in anchors):
             raise ValueError("Anchors require content hashes")
         fact = Fact(fact_id or uuid.uuid4().hex, text, user, session, tool, source, float(confidence), anchors)
+        fact = replace(fact, subject=subject)
         with self.db:
             self.db.execute("INSERT INTO facts VALUES (?, ?)", (fact.id, json.dumps(asdict(fact))))
             self.db.executemany('INSERT INTO fact_anchors VALUES (?, ?, ?)', [(fact.id, a.symbol_id, a.content_hash) for a in anchors])
@@ -136,3 +138,11 @@ class MemoryStore:
     def audit(self, fact_id):
         return [{"before": self._decode(before) if before else None, "after": self._decode(after)} for before, after in self.db.execute("SELECT before_payload,after_payload FROM fact_audit WHERE fact_id=? ORDER BY seq", (fact_id,))]
 # P09.16
+    def contradictions(self, fact_id):
+        fact = next((f for f in self.recall() if f.id == fact_id), None)
+        if fact is None:
+            raise KeyError(fact_id)
+        if not fact.subject:
+            return []
+        return [f for f in self.recall() if f.id != fact.id and f.subject == fact.subject and f.text != fact.text]
+# P09.17
