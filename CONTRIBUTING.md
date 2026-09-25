@@ -88,7 +88,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P01.13 | Define config file and environment precedence | smriti/config.py; tests/test_config.py; syntax/format reviewed |
 | ✅ Done | P01.14 | Define ignored paths and local data directory | docs/local-state.md; syntax/format reviewed |
 | ✅ Done | P01.15 | Create small repository fixtures with known symbols | tests/fixtures/sample/app.py; tests/fixtures/sample/test_app.py; syntax/format reviewed |
-| ❌ Pending | P01.16 | Document setup and contributor commands | — |
+| ✅ Done | P01.16 | Document setup and contributor commands | docs/development.md; syntax/format reviewed |
 | ✅ Done | P01.17 | Record comparison with Aider, Cursor, Mem0, and Zep | docs/prior-work.md; primary sources reviewed |
 
 ### P02 — Merkle tree and incremental indexing
