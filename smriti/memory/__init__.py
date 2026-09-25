@@ -107,3 +107,9 @@ class MemoryStore:
 # P09.11
 
 # P09.12
+    def anchor_states(self, fact_id, symbols):
+        fact = next((f for f in self.recall() if f.id == fact_id), None)
+        if fact is None:
+            raise KeyError(fact_id)
+        return {a.symbol_id: ("orphaned" if a.symbol_id not in symbols else "fresh" if symbols[a.symbol_id] == a.content_hash else "stale") for a in fact.anchors}
+# P09.13

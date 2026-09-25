@@ -313,7 +313,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P09.10 | Mark deleted anchors orphaned | smriti\memory\__init__.py; P09.10 regression in tests\test_memory.py |
 | ✅ Done | P09.11 | Follow verified symbol renames | smriti\memory\__init__.py; P09.11 regression in tests\test_memory.py |
 | ✅ Done | P09.12 | Record freshness reason and triggering commit | smriti\memory\__init__.py; P09.12 regression in tests\test_memory.py |
-| ❌ Pending | P09.13 | Define policy for memories with multiple anchors | — |
+| ✅ Done | P09.13 | Define policy for memories with multiple anchors | smriti\memory\__init__.py; P09.13 regression in tests\test_memory.py |
 | ❌ Pending | P09.14 | Rank stale facts lower during recall | — |
 | ❌ Pending | P09.15 | Show freshness state in recall results | — |
 | ❌ Pending | P09.16 | Handle revalidation without losing history | — |
