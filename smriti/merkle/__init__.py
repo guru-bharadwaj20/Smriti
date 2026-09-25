@@ -137,3 +137,7 @@ def created_files(old: MerkleSnapshot, new: MerkleSnapshot) -> list[FileChange]:
 def modified_files(old: MerkleSnapshot, new: MerkleSnapshot) -> list[FileChange]:
     return [FileChange("modified", path) for path in sorted(old.files.keys() & new.files.keys())
             if old.files[path] != new.files[path]]
+
+
+def deleted_files(old: MerkleSnapshot, new: MerkleSnapshot) -> list[FileChange]:
+    return [FileChange("deleted", path) for path in sorted(old.files.keys() - new.files.keys())]
