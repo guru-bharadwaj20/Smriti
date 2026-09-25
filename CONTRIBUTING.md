@@ -321,7 +321,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P09.18 | Combine embedding similarity with anchor overlap | smriti\memory\__init__.py; P09.18 regression in tests\test_memory.py |
 | ✅ Done | P09.19 | Implement source-priority conflict rules | smriti\memory\__init__.py; P09.19 regression in tests\test_memory.py |
 | ✅ Done | P09.20 | Retain conflicting fact versions for audit | smriti\memory\__init__.py; P09.20 regression in tests\test_memory.py |
-| ❌ Pending | P09.21 | Test freshness across edits, moves, and deletions | — |
+| ✅ Done | P09.21 | Test freshness across edits, moves, and deletions | smriti\memory\__init__.py; P09.21 regression in tests\test_memory.py |
 
 ### P10 — Bitemporal and versioned memory log
 
