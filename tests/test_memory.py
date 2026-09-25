@@ -134,6 +134,14 @@ class MemoryTests(unittest.TestCase):
         self.assertAlmostEqual(store.relatedness(a, b, [1, 0], [0, 1]), .3)
         store.close()
 
+    def test_source_priority(self):
+        store = MemoryStore(":memory:")
+        a = store.remember("timeout 5", subject="timeout", source="user")
+        b = store.remember("timeout 10", subject="timeout", source="code", confidence=.5)
+        self.assertEqual(store.preferred(a.id), b)
+        self.assertEqual(len(store.recall()), 2)
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"

@@ -158,3 +158,10 @@ class MemoryStore:
         overlap = len(a & b) / len(a | b) if a | b else 0.0
         return 0.7 * max(0.0, cosine) + 0.3 * overlap
 # P09.18
+    def preferred(self, fact_id, source_priority=None):
+        fact = next((f for f in self.recall() if f.id == fact_id), None)
+        if fact is None:
+            raise KeyError(fact_id)
+        priorities = source_priority or {"code": 3, "test": 2, "user": 1}
+        return max([fact, *self.contradictions(fact_id)], key=lambda f: (priorities.get(f.source, 0), f.confidence, f.id))
+# P09.19
