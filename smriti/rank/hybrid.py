@@ -27,3 +27,9 @@ def expand_callers(seeds,edges):
     for source,target,kind,*_ in edges:
         if kind=='calls' and target in seeds: selected.add(source)
     return selected
+
+def expand_associations(seeds,edges):
+    selected=set(seeds)
+    for source,target,kind,*_ in edges:
+        if kind in {'tests','config'} and (source in seeds or target in seeds): selected.update([source,target])
+    return selected

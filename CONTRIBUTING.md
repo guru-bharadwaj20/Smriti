@@ -120,7 +120,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P02.21 | Commit index changes atomically | — |
 | ❌ Pending | P02.22 | Recover from interrupted indexing | — |
 | ✅ Done | P02.23 | Verify incremental and fresh-index equivalence | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
-| ❌ Pending | P02.24 | Measure one-line update latency on stated hardware | — |
+| ✅ Done | P02.24 | Measure one-line update latency on stated hardware | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 
 ### P03 — Parsing and symbol extraction
 
@@ -164,7 +164,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P04.06 | Resolve relative imports | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.07 | Resolve re-exported names within supported scope | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.08 | Record builtins and external references | smriti/resolve; pytest tests/test_resolve.py passed |
-| ❌ Pending | P04.09 | Resolve self method calls | — |
+| ✅ Done | P04.09 | Resolve self method calls | smriti/resolve; pytest tests/test_resolve.py passed |
 | ❌ Pending | P04.10 | Implement Python C3 linearisation | — |
 | ❌ Pending | P04.11 | Resolve inherited methods | — |
 | ❌ Pending | P04.12 | Respect overridden methods | — |
@@ -260,7 +260,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P07.11 | Specify convergence and iteration limits | smriti/rank/pagerank.py; executable assertions passed |
 | ✅ Done | P07.12 | Test ranking on a hand-computed graph | tests/test_rank.py; executable assertions passed |
 | ✅ Done | P07.13 | Expand candidate set with callers | smriti/rank/hybrid.py; executable assertions passed |
-| ❌ Pending | P07.14 | Include associated tests and configuration | — |
+| ✅ Done | P07.14 | Include associated tests and configuration | smriti/rank/hybrid.py; executable assertions passed |
 | ❌ Pending | P07.15 | Cache ranking with index-version keys | — |
 | ❌ Pending | P07.16 | Invalidate cache after index updates | — |
 | ✅ Done | P07.17 | Tune fusion weights on validation data only | scripts/fusion_tuning.py; bench/fusion/validation.json; validation-only grid search, separate held-out IDs |

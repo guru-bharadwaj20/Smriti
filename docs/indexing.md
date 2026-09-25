@@ -1,0 +1,23 @@
+# Incremental indexing
+
+Repository snapshots hash exact file bytes and UTF-8-ordered child names with length framing. Gitignore rules apply at each directory; symlinks hash their target text and are never recursively traversed. Snapshot writes use fsync and atomic replacement.
+
+`refresh_snapshot(root, old, paths)` reads only changed files and recomputes ancestor directory hashes. Watchdog events are debounced; git checkout bursts request one snapshot reconciliation. Symbol diffs preserve IDs only for unique structurally identical definitions; ambiguous moves remain additions/deletions.
+
+## Measured one-line update
+
+The run used 200 synthetic Python files and 31 edits. Timings include the changed-file hash, ancestor hashes, and incremental tree-sitter parse, with full fresh-scan equivalence verified outside each timed interval. This measures a local synthetic workload, not a large-repository performance guarantee.
+
+| Metric | Measured value |
+| --- | --- |
+| files | 200 |
+| repeats | 31 |
+| p50_ms | 14.450000002398156 |
+| p95_ms | 23.973199997271877 |
+| cpu | Intel64 Family 6 Model 61 Stepping 4, GenuineIntel |
+| cpu_count | 4 |
+| os | Windows-11-10.0.22000-SP0 |
+| python | 3.13.1 |
+| samples_ms | [7.7162000015960075, 19.876500002283137, 14.450000002398156, 18.17239999945741, 10.441400001582224, 8.16369999665767, 25.287199998274446, 16.182700004719663, 7.6139000011608005, 8.44840000354452, 13.23699999920791, 7.390099999611266, 18.498299999919254, 13.588399997388478, 15.143099997658283, 7.704700001340825, 23.973199997271877, 12.602000002516434, 17.800400004489347, 23.10070000385167, 18.12880000215955, 17.999000003328547, 17.51230000081705, 14.209399996616412, 15.823900001123548, 8.409099995333236, 13.492599995515775, 12.924599999678321, 17.996800001128577, 7.71099999838043, 37.18970000045374] |
+
+Raw measurements: `docs/indexing-latency.json`. Native symlink creation requires Windows developer mode or privilege; its test records a skip when unavailable.

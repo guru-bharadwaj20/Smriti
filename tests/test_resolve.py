@@ -69,3 +69,9 @@ def test_builtin_external_and_dynamic_references_are_explicit():
     edges = [edge for edge in Resolver([result]).resolve() if edge.kind == "calls"]
     assert {edge.target.split(":", 1)[0] for edge in edges} == {"builtin", "external", "dynamic"}
     assert all(edge.confidence < 1 for edge in edges)
+
+
+def test_self_and_class_method_calls():
+    result = parse_file("a.py", "class A:\n    def helper(self):\n        pass\n    def run(self):\n        self.helper()\n")
+    resolver = Resolver([result])
+    assert resolver.resolve_name("self.helper", result.symbols[3].id) == result.symbols[2].id
