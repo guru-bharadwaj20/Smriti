@@ -230,7 +230,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P06.14 | Implement neighbor selection heuristic | smriti/vector/hnsw.py; executable assertions passed |
 | ✅ Done | P06.15 | Implement bidirectional graph insertion | smriti/vector/hnsw.py; executable assertions passed |
 | ✅ Done | P06.16 | Enforce neighbor count limits | smriti/vector/hnsw.py; executable assertions passed |
-| ❌ Pending | P06.17 | Implement efConstruction configuration | — |
+| ✅ Done | P06.17 | Implement efConstruction configuration | docs/retrieval.md; executable assertions passed |
 | ❌ Pending | P06.18 | Implement efSearch configuration | — |
 | ❌ Pending | P06.19 | Exclude tombstoned vectors from results | — |
 | ❌ Pending | P06.20 | Implement deletion repair or rebuild strategy | — |
