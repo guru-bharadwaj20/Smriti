@@ -110,3 +110,20 @@ def test_moves_are_verified_and_ambiguity_is_retained():
     assert [(event.kind, event.path, event.old_path) for event in events] == [("moved", "b.py", "a.py")]
     events = diff_snapshots(MerkleSnapshot({"a.py": digest}), MerkleSnapshot({"b.py": digest, "c.py": digest}))
     assert all(event.kind != "moved" for event in events)
+
+
+def test_symlink_leaf_never_reads_target_directory(tmp_path, monkeypatch):
+    """Exercise no traversal even when Windows forbids creating real symlinks."""
+    import os
+    from pathlib import Path
+    from smriti.merkle import RepositoryScanner
+
+    link = tmp_path / "linked"
+    link.mkdir()
+    (link / "outside.py").write_text("must not be indexed")
+    original = Path.is_symlink
+    monkeypatch.setattr(Path, "is_symlink", lambda path: path == link or original(path))
+    monkeypatch.setattr(os, "readlink", lambda path: "external-target")
+    snapshot = RepositoryScanner().scan(tmp_path)
+    assert snapshot.files == {"linked": hash_content(b"symlink\0external-target")}
+    assert set(snapshot.directories) == {""}

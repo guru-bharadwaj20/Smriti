@@ -471,7 +471,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
-| ❌ Pending | P14.01 | Choose minimal UI framework and local API | — |
+| ✅ Done | P14.01 | Choose minimal UI framework and local API | docs/ui-design.md; view and mutation contracts reviewed |
 | ❌ Pending | P14.02 | Implement repository index status view | — |
 | ❌ Pending | P14.03 | Implement searchable symbol graph view | — |
 | ❌ Pending | P14.04 | Implement packed-context explanation view | — |
