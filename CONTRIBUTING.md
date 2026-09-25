@@ -232,7 +232,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P06.16 | Enforce neighbor count limits | smriti/vector/hnsw.py; executable assertions passed |
 | ✅ Done | P06.17 | Implement efConstruction configuration | docs/retrieval.md; executable assertions passed |
 | ✅ Done | P06.18 | Implement efSearch configuration | smriti/vector/hnsw.py; executable assertions passed |
-| ❌ Pending | P06.19 | Exclude tombstoned vectors from results | — |
+| ✅ Done | P06.19 | Exclude tombstoned vectors from results | smriti/vector/hnsw.py; executable assertions passed |
 | ❌ Pending | P06.20 | Implement deletion repair or rebuild strategy | — |
 | ❌ Pending | P06.21 | Update embeddings after source edits | — |
 | ❌ Pending | P06.22 | Persist and reload HNSW graph | — |
