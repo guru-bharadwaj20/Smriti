@@ -13,3 +13,6 @@ def adjacency(nodes,edges):
         weight=edge_weight(kind,confidence)
         if weight>0: result[source][target]=result[source].get(target,0)+weight
     return result
+
+def transitions(graph):
+    return {node:{other:weight/sum(links.values()) for other,weight in links.items()} if links else {} for node,links in graph.items()}

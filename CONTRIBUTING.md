@@ -254,7 +254,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P07.05 | Define graph edge type weights | smriti/rank/pagerank.py; executable assertions passed |
 | ✅ Done | P07.06 | Include resolution confidence in weights | smriti/rank/pagerank.py; executable assertions passed |
 | ✅ Done | P07.07 | Build sparse adjacency representation | smriti/rank/pagerank.py; executable assertions passed |
-| ❌ Pending | P07.08 | Normalize transitions and handle dangling nodes | — |
+| ✅ Done | P07.08 | Normalize transitions and handle dangling nodes | smriti/rank/pagerank.py; executable assertions passed |
 | ❌ Pending | P07.09 | Seed personalized restart distribution | — |
 | ❌ Pending | P07.10 | Implement PageRank power iteration | — |
 | ❌ Pending | P07.11 | Specify convergence and iteration limits | — |
