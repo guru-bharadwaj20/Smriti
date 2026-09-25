@@ -87,7 +87,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P01.12 | Configure CI for supported platforms | .github/workflows/ci.yml; syntax/format reviewed |
 | ✅ Done | P01.13 | Define config file and environment precedence | smriti/config.py; tests/test_config.py; syntax/format reviewed |
 | ✅ Done | P01.14 | Define ignored paths and local data directory | docs/local-state.md; syntax/format reviewed |
-| ❌ Pending | P01.15 | Create small repository fixtures with known symbols | — |
+| ✅ Done | P01.15 | Create small repository fixtures with known symbols | tests/fixtures/sample/app.py; tests/fixtures/sample/test_app.py; syntax/format reviewed |
 | ❌ Pending | P01.16 | Document setup and contributor commands | — |
 | ✅ Done | P01.17 | Record comparison with Aider, Cursor, Mem0, and Zep | docs/prior-work.md; primary sources reviewed |
 
@@ -134,7 +134,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P03.04 | Extract Python functions and methods | smriti/parse; pytest tests/test_parse.py passed |
 | ✅ Done | P03.05 | Extract signatures and docstrings | smriti/parse; pytest tests/test_parse.py passed |
 | ✅ Done | P03.06 | Capture byte offsets and source line ranges | smriti/parse; pytest tests/test_parse.py passed |
-| ❌ Pending | P03.07 | Extract import declarations | — |
+| ✅ Done | P03.07 | Extract import declarations | smriti/parse; pytest tests/test_parse.py passed |
 | ❌ Pending | P03.08 | Extract call expression candidates | — |
 | ❌ Pending | P03.09 | Extract inheritance declarations | — |
 | ❌ Pending | P03.10 | Model nested definitions and comprehensions | — |
@@ -230,7 +230,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P06.14 | Implement neighbor selection heuristic | smriti/vector/hnsw.py; executable assertions passed |
 | ✅ Done | P06.15 | Implement bidirectional graph insertion | smriti/vector/hnsw.py; executable assertions passed |
 | ✅ Done | P06.16 | Enforce neighbor count limits | smriti/vector/hnsw.py; executable assertions passed |
-| ❌ Pending | P06.17 | Implement efConstruction configuration | — |
+| ✅ Done | P06.17 | Implement efConstruction configuration | docs/retrieval.md; executable assertions passed |
 | ❌ Pending | P06.18 | Implement efSearch configuration | — |
 | ❌ Pending | P06.19 | Exclude tombstoned vectors from results | — |
 | ❌ Pending | P06.20 | Implement deletion repair or rebuild strategy | — |

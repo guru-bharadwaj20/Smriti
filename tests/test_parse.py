@@ -42,3 +42,11 @@ def test_source_offsets():
     symbol = result.symbols[1]
     assert (symbol.start_line, symbol.end_line) == (2, 3)
     assert source_slice(result, symbol).decode() == symbol.body
+
+
+def test_import_declarations():
+    result = parse_file("pkg/a.py", "import os.path as p\nfrom .helpers import work as run\n")
+    assert result.imports[0]["alias"] == "p"
+    assert result.imports[0]["module"] == "os.path"
+    assert result.imports[1]["name"] == "work"
+    assert result.imports[1]["level"] == 1

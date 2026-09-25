@@ -64,6 +64,16 @@ class SourceParser:
                     content_hash=sha256(body).hexdigest(), parent_id=parent.id)
                 result.symbols.append(symbol)
                 parent = symbol
+            if node.type in {"import_statement", "import_from_statement"}:
+                import ast
+                statement = ast.parse(result.source[node.start_byte:node.end_byte].decode("utf-8")).body[0]
+                for alias in statement.names:
+                    module = statement.module or "" if isinstance(statement, ast.ImportFrom) else alias.name
+                    level = statement.level if isinstance(statement, ast.ImportFrom) else 0
+                    imported = alias.name if isinstance(statement, ast.ImportFrom) else ""
+                    binding = alias.asname or (alias.name if imported else alias.name.split(".")[0])
+                    result.imports.append({"scope": parent.id, "module": module, "name": imported,
+                        "alias": binding, "level": level, "line": node.start_point.row + 1})
             for child in node.named_children:
                 walk(child, parent)
         walk(root, result.symbols[0])
