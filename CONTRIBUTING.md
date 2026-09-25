@@ -163,7 +163,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P04.05 | Resolve aliased imports | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.06 | Resolve relative imports | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.07 | Resolve re-exported names within supported scope | smriti/resolve; pytest tests/test_resolve.py passed |
-| ❌ Pending | P04.08 | Record builtins and external references | — |
+| ✅ Done | P04.08 | Record builtins and external references | smriti/resolve; pytest tests/test_resolve.py passed |
 | ❌ Pending | P04.09 | Resolve self method calls | — |
 | ❌ Pending | P04.10 | Implement Python C3 linearisation | — |
 | ❌ Pending | P04.11 | Resolve inherited methods | — |
@@ -205,7 +205,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P05.17 | Remove symbols and update statistics | tests/test_lexical_index.py; executable assertions passed |
 | ✅ Done | P05.18 | Persist and reload lexical index | smriti/lexical/index.py; executable assertions passed |
 | ✅ Done | P05.19 | Define deterministic tie breaking | tests/test_lexical_index.py; executable assertions passed |
-| ❌ Pending | P05.20 | Validate scoring against hand-computed examples | — |
+| ✅ Done | P05.20 | Validate scoring against hand-computed examples | tests/test_lexical_index.py; executable assertions passed |
 | ❌ Pending | P05.21 | Benchmark lexical query time and storage | — |
 
 ### P06 — CPU embeddings and custom HNSW
@@ -319,7 +319,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P09.16 | Handle revalidation without losing history | smriti\memory\__init__.py; P09.16 regression in tests\test_memory.py |
 | ✅ Done | P09.17 | Detect contradiction candidates by subject | smriti\memory\__init__.py; P09.17 regression in tests\test_memory.py |
 | ✅ Done | P09.18 | Combine embedding similarity with anchor overlap | smriti\memory\__init__.py; P09.18 regression in tests\test_memory.py |
-| ❌ Pending | P09.19 | Implement source-priority conflict rules | — |
+| ✅ Done | P09.19 | Implement source-priority conflict rules | smriti\memory\__init__.py; P09.19 regression in tests\test_memory.py |
 | ❌ Pending | P09.20 | Retain conflicting fact versions for audit | — |
 | ❌ Pending | P09.21 | Test freshness across edits, moves, and deletions | — |
 
