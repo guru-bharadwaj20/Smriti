@@ -38,3 +38,11 @@ class HNSWIndex:
                     heapq.heappush(candidates,(nd,neighbor)); heapq.heappush(best,(-nd,neighbor))
                     if len(best)>ef: heapq.heappop(best)
         return sorted([( -d,id) for d,id in best])
+
+    def _select(self,query,candidates,limit):
+        selected=[]; rejected=[]
+        for d,id in sorted(candidates):
+            if all(distance(self.vectors[id],self.vectors[other])>=d for other in selected): selected.append(id)
+            else: rejected.append(id)
+            if len(selected)==limit: return selected
+        return (selected+rejected)[:limit]

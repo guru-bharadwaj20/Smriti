@@ -131,7 +131,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P03.01 | Integrate tree-sitter parser lifecycle | smriti/parse; pytest tests/test_parse.py passed |
 | ✅ Done | P03.02 | Extract Python module scopes | smriti/parse; pytest tests/test_parse.py passed |
 | ✅ Done | P03.03 | Extract Python class definitions | smriti/parse; pytest tests/test_parse.py passed |
-| ❌ Pending | P03.04 | Extract Python functions and methods | — |
+| ✅ Done | P03.04 | Extract Python functions and methods | smriti/parse; pytest tests/test_parse.py passed |
 | ❌ Pending | P03.05 | Extract signatures and docstrings | — |
 | ❌ Pending | P03.06 | Capture byte offsets and source line ranges | — |
 | ❌ Pending | P03.07 | Extract import declarations | — |
@@ -227,7 +227,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P06.11 | Implement HNSW entry point management | smriti/vector/hnsw.py; executable assertions passed |
 | ✅ Done | P06.12 | Implement upper-layer greedy descent | smriti/vector/hnsw.py; executable assertions passed |
 | ✅ Done | P06.13 | Implement candidate queue search | smriti/vector/hnsw.py; executable assertions passed |
-| ❌ Pending | P06.14 | Implement neighbor selection heuristic | — |
+| ✅ Done | P06.14 | Implement neighbor selection heuristic | smriti/vector/hnsw.py; executable assertions passed |
 | ❌ Pending | P06.15 | Implement bidirectional graph insertion | — |
 | ❌ Pending | P06.16 | Enforce neighbor count limits | — |
 | ❌ Pending | P06.17 | Implement efConstruction configuration | — |
@@ -250,7 +250,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P07.01 | Define query normalization | smriti/rank/__init__.py; smriti/rank/hybrid.py; executable assertions passed |
 | ✅ Done | P07.02 | Retrieve lexical candidates | smriti/rank/hybrid.py; executable assertions passed |
 | ✅ Done | P07.03 | Retrieve vector candidates | smriti/rank/hybrid.py; executable assertions passed |
-| ❌ Pending | P07.04 | Implement reciprocal rank fusion | — |
+| ✅ Done | P07.04 | Implement reciprocal rank fusion | smriti/rank/hybrid.py; executable assertions passed |
 | ❌ Pending | P07.05 | Define graph edge type weights | — |
 | ❌ Pending | P07.06 | Include resolution confidence in weights | — |
 | ❌ Pending | P07.07 | Build sparse adjacency representation | — |
