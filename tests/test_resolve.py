@@ -28,3 +28,11 @@ def test_nonlocal_declaration_uses_enclosing_scope():
     result = parse_file("a.py", "def outer():\n    def helper():\n        pass\n    def inner():\n        nonlocal helper\n        helper()\n")
     resolver = Resolver([result])
     assert resolver.resolve_name("helper", result.symbols[3].id) == result.symbols[2].id
+
+
+def test_module_level_names_and_recursion():
+    result = parse_file("a.py", "def helper():\n    helper()\ndef worker():\n    helper()\n")
+    resolver = Resolver([result])
+    assert resolver.resolve_name("helper", result.symbols[2].id) == result.symbols[1].id
+    assert resolver.resolve_name("helper", result.symbols[1].id) == result.symbols[1].id
+    assert resolver.resolve_name("a.helper", result.symbols[0].id) == result.symbols[1].id
