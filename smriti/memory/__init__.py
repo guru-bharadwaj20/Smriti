@@ -84,10 +84,15 @@ class MemoryStore:
             self.db.execute("UPDATE facts SET payload=? WHERE id=?", (json.dumps(asdict(fact)), fact.id))
         return fact
 
-    def refresh(self, symbols):
+    def refresh(self, symbols, *, renames=None):
         """symbols maps stable symbol IDs to current content hashes."""
+        renames = renames or {}
         changes = []
         for fact in self.recall():
+            moved = tuple(Anchor(renames[a.symbol_id], a.content_hash) if a.symbol_id in renames and symbols.get(renames[a.symbol_id]) == a.content_hash else a for a in fact.anchors)
+            if moved != fact.anchors:
+                fact = self._save(replace(fact, anchors=moved))
+                changes.append(fact)
             if any(a.symbol_id not in symbols for a in fact.anchors):
                 changes.append(self._save(replace(fact, freshness='orphaned')))
             elif any(a.symbol_id in symbols and symbols[a.symbol_id] != a.content_hash for a in fact.anchors):
@@ -96,3 +101,5 @@ class MemoryStore:
 # P09.09
 
 # P09.10
+
+# P09.11
