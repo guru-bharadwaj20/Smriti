@@ -250,7 +250,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P07.01 | Define query normalization | smriti/rank/__init__.py; smriti/rank/hybrid.py; executable assertions passed |
 | ✅ Done | P07.02 | Retrieve lexical candidates | smriti/rank/hybrid.py; executable assertions passed |
 | ✅ Done | P07.03 | Retrieve vector candidates | smriti/rank/hybrid.py; executable assertions passed |
-| ❌ Pending | P07.04 | Implement reciprocal rank fusion | — |
+| ✅ Done | P07.04 | Implement reciprocal rank fusion | smriti/rank/hybrid.py; executable assertions passed |
 | ❌ Pending | P07.05 | Define graph edge type weights | — |
 | ❌ Pending | P07.06 | Include resolution confidence in weights | — |
 | ❌ Pending | P07.07 | Build sparse adjacency representation | — |
