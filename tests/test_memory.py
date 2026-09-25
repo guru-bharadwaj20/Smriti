@@ -125,6 +125,15 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual(store.contradictions(a.id), [b])
         store.close()
 
+    def test_relatedness(self):
+        from smriti.memory import Anchor
+        store = MemoryStore(":memory:")
+        a = store.remember("a", anchors=[Anchor("x", "h")])
+        b = store.remember("b", anchors=[Anchor("x", "h")])
+        self.assertAlmostEqual(store.relatedness(a, b, [1, 0], [1, 0]), 1)
+        self.assertAlmostEqual(store.relatedness(a, b, [1, 0], [0, 1]), .3)
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"

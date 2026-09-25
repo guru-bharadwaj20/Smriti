@@ -11,3 +11,8 @@ def test_delete_statistics():
     assert x.averages=={'body':1}
     x.remove('b')
     assert x.search('hello')==[]
+
+def test_ties_are_stable():
+    x=BM25Index()
+    for id in ['z','a','m']: x.add(id,{'body':'same'})
+    assert [hit.id for hit in x.search('same')]==['a','m','z']

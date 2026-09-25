@@ -204,7 +204,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P05.16 | Add symbols incrementally | smriti/lexical/index.py; executable assertions passed |
 | ✅ Done | P05.17 | Remove symbols and update statistics | tests/test_lexical_index.py; executable assertions passed |
 | ✅ Done | P05.18 | Persist and reload lexical index | smriti/lexical/index.py; executable assertions passed |
-| ❌ Pending | P05.19 | Define deterministic tie breaking | — |
+| ✅ Done | P05.19 | Define deterministic tie breaking | tests/test_lexical_index.py; executable assertions passed |
 | ❌ Pending | P05.20 | Validate scoring against hand-computed examples | — |
 | ❌ Pending | P05.21 | Benchmark lexical query time and storage | — |
 
@@ -280,7 +280,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P08.06 | Count rendering overhead and metadata tokens | smriti/pack/packer.py; executable assertions passed |
 | ✅ Done | P08.07 | Reserve budget for memory and response framing | smriti/pack/packer.py; executable assertions passed |
 | ✅ Done | P08.08 | Assign values to representation levels | smriti/pack/packer.py; executable assertions passed |
-| ❌ Pending | P08.09 | Implement multiple-choice knapsack dynamic program | — |
+| ✅ Done | P08.09 | Implement multiple-choice knapsack dynamic program | smriti/pack/packer.py; executable assertions passed |
 | ❌ Pending | P08.10 | Implement bucketed budget option | — |
 | ❌ Pending | P08.11 | Implement greedy marginal-value baseline | — |
 | ❌ Pending | P08.12 | Require minimum class context for methods | — |
@@ -318,7 +318,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P09.15 | Show freshness state in recall results | smriti\memory\__init__.py; P09.15 regression in tests\test_memory.py |
 | ✅ Done | P09.16 | Handle revalidation without losing history | smriti\memory\__init__.py; P09.16 regression in tests\test_memory.py |
 | ✅ Done | P09.17 | Detect contradiction candidates by subject | smriti\memory\__init__.py; P09.17 regression in tests\test_memory.py |
-| ❌ Pending | P09.18 | Combine embedding similarity with anchor overlap | — |
+| ✅ Done | P09.18 | Combine embedding similarity with anchor overlap | smriti\memory\__init__.py; P09.18 regression in tests\test_memory.py |
 | ❌ Pending | P09.19 | Implement source-priority conflict rules | — |
 | ❌ Pending | P09.20 | Retain conflicting fact versions for audit | — |
 | ❌ Pending | P09.21 | Test freshness across edits, moves, and deletions | — |
@@ -393,7 +393,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | --- | --- | --- | --- |
 | ✅ Done | P12.01 | Create Typer CLI entry point | smriti/server/cli.py; CLI version test passed |
 | ✅ Done | P12.02 | Implement index command | smriti/server/service.py; create/restart/update/delete integration test passed |
-| ❌ Pending | P12.03 | Implement index status command | — |
+| ✅ Done | P12.03 | Implement index status command | smriti/server/status.py; read-only status and indexed CLI tests passed |
 | ❌ Pending | P12.04 | Implement context command with budget | — |
 | ❌ Pending | P12.05 | Implement find-symbol command | — |
 | ❌ Pending | P12.06 | Implement callers and callees commands | — |

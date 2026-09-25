@@ -33,3 +33,13 @@ def index_repository(
 
     result = SmritiService(root).index()
     typer.echo(json.dumps(asdict(result)))
+
+
+@app.command('status')
+def status(
+    root: Annotated[Path, typer.Option('--root', exists=True, file_okay=False)] = DEFAULT_ROOT,
+) -> None:
+    """Show persisted index version and source coverage."""
+    from smriti.server.status import index_status
+
+    typer.echo(json.dumps(asdict(index_status(root))))
