@@ -67,6 +67,14 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual(store.refresh({})[0].freshness, "orphaned")
         store.close()
 
+    def test_verified_rename(self):
+        from smriti.memory import Anchor
+        store = MemoryStore(":memory:")
+        store.remember("rule", anchors=[Anchor("old", "hash")])
+        store.refresh({"new": "hash"}, renames={"old": "new"})
+        self.assertEqual(store.recall()[0].anchors[0].symbol_id, "new")
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"

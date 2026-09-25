@@ -311,7 +311,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P09.08 | Persist fact-to-anchor relationships | smriti\memory\__init__.py; P09.08 regression in tests\test_memory.py |
 | ✅ Done | P09.09 | Mark changed anchors possibly stale | smriti\memory\__init__.py; P09.09 regression in tests\test_memory.py |
 | ✅ Done | P09.10 | Mark deleted anchors orphaned | smriti\memory\__init__.py; P09.10 regression in tests\test_memory.py |
-| ❌ Pending | P09.11 | Follow verified symbol renames | — |
+| ✅ Done | P09.11 | Follow verified symbol renames | smriti\memory\__init__.py; P09.11 regression in tests\test_memory.py |
 | ❌ Pending | P09.12 | Record freshness reason and triggering commit | — |
 | ❌ Pending | P09.13 | Define policy for memories with multiple anchors | — |
 | ❌ Pending | P09.14 | Rank stale facts lower during recall | — |
