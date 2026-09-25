@@ -9,20 +9,25 @@ from smriti.merkle import FileChange
 
 
 class ChangeWatcher:
-    def __init__(self, root: str | Path):
+    def __init__(self, root: str | Path, debounce_seconds: float = 0.1):
         self.root = Path(root).resolve()
-        self.queue = deque()
+        if debounce_seconds < 0:
+            raise ValueError("Debounce interval must be nonnegative")
+        self.debounce_seconds = debounce_seconds
+        self.pending = {}
         self.lock = Lock()
         self.observer = None
 
     def feed(self, kind: str, path: str, old_path: str | None = None) -> None:
         with self.lock:
-            self.queue.append(FileChange(kind, path, old_path))
+            self.pending[path] = (monotonic(), FileChange(kind, path, old_path))
 
-    def poll(self) -> list[FileChange]:
+    def poll(self, *, now: float | None = None, force: bool = False) -> list[FileChange]:
+        now = monotonic() if now is None else now
         with self.lock:
-            events = list(self.queue)
-            self.queue.clear()
+            ready = [path for path, (timestamp, event) in self.pending.items()
+                     if force or now - timestamp >= self.debounce_seconds]
+            events = [self.pending.pop(path)[1] for path in sorted(ready)]
         return events
 
     def start(self) -> None:
