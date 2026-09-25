@@ -24,3 +24,7 @@ def body_text(symbol):
 def representations(symbol,score,counter):
     texts={'name':name_text(symbol),'signature':signature_text(symbol),'body':body_text(symbol)}
     return [omitted(symbol)]+[Representation(symbol.id,level,text,counter.count(text),score) for level,text in texts.items()]
+
+def available_budget(budget,memory_tokens=0,framing_tokens=0):
+    if min(budget,memory_tokens,framing_tokens)<0: raise ValueError('budgets must be nonnegative')
+    return max(0,budget-memory_tokens-framing_tokens)
