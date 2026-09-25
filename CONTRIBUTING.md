@@ -107,7 +107,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P02.08 | Diff old and new trees by subtree hash | smriti/merkle; pytest tests/test_merkle.py passed |
 | ✅ Done | P02.09 | Detect created files | smriti/merkle; pytest tests/test_merkle.py passed |
 | ✅ Done | P02.10 | Detect modified files | smriti/merkle; pytest tests/test_merkle.py passed |
-| ❌ Pending | P02.11 | Detect deleted files | — |
+| ✅ Done | P02.11 | Detect deleted files | smriti/merkle; pytest tests/test_merkle.py passed |
 | ❌ Pending | P02.12 | Detect unchanged-content file moves | — |
 | ✅ Done | P02.13 | Connect filesystem watcher | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ✅ Done | P02.14 | Debounce repeated events | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
@@ -133,7 +133,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P03.03 | Extract Python class definitions | smriti/parse; pytest tests/test_parse.py passed |
 | ✅ Done | P03.04 | Extract Python functions and methods | smriti/parse; pytest tests/test_parse.py passed |
 | ✅ Done | P03.05 | Extract signatures and docstrings | smriti/parse; pytest tests/test_parse.py passed |
-| ❌ Pending | P03.06 | Capture byte offsets and source line ranges | — |
+| ✅ Done | P03.06 | Capture byte offsets and source line ranges | smriti/parse; pytest tests/test_parse.py passed |
 | ❌ Pending | P03.07 | Extract import declarations | — |
 | ❌ Pending | P03.08 | Extract call expression candidates | — |
 | ❌ Pending | P03.09 | Extract inheritance declarations | — |
@@ -252,7 +252,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P07.03 | Retrieve vector candidates | smriti/rank/hybrid.py; executable assertions passed |
 | ✅ Done | P07.04 | Implement reciprocal rank fusion | smriti/rank/hybrid.py; executable assertions passed |
 | ✅ Done | P07.05 | Define graph edge type weights | smriti/rank/pagerank.py; executable assertions passed |
-| ❌ Pending | P07.06 | Include resolution confidence in weights | — |
+| ✅ Done | P07.06 | Include resolution confidence in weights | smriti/rank/pagerank.py; executable assertions passed |
 | ❌ Pending | P07.07 | Build sparse adjacency representation | — |
 | ❌ Pending | P07.08 | Normalize transitions and handle dangling nodes | — |
 | ❌ Pending | P07.09 | Seed personalized restart distribution | — |

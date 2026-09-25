@@ -95,3 +95,9 @@ def test_modified_files():
     old = MerkleSnapshot({"a.py": hash_content(b"a"), "b.py": hash_content(b"b")})
     new = MerkleSnapshot({"a.py": hash_content(b"new"), "b.py": hash_content(b"b")})
     assert [event.path for event in modified_files(old, new)] == ["a.py"]
+
+
+def test_deleted_files():
+    from smriti.merkle import MerkleSnapshot, deleted_files
+    changes = deleted_files(MerkleSnapshot({"old.py": hash_content(b"n")}), MerkleSnapshot())
+    assert [(event.kind, event.path) for event in changes] == [("deleted", "old.py")]

@@ -70,3 +70,8 @@ class SourceParser:
 
 def parse_file(path: str, source: bytes | str) -> ParseResult:
     return SourceParser().parse(path, source)
+
+
+def source_slice(result: ParseResult, symbol: Symbol) -> bytes:
+    """Ranges are UTF-8 byte offsets with an exclusive end, and 1-based lines."""
+    return result.source[symbol.start_byte:symbol.end_byte]
