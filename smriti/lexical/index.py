@@ -68,3 +68,21 @@ def _remove(self, id):
     self._rebuild()
 
 BM25Index.remove = _remove
+
+def _save(self, path):
+    import json
+    from pathlib import Path
+    Path(path).write_text(json.dumps({"version":1,"k1":self.k1,"b":self.b,"weights":self.weights,"documents":self.documents},sort_keys=True),encoding="utf-8")
+
+def _load(path):
+    import json
+    from pathlib import Path
+    data=json.loads(Path(path).read_text(encoding="utf-8"))
+    if data["version"] != 1: raise ValueError("unsupported lexical format")
+    index=BM25Index(data["k1"],data["b"],data["weights"])
+    index.documents={id:{f:Counter(c) for f,c in fields.items()} for id,fields in data["documents"].items()}
+    index._rebuild()
+    return index
+
+BM25Index.save=_save
+BM25Index.load=staticmethod(_load)

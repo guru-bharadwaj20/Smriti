@@ -203,7 +203,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P05.15 | Implement posting decoding | smriti/lexical/codec.py; executable assertions passed |
 | ✅ Done | P05.16 | Add symbols incrementally | smriti/lexical/index.py; executable assertions passed |
 | ✅ Done | P05.17 | Remove symbols and update statistics | tests/test_lexical_index.py; executable assertions passed |
-| ❌ Pending | P05.18 | Persist and reload lexical index | — |
+| ✅ Done | P05.18 | Persist and reload lexical index | smriti/lexical/index.py; executable assertions passed |
 | ❌ Pending | P05.19 | Define deterministic tie breaking | — |
 | ❌ Pending | P05.20 | Validate scoring against hand-computed examples | — |
 | ❌ Pending | P05.21 | Benchmark lexical query time and storage | — |
@@ -317,7 +317,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P09.14 | Rank stale facts lower during recall | smriti\memory\__init__.py; P09.14 regression in tests\test_memory.py |
 | ✅ Done | P09.15 | Show freshness state in recall results | smriti\memory\__init__.py; P09.15 regression in tests\test_memory.py |
 | ✅ Done | P09.16 | Handle revalidation without losing history | smriti\memory\__init__.py; P09.16 regression in tests\test_memory.py |
-| ❌ Pending | P09.17 | Detect contradiction candidates by subject | — |
+| ✅ Done | P09.17 | Detect contradiction candidates by subject | smriti\memory\__init__.py; P09.17 regression in tests\test_memory.py |
 | ❌ Pending | P09.18 | Combine embedding similarity with anchor overlap | — |
 | ❌ Pending | P09.19 | Implement source-priority conflict rules | — |
 | ❌ Pending | P09.20 | Retain conflicting fact versions for audit | — |
@@ -429,7 +429,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P13.03 | Create isolated base-commit checkouts | bench/swebench/checkout.py; base-commit isolation test passed |
 | ✅ Done | P13.04 | Validate task repository and commit identity | bench/swebench/validation.py; wrong-repo commit and dirty-checkout tests passed |
 | ✅ Done | P13.05 | Extract patch ground truth outside indexed tree | bench/swebench/ground_truth.py; changed-context and added-file tests passed |
-| ❌ Pending | P13.06 | Map changed functions to base-commit symbols | — |
+| ✅ Done | P13.06 | Map changed functions to base-commit symbols | bench/swebench/mapping.py; neighboring nested and added-function cases passed |
 | ❌ Pending | P13.07 | Define handling of added and deleted functions | — |
 | ❌ Pending | P13.08 | Prevent patch and post-fix code leakage | — |
 | ❌ Pending | P13.09 | Implement issue-word grep baseline | — |

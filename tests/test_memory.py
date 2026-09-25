@@ -117,6 +117,14 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual(len(store.audit(f.id)), 2)
         store.close()
 
+    def test_contradiction_subject(self):
+        store = MemoryStore(":memory:")
+        a = store.remember("timeout 5", subject="timeout")
+        b = store.remember("timeout 10", subject="timeout")
+        store.remember("unrelated")
+        self.assertEqual(store.contradictions(a.id), [b])
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"
