@@ -108,7 +108,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P02.09 | Detect created files | smriti/merkle; pytest tests/test_merkle.py passed |
 | ✅ Done | P02.10 | Detect modified files | smriti/merkle; pytest tests/test_merkle.py passed |
 | ✅ Done | P02.11 | Detect deleted files | smriti/merkle; pytest tests/test_merkle.py passed |
-| ❌ Pending | P02.12 | Detect unchanged-content file moves | — |
+| ✅ Done | P02.12 | Detect unchanged-content file moves | smriti/merkle; pytest tests/test_merkle.py passed |
 | ✅ Done | P02.13 | Connect filesystem watcher | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ✅ Done | P02.14 | Debounce repeated events | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ✅ Done | P02.15 | Coalesce checkout event bursts | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
