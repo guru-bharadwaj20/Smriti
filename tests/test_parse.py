@@ -86,3 +86,17 @@ def test_incremental_parse_matches_fresh():
     assert new.symbols == fresh.symbols
     assert old.symbols[1].start_line == 1
     assert new.symbols[1].start_line == 2
+
+
+def test_unicode_and_crlf_offsets():
+    from smriti.parse import source_slice, byte_point
+    source = "# café\r\ndef π():\r\n    return '你好'\r\n"
+    result = parse_file("unicode.py", source)
+    symbol = result.symbols[1]
+    assert symbol.name == "π"
+    assert source_slice(result, symbol).decode("utf-8") == symbol.body
+    assert byte_point(result.source, symbol.start_byte) == (1, 0)
+    parser = SourceParser()
+    parser.parse("unicode.py", source)
+    edited = parser.parse("unicode.py", source.replace("你好", "再见"))
+    assert edited.symbols == parse_file("unicode.py", edited.source).symbols
