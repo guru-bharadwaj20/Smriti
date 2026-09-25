@@ -74,6 +74,11 @@ class SourceParser:
                     binding = alias.asname or (alias.name if imported else alias.name.split(".")[0])
                     result.imports.append({"scope": parent.id, "module": module, "name": imported,
                         "alias": binding, "level": level, "line": node.start_point.row + 1})
+            if node.type == "call":
+                function = node.child_by_field_name("function")
+                result.calls.append({"scope": parent.id,
+                    "name": result.source[function.start_byte:function.end_byte].decode("utf-8"),
+                    "line": node.start_point.row + 1, "start_byte": node.start_byte})
             for child in node.named_children:
                 walk(child, parent)
         walk(root, result.symbols[0])
