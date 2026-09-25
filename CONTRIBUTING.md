@@ -139,7 +139,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P03.09 | Extract inheritance declarations | smriti/parse; pytest tests/test_parse.py passed |
 | ✅ Done | P03.10 | Model nested definitions and comprehensions | smriti/parse; pytest tests/test_parse.py passed |
 | ✅ Done | P03.11 | Store parser diagnostics for invalid syntax | smriti/parse; pytest tests/test_parse.py passed |
-| ❌ Pending | P03.12 | Reuse syntax trees for edited files | — |
+| ✅ Done | P03.12 | Reuse syntax trees for edited files | smriti/parse; pytest tests/test_parse.py passed |
 | ❌ Pending | P03.13 | Handle unicode offsets and line endings | — |
 | ❌ Pending | P03.14 | Chunk source at symbol boundaries | — |
 | ❌ Pending | P03.15 | Define treatment of oversized functions | — |

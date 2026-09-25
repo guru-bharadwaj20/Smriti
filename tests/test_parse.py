@@ -76,3 +76,13 @@ def test_invalid_syntax_diagnostics():
     assert result.tree.root_node.has_error
     assert result.diagnostics
     assert all(d["line"] >= 1 for d in result.diagnostics)
+
+
+def test_incremental_parse_matches_fresh():
+    parser = SourceParser()
+    old = parser.parse("a.py", "def f():\n    return 1\n")
+    new = parser.parse("a.py", "# comment\ndef f():\n    return 22\n")
+    fresh = SourceParser().parse("a.py", new.source)
+    assert new.symbols == fresh.symbols
+    assert old.symbols[1].start_line == 1
+    assert new.symbols[1].start_line == 2
