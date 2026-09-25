@@ -44,3 +44,10 @@ def test_aliased_imports():
     resolver = Resolver([helper, client])
     assert resolver.resolve_name("run", client.symbols[1].id) == helper.symbols[1].id
     assert resolver.resolve_name("h.work", client.symbols[1].id) == helper.symbols[1].id
+
+
+def test_relative_imports():
+    helper = parse_file("pkg/helpers.py", "def work():\n    pass\n")
+    client = parse_file("pkg/client.py", "from .helpers import work\ndef main():\n    work()\n")
+    resolver = Resolver([helper, client])
+    assert resolver.resolve_name("work", client.symbols[1].id) == helper.symbols[1].id

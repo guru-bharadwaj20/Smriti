@@ -24,6 +24,7 @@ def restart_distribution(nodes,seeds):
     return {id:value/total if total else 1/len(nodes) for id,value in values.items()}
 
 def personalized_pagerank(graph,seeds,damping=0.85,tolerance=1e-10,max_iterations=200):
+    if not 0<=damping<1 or tolerance<=0 or max_iterations<1: raise ValueError("invalid convergence settings")
     if not graph: return {}
     restart=restart_distribution(graph,seeds); scores=restart.copy(); matrix=transitions(graph)
     for _ in range(max_iterations):

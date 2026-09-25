@@ -161,7 +161,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P04.03 | Resolve enclosing-scope bindings | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.04 | Resolve module-level names | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.05 | Resolve aliased imports | smriti/resolve; pytest tests/test_resolve.py passed |
-| ❌ Pending | P04.06 | Resolve relative imports | — |
+| ✅ Done | P04.06 | Resolve relative imports | smriti/resolve; pytest tests/test_resolve.py passed |
 | ❌ Pending | P04.07 | Resolve re-exported names within supported scope | — |
 | ❌ Pending | P04.08 | Record builtins and external references | — |
 | ❌ Pending | P04.09 | Resolve self method calls | — |
@@ -257,7 +257,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P07.08 | Normalize transitions and handle dangling nodes | smriti/rank/pagerank.py; executable assertions passed |
 | ✅ Done | P07.09 | Seed personalized restart distribution | smriti/rank/pagerank.py; executable assertions passed |
 | ✅ Done | P07.10 | Implement PageRank power iteration | smriti/rank/pagerank.py; executable assertions passed |
-| ❌ Pending | P07.11 | Specify convergence and iteration limits | — |
+| ✅ Done | P07.11 | Specify convergence and iteration limits | smriti/rank/pagerank.py; executable assertions passed |
 | ❌ Pending | P07.12 | Test ranking on a hand-computed graph | — |
 | ❌ Pending | P07.13 | Expand candidate set with callers | — |
 | ❌ Pending | P07.14 | Include associated tests and configuration | — |
@@ -430,7 +430,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P13.04 | Validate task repository and commit identity | bench/swebench/validation.py; wrong-repo commit and dirty-checkout tests passed |
 | ✅ Done | P13.05 | Extract patch ground truth outside indexed tree | bench/swebench/ground_truth.py; changed-context and added-file tests passed |
 | ✅ Done | P13.06 | Map changed functions to base-commit symbols | bench/swebench/mapping.py; neighboring nested and added-function cases passed |
-| ❌ Pending | P13.07 | Define handling of added and deleted functions | — |
+| ✅ Done | P13.07 | Define handling of added and deleted functions | docs/evaluation-labels.md; base-commit label policy reviewed |
 | ❌ Pending | P13.08 | Prevent patch and post-fix code leakage | — |
 | ❌ Pending | P13.09 | Implement issue-word grep baseline | — |
 | ❌ Pending | P13.10 | Implement lexical-only baseline | — |
