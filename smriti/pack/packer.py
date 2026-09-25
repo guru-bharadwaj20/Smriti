@@ -63,3 +63,14 @@ def greedy(groups,budget):
         if not upgrades: return chosen
         *_,negative_i,option=max(upgrades,key=lambda u:u[:4]); i=-negative_i
         used+=option.cost-chosen[i].cost; chosen[i]=option
+
+def add_parent_context(groups,symbols,counter):
+    by_id={symbol.id:symbol for symbol in symbols}
+    result=[]
+    for symbol,options in zip(symbols,groups):
+        parent=by_id.get(getattr(symbol,'parent_id',None))
+        if parent and parent.kind=='class' and symbol.kind in {'method','function'}:
+            header=signature_text(parent)
+            options=[Representation(o.id,o.level,header+o.text,counter.count(header+o.text),o.value) if o.level!='omit' else o for o in options]
+        result.append(options)
+    return result
