@@ -161,7 +161,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P04.03 | Resolve enclosing-scope bindings | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.04 | Resolve module-level names | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.05 | Resolve aliased imports | smriti/resolve; pytest tests/test_resolve.py passed |
-| ❌ Pending | P04.06 | Resolve relative imports | — |
+| ✅ Done | P04.06 | Resolve relative imports | smriti/resolve; pytest tests/test_resolve.py passed |
 | ❌ Pending | P04.07 | Resolve re-exported names within supported scope | — |
 | ❌ Pending | P04.08 | Record builtins and external references | — |
 | ❌ Pending | P04.09 | Resolve self method calls | — |

@@ -97,6 +97,17 @@ class Resolver:
         if not declaration:
             return None
         module = declaration["module"]
+        if declaration["level"]:
+            owner = self.symbols[scope]
+            while owner.kind != "module":
+                owner = self.symbols[owner.parent_id]
+            package = owner.qualname if owner.path.endswith("/__init__.py") else owner.qualname.rpartition(".")[0]
+            components = package.split(".") if package else []
+            ascend = declaration["level"] - 1
+            if ascend > len(components):
+                return None
+            prefix = components[:len(components) - ascend]
+            module = ".".join([*prefix, module] if module else prefix)
         imported = declaration["name"]
         qualified = ".".join(part for part in [module, imported, *tail] if part)
         for symbol in self.symbols.values():
