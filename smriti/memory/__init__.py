@@ -43,6 +43,7 @@ class MemoryStore:
         self.db.execute("CREATE TABLE IF NOT EXISTS facts (id TEXT PRIMARY KEY, payload TEXT NOT NULL)")
         self.db.execute('CREATE TABLE IF NOT EXISTS fact_anchors (fact_id TEXT, symbol_id TEXT, content_hash TEXT, PRIMARY KEY (fact_id, symbol_id))')
         self.db.execute('CREATE TABLE IF NOT EXISTS fact_audit (seq INTEGER PRIMARY KEY, fact_id TEXT, before_payload TEXT, after_payload TEXT)')
+        self.db.execute('CREATE TABLE IF NOT EXISTS conflict_audit (seq INTEGER PRIMARY KEY, fact_id TEXT, candidate_ids TEXT, winner_id TEXT)')
         self.db.commit()
 
     def close(self):
@@ -163,5 +164,12 @@ class MemoryStore:
         if fact is None:
             raise KeyError(fact_id)
         priorities = source_priority or {"code": 3, "test": 2, "user": 1}
-        return max([fact, *self.contradictions(fact_id)], key=lambda f: (priorities.get(f.source, 0), f.confidence, f.id))
+        candidates = [fact, *self.contradictions(fact_id)]
+        winner = max(candidates, key=lambda f: (priorities.get(f.source, 0), f.confidence, f.id))
+        with self.db:
+            self.db.execute("INSERT INTO conflict_audit(fact_id,candidate_ids,winner_id) VALUES (?,?,?)", (fact_id, json.dumps(sorted(f.id for f in candidates)), winner.id))
+        return winner
 # P09.19
+    def conflict_history(self, fact_id):
+        return [{"candidates": json.loads(c), "winner": w} for c, w in self.db.execute("SELECT candidate_ids,winner_id FROM conflict_audit WHERE fact_id=? ORDER BY seq", (fact_id,))]
+# P09.20

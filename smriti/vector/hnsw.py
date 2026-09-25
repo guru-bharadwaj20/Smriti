@@ -100,3 +100,14 @@ class HNSWIndex:
         x.graph={id:{int(layer):set(links) for layer,links in layers.items()} for id,layers in data['graph'].items()}
         state=data['random_state']; x.random.setstate((state[0],tuple(state[1]),state[2]))
         return x
+
+    def validate(self):
+        if set(self.vectors)!=set(self.graph) or set(self.graph)!=set(self.levels): raise ValueError('node sets differ')
+        if self.entry is not None and self.levels[self.entry]!=max(self.levels.values()): raise ValueError('invalid entry level')
+        for id,layers in self.graph.items():
+            if set(layers)!=set(range(self.levels[id]+1)): raise ValueError('missing layers')
+            for layer,links in layers.items():
+                if len(links)>(2*self.m if layer==0 else self.m): raise ValueError('degree exceeded')
+                for other in links:
+                    if other==id or other not in self.graph or layer not in self.graph[other] or id not in self.graph[other][layer]: raise ValueError('invalid reciprocal edge')
+        return True

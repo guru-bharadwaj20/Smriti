@@ -236,7 +236,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P06.20 | Implement deletion repair or rebuild strategy | smriti/vector/hnsw.py; executable assertions passed |
 | ✅ Done | P06.21 | Update embeddings after source edits | tests/test_vector.py; executable assertions passed |
 | ✅ Done | P06.22 | Persist and reload HNSW graph | smriti/vector/hnsw.py; executable assertions passed |
-| ❌ Pending | P06.23 | Validate graph invariants after updates | — |
+| ✅ Done | P06.23 | Validate graph invariants after updates | smriti/vector/hnsw.py; executable assertions passed |
 | ❌ Pending | P06.24 | Compare recall at 10 against exact search | — |
 | ✅ Done | P06.25 | Compare quality and throughput with hnswlib | bench/vector/hnsw_reference.py; bench/vector/hnsw_reference.json; real exact-oracle recall and throughput |
 | ❌ Pending | P06.26 | Measure memory and CPU query latency | — |
@@ -282,7 +282,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P08.08 | Assign values to representation levels | smriti/pack/packer.py; executable assertions passed |
 | ✅ Done | P08.09 | Implement multiple-choice knapsack dynamic program | smriti/pack/packer.py; executable assertions passed |
 | ✅ Done | P08.10 | Implement bucketed budget option | tests/test_pack.py; executable assertions passed |
-| ❌ Pending | P08.11 | Implement greedy marginal-value baseline | — |
+| ✅ Done | P08.11 | Implement greedy marginal-value baseline | smriti/pack/packer.py; executable assertions passed |
 | ❌ Pending | P08.12 | Require minimum class context for methods | — |
 | ❌ Pending | P08.13 | Deduplicate class and method bodies | — |
 | ❌ Pending | P08.14 | Handle dependency costs during packing | — |
@@ -320,7 +320,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P09.17 | Detect contradiction candidates by subject | smriti\memory\__init__.py; P09.17 regression in tests\test_memory.py |
 | ✅ Done | P09.18 | Combine embedding similarity with anchor overlap | smriti\memory\__init__.py; P09.18 regression in tests\test_memory.py |
 | ✅ Done | P09.19 | Implement source-priority conflict rules | smriti\memory\__init__.py; P09.19 regression in tests\test_memory.py |
-| ❌ Pending | P09.20 | Retain conflicting fact versions for audit | — |
+| ✅ Done | P09.20 | Retain conflicting fact versions for audit | smriti\memory\__init__.py; P09.20 regression in tests\test_memory.py |
 | ❌ Pending | P09.21 | Test freshness across edits, moves, and deletions | — |
 
 ### P10 — Bitemporal and versioned memory log
