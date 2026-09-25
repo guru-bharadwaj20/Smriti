@@ -21,3 +21,9 @@ def reciprocal_rank_fusion(rankings,weights=None,constant=60):
             if id in seen: continue
             seen.add(id); scores[id]=scores.get(id,0)+weight/(constant+position)
     return dict(sorted(scores.items(),key=lambda item:(-item[1],item[0])))
+
+def expand_callers(seeds,edges):
+    selected=set(seeds)
+    for source,target,kind,*_ in edges:
+        if kind=='calls' and target in seeds: selected.add(source)
+    return selected
