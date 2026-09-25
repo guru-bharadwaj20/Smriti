@@ -219,7 +219,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P06.03 | Configure ONNX CPU inference | smriti/vector/embedding.py; executable assertions passed |
 | ✅ Done | P06.04 | Evaluate int8 embedding quality | bench/vector/embedding_quality.py; bench/vector/embedding_quality.json; executable assertions passed |
 | ✅ Done | P06.05 | Batch symbol embedding requests | smriti/vector/embedding.py; executable assertions passed |
-| ❌ Pending | P06.06 | Cache embeddings by content and model version | — |
+| ✅ Done | P06.06 | Cache embeddings by content and model version | smriti/vector/embedding.py; executable assertions passed |
 | ✅ Done | P06.07 | Normalize vectors for chosen distance metric | smriti/vector/math.py; smriti/vector/__init__.py; executable assertions passed |
 | ✅ Done | P06.08 | Persist vectors in memory-mapped storage | smriti/vector/storage.py; executable assertions passed |
 | ✅ Done | P06.09 | Implement exact nearest-neighbor oracle | smriti/vector/math.py; executable assertions passed |
