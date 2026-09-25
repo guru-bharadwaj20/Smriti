@@ -49,3 +49,17 @@ def knapsack(groups,budget,bucket=1):
     while chain is not None:
         option,chain=chain; result.append(option)
     return list(reversed(result))
+
+def greedy(groups,budget):
+    chosen=[options[0] for options in groups]; used=0
+    while True:
+        upgrades=[]
+        for i,options in enumerate(groups):
+            current=chosen[i]
+            for option in options:
+                extra=option.cost-current.cost; gain=option.value-current.value
+                if gain>0 and extra>=0 and used+extra<=budget:
+                    upgrades.append((gain/max(extra,1),gain,-extra,-i,option))
+        if not upgrades: return chosen
+        *_,negative_i,option=max(upgrades,key=lambda u:u[:4]); i=-negative_i
+        used+=option.cost-chosen[i].cost; chosen[i]=option
