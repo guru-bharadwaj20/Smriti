@@ -275,7 +275,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P08.01 | Define omitted symbol representation | smriti/pack/__init__.py; smriti/pack/packer.py; executable assertions passed |
 | ✅ Done | P08.02 | Define name and path representation | smriti/pack/packer.py; executable assertions passed |
 | ✅ Done | P08.03 | Define signature and docstring representation | smriti/pack/packer.py; executable assertions passed |
-| ❌ Pending | P08.04 | Define full-body representation | — |
+| ✅ Done | P08.04 | Define full-body representation | smriti/pack/packer.py; executable assertions passed |
 | ❌ Pending | P08.05 | Integrate chosen model tokenizer | — |
 | ❌ Pending | P08.06 | Count rendering overhead and metadata tokens | — |
 | ❌ Pending | P08.07 | Reserve budget for memory and response framing | — |
