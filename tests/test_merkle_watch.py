@@ -42,3 +42,14 @@ def test_affected_jobs_do_not_parse_deletions():
     assert parse == ["a.py", "d.py"]
     assert remove == ["b.py", "c.py"]
     assert not rescan
+
+
+def test_symbol_delta_detects_edits_and_deletion():
+    from smriti.watch import diff_symbols
+    from smriti.parse import parse_file
+    old = parse_file("a.py", "def a():\n    return 1\ndef b():\n    pass\n").symbols
+    new = parse_file("a.py", "def a():\n    return 2\n").symbols
+    delta = diff_symbols(old, new)
+    assert [s.name for s in delta.removed] == ["b"]
+    assert {s.name for s in delta.changed} == {"a", "a"}
+    assert not delta.added
