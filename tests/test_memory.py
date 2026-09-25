@@ -151,6 +151,21 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual(len(store.recall()), 2)
         store.close()
 
+    def test_edit_move_delete_lifecycle(self):
+        from smriti.memory import Anchor
+        store = MemoryStore(":memory:")
+        f = store.remember("cache invariant", anchors=[Anchor("old", "v1")])
+        store.refresh({"new": "v1"}, renames={"old": "new"}, commit="move")
+        self.assertEqual(store.recall()[0].freshness, "fresh")
+        store.refresh({"new": "v2"}, commit="edit")
+        self.assertEqual(store.recall()[0].freshness, "stale")
+        store.revalidate(f.id, {"new": "v2"})
+        store.refresh({}, commit="delete")
+        self.assertEqual(store.recall()[0].freshness, "orphaned")
+        with self.assertRaises(ValueError):
+            store.revalidate(f.id, {})
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"

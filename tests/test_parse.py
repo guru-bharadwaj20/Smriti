@@ -100,3 +100,12 @@ def test_unicode_and_crlf_offsets():
     parser.parse("unicode.py", source)
     edited = parser.parse("unicode.py", source.replace("你好", "再见"))
     assert edited.symbols == parse_file("unicode.py", edited.source).symbols
+
+
+def test_chunks_follow_symbol_boundaries():
+    from smriti.parse import symbol_chunks
+    result = parse_file("a.py", "def a():\n    pass\ndef b():\n    pass\n")
+    chunks = symbol_chunks(result)
+    assert len(chunks) == 2
+    assert chunks[0][1].startswith(b"def a")
+    assert chunks[1][1].startswith(b"def b")

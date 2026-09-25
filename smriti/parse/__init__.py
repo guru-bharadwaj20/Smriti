@@ -133,3 +133,9 @@ def byte_point(source: bytes, position: int) -> tuple[int, int]:
         raise ValueError("Offset outside source")
     prefix = source[:position]
     return prefix.count(b"\n"), len(prefix.rsplit(b"\n", 1)[-1])
+
+
+def symbol_chunks(result: ParseResult) -> list[tuple[str, bytes]]:
+    """Independent source units follow definitions; modules only when no definitions exist."""
+    definitions = [s for s in result.symbols if s.kind != "module"]
+    return [(symbol.id, source_slice(result, symbol)) for symbol in definitions or result.symbols]

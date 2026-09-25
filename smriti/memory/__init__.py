@@ -173,3 +173,5 @@ class MemoryStore:
     def conflict_history(self, fact_id):
         return [{"candidates": json.loads(c), "winner": w} for c, w in self.db.execute("SELECT candidate_ids,winner_id FROM conflict_audit WHERE fact_id=? ORDER BY seq", (fact_id,))]
 # P09.20
+
+# P09.21
