@@ -91,6 +91,15 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual(store.refresh({"a": "1"})[0].freshness, "orphaned")
         store.close()
 
+    def test_stale_ranking(self):
+        from smriti.memory import Anchor
+        store = MemoryStore(":memory:")
+        store.remember("rule stale", anchors=[Anchor("x", "old")], fact_id="a")
+        store.remember("rule fresh", fact_id="z")
+        store.refresh({"x": "new"})
+        self.assertEqual(store.recall("rule")[0].id, "z")
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"

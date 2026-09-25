@@ -112,7 +112,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P02.13 | Connect filesystem watcher | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ✅ Done | P02.14 | Debounce repeated events | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ✅ Done | P02.15 | Coalesce checkout event bursts | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
-| ❌ Pending | P02.16 | Schedule affected-file indexing jobs | — |
+| ✅ Done | P02.16 | Schedule affected-file indexing jobs | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ❌ Pending | P02.17 | Diff old and new symbol sets | — |
 | ❌ Pending | P02.18 | Preserve symbol IDs for verified renames | — |
 | ❌ Pending | P02.19 | Remove dangling graph references after deletion | — |
@@ -200,7 +200,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P05.12 | Implement BM25F field weighting | smriti/lexical/index.py; executable assertions passed |
 | ✅ Done | P05.13 | Encode posting deltas | smriti/lexical/codec.py; executable assertions passed |
 | ✅ Done | P05.14 | Implement variable-byte encoding | smriti/lexical/codec.py; executable assertions passed |
-| ❌ Pending | P05.15 | Implement posting decoding | — |
+| ✅ Done | P05.15 | Implement posting decoding | smriti/lexical/codec.py; executable assertions passed |
 | ❌ Pending | P05.16 | Add symbols incrementally | — |
 | ❌ Pending | P05.17 | Remove symbols and update statistics | — |
 | ❌ Pending | P05.18 | Persist and reload lexical index | — |
@@ -276,7 +276,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P08.02 | Define name and path representation | smriti/pack/packer.py; executable assertions passed |
 | ✅ Done | P08.03 | Define signature and docstring representation | smriti/pack/packer.py; executable assertions passed |
 | ✅ Done | P08.04 | Define full-body representation | smriti/pack/packer.py; executable assertions passed |
-| ❌ Pending | P08.05 | Integrate chosen model tokenizer | — |
+| ✅ Done | P08.05 | Integrate chosen model tokenizer | smriti/pack/tokens.py; executable assertions passed |
 | ❌ Pending | P08.06 | Count rendering overhead and metadata tokens | — |
 | ❌ Pending | P08.07 | Reserve budget for memory and response framing | — |
 | ❌ Pending | P08.08 | Assign values to representation levels | — |
@@ -314,7 +314,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P09.11 | Follow verified symbol renames | smriti\memory\__init__.py; P09.11 regression in tests\test_memory.py |
 | ✅ Done | P09.12 | Record freshness reason and triggering commit | smriti\memory\__init__.py; P09.12 regression in tests\test_memory.py |
 | ✅ Done | P09.13 | Define policy for memories with multiple anchors | smriti\memory\__init__.py; P09.13 regression in tests\test_memory.py |
-| ❌ Pending | P09.14 | Rank stale facts lower during recall | — |
+| ✅ Done | P09.14 | Rank stale facts lower during recall | smriti\memory\__init__.py; P09.14 regression in tests\test_memory.py |
 | ❌ Pending | P09.15 | Show freshness state in recall results | — |
 | ❌ Pending | P09.16 | Handle revalidation without losing history | — |
 | ❌ Pending | P09.17 | Detect contradiction candidates by subject | — |

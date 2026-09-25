@@ -17,3 +17,23 @@ def encode(values):
             value >>= 7
         out.append(value | 128)
     return bytes(out)
+
+def decode(data):
+    result=[]
+    value=shift=0
+    for byte in data:
+        value |= (byte & 127) << shift
+        if byte & 128:
+            result.append(value)
+            value=shift=0
+        else: shift+=7
+    if shift: raise ValueError("truncated variable-byte stream")
+    return result
+
+def posting_ids(data):
+    value=0
+    result=[]
+    for delta in decode(data):
+        value+=delta
+        result.append(value)
+    return result

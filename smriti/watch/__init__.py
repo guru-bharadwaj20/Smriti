@@ -61,3 +61,18 @@ class ChangeWatcher:
             if self.observer.is_alive():
                 raise TimeoutError("Filesystem observer failed to stop")
             self.observer = None
+
+
+def affected_file_jobs(events: list[FileChange]) -> tuple[list[str], list[str], bool]:
+    """A checkout requires one snapshot diff; source paths queue once per burst."""
+    if any(event.kind == "rescan" for event in events):
+        return [], [], True
+    parse, remove = set(), set()
+    for event in events:
+        if event.kind in {"created", "modified", "moved"}:
+            parse.add(event.path)
+        if event.kind == "deleted":
+            remove.add(event.path)
+        if event.kind == "moved" and event.old_path:
+            remove.add(event.old_path)
+    return sorted(parse), sorted(remove - parse), False
