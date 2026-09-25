@@ -101,3 +101,12 @@ def test_deleted_files():
     from smriti.merkle import MerkleSnapshot, deleted_files
     changes = deleted_files(MerkleSnapshot({"old.py": hash_content(b"n")}), MerkleSnapshot())
     assert [(event.kind, event.path) for event in changes] == [("deleted", "old.py")]
+
+
+def test_moves_are_verified_and_ambiguity_is_retained():
+    from smriti.merkle import MerkleSnapshot, diff_snapshots
+    digest = hash_content(b"same")
+    events = diff_snapshots(MerkleSnapshot({"a.py": digest}), MerkleSnapshot({"b.py": digest}))
+    assert [(event.kind, event.path, event.old_path) for event in events] == [("moved", "b.py", "a.py")]
+    events = diff_snapshots(MerkleSnapshot({"a.py": digest}), MerkleSnapshot({"b.py": digest, "c.py": digest}))
+    assert all(event.kind != "moved" for event in events)

@@ -108,7 +108,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P02.09 | Detect created files | smriti/merkle; pytest tests/test_merkle.py passed |
 | ✅ Done | P02.10 | Detect modified files | smriti/merkle; pytest tests/test_merkle.py passed |
 | ✅ Done | P02.11 | Detect deleted files | smriti/merkle; pytest tests/test_merkle.py passed |
-| ❌ Pending | P02.12 | Detect unchanged-content file moves | — |
+| ✅ Done | P02.12 | Detect unchanged-content file moves | smriti/merkle; pytest tests/test_merkle.py passed |
 | ✅ Done | P02.13 | Connect filesystem watcher | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ✅ Done | P02.14 | Debounce repeated events | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ✅ Done | P02.15 | Coalesce checkout event bursts | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
@@ -217,7 +217,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P06.01 | Select and record embedding model license | docs/embeddings.md; executable assertions passed |
 | ✅ Done | P06.02 | Pin model artifact and checksum | smriti/vector/model_manifest.json; smriti/vector/download.py; executable assertions passed |
 | ✅ Done | P06.03 | Configure ONNX CPU inference | smriti/vector/embedding.py; executable assertions passed |
-| ❌ Pending | P06.04 | Evaluate int8 embedding quality | — |
+| ✅ Done | P06.04 | Evaluate int8 embedding quality | bench/vector/embedding_quality.py; bench/vector/embedding_quality.json; executable assertions passed |
 | ❌ Pending | P06.05 | Batch symbol embedding requests | — |
 | ❌ Pending | P06.06 | Cache embeddings by content and model version | — |
 | ✅ Done | P06.07 | Normalize vectors for chosen distance metric | smriti/vector/math.py; smriti/vector/__init__.py; executable assertions passed |
@@ -253,7 +253,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P07.04 | Implement reciprocal rank fusion | smriti/rank/hybrid.py; executable assertions passed |
 | ✅ Done | P07.05 | Define graph edge type weights | smriti/rank/pagerank.py; executable assertions passed |
 | ✅ Done | P07.06 | Include resolution confidence in weights | smriti/rank/pagerank.py; executable assertions passed |
-| ❌ Pending | P07.07 | Build sparse adjacency representation | — |
+| ✅ Done | P07.07 | Build sparse adjacency representation | smriti/rank/pagerank.py; executable assertions passed |
 | ❌ Pending | P07.08 | Normalize transitions and handle dangling nodes | — |
 | ❌ Pending | P07.09 | Seed personalized restart distribution | — |
 | ❌ Pending | P07.10 | Implement PageRank power iteration | — |

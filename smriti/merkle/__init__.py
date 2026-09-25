@@ -141,3 +141,19 @@ def modified_files(old: MerkleSnapshot, new: MerkleSnapshot) -> list[FileChange]
 
 def deleted_files(old: MerkleSnapshot, new: MerkleSnapshot) -> list[FileChange]:
     return [FileChange("deleted", path) for path in sorted(old.files.keys() - new.files.keys())]
+
+
+def diff_snapshots(old: MerkleSnapshot, new: MerkleSnapshot) -> list[FileChange]:
+    """Verify content moves only when the deleted/created digest is unique."""
+    created = {event.path for event in created_files(old, new)}
+    deleted = {event.path for event in deleted_files(old, new)}
+    moves = []
+    for digest in sorted({old.files[path] for path in deleted}):
+        sources = sorted(path for path in deleted if old.files[path] == digest)
+        targets = sorted(path for path in created if new.files[path] == digest)
+        if len(sources) == len(targets) == 1:
+            moves.append(FileChange("moved", targets[0], sources[0]))
+            deleted.remove(sources[0])
+            created.remove(targets[0])
+    return (moves + [FileChange("created", p) for p in sorted(created)]
+            + modified_files(old, new) + [FileChange("deleted", p) for p in sorted(deleted)])

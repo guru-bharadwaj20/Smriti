@@ -1,0 +1,33 @@
+{
+  "hardware": "Intel64 Family 6 Model 61 Stepping 4, GenuineIntel",
+  "os": "Windows-11-10.0.22000-SP0",
+  "python": "3.13.1",
+  "texts": [
+    "def load_user(id): return db.get(id)",
+    "def save_user(user): db.put(user)",
+    "def delete_user(id): db.delete(id)",
+    "def hash_password(value): return sha256(value)",
+    "def validate_token(token): return decode(token)",
+    "def parse_config(path): return json.load(path)",
+    "def read_file(path): return path.read_text()",
+    "def write_file(path,data): path.write_text(data)",
+    "def run_tests(): return pytest.main()",
+    "def start_server(port): app.listen(port)",
+    "def stop_server(): app.close()",
+    "def fetch_url(url): return requests.get(url)"
+  ],
+  "queries": [
+    "load a database user",
+    "write settings file",
+    "authenticate password",
+    "start HTTP service",
+    "execute tests",
+    "download a web resource"
+  ],
+  "mean_cosine_fp32_uint8": 0.9939659630427072,
+  "minimum_cosine_fp32_uint8": 0.9907128246394511,
+  "mean_top5_overlap": 1.0,
+  "fp32_batch_seconds": 0.3325492000003578,
+  "uint8_batch_seconds": 0.46998059999896213,
+  "note": "Small code smoke fixture; embedding/rank preservation only, not held-out SWE-bench retrieval quality or evidence of int8 speedup."
+}
