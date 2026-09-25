@@ -91,7 +91,11 @@ class Resolver:
             visit(tree, result.symbols[0].id)
 
 
-    def resolve_import(self, name: str, scope: str) -> str | None:
+    def resolve_import(self, name: str, scope: str, visited=None) -> str | None:
+        visited = set() if visited is None else visited
+        if (scope, name) in visited:
+            return None
+        visited.add((scope, name))
         head, *tail = name.split(".")
         declaration = self.imports.get((scope, head))
         if not declaration:
@@ -113,4 +117,9 @@ class Resolver:
         for symbol in self.symbols.values():
             if symbol.qualname == qualified:
                 return symbol.id
+        owner = next((symbol for symbol in self.symbols.values() if symbol.kind == "module" and symbol.qualname == module), None)
+        if owner and imported:
+            target = self.resolve_import(".".join([imported, *tail]), owner.id, visited)
+            if target:
+                return target
         return None

@@ -51,3 +51,14 @@ def test_relative_imports():
     client = parse_file("pkg/client.py", "from .helpers import work\ndef main():\n    work()\n")
     resolver = Resolver([helper, client])
     assert resolver.resolve_name("work", client.symbols[1].id) == helper.symbols[1].id
+
+
+def test_reexports_and_cycles_are_conservative():
+    original = parse_file("impl.py", "def work():\n    pass\n")
+    export = parse_file("api.py", "from impl import work\n")
+    client = parse_file("client.py", "from api import work as run\ndef main():\n    run()\n")
+    resolver = Resolver([original, export, client])
+    assert resolver.resolve_name("run", client.symbols[1].id) == original.symbols[1].id
+    a = parse_file("a.py", "from b import unknown\n")
+    b = parse_file("b.py", "from a import unknown\n")
+    assert Resolver([a, b]).resolve_name("unknown", a.symbols[0].id) is None
