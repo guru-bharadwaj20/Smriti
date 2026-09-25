@@ -66,7 +66,8 @@ class MemoryStore:
 
     def recall(self, query="") -> list[Fact]:
         facts = [self._decode(row[0]) for row in self.db.execute("SELECT payload FROM facts ORDER BY id")]
-        return [f for f in facts if query.casefold() in f.text.casefold()]
+        matches = [f for f in facts if query.casefold() in f.text.casefold()]
+        return sorted(matches, key=lambda f: ({'fresh': 0, 'stale': 1, 'orphaned': 2}[f.freshness], -f.confidence, f.id))
 
     @staticmethod
     def _decode(payload):
@@ -113,3 +114,5 @@ class MemoryStore:
             raise KeyError(fact_id)
         return {a.symbol_id: ("orphaned" if a.symbol_id not in symbols else "fresh" if symbols[a.symbol_id] == a.content_hash else "stale") for a in fact.anchors}
 # P09.13
+
+# P09.14
