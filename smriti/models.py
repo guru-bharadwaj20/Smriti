@@ -3,7 +3,6 @@
 from dataclasses import dataclass
 from typing import Literal
 
-
 SymbolKind = Literal['module', 'class', 'function', 'method', 'variable']
 EdgeKind = Literal['defines', 'contains', 'calls', 'imports', 'inherits', 'tests', 'may_call']
 

@@ -137,7 +137,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P03.07 | Extract import declarations | smriti/parse; pytest tests/test_parse.py passed |
 | ✅ Done | P03.08 | Extract call expression candidates | smriti/parse; pytest tests/test_parse.py passed |
 | ✅ Done | P03.09 | Extract inheritance declarations | smriti/parse; pytest tests/test_parse.py passed |
-| ❌ Pending | P03.10 | Model nested definitions and comprehensions | — |
+| ✅ Done | P03.10 | Model nested definitions and comprehensions | smriti/parse; pytest tests/test_parse.py passed |
 | ❌ Pending | P03.11 | Store parser diagnostics for invalid syntax | — |
 | ❌ Pending | P03.12 | Reuse syntax trees for edited files | — |
 | ❌ Pending | P03.13 | Handle unicode offsets and line endings | — |
@@ -160,7 +160,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P04.02 | Resolve local bindings | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.03 | Resolve enclosing-scope bindings | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.04 | Resolve module-level names | smriti/resolve; pytest tests/test_resolve.py passed |
-| ❌ Pending | P04.05 | Resolve aliased imports | — |
+| ✅ Done | P04.05 | Resolve aliased imports | smriti/resolve; pytest tests/test_resolve.py passed |
 | ❌ Pending | P04.06 | Resolve relative imports | — |
 | ❌ Pending | P04.07 | Resolve re-exported names within supported scope | — |
 | ❌ Pending | P04.08 | Record builtins and external references | — |
@@ -256,7 +256,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P07.07 | Build sparse adjacency representation | smriti/rank/pagerank.py; executable assertions passed |
 | ✅ Done | P07.08 | Normalize transitions and handle dangling nodes | smriti/rank/pagerank.py; executable assertions passed |
 | ✅ Done | P07.09 | Seed personalized restart distribution | smriti/rank/pagerank.py; executable assertions passed |
-| ❌ Pending | P07.10 | Implement PageRank power iteration | — |
+| ✅ Done | P07.10 | Implement PageRank power iteration | smriti/rank/pagerank.py; executable assertions passed |
 | ❌ Pending | P07.11 | Specify convergence and iteration limits | — |
 | ❌ Pending | P07.12 | Test ranking on a hand-computed graph | — |
 | ❌ Pending | P07.13 | Expand candidate set with callers | — |

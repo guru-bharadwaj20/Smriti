@@ -36,3 +36,11 @@ def test_module_level_names_and_recursion():
     assert resolver.resolve_name("helper", result.symbols[2].id) == result.symbols[1].id
     assert resolver.resolve_name("helper", result.symbols[1].id) == result.symbols[1].id
     assert resolver.resolve_name("a.helper", result.symbols[0].id) == result.symbols[1].id
+
+
+def test_aliased_imports():
+    helper = parse_file("helpers.py", "def work():\n    pass\n")
+    client = parse_file("client.py", "from helpers import work as run\nimport helpers as h\ndef main():\n    run()\n    h.work()\n")
+    resolver = Resolver([helper, client])
+    assert resolver.resolve_name("run", client.symbols[1].id) == helper.symbols[1].id
+    assert resolver.resolve_name("h.work", client.symbols[1].id) == helper.symbols[1].id

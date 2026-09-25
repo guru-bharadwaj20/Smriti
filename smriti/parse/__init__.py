@@ -17,6 +17,7 @@ class ParseResult:
     calls: list = field(default_factory=list)
     inheritance: list = field(default_factory=list)
     diagnostics: list = field(default_factory=list)
+    comprehensions: list = field(default_factory=list)
 
 
 class SourceParser:
@@ -85,6 +86,10 @@ class SourceParser:
                 result.calls.append({"scope": parent.id,
                     "name": result.source[function.start_byte:function.end_byte].decode("utf-8"),
                     "line": node.start_point.row + 1, "start_byte": node.start_byte})
+            if node.type in {"list_comprehension", "set_comprehension", "dictionary_comprehension", "generator_expression"}:
+                # Python comprehension targets are isolated from their enclosing scope.
+                result.comprehensions.append({"parent": parent.id, "start_byte": node.start_byte,
+                    "end_byte": node.end_byte, "source": result.source[node.start_byte:node.end_byte].decode("utf-8")})
             for child in node.named_children:
                 walk(child, parent)
         walk(root, result.symbols[0])

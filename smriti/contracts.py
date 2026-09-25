@@ -1,4 +1,5 @@
 """Public retrieval output contracts shared by interfaces."""
+
 from dataclasses import dataclass
 
 

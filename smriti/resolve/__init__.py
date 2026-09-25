@@ -13,6 +13,7 @@ class Resolver:
             if symbol.parent_id:
                 self.children.setdefault(symbol.parent_id, {})[symbol.name] = symbol.id
         self.edges = []
+        self.imports = {(item["scope"], item["alias"]): item for result in self.results for item in result.imports}
         self.bindings = {}
         self.declarations = {}
         self._bind()
@@ -36,7 +37,7 @@ class Resolver:
             return None
         if binding != "@missing" and binding != name:
             return self.resolve_name(binding, scope, visited)
-        target = self.children.get(scope, {}).get(name)
+        target = self.resolve_import(name, scope) or self.children.get(scope, {}).get(name)
         if target:
             return target
         parent = self.parents.get(scope)
@@ -88,3 +89,17 @@ class Resolver:
                 for child in ast.iter_child_nodes(node):
                     visit(child, scope)
             visit(tree, result.symbols[0].id)
+
+
+    def resolve_import(self, name: str, scope: str) -> str | None:
+        head, *tail = name.split(".")
+        declaration = self.imports.get((scope, head))
+        if not declaration:
+            return None
+        module = declaration["module"]
+        imported = declaration["name"]
+        qualified = ".".join(part for part in [module, imported, *tail] if part)
+        for symbol in self.symbols.values():
+            if symbol.qualname == qualified:
+                return symbol.id
+        return None

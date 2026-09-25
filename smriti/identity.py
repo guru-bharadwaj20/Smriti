@@ -1,8 +1,8 @@
 """Stable repository identity and initial symbol identifiers."""
 
+import uuid
 from hashlib import sha256
 from pathlib import Path
-import uuid
 
 
 def repository_id(root: Path) -> str:

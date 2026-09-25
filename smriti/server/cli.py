@@ -1,13 +1,16 @@
 """Smriti command line interface."""
 
-import typer
-from pathlib import Path
-from dataclasses import asdict
 import json
+from dataclasses import asdict
+from pathlib import Path
+from typing import Annotated
+
+import typer
 
 from smriti import __version__
 
 app = typer.Typer(help='Local code context and versioned memory.', no_args_is_help=True)
+DEFAULT_ROOT = Path('.')
 
 
 @app.callback()
@@ -22,7 +25,9 @@ def version() -> None:
 
 
 @app.command('index')
-def index_repository(root: Path = typer.Option(Path('.'), '--root')) -> None:
+def index_repository(
+    root: Annotated[Path, typer.Option('--root', exists=True, file_okay=False)] = DEFAULT_ROOT,
+) -> None:
     """Index supported source files and atomically publish a query snapshot."""
     from smriti.server.service import SmritiService
 
