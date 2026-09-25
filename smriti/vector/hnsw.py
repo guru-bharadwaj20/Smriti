@@ -87,3 +87,16 @@ class HNSWIndex:
         live={id:v for id,v in self.vectors.items() if id not in self.deleted}
         self.vectors={}; self.levels={}; self.graph={}; self.entry=None; self.deleted=set(); self.random=random.Random(self.seed)
         for id in sorted(live): self.add(id,live[id])
+
+    def save(self,path):
+        data={"version":1,"m":self.m,"ef_construction":self.ef_construction,"ef_search":self.ef_search,"seed":self.seed,"vectors":self.vectors,"levels":self.levels,"entry":self.entry,"deleted":sorted(self.deleted),"graph":{id:{str(layer):sorted(links) for layer,links in layers.items()} for id,layers in self.graph.items()},"random_state":self.random.getstate()}
+        Path(path).write_text(json.dumps(data,sort_keys=True),encoding='utf-8')
+    @classmethod
+    def load(cls,path):
+        data=json.loads(Path(path).read_text(encoding='utf-8'))
+        if data['version']!=1: raise ValueError('unsupported graph format')
+        x=cls(data['m'],data['ef_construction'],data['ef_search'],data['seed'])
+        x.vectors={id:tuple(v) for id,v in data['vectors'].items()}; x.levels=data['levels']; x.entry=data['entry']; x.deleted=set(data['deleted'])
+        x.graph={id:{int(layer):set(links) for layer,links in layers.items()} for id,layers in data['graph'].items()}
+        state=data['random_state']; x.random.setstate((state[0],tuple(state[1]),state[2]))
+        return x

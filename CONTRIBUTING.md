@@ -119,7 +119,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P02.20 | Update postings and vectors for changed symbols | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ❌ Pending | P02.21 | Commit index changes atomically | — |
 | ❌ Pending | P02.22 | Recover from interrupted indexing | — |
-| ❌ Pending | P02.23 | Verify incremental and fresh-index equivalence | — |
+| ✅ Done | P02.23 | Verify incremental and fresh-index equivalence | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ❌ Pending | P02.24 | Measure one-line update latency on stated hardware | — |
 
 ### P03 — Parsing and symbol extraction
@@ -235,7 +235,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P06.19 | Exclude tombstoned vectors from results | smriti/vector/hnsw.py; executable assertions passed |
 | ✅ Done | P06.20 | Implement deletion repair or rebuild strategy | smriti/vector/hnsw.py; executable assertions passed |
 | ✅ Done | P06.21 | Update embeddings after source edits | tests/test_vector.py; executable assertions passed |
-| ❌ Pending | P06.22 | Persist and reload HNSW graph | — |
+| ✅ Done | P06.22 | Persist and reload HNSW graph | smriti/vector/hnsw.py; executable assertions passed |
 | ❌ Pending | P06.23 | Validate graph invariants after updates | — |
 | ❌ Pending | P06.24 | Compare recall at 10 against exact search | — |
 | ✅ Done | P06.25 | Compare quality and throughput with hnswlib | bench/vector/hnsw_reference.py; bench/vector/hnsw_reference.json; real exact-oracle recall and throughput |
@@ -281,7 +281,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P08.07 | Reserve budget for memory and response framing | smriti/pack/packer.py; executable assertions passed |
 | ✅ Done | P08.08 | Assign values to representation levels | smriti/pack/packer.py; executable assertions passed |
 | ✅ Done | P08.09 | Implement multiple-choice knapsack dynamic program | smriti/pack/packer.py; executable assertions passed |
-| ❌ Pending | P08.10 | Implement bucketed budget option | — |
+| ✅ Done | P08.10 | Implement bucketed budget option | tests/test_pack.py; executable assertions passed |
 | ❌ Pending | P08.11 | Implement greedy marginal-value baseline | — |
 | ❌ Pending | P08.12 | Require minimum class context for methods | — |
 | ❌ Pending | P08.13 | Deduplicate class and method bodies | — |
