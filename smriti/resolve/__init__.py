@@ -55,6 +55,9 @@ class Resolver:
                 target = self.resolve_name(call["name"], call["scope"])
                 if target:
                     edges.append(Edge(call["scope"], target, "calls"))
+                else:
+                    target = self.external_reference(call["name"], call["scope"])
+                    edges.append(Edge(call["scope"], target, "calls", 0.5))
         self.edges = sorted(set(edges), key=lambda e: (e.source, e.kind, e.target))
         return self.edges
 
@@ -123,3 +126,22 @@ class Resolver:
             if target:
                 return target
         return None
+
+
+    def external_reference(self, name: str, scope: str) -> str:
+        import builtins
+        owner = scope
+        shadowed = False
+        while owner:
+            shadowed = shadowed or (owner, name) in self.bindings
+            owner = self.parents.get(owner)
+        if "." not in name and hasattr(builtins, name) and not shadowed:
+            return "builtin:" + name
+        head, *tail = name.split(".")
+        owner = scope
+        while owner:
+            declaration = self.imports.get((owner, head))
+            if declaration:
+                return "external:" + ".".join(part for part in [declaration["module"], declaration["name"], *tail] if part)
+            owner = self.parents.get(owner)
+        return "dynamic:" + scope + ":" + name

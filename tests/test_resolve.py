@@ -62,3 +62,10 @@ def test_reexports_and_cycles_are_conservative():
     a = parse_file("a.py", "from b import unknown\n")
     b = parse_file("b.py", "from a import unknown\n")
     assert Resolver([a, b]).resolve_name("unknown", a.symbols[0].id) is None
+
+
+def test_builtin_external_and_dynamic_references_are_explicit():
+    result = parse_file("a.py", "import missing as m\ndef f(callback):\n    len([])\n    m.run()\n    callback()\n")
+    edges = [edge for edge in Resolver([result]).resolve() if edge.kind == "calls"]
+    assert {edge.target.split(":", 1)[0] for edge in edges} == {"builtin", "external", "dynamic"}
+    assert all(edge.confidence < 1 for edge in edges)

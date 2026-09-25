@@ -163,7 +163,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P04.05 | Resolve aliased imports | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.06 | Resolve relative imports | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.07 | Resolve re-exported names within supported scope | smriti/resolve; pytest tests/test_resolve.py passed |
-| ❌ Pending | P04.08 | Record builtins and external references | — |
+| ✅ Done | P04.08 | Record builtins and external references | smriti/resolve; pytest tests/test_resolve.py passed |
 | ❌ Pending | P04.09 | Resolve self method calls | — |
 | ❌ Pending | P04.10 | Implement Python C3 linearisation | — |
 | ❌ Pending | P04.11 | Resolve inherited methods | — |
