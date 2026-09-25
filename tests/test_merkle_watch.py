@@ -73,3 +73,16 @@ def test_graph_deletion_prunes_both_directions():
     from smriti.models import Edge
     edges = [Edge("a", "b", "calls"), Edge("b", "c", "calls"), Edge("c", "a", "calls")]
     assert prune_edges(edges, {"b"}) == [edges[2]]
+
+
+def test_lexical_and_vector_updates_match_symbol_delta():
+    from smriti.watch import SymbolDelta, update_search_indexes
+    from smriti.models import Symbol
+    added = Symbol("new", "a.py", "new", "a.new", "function")
+    removed = Symbol("old", "a.py", "old", "a.old", "function")
+    unchanged = Symbol("same", "a.py", "same", "a.same", "function")
+    calls = []
+    update_search_indexes(SymbolDelta([added], [], [removed], [unchanged], []),
+        lexical_upsert=lambda s: calls.append(("lex+", s.id)), lexical_delete=lambda i: calls.append(("lex-", i)),
+        vector_upsert=lambda s: calls.append(("vec+", s.id)), vector_delete=lambda i: calls.append(("vec-", i)))
+    assert calls == [("lex-", "old"), ("vec-", "old"), ("lex+", "new"), ("vec+", "new")]

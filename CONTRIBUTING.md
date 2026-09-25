@@ -116,7 +116,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P02.17 | Diff old and new symbol sets | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ✅ Done | P02.18 | Preserve symbol IDs for verified renames | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ✅ Done | P02.19 | Remove dangling graph references after deletion | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
-| ❌ Pending | P02.20 | Update postings and vectors for changed symbols | — |
+| ✅ Done | P02.20 | Update postings and vectors for changed symbols | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ❌ Pending | P02.21 | Commit index changes atomically | — |
 | ❌ Pending | P02.22 | Recover from interrupted indexing | — |
 | ❌ Pending | P02.23 | Verify incremental and fresh-index equivalence | — |
@@ -138,7 +138,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P03.08 | Extract call expression candidates | smriti/parse; pytest tests/test_parse.py passed |
 | ✅ Done | P03.09 | Extract inheritance declarations | smriti/parse; pytest tests/test_parse.py passed |
 | ✅ Done | P03.10 | Model nested definitions and comprehensions | smriti/parse; pytest tests/test_parse.py passed |
-| ❌ Pending | P03.11 | Store parser diagnostics for invalid syntax | — |
+| ✅ Done | P03.11 | Store parser diagnostics for invalid syntax | smriti/parse; pytest tests/test_parse.py passed |
 | ❌ Pending | P03.12 | Reuse syntax trees for edited files | — |
 | ❌ Pending | P03.13 | Handle unicode offsets and line endings | — |
 | ❌ Pending | P03.14 | Chunk source at symbol boundaries | — |
@@ -234,7 +234,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P06.18 | Implement efSearch configuration | smriti/vector/hnsw.py; executable assertions passed |
 | ✅ Done | P06.19 | Exclude tombstoned vectors from results | smriti/vector/hnsw.py; executable assertions passed |
 | ✅ Done | P06.20 | Implement deletion repair or rebuild strategy | smriti/vector/hnsw.py; executable assertions passed |
-| ❌ Pending | P06.21 | Update embeddings after source edits | — |
+| ✅ Done | P06.21 | Update embeddings after source edits | tests/test_vector.py; executable assertions passed |
 | ❌ Pending | P06.22 | Persist and reload HNSW graph | — |
 | ❌ Pending | P06.23 | Validate graph invariants after updates | — |
 | ❌ Pending | P06.24 | Compare recall at 10 against exact search | — |

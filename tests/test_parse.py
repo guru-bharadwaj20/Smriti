@@ -69,3 +69,10 @@ def test_nested_and_comprehension_scopes():
     assert result.symbols[2].parent_id == result.symbols[1].id
     assert result.symbols[2].qualname == "a.outer.inner"
     assert result.comprehensions[0]["parent"] == result.symbols[2].id
+
+
+def test_invalid_syntax_diagnostics():
+    result = parse_file("a.py", "def broken(:\n    x =\n")
+    assert result.tree.root_node.has_error
+    assert result.diagnostics
+    assert all(d["line"] >= 1 for d in result.diagnostics)

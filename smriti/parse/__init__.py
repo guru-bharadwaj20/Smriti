@@ -41,7 +41,7 @@ class SourceParser:
             body=result.source.decode("utf-8"), content_hash=sha256(result.source).hexdigest()))
 
         def walk(node, parent):
-            if node.type in {"class_definition", "function_definition"}:
+            if node.type in {"class_definition", "function_definition"} and node.child_by_field_name("name") and node.child_by_field_name("body"):
                 kind = "class" if node.type == "class_definition" else ("method" if parent.kind == "class" else "function")
                 name_node = node.child_by_field_name("name")
                 name = result.source[name_node.start_byte:name_node.end_byte].decode("utf-8")
@@ -90,6 +90,10 @@ class SourceParser:
                 # Python comprehension targets are isolated from their enclosing scope.
                 result.comprehensions.append({"parent": parent.id, "start_byte": node.start_byte,
                     "end_byte": node.end_byte, "source": result.source[node.start_byte:node.end_byte].decode("utf-8")})
+            if node.type == "ERROR" or node.is_missing:
+                result.diagnostics.append({"kind": "missing" if node.is_missing else "syntax_error",
+                    "start_byte": node.start_byte, "end_byte": node.end_byte,
+                    "line": node.start_point.row + 1})
             for child in node.named_children:
                 walk(child, parent)
         walk(root, result.symbols[0])
