@@ -139,7 +139,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P03.09 | Extract inheritance declarations | smriti/parse; pytest tests/test_parse.py passed |
 | ✅ Done | P03.10 | Model nested definitions and comprehensions | smriti/parse; pytest tests/test_parse.py passed |
 | ✅ Done | P03.11 | Store parser diagnostics for invalid syntax | smriti/parse; pytest tests/test_parse.py passed |
-| ❌ Pending | P03.12 | Reuse syntax trees for edited files | — |
+| ✅ Done | P03.12 | Reuse syntax trees for edited files | smriti/parse; pytest tests/test_parse.py passed |
 | ❌ Pending | P03.13 | Handle unicode offsets and line endings | — |
 | ❌ Pending | P03.14 | Chunk source at symbol boundaries | — |
 | ❌ Pending | P03.15 | Define treatment of oversized functions | — |
@@ -162,7 +162,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P04.04 | Resolve module-level names | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.05 | Resolve aliased imports | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.06 | Resolve relative imports | smriti/resolve; pytest tests/test_resolve.py passed |
-| ❌ Pending | P04.07 | Resolve re-exported names within supported scope | — |
+| ✅ Done | P04.07 | Resolve re-exported names within supported scope | smriti/resolve; pytest tests/test_resolve.py passed |
 | ❌ Pending | P04.08 | Record builtins and external references | — |
 | ❌ Pending | P04.09 | Resolve self method calls | — |
 | ❌ Pending | P04.10 | Implement Python C3 linearisation | — |
@@ -258,7 +258,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P07.09 | Seed personalized restart distribution | smriti/rank/pagerank.py; executable assertions passed |
 | ✅ Done | P07.10 | Implement PageRank power iteration | smriti/rank/pagerank.py; executable assertions passed |
 | ✅ Done | P07.11 | Specify convergence and iteration limits | smriti/rank/pagerank.py; executable assertions passed |
-| ❌ Pending | P07.12 | Test ranking on a hand-computed graph | — |
+| ✅ Done | P07.12 | Test ranking on a hand-computed graph | tests/test_rank.py; executable assertions passed |
 | ❌ Pending | P07.13 | Expand candidate set with callers | — |
 | ❌ Pending | P07.14 | Include associated tests and configuration | — |
 | ❌ Pending | P07.15 | Cache ranking with index-version keys | — |

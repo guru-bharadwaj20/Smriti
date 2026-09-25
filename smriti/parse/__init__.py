@@ -22,13 +22,33 @@ class ParseResult:
 
 class SourceParser:
     def __init__(self):
+        self.cache = {}
         self.parsers = {"python": Parser(Language(tree_sitter_python.language()))}
 
     def parse(self, path: str, source: bytes | str, language: str = "python") -> ParseResult:
         data = source.encode("utf-8") if isinstance(source, str) else source
-        tree = self.parsers[language].parse(data)
+        cached = self.cache.get(path)
+        if cached is not None:
+            old = cached.source
+            prefix = 0
+            while prefix < min(len(old), len(data)) and old[prefix] == data[prefix]:
+                prefix += 1
+            suffix = 0
+            while suffix < min(len(old), len(data)) - prefix and old[-suffix - 1] == data[-suffix - 1]:
+                suffix += 1
+            old_end, new_end = len(old) - suffix, len(data) - suffix
+            def point(source, position):
+                before = source[:position]
+                return (before.count(b"\n"), len(before.rsplit(b"\n", 1)[-1]))
+            tree = cached.tree.copy()
+            tree.edit(start_byte=prefix, old_end_byte=old_end, new_end_byte=new_end,
+                start_point=point(old, prefix), old_end_point=point(old, old_end), new_end_point=point(data, new_end))
+            tree = self.parsers[language].parse(data, tree)
+        else:
+            tree = self.parsers[language].parse(data)
         result = ParseResult(path.replace("\\", "/"), data, tree)
         self._extract(result, language)
+        self.cache[path] = result
         return result
 
     def _extract(self, result: ParseResult, language: str) -> None:
