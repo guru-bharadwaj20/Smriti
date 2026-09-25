@@ -71,3 +71,11 @@ class HNSWIndex:
                     self.graph[other][layer]=keep
             if candidates: entry=candidates[0][1]
         if level>max_level: self.entry=id
+
+    def search(self,query,k=10,ef=None):
+        if k<0: raise ValueError('k must be nonnegative')
+        if not self.entry or not k: return []
+        query=normalize(query); entry=self.entry
+        for layer in range(self.levels[entry],0,-1): entry=self._greedy(query,entry,layer)
+        candidates=self._layer_search(query,[entry],max(k,ef or self.ef_search),0)
+        return [VectorHit(id,1-d) for d,id in candidates][:k]
