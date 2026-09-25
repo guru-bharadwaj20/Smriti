@@ -78,4 +78,7 @@ class HNSWIndex:
         query=normalize(query); entry=self.entry
         for layer in range(self.levels[entry],0,-1): entry=self._greedy(query,entry,layer)
         candidates=self._layer_search(query,[entry],max(k,ef or self.ef_search),0)
-        return [VectorHit(id,1-d) for d,id in candidates][:k]
+        return [VectorHit(id,1-d) for d,id in candidates if id not in self.deleted][:k]
+
+    def remove(self,id):
+        if id in self.vectors: self.deleted.add(id)

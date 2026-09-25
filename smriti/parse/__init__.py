@@ -63,6 +63,12 @@ class SourceParser:
                     node.start_byte, node.end_byte, signature=signature, docstring=docstring, body=body.decode("utf-8"),
                     content_hash=sha256(body).hexdigest(), parent_id=parent.id)
                 result.symbols.append(symbol)
+                if kind == "class":
+                    bases = node.child_by_field_name("superclasses")
+                    if bases:
+                        for base in bases.named_children:
+                            result.inheritance.append({"class": symbol.id, "scope": parent.id,
+                                "name": result.source[base.start_byte:base.end_byte].decode("utf-8")})
                 parent = symbol
             if node.type in {"import_statement", "import_from_statement"}:
                 import ast

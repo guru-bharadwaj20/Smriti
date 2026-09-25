@@ -56,3 +56,9 @@ def test_call_candidates():
     result = parse_file("a.py", "def f():\n    obj.run(helper())\n")
     assert [call["name"] for call in result.calls] == ["obj.run", "helper"]
     assert all(call["scope"] == result.symbols[1].id for call in result.calls)
+
+
+def test_inheritance_declarations():
+    result = parse_file("a.py", "class A(Base, pkg.Other):\n    pass\n")
+    assert [base["name"] for base in result.inheritance] == ["Base", "pkg.Other"]
+    assert all(base["class"] == result.symbols[1].id for base in result.inheritance)

@@ -98,3 +98,33 @@ def diff_symbols(old: list[Symbol], new: list[Symbol]) -> SymbolDelta:
         [after[key] for key in sorted(common) if before[key] != after[key]],
         [before[key] for key in sorted(before.keys() - after.keys())],
         [after[key] for key in sorted(common) if before[key] == after[key]], [])
+
+
+def structural_fingerprint(symbol: Symbol) -> str:
+    """A rename must preserve a unique AST body, not merely a similar name."""
+    import ast
+    import textwrap
+    from hashlib import sha256
+    try:
+        tree = ast.parse(textwrap.dedent(symbol.body))
+        if len(tree.body) == 1 and isinstance(tree.body[0], (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+            tree.body[0].name = "@renamed"
+        content = ast.dump(tree, include_attributes=False)
+    except SyntaxError:
+        content = symbol.body
+    return sha256((symbol.kind + "\0" + content).encode()).hexdigest()
+
+
+def preserve_symbol_ids(old: list[Symbol], new: list[Symbol]) -> tuple[list[Symbol], dict[str, str]]:
+    before, after = {s.id: s for s in old}, {s.id: s for s in new}
+    removed = [s for s in old if s.id not in after]
+    added = [s for s in new if s.id not in before]
+    mapping = {}
+    fingerprints = {structural_fingerprint(s) for s in removed}
+    for fingerprint in fingerprints:
+        sources = [s for s in removed if structural_fingerprint(s) == fingerprint]
+        targets = [s for s in added if structural_fingerprint(s) == fingerprint]
+        if len(sources) == len(targets) == 1:
+            mapping[targets[0].id] = sources[0].id
+    renamed = [replace(s, id=mapping.get(s.id, s.id), parent_id=mapping.get(s.parent_id, s.parent_id)) for s in new]
+    return renamed, mapping

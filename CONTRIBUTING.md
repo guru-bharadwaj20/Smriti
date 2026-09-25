@@ -114,7 +114,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P02.15 | Coalesce checkout event bursts | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ✅ Done | P02.16 | Schedule affected-file indexing jobs | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ✅ Done | P02.17 | Diff old and new symbol sets | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
-| ❌ Pending | P02.18 | Preserve symbol IDs for verified renames | — |
+| ✅ Done | P02.18 | Preserve symbol IDs for verified renames | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ❌ Pending | P02.19 | Remove dangling graph references after deletion | — |
 | ❌ Pending | P02.20 | Update postings and vectors for changed symbols | — |
 | ❌ Pending | P02.21 | Commit index changes atomically | — |
@@ -136,7 +136,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P03.06 | Capture byte offsets and source line ranges | smriti/parse; pytest tests/test_parse.py passed |
 | ✅ Done | P03.07 | Extract import declarations | smriti/parse; pytest tests/test_parse.py passed |
 | ✅ Done | P03.08 | Extract call expression candidates | smriti/parse; pytest tests/test_parse.py passed |
-| ❌ Pending | P03.09 | Extract inheritance declarations | — |
+| ✅ Done | P03.09 | Extract inheritance declarations | smriti/parse; pytest tests/test_parse.py passed |
 | ❌ Pending | P03.10 | Model nested definitions and comprehensions | — |
 | ❌ Pending | P03.11 | Store parser diagnostics for invalid syntax | — |
 | ❌ Pending | P03.12 | Reuse syntax trees for edited files | — |
@@ -232,7 +232,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P06.16 | Enforce neighbor count limits | smriti/vector/hnsw.py; executable assertions passed |
 | ✅ Done | P06.17 | Implement efConstruction configuration | docs/retrieval.md; executable assertions passed |
 | ✅ Done | P06.18 | Implement efSearch configuration | smriti/vector/hnsw.py; executable assertions passed |
-| ❌ Pending | P06.19 | Exclude tombstoned vectors from results | — |
+| ✅ Done | P06.19 | Exclude tombstoned vectors from results | smriti/vector/hnsw.py; executable assertions passed |
 | ❌ Pending | P06.20 | Implement deletion repair or rebuild strategy | — |
 | ❌ Pending | P06.21 | Update embeddings after source edits | — |
 | ❌ Pending | P06.22 | Persist and reload HNSW graph | — |
@@ -471,7 +471,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
-| ❌ Pending | P14.01 | Choose minimal UI framework and local API | — |
+| ✅ Done | P14.01 | Choose minimal UI framework and local API | docs/ui-design.md; view and mutation contracts reviewed |
 | ❌ Pending | P14.02 | Implement repository index status view | — |
 | ❌ Pending | P14.03 | Implement searchable symbol graph view | — |
 | ❌ Pending | P14.04 | Implement packed-context explanation view | — |
