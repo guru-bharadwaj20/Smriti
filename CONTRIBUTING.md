@@ -109,7 +109,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P02.10 | Detect modified files | — |
 | ❌ Pending | P02.11 | Detect deleted files | — |
 | ❌ Pending | P02.12 | Detect unchanged-content file moves | — |
-| ❌ Pending | P02.13 | Connect filesystem watcher | — |
+| ✅ Done | P02.13 | Connect filesystem watcher | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ❌ Pending | P02.14 | Debounce repeated events | — |
 | ❌ Pending | P02.15 | Coalesce checkout event bursts | — |
 | ❌ Pending | P02.16 | Schedule affected-file indexing jobs | — |
@@ -197,7 +197,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P05.09 | Maintain document frequency counts | smriti/lexical/index.py; executable assertions passed |
 | ✅ Done | P05.10 | Maintain document lengths and field averages | smriti/lexical/index.py; executable assertions passed |
 | ✅ Done | P05.11 | Implement BM25 scoring formula | smriti/lexical/index.py; executable assertions passed |
-| ❌ Pending | P05.12 | Implement BM25F field weighting | — |
+| ✅ Done | P05.12 | Implement BM25F field weighting | smriti/lexical/index.py; executable assertions passed |
 | ❌ Pending | P05.13 | Encode posting deltas | — |
 | ❌ Pending | P05.14 | Implement variable-byte encoding | — |
 | ❌ Pending | P05.15 | Implement posting decoding | — |
@@ -273,7 +273,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
 | ✅ Done | P08.01 | Define omitted symbol representation | smriti/pack/__init__.py; smriti/pack/packer.py; executable assertions passed |
-| ❌ Pending | P08.02 | Define name and path representation | — |
+| ✅ Done | P08.02 | Define name and path representation | smriti/pack/packer.py; executable assertions passed |
 | ❌ Pending | P08.03 | Define signature and docstring representation | — |
 | ❌ Pending | P08.04 | Define full-body representation | — |
 | ❌ Pending | P08.05 | Integrate chosen model tokenizer | — |

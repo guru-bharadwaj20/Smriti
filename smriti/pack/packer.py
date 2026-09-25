@@ -11,3 +11,6 @@ class Representation:
 
 def omitted(symbol):
     return Representation(symbol.id,'omit','',0,0.0)
+
+def name_text(symbol):
+    return f'{symbol.path}:{symbol.start_line} {symbol.qualname}\n'
