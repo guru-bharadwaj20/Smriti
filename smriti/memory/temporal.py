@@ -51,3 +51,7 @@ class Timeline:
         point = timestamp(point)
         return [v for v in self.rows if v.valid.contains(point)]
 # P10.05
+    def query(self, valid_at, as_of):
+        as_of = timestamp(as_of)
+        return [v for v in self.valid_at(valid_at) if v.transaction.contains(as_of)]
+# P10.06

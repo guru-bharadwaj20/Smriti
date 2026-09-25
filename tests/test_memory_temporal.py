@@ -40,3 +40,12 @@ class TemporalTests(unittest.TestCase):
         timeline = Timeline([version])
         self.assertEqual(timeline.valid_at(a), [version])
         self.assertEqual(timeline.valid_at(b), [])
+
+    def test_belief_query(self):
+        from smriti.memory.temporal import Timeline, TemporalVersion, TransactionInterval
+        a = datetime(2025, 1, 1, tzinfo=timezone.utc)
+        b = datetime(2025, 2, 1, tzinfo=timezone.utc)
+        version = TemporalVersion("x", {"text": "later discovery"}, ValidInterval(a), TransactionInterval(b))
+        timeline = Timeline([version])
+        self.assertEqual(timeline.query(a, a), [])
+        self.assertEqual(timeline.query(a, b), [version])
