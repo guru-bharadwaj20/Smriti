@@ -22,12 +22,29 @@ class Resolver:
         if (scope, name) in visited:
             return None
         visited.add((scope, name))
+        declaration = self.declarations.get((scope, name))
+        if declaration:
+            parent = self.parents.get(scope)
+            if declaration == "global":
+                while parent and self.parents.get(parent):
+                    parent = self.parents[parent]
+            elif parent and self.symbols[parent].kind == "class":
+                parent = self.parents.get(parent)
+            return self.resolve_name(name, parent, visited) if parent else None
         binding = self.bindings.get((scope, name), "@missing")
         if binding is None:
             return None
         if binding != "@missing" and binding != name:
             return self.resolve_name(binding, scope, visited)
-        return self.children.get(scope, {}).get(name)
+        target = self.children.get(scope, {}).get(name)
+        if target:
+            return target
+        parent = self.parents.get(scope)
+        while parent and self.symbols[parent].kind == "class":
+            parent = self.parents.get(parent)
+        if parent and self.symbols[parent].kind != "module":
+            return self.resolve_name(name, parent, visited)
+        return None
 
     def resolve(self) -> list[Edge]:
         edges = []
