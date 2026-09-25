@@ -76,3 +76,25 @@ def affected_file_jobs(events: list[FileChange]) -> tuple[list[str], list[str], 
         if event.kind == "moved" and event.old_path:
             remove.add(event.old_path)
     return sorted(parse), sorted(remove - parse), False
+
+
+from dataclasses import dataclass, replace
+from smriti.models import Symbol, Edge
+
+
+@dataclass
+class SymbolDelta:
+    added: list[Symbol]
+    changed: list[Symbol]
+    removed: list[Symbol]
+    unchanged: list[Symbol]
+    renames: list[tuple[str, str]]
+
+
+def diff_symbols(old: list[Symbol], new: list[Symbol]) -> SymbolDelta:
+    before, after = {s.id: s for s in old}, {s.id: s for s in new}
+    common = before.keys() & after.keys()
+    return SymbolDelta([after[key] for key in sorted(after.keys() - before.keys())],
+        [after[key] for key in sorted(common) if before[key] != after[key]],
+        [before[key] for key in sorted(before.keys() - after.keys())],
+        [after[key] for key in sorted(common) if before[key] == after[key]], [])

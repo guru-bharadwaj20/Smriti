@@ -20,3 +20,7 @@ def signature_text(symbol):
 
 def body_text(symbol):
     return name_text(symbol)+'```python\n'+symbol.body+'\n```\n'
+
+def representations(symbol,score,counter):
+    texts={'name':name_text(symbol),'signature':signature_text(symbol),'body':body_text(symbol)}
+    return [omitted(symbol)]+[Representation(symbol.id,level,text,counter.count(text),score) for level,text in texts.items()]

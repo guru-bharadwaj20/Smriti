@@ -88,7 +88,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P01.13 | Define config file and environment precedence | smriti/config.py; tests/test_config.py; syntax/format reviewed |
 | ✅ Done | P01.14 | Define ignored paths and local data directory | docs/local-state.md; syntax/format reviewed |
 | ✅ Done | P01.15 | Create small repository fixtures with known symbols | tests/fixtures/sample/app.py; tests/fixtures/sample/test_app.py; syntax/format reviewed |
-| ❌ Pending | P01.16 | Document setup and contributor commands | — |
+| ✅ Done | P01.16 | Document setup and contributor commands | docs/development.md; syntax/format reviewed |
 | ✅ Done | P01.17 | Record comparison with Aider, Cursor, Mem0, and Zep | docs/prior-work.md; primary sources reviewed |
 
 ### P02 — Merkle tree and incremental indexing
@@ -113,7 +113,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P02.14 | Debounce repeated events | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ✅ Done | P02.15 | Coalesce checkout event bursts | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ✅ Done | P02.16 | Schedule affected-file indexing jobs | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
-| ❌ Pending | P02.17 | Diff old and new symbol sets | — |
+| ✅ Done | P02.17 | Diff old and new symbol sets | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ❌ Pending | P02.18 | Preserve symbol IDs for verified renames | — |
 | ❌ Pending | P02.19 | Remove dangling graph references after deletion | — |
 | ❌ Pending | P02.20 | Update postings and vectors for changed symbols | — |
@@ -277,7 +277,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P08.03 | Define signature and docstring representation | smriti/pack/packer.py; executable assertions passed |
 | ✅ Done | P08.04 | Define full-body representation | smriti/pack/packer.py; executable assertions passed |
 | ✅ Done | P08.05 | Integrate chosen model tokenizer | smriti/pack/tokens.py; executable assertions passed |
-| ❌ Pending | P08.06 | Count rendering overhead and metadata tokens | — |
+| ✅ Done | P08.06 | Count rendering overhead and metadata tokens | smriti/pack/packer.py; executable assertions passed |
 | ❌ Pending | P08.07 | Reserve budget for memory and response framing | — |
 | ❌ Pending | P08.08 | Assign values to representation levels | — |
 | ❌ Pending | P08.09 | Implement multiple-choice knapsack dynamic program | — |
