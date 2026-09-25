@@ -21,3 +21,9 @@ def test_class_definitions():
     classes = [s for s in result.symbols if s.kind == "class"]
     assert [s.qualname for s in classes] == ["a.A", "a.A.B"]
     assert classes[1].parent_id == classes[0].id
+
+
+def test_functions_and_methods():
+    result = parse_file("a.py", "def f():\n    pass\nclass A:\n    async def m(self):\n        pass\n")
+    assert [(s.name, s.kind) for s in result.symbols] == [("a", "module"), ("f", "function"), ("A", "class"), ("m", "method")]
+    assert len({s.id for s in result.symbols}) == 4

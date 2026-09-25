@@ -40,13 +40,14 @@ class SourceParser:
             body=result.source.decode("utf-8"), content_hash=sha256(result.source).hexdigest()))
 
         def walk(node, parent):
-            if node.type == "class_definition":
+            if node.type in {"class_definition", "function_definition"}:
+                kind = "class" if node.type == "class_definition" else ("method" if parent.kind == "class" else "function")
                 name_node = node.child_by_field_name("name")
                 name = result.source[name_node.start_byte:name_node.end_byte].decode("utf-8")
                 qualname = parent.qualname + "." + name
                 body = result.source[node.start_byte:node.end_byte]
-                symbol = Symbol(sha256((path + ":class:" + qualname).encode()).hexdigest(), path,
-                    name, qualname, "class", node.start_point.row + 1, node.end_point.row + 1,
+                symbol = Symbol(sha256((path + ":" + kind + ":" + qualname).encode()).hexdigest(), path,
+                    name, qualname, kind, node.start_point.row + 1, node.end_point.row + 1,
                     node.start_byte, node.end_byte, body=body.decode("utf-8"),
                     content_hash=sha256(body).hexdigest(), parent_id=parent.id)
                 result.symbols.append(symbol)
