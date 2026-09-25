@@ -158,7 +158,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | --- | --- | --- | --- |
 | ✅ Done | P04.01 | Build scope parent links | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.02 | Resolve local bindings | smriti/resolve; pytest tests/test_resolve.py passed |
-| ❌ Pending | P04.03 | Resolve enclosing-scope bindings | — |
+| ✅ Done | P04.03 | Resolve enclosing-scope bindings | smriti/resolve; pytest tests/test_resolve.py passed |
 | ❌ Pending | P04.04 | Resolve module-level names | — |
 | ❌ Pending | P04.05 | Resolve aliased imports | — |
 | ❌ Pending | P04.06 | Resolve relative imports | — |
@@ -218,7 +218,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P06.02 | Pin model artifact and checksum | smriti/vector/model_manifest.json; smriti/vector/download.py; executable assertions passed |
 | ✅ Done | P06.03 | Configure ONNX CPU inference | smriti/vector/embedding.py; executable assertions passed |
 | ✅ Done | P06.04 | Evaluate int8 embedding quality | bench/vector/embedding_quality.py; bench/vector/embedding_quality.json; executable assertions passed |
-| ❌ Pending | P06.05 | Batch symbol embedding requests | — |
+| ✅ Done | P06.05 | Batch symbol embedding requests | smriti/vector/embedding.py; executable assertions passed |
 | ❌ Pending | P06.06 | Cache embeddings by content and model version | — |
 | ✅ Done | P06.07 | Normalize vectors for chosen distance metric | smriti/vector/math.py; smriti/vector/__init__.py; executable assertions passed |
 | ✅ Done | P06.08 | Persist vectors in memory-mapped storage | smriti/vector/storage.py; executable assertions passed |
@@ -254,7 +254,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P07.05 | Define graph edge type weights | smriti/rank/pagerank.py; executable assertions passed |
 | ✅ Done | P07.06 | Include resolution confidence in weights | smriti/rank/pagerank.py; executable assertions passed |
 | ✅ Done | P07.07 | Build sparse adjacency representation | smriti/rank/pagerank.py; executable assertions passed |
-| ❌ Pending | P07.08 | Normalize transitions and handle dangling nodes | — |
+| ✅ Done | P07.08 | Normalize transitions and handle dangling nodes | smriti/rank/pagerank.py; executable assertions passed |
 | ❌ Pending | P07.09 | Seed personalized restart distribution | — |
 | ❌ Pending | P07.10 | Implement PageRank power iteration | — |
 | ❌ Pending | P07.11 | Specify convergence and iteration limits | — |

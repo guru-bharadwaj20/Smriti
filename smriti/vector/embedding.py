@@ -23,3 +23,12 @@ class ONNXEmbedder:
         pooled=(tokens*mask).sum(axis=1)/np.maximum(mask.sum(axis=1),1)
         return [normalize(vector) for vector in pooled]
     def __call__(self,text): return self.embed([text])[0]
+
+class BatchedEmbedder:
+    def __init__(self,encoder,batch_size=32):
+        if batch_size<1: raise ValueError('positive batch size required')
+        self.encoder=encoder; self.batch_size=batch_size
+    def embed(self,texts):
+        texts=list(texts); result=[]
+        for start in range(0,len(texts),self.batch_size): result.extend(self.encoder.embed(texts[start:start+self.batch_size]))
+        return result

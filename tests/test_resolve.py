@@ -16,3 +16,15 @@ def test_local_alias_and_parameter_shadowing():
     outer, inner = result.symbols[1:]
     assert resolver.resolve_name("alias", outer.id) == inner.id
     assert resolver.resolve_name("callback", outer.id) is None
+
+
+def test_enclosing_scope_resolution():
+    result = parse_file("a.py", "def outer():\n    def helper():\n        pass\n    def inner():\n        helper()\n")
+    resolver = Resolver([result])
+    assert resolver.resolve_name("helper", result.symbols[3].id) == result.symbols[2].id
+
+
+def test_nonlocal_declaration_uses_enclosing_scope():
+    result = parse_file("a.py", "def outer():\n    def helper():\n        pass\n    def inner():\n        nonlocal helper\n        helper()\n")
+    resolver = Resolver([result])
+    assert resolver.resolve_name("helper", result.symbols[3].id) == result.symbols[2].id
