@@ -156,7 +156,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
-| ❌ Pending | P04.01 | Build scope parent links | — |
+| ✅ Done | P04.01 | Build scope parent links | smriti/resolve; pytest tests/test_resolve.py passed |
 | ❌ Pending | P04.02 | Resolve local bindings | — |
 | ❌ Pending | P04.03 | Resolve enclosing-scope bindings | — |
 | ❌ Pending | P04.04 | Resolve module-level names | — |
