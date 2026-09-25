@@ -125,3 +125,11 @@ def parse_file(path: str, source: bytes | str) -> ParseResult:
 def source_slice(result: ParseResult, symbol: Symbol) -> bytes:
     """Ranges are UTF-8 byte offsets with an exclusive end, and 1-based lines."""
     return result.source[symbol.start_byte:symbol.end_byte]
+
+
+def byte_point(source: bytes, position: int) -> tuple[int, int]:
+    """Tree-sitter columns count bytes, including CR in CRLF line endings."""
+    if not 0 <= position <= len(source):
+        raise ValueError("Offset outside source")
+    prefix = source[:position]
+    return prefix.count(b"\n"), len(prefix.rsplit(b"\n", 1)[-1])
