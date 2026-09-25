@@ -135,7 +135,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P03.05 | Extract signatures and docstrings | smriti/parse; pytest tests/test_parse.py passed |
 | ✅ Done | P03.06 | Capture byte offsets and source line ranges | smriti/parse; pytest tests/test_parse.py passed |
 | ✅ Done | P03.07 | Extract import declarations | smriti/parse; pytest tests/test_parse.py passed |
-| ❌ Pending | P03.08 | Extract call expression candidates | — |
+| ✅ Done | P03.08 | Extract call expression candidates | smriti/parse; pytest tests/test_parse.py passed |
 | ❌ Pending | P03.09 | Extract inheritance declarations | — |
 | ❌ Pending | P03.10 | Model nested definitions and comprehensions | — |
 | ❌ Pending | P03.11 | Store parser diagnostics for invalid syntax | — |
@@ -231,7 +231,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P06.15 | Implement bidirectional graph insertion | smriti/vector/hnsw.py; executable assertions passed |
 | ✅ Done | P06.16 | Enforce neighbor count limits | smriti/vector/hnsw.py; executable assertions passed |
 | ✅ Done | P06.17 | Implement efConstruction configuration | docs/retrieval.md; executable assertions passed |
-| ❌ Pending | P06.18 | Implement efSearch configuration | — |
+| ✅ Done | P06.18 | Implement efSearch configuration | smriti/vector/hnsw.py; executable assertions passed |
 | ❌ Pending | P06.19 | Exclude tombstoned vectors from results | — |
 | ❌ Pending | P06.20 | Implement deletion repair or rebuild strategy | — |
 | ❌ Pending | P06.21 | Update embeddings after source edits | — |
@@ -428,7 +428,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P13.02 | Pin SWE-bench Verified dataset revision | bench/datasets.json; Hugging Face API SHA c104f840cc67f8b6eec6f759ebc8b2693d585d4a |
 | ✅ Done | P13.03 | Create isolated base-commit checkouts | bench/swebench/checkout.py; base-commit isolation test passed |
 | ❌ Pending | P13.04 | Validate task repository and commit identity | — |
-| ❌ Pending | P13.05 | Extract patch ground truth outside indexed tree | — |
+| ✅ Done | P13.05 | Extract patch ground truth outside indexed tree | bench/swebench/ground_truth.py; changed-context and added-file tests passed |
 | ❌ Pending | P13.06 | Map changed functions to base-commit symbols | — |
 | ❌ Pending | P13.07 | Define handling of added and deleted functions | — |
 | ❌ Pending | P13.08 | Prevent patch and post-fix code leakage | — |

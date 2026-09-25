@@ -50,3 +50,9 @@ def test_import_declarations():
     assert result.imports[0]["module"] == "os.path"
     assert result.imports[1]["name"] == "work"
     assert result.imports[1]["level"] == 1
+
+
+def test_call_candidates():
+    result = parse_file("a.py", "def f():\n    obj.run(helper())\n")
+    assert [call["name"] for call in result.calls] == ["obj.run", "helper"]
+    assert all(call["scope"] == result.symbols[1].id for call in result.calls)
