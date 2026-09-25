@@ -159,7 +159,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P04.01 | Build scope parent links | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.02 | Resolve local bindings | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.03 | Resolve enclosing-scope bindings | smriti/resolve; pytest tests/test_resolve.py passed |
-| ❌ Pending | P04.04 | Resolve module-level names | — |
+| ✅ Done | P04.04 | Resolve module-level names | smriti/resolve; pytest tests/test_resolve.py passed |
 | ❌ Pending | P04.05 | Resolve aliased imports | — |
 | ❌ Pending | P04.06 | Resolve relative imports | — |
 | ❌ Pending | P04.07 | Resolve re-exported names within supported scope | — |
@@ -219,7 +219,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P06.03 | Configure ONNX CPU inference | smriti/vector/embedding.py; executable assertions passed |
 | ✅ Done | P06.04 | Evaluate int8 embedding quality | bench/vector/embedding_quality.py; bench/vector/embedding_quality.json; executable assertions passed |
 | ✅ Done | P06.05 | Batch symbol embedding requests | smriti/vector/embedding.py; executable assertions passed |
-| ❌ Pending | P06.06 | Cache embeddings by content and model version | — |
+| ✅ Done | P06.06 | Cache embeddings by content and model version | smriti/vector/embedding.py; executable assertions passed |
 | ✅ Done | P06.07 | Normalize vectors for chosen distance metric | smriti/vector/math.py; smriti/vector/__init__.py; executable assertions passed |
 | ✅ Done | P06.08 | Persist vectors in memory-mapped storage | smriti/vector/storage.py; executable assertions passed |
 | ✅ Done | P06.09 | Implement exact nearest-neighbor oracle | smriti/vector/math.py; executable assertions passed |
@@ -315,7 +315,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P09.12 | Record freshness reason and triggering commit | smriti\memory\__init__.py; P09.12 regression in tests\test_memory.py |
 | ✅ Done | P09.13 | Define policy for memories with multiple anchors | smriti\memory\__init__.py; P09.13 regression in tests\test_memory.py |
 | ✅ Done | P09.14 | Rank stale facts lower during recall | smriti\memory\__init__.py; P09.14 regression in tests\test_memory.py |
-| ❌ Pending | P09.15 | Show freshness state in recall results | — |
+| ✅ Done | P09.15 | Show freshness state in recall results | smriti\memory\__init__.py; P09.15 regression in tests\test_memory.py |
 | ❌ Pending | P09.16 | Handle revalidation without losing history | — |
 | ❌ Pending | P09.17 | Detect contradiction candidates by subject | — |
 | ❌ Pending | P09.18 | Combine embedding similarity with anchor overlap | — |

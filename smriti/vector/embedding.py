@@ -32,3 +32,23 @@ class BatchedEmbedder:
         texts=list(texts); result=[]
         for start in range(0,len(texts),self.batch_size): result.extend(self.encoder.embed(texts[start:start+self.batch_size]))
         return result
+
+class EmbeddingCache:
+    def __init__(self,path,encoder):
+        import sqlite3
+        self.connection=sqlite3.connect(path); self.encoder=encoder
+        self.connection.execute('CREATE TABLE IF NOT EXISTS embeddings (key TEXT PRIMARY KEY, vector TEXT NOT NULL)')
+    def embed(self,texts):
+        import hashlib,json
+        output=[]
+        for text in texts:
+            key=hashlib.sha256((self.encoder.version+'\0'+text).encode()).hexdigest()
+            row=self.connection.execute('SELECT vector FROM embeddings WHERE key=?',(key,)).fetchone()
+            if row: vector=tuple(json.loads(row[0]))
+            else:
+                vector=self.encoder.embed([text])[0]
+                self.connection.execute('INSERT OR REPLACE INTO embeddings VALUES (?,?)',(key,json.dumps(vector)))
+                self.connection.commit()
+            output.append(vector)
+        return output
+    def close(self): self.connection.close()

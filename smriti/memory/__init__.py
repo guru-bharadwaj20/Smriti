@@ -26,6 +26,9 @@ class Fact:
     freshness_reason: str | None = None
     triggering_commit: str | None = None
 
+    def to_dict(self):
+        return {**asdict(self), 'scope': self.scope, 'requires_revalidation': self.freshness != 'fresh'}
+
     @property
     def scope(self):
         return 'symbol' if self.anchors else 'project'
@@ -116,3 +119,5 @@ class MemoryStore:
 # P09.13
 
 # P09.14
+
+# P09.15

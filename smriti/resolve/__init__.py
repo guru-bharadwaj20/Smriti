@@ -42,9 +42,10 @@ class Resolver:
         parent = self.parents.get(scope)
         while parent and self.symbols[parent].kind == "class":
             parent = self.parents.get(parent)
-        if parent and self.symbols[parent].kind != "module":
+        if parent:
             return self.resolve_name(name, parent, visited)
-        return None
+        qualified = {s.qualname: s.id for s in self.symbols.values()}
+        return qualified.get(name)
 
     def resolve(self) -> list[Edge]:
         edges = []

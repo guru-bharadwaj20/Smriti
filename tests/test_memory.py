@@ -100,6 +100,13 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual(store.recall("rule")[0].id, "z")
         store.close()
 
+    def test_recall_freshness_output(self):
+        store = MemoryStore(":memory:")
+        f = store.remember("rule")
+        self.assertEqual(f.to_dict()["freshness"], "fresh")
+        self.assertFalse(f.to_dict()["requires_revalidation"])
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"
