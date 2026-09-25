@@ -238,7 +238,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P06.22 | Persist and reload HNSW graph | — |
 | ❌ Pending | P06.23 | Validate graph invariants after updates | — |
 | ❌ Pending | P06.24 | Compare recall at 10 against exact search | — |
-| ❌ Pending | P06.25 | Compare quality and throughput with hnswlib | — |
+| ✅ Done | P06.25 | Compare quality and throughput with hnswlib | bench/vector/hnsw_reference.py; bench/vector/hnsw_reference.json; real exact-oracle recall and throughput |
 | ❌ Pending | P06.26 | Measure memory and CPU query latency | — |
 
 ### P07 — Hybrid retrieval and graph ranking

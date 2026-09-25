@@ -1,0 +1,53 @@
+{
+  "dataset": "synthetic-v1",
+  "seed": 81,
+  "vectors": 400,
+  "dimensions": 16,
+  "queries": 100,
+  "cpu": "Intel64 Family 6 Model 61 Stepping 4, GenuineIntel",
+  "os": "Windows-11-10.0.22000-SP0",
+  "python": "3.13.1",
+  "config": {
+    "M": 12,
+    "efConstruction": 100,
+    "efSearch": 100,
+    "threads": 1
+  },
+  "reference_build": {
+    "source": {
+      "project": "hnswlib",
+      "version": "0.8.0",
+      "filename": "hnswlib-0.8.0.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/cf/7a/1a9b1405f2eb59515f06c3074750b03e0e96edf7fee0f6dd6df81d9c21d7/hnswlib-0.8.0.tar.gz",
+      "sha256": "cb6d037eedebb34a7134e7dc78966441dfd04c9cf5ee93911be911ced951c44c"
+    },
+    "headers": {
+      "project": "pybind11",
+      "version": "3.1.0",
+      "filename": "pybind11-3.1.0-py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/33/fd/8762f7ee3e4e4be6d1d846cffb4916dd9bb02b2f800d3603718a0efe494c/pybind11-3.1.0-py3-none-any.whl",
+      "sha256": "b8488090f8acffbcb6b5d6a85571a6827a0a2981ffb75e5a0b27b87c4a6b7dd0"
+    },
+    "compiler_version": "g++.EXE (x86_64-posix-seh-rev1, Built by MinGW-Builds project) 15.2.0",
+    "binary_sha256": "b90c363c24fd92e47c214e3380fa24e12b8f5e1892638aaba933eb3c10c199ad"
+  },
+  "construction_seconds": {
+    "custom": 12.916710000004969,
+    "hnswlib": 0.04099329999735346
+  },
+  "metrics": {
+    "custom": {
+      "recall_at_10": 1.0,
+      "query_ms_p50": 11.835999997856561,
+      "query_ms_p95": 86.06209999561543,
+      "queries_per_second": 42.15588216614928
+    },
+    "hnswlib": {
+      "recall_at_10": 1.0,
+      "query_ms_p50": 0.20680000307038426,
+      "query_ms_p95": 0.7550000009359792,
+      "queries_per_second": 2642.4337883833728
+    }
+  },
+  "limitation": "Synthetic ANN comparison. Different implementations may build different graphs; this does not measure semantic code retrieval."
+}
