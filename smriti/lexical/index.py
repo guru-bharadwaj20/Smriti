@@ -16,6 +16,7 @@ class BM25Index:
         self.postings = {}
 
     def add(self, id, fields):
+        self.remove(id)
         self.documents[id] = {field: Counter(code_tokens(text)) for field,text in fields.items()}
         self._rebuild()
 
@@ -60,3 +61,10 @@ def _search(self, query, k=20):
     return [SearchHit(id,score) for id,score in sorted(scores.items(), key=lambda item:(-item[1],item[0]))[:k]]
 
 BM25Index.search = _search
+
+
+def _remove(self, id):
+    self.documents.pop(id,None)
+    self._rebuild()
+
+BM25Index.remove = _remove
