@@ -27,3 +27,10 @@ def test_functions_and_methods():
     result = parse_file("a.py", "def f():\n    pass\nclass A:\n    async def m(self):\n        pass\n")
     assert [(s.name, s.kind) for s in result.symbols] == [("a", "module"), ("f", "function"), ("A", "class"), ("m", "method")]
     assert len({s.id for s in result.symbols}) == 4
+
+
+def test_signatures_and_docstrings():
+    result = parse_file("a.py", 'def f(x: int = 1) -> str:\n    "description"\n    return str(x)\n')
+    symbol = result.symbols[1]
+    assert symbol.signature == "def f(x: int = 1) -> str"
+    assert symbol.docstring == "description"

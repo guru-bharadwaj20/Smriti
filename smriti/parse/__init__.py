@@ -46,9 +46,21 @@ class SourceParser:
                 name = result.source[name_node.start_byte:name_node.end_byte].decode("utf-8")
                 qualname = parent.qualname + "." + name
                 body = result.source[node.start_byte:node.end_byte]
+                body_node = node.child_by_field_name("body")
+                signature = result.source[node.start_byte:body_node.start_byte].decode("utf-8").rstrip().rstrip(":")
+                docstring = ""
+                if body_node.named_children:
+                    import ast
+                    first = body_node.named_children[0]
+                    try:
+                        value = ast.literal_eval(result.source[first.start_byte:first.end_byte].decode("utf-8"))
+                        if isinstance(value, str):
+                            docstring = value
+                    except (ValueError, SyntaxError):
+                        pass
                 symbol = Symbol(sha256((path + ":" + kind + ":" + qualname).encode()).hexdigest(), path,
                     name, qualname, kind, node.start_point.row + 1, node.end_point.row + 1,
-                    node.start_byte, node.end_byte, body=body.decode("utf-8"),
+                    node.start_byte, node.end_byte, signature=signature, docstring=docstring, body=body.decode("utf-8"),
                     content_hash=sha256(body).hexdigest(), parent_id=parent.id)
                 result.symbols.append(symbol)
                 parent = symbol

@@ -85,7 +85,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P01.10 | Configure formatting and linting | pyproject.toml; syntax/format reviewed |
 | ✅ Done | P01.11 | Configure pytest and Hypothesis | pyproject.toml; tests/conftest.py; syntax/format reviewed |
 | ✅ Done | P01.12 | Configure CI for supported platforms | .github/workflows/ci.yml; syntax/format reviewed |
-| ❌ Pending | P01.13 | Define config file and environment precedence | — |
+| ✅ Done | P01.13 | Define config file and environment precedence | smriti/config.py; tests/test_config.py; syntax/format reviewed |
 | ❌ Pending | P01.14 | Define ignored paths and local data directory | — |
 | ❌ Pending | P01.15 | Create small repository fixtures with known symbols | — |
 | ❌ Pending | P01.16 | Document setup and contributor commands | — |
@@ -132,7 +132,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P03.02 | Extract Python module scopes | smriti/parse; pytest tests/test_parse.py passed |
 | ✅ Done | P03.03 | Extract Python class definitions | smriti/parse; pytest tests/test_parse.py passed |
 | ✅ Done | P03.04 | Extract Python functions and methods | smriti/parse; pytest tests/test_parse.py passed |
-| ❌ Pending | P03.05 | Extract signatures and docstrings | — |
+| ✅ Done | P03.05 | Extract signatures and docstrings | smriti/parse; pytest tests/test_parse.py passed |
 | ❌ Pending | P03.06 | Capture byte offsets and source line ranges | — |
 | ❌ Pending | P03.07 | Extract import declarations | — |
 | ❌ Pending | P03.08 | Extract call expression candidates | — |
@@ -228,7 +228,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P06.12 | Implement upper-layer greedy descent | smriti/vector/hnsw.py; executable assertions passed |
 | ✅ Done | P06.13 | Implement candidate queue search | smriti/vector/hnsw.py; executable assertions passed |
 | ✅ Done | P06.14 | Implement neighbor selection heuristic | smriti/vector/hnsw.py; executable assertions passed |
-| ❌ Pending | P06.15 | Implement bidirectional graph insertion | — |
+| ✅ Done | P06.15 | Implement bidirectional graph insertion | smriti/vector/hnsw.py; executable assertions passed |
 | ❌ Pending | P06.16 | Enforce neighbor count limits | — |
 | ❌ Pending | P06.17 | Implement efConstruction configuration | — |
 | ❌ Pending | P06.18 | Implement efSearch configuration | — |
