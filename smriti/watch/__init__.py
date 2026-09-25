@@ -20,6 +20,12 @@ class ChangeWatcher:
 
     def feed(self, kind: str, path: str, old_path: str | None = None) -> None:
         with self.lock:
+            if path.startswith(".git/"):
+                if path in {".git/HEAD", ".git/index"} or path.startswith(".git/refs/"):
+                    self.pending["@checkout"] = (monotonic(), FileChange("rescan", ""))
+                return
+            if any(part in {".smriti", ".venv", "__pycache__"} for part in Path(path).parts):
+                return
             self.pending[path] = (monotonic(), FileChange(kind, path, old_path))
 
     def poll(self, *, now: float | None = None, force: bool = False) -> list[FileChange]:
@@ -28,7 +34,7 @@ class ChangeWatcher:
             ready = [path for path, (timestamp, event) in self.pending.items()
                      if force or now - timestamp >= self.debounce_seconds]
             events = [self.pending.pop(path)[1] for path in sorted(ready)]
-        return events
+        return [FileChange("rescan", "")] if any(event.kind == "rescan" for event in events) else events
 
     def start(self) -> None:
         watcher = self

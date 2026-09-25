@@ -62,5 +62,12 @@ class HNSWIndex:
             neighbors=self._select(value,candidates,self.m)
             for other in neighbors:
                 self.graph[id][layer].add(other); self.graph[other][layer].add(id)
+            for other in [id,*neighbors]:
+                limit=self.m*2 if layer==0 else self.m
+                links=self.graph[other][layer]
+                if len(links)>limit:
+                    keep=set(self._select(self.vectors[other],[(distance(self.vectors[other],self.vectors[n]),n) for n in links],limit))
+                    for removed in links-keep: self.graph[removed][layer].discard(other)
+                    self.graph[other][layer]=keep
             if candidates: entry=candidates[0][1]
         if level>max_level: self.entry=id

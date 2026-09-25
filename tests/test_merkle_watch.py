@@ -25,3 +25,11 @@ def test_debounce_coalesces_events(tmp_path):
     assert watcher.poll() == []
     assert len(watcher.poll(force=True)) == 1
     assert watcher.poll(force=True) == []
+
+
+def test_checkout_burst_requests_single_rescan(tmp_path):
+    watcher = ChangeWatcher(tmp_path)
+    for name in ["a.py", "b.py", ".git/HEAD", ".git/index"]:
+        watcher.feed("modified", name)
+    events = watcher.poll(force=True)
+    assert [(event.kind, event.path) for event in events] == [("rescan", "")]

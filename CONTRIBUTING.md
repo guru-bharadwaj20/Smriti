@@ -86,7 +86,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P01.11 | Configure pytest and Hypothesis | pyproject.toml; tests/conftest.py; syntax/format reviewed |
 | ✅ Done | P01.12 | Configure CI for supported platforms | .github/workflows/ci.yml; syntax/format reviewed |
 | ✅ Done | P01.13 | Define config file and environment precedence | smriti/config.py; tests/test_config.py; syntax/format reviewed |
-| ❌ Pending | P01.14 | Define ignored paths and local data directory | — |
+| ✅ Done | P01.14 | Define ignored paths and local data directory | docs/local-state.md; syntax/format reviewed |
 | ❌ Pending | P01.15 | Create small repository fixtures with known symbols | — |
 | ❌ Pending | P01.16 | Document setup and contributor commands | — |
 | ✅ Done | P01.17 | Record comparison with Aider, Cursor, Mem0, and Zep | docs/prior-work.md; primary sources reviewed |
@@ -111,7 +111,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P02.12 | Detect unchanged-content file moves | — |
 | ✅ Done | P02.13 | Connect filesystem watcher | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ✅ Done | P02.14 | Debounce repeated events | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
-| ❌ Pending | P02.15 | Coalesce checkout event bursts | — |
+| ✅ Done | P02.15 | Coalesce checkout event bursts | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ❌ Pending | P02.16 | Schedule affected-file indexing jobs | — |
 | ❌ Pending | P02.17 | Diff old and new symbol sets | — |
 | ❌ Pending | P02.18 | Preserve symbol IDs for verified renames | — |
@@ -229,7 +229,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P06.13 | Implement candidate queue search | smriti/vector/hnsw.py; executable assertions passed |
 | ✅ Done | P06.14 | Implement neighbor selection heuristic | smriti/vector/hnsw.py; executable assertions passed |
 | ✅ Done | P06.15 | Implement bidirectional graph insertion | smriti/vector/hnsw.py; executable assertions passed |
-| ❌ Pending | P06.16 | Enforce neighbor count limits | — |
+| ✅ Done | P06.16 | Enforce neighbor count limits | smriti/vector/hnsw.py; executable assertions passed |
 | ❌ Pending | P06.17 | Implement efConstruction configuration | — |
 | ❌ Pending | P06.18 | Implement efSearch configuration | — |
 | ❌ Pending | P06.19 | Exclude tombstoned vectors from results | — |
