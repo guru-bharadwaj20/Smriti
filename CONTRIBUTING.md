@@ -141,7 +141,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P03.11 | Store parser diagnostics for invalid syntax | smriti/parse; pytest tests/test_parse.py passed |
 | ✅ Done | P03.12 | Reuse syntax trees for edited files | smriti/parse; pytest tests/test_parse.py passed |
 | ✅ Done | P03.13 | Handle unicode offsets and line endings | smriti/parse; pytest tests/test_parse.py passed |
-| ❌ Pending | P03.14 | Chunk source at symbol boundaries | — |
+| ✅ Done | P03.14 | Chunk source at symbol boundaries | smriti/parse; pytest tests/test_parse.py passed |
 | ❌ Pending | P03.15 | Define treatment of oversized functions | — |
 | ❌ Pending | P03.16 | Add TypeScript extraction fixtures | — |
 | ❌ Pending | P03.17 | Implement TypeScript symbol extraction | — |
