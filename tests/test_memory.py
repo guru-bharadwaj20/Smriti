@@ -142,6 +142,15 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual(len(store.recall()), 2)
         store.close()
 
+    def test_conflict_audit(self):
+        store = MemoryStore(":memory:")
+        a = store.remember("v1", subject="x", source="user")
+        b = store.remember("v2", subject="x", source="code")
+        store.preferred(a.id)
+        self.assertEqual(store.conflict_history(a.id)[0]["winner"], b.id)
+        self.assertEqual(len(store.recall()), 2)
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"
