@@ -33,3 +33,12 @@ def test_checkout_burst_requests_single_rescan(tmp_path):
         watcher.feed("modified", name)
     events = watcher.poll(force=True)
     assert [(event.kind, event.path) for event in events] == [("rescan", "")]
+
+
+def test_affected_jobs_do_not_parse_deletions():
+    from smriti.watch import affected_file_jobs
+    from smriti.merkle import FileChange
+    parse, remove, rescan = affected_file_jobs([FileChange("modified", "a.py"), FileChange("deleted", "b.py"), FileChange("moved", "d.py", "c.py")])
+    assert parse == ["a.py", "d.py"]
+    assert remove == ["b.py", "c.py"]
+    assert not rescan
