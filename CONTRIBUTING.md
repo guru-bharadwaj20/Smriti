@@ -109,7 +109,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P02.10 | Detect modified files | — |
 | ❌ Pending | P02.11 | Detect deleted files | — |
 | ❌ Pending | P02.12 | Detect unchanged-content file moves | — |
-| ❌ Pending | P02.13 | Connect filesystem watcher | — |
+| ✅ Done | P02.13 | Connect filesystem watcher | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ❌ Pending | P02.14 | Debounce repeated events | — |
 | ❌ Pending | P02.15 | Coalesce checkout event bursts | — |
 | ❌ Pending | P02.16 | Schedule affected-file indexing jobs | — |
