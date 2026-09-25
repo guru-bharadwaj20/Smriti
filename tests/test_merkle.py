@@ -88,3 +88,10 @@ def test_created_files():
     from smriti.merkle import MerkleSnapshot, created_files
     changes = created_files(MerkleSnapshot(), MerkleSnapshot({"new.py": hash_content(b"n")}))
     assert [(event.kind, event.path) for event in changes] == [("created", "new.py")]
+
+
+def test_modified_files():
+    from smriti.merkle import MerkleSnapshot, modified_files
+    old = MerkleSnapshot({"a.py": hash_content(b"a"), "b.py": hash_content(b"b")})
+    new = MerkleSnapshot({"a.py": hash_content(b"new"), "b.py": hash_content(b"b")})
+    assert [event.path for event in modified_files(old, new)] == ["a.py"]
