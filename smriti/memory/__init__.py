@@ -7,7 +7,8 @@ import json
 import math
 import sqlite3
 import uuid
-from collections.abc import Callable, Iterable, Sequence
+from collections.abc import Callable, Iterable, Iterator, Sequence
+from contextlib import contextmanager
 from dataclasses import asdict, dataclass, replace
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -91,6 +92,7 @@ class MemoryStore:
         self.db.execute("INSERT OR IGNORE INTO memory_branches VALUES ('main',?)", (self.head,))
         self.db.execute('CREATE TABLE IF NOT EXISTS memory_purged (fact_id TEXT PRIMARY KEY)')
         self.db.commit()
+        self._savepoint_seq = 0
 
     def close(self) -> None:
         self.db.close()
@@ -112,72 +114,77 @@ class MemoryStore:
         valid_to: datetime | str | None = None,
         derived_from: Iterable[str] = (),
     ) -> Fact:
-        if not isinstance(text, str) or not text.strip():
-            raise ValueError('Fact text must be nonempty')
-        if (
-            not isinstance(confidence, (int, float))
-            or not math.isfinite(confidence)
-            or (not 0 <= confidence <= 1)
-        ):
-            raise ValueError('Confidence must be finite in [0,1]')
-        for value in (user, session, tool, source, subject):
-            if value is not None and (not isinstance(value, str) or not value.strip()):
-                raise ValueError('Metadata values must be nonempty strings')
-        if not anchors:
-            anchors = tuple(
-                Anchor(s['symbol_id'], s['content_hash'])
-                if isinstance(s, dict)
-                else Anchor(s.id, s.content_hash)
-                for s in selected_context
+        with self._atomic():
+            if not isinstance(text, str) or not text.strip():
+                raise ValueError('Fact text must be nonempty')
+            if (
+                not isinstance(confidence, (int, float))
+                or not math.isfinite(confidence)
+                or (not 0 <= confidence <= 1)
+            ):
+                raise ValueError('Confidence must be finite in [0,1]')
+            for value in (user, session, tool, source, subject):
+                if value is not None and (not isinstance(value, str) or not value.strip()):
+                    raise ValueError('Metadata values must be nonempty strings')
+            if not anchors:
+                anchors = tuple(
+                    Anchor(s['symbol_id'], s['content_hash'])
+                    if isinstance(s, dict)
+                    else Anchor(s.id, s.content_hash)
+                    for s in selected_context
+                )
+            normalized_anchors = tuple(Anchor(**a) if isinstance(a, dict) else a for a in anchors)
+            if any(
+                not isinstance(a, Anchor) or not a.symbol_id or (not a.content_hash)
+                for a in normalized_anchors
+            ):
+                raise ValueError('Anchors require symbol IDs and hashes')
+            if len({a.symbol_id for a in normalized_anchors}) != len(normalized_anchors):
+                raise ValueError('Duplicate anchors are not allowed')
+            if self.is_purged(fact_id):
+                raise ValueError('Forgotten fact IDs cannot be reused')
+            recorded_at = self._event_time()
+            valid = ValidInterval(valid_from or recorded_at, valid_to)
+            fact = Fact(
+                fact_id or uuid.uuid4().hex,
+                text,
+                user,
+                session,
+                tool,
+                source,
+                float(confidence),
+                normalized_anchors,
             )
-        normalized_anchors = tuple(Anchor(**a) if isinstance(a, dict) else a for a in anchors)
-        if any(
-            not isinstance(a, Anchor) or not a.symbol_id or (not a.content_hash)
-            for a in normalized_anchors
-        ):
-            raise ValueError('Anchors require symbol IDs and hashes')
-        if len({a.symbol_id for a in normalized_anchors}) != len(normalized_anchors):
-            raise ValueError('Duplicate anchors are not allowed')
-        if self.is_purged(fact_id):
-            raise ValueError('Forgotten fact IDs cannot be reused')
-        recorded_at = self._event_time()
-        valid = ValidInterval(valid_from or recorded_at, valid_to)
-        fact = Fact(
-            fact_id or uuid.uuid4().hex,
-            text,
-            user,
-            session,
-            tool,
-            source,
-            float(confidence),
-            normalized_anchors,
-        )
-        derived_from = tuple(dict.fromkeys(derived_from))
-        known = {f.id for f in self.recall()}
-        if any(source_id not in known or self.is_purged(source_id) for source_id in derived_from):
-            raise ValueError('Derivation sources must exist on the active branch')
-        self._validate_derivations(fact.id, derived_from)
-        fact = replace(
-            fact,
-            derived_from=derived_from,
-            subject=subject,
-            created_at=recorded_at,
-            valid_from=valid.start.isoformat(),
-            valid_to=valid.end.isoformat() if valid.end else None,
-            recorded_at=recorded_at,
-        )
-        with self.db:
-            self.db.execute('INSERT INTO facts VALUES (?,?)', (fact.id, canonical(asdict(fact))))
-            self.db.executemany(
-                'INSERT INTO fact_anchors VALUES (?,?,?)',
-                [(fact.id, a.symbol_id, a.content_hash) for a in normalized_anchors],
+            derived_from = tuple(dict.fromkeys(derived_from))
+            known = {f.id for f in self.recall()}
+            if any(
+                source_id not in known or self.is_purged(source_id) for source_id in derived_from
+            ):
+                raise ValueError('Derivation sources must exist on the active branch')
+            self._validate_derivations(fact.id, derived_from)
+            fact = replace(
+                fact,
+                derived_from=derived_from,
+                subject=subject,
+                created_at=recorded_at,
+                valid_from=valid.start.isoformat(),
+                valid_to=valid.end.isoformat() if valid.end else None,
+                recorded_at=recorded_at,
             )
-            self.db.executemany(
-                'INSERT OR IGNORE INTO memory_derivations VALUES (?,?)',
-                [(source_id, fact.id) for source_id in derived_from],
-            )
-            self._record('add', fact.id, asdict(fact), recorded_at=recorded_at)
-        return fact
+            with self._atomic():
+                self.db.execute(
+                    'INSERT INTO facts VALUES (?,?)', (fact.id, canonical(asdict(fact)))
+                )
+                self.db.executemany(
+                    'INSERT INTO fact_anchors VALUES (?,?,?)',
+                    [(fact.id, a.symbol_id, a.content_hash) for a in normalized_anchors],
+                )
+                self.db.executemany(
+                    'INSERT OR IGNORE INTO memory_derivations VALUES (?,?)',
+                    [(source_id, fact.id) for source_id in derived_from],
+                )
+                self._record('add', fact.id, asdict(fact), recorded_at=recorded_at)
+            return fact
 
     def recall(
         self,
@@ -208,8 +215,8 @@ class MemoryStore:
         return Fact(**data)
 
     def _save(self, fact: Fact) -> Fact:
-        fact = replace(fact, recorded_at=self._event_time())
-        with self.db:
+        with self._atomic():
+            fact = replace(fact, recorded_at=self._event_time())
             previous = self.db.execute(
                 'SELECT payload FROM facts WHERE id=?', (fact.id,)
             ).fetchone()
@@ -238,44 +245,46 @@ class MemoryStore:
         commit: str | None = None,
     ) -> list[Fact]:
         """symbols maps stable symbol IDs to current content hashes."""
-        renames = renames or {}
-        changes = []
-        for fact in self.recall():
-            moved = tuple(
-                Anchor(renames[a.symbol_id], a.content_hash)
-                if a.symbol_id in renames and symbols.get(renames[a.symbol_id]) == a.content_hash
-                else a
-                for a in fact.anchors
-            )
-            if moved != fact.anchors:
-                fact = self._save(replace(fact, anchors=moved))
-                changes.append(fact)
-            if any(a.symbol_id not in symbols for a in fact.anchors):
-                changes.append(
-                    self._save(
-                        replace(
-                            fact,
-                            freshness='orphaned',
-                            freshness_reason='anchor_deleted',
-                            triggering_commit=commit,
+        with self._atomic():
+            renames = renames or {}
+            changes = []
+            for fact in self.recall():
+                moved = tuple(
+                    Anchor(renames[a.symbol_id], a.content_hash)
+                    if a.symbol_id in renames
+                    and symbols.get(renames[a.symbol_id]) == a.content_hash
+                    else a
+                    for a in fact.anchors
+                )
+                if moved != fact.anchors:
+                    fact = self._save(replace(fact, anchors=moved))
+                    changes.append(fact)
+                if any(a.symbol_id not in symbols for a in fact.anchors):
+                    changes.append(
+                        self._save(
+                            replace(
+                                fact,
+                                freshness='orphaned',
+                                freshness_reason='anchor_deleted',
+                                triggering_commit=commit,
+                            )
                         )
                     )
-                )
-            elif any(
-                a.symbol_id in symbols and symbols[a.symbol_id] != a.content_hash
-                for a in fact.anchors
-            ):
-                changes.append(
-                    self._save(
-                        replace(
-                            fact,
-                            freshness='stale',
-                            freshness_reason='anchor_changed',
-                            triggering_commit=commit,
+                elif any(
+                    a.symbol_id in symbols and symbols[a.symbol_id] != a.content_hash
+                    for a in fact.anchors
+                ):
+                    changes.append(
+                        self._save(
+                            replace(
+                                fact,
+                                freshness='stale',
+                                freshness_reason='anchor_changed',
+                                triggering_commit=commit,
+                            )
                         )
                     )
-                )
-        return changes
+            return changes
 
     def anchor_states(self, fact_id: str, symbols: dict[str, str]) -> dict[str, str]:
         fact = next((f for f in self.recall() if f.id == fact_id), None)
@@ -293,21 +302,22 @@ class MemoryStore:
     def revalidate(
         self, fact_id: str, symbols: dict[str, str], *, commit: str | None = None
     ) -> Fact:
-        fact = next((f for f in self.recall() if f.id == fact_id), None)
-        if fact is None:
-            raise KeyError(fact_id)
-        if any(a.symbol_id not in symbols for a in fact.anchors):
-            raise ValueError('Cannot revalidate a deleted anchor')
-        anchors = tuple(Anchor(a.symbol_id, symbols[a.symbol_id]) for a in fact.anchors)
-        return self._save(
-            replace(
-                fact,
-                anchors=anchors,
-                freshness='fresh',
-                freshness_reason='revalidated',
-                triggering_commit=commit,
+        with self._atomic():
+            fact = next((f for f in self.recall() if f.id == fact_id), None)
+            if fact is None:
+                raise KeyError(fact_id)
+            if any(a.symbol_id not in symbols for a in fact.anchors):
+                raise ValueError('Cannot revalidate a deleted anchor')
+            anchors = tuple(Anchor(a.symbol_id, symbols[a.symbol_id]) for a in fact.anchors)
+            return self._save(
+                replace(
+                    fact,
+                    anchors=anchors,
+                    freshness='fresh',
+                    freshness_reason='revalidated',
+                    triggering_commit=commit,
+                )
             )
-        )
 
     def audit(self, fact_id: str) -> list[dict[str, Fact | None]]:
         return [
@@ -363,7 +373,7 @@ class MemoryStore:
                 f.id,
             ),
         )
-        with self.db:
+        with self._atomic():
             self.db.execute(
                 'INSERT INTO conflict_audit(fact_id,candidate_ids,winner_id) VALUES (?,?,?)',
                 (fact_id, json.dumps(sorted(f.id for f in candidates)), winner.id),
@@ -498,23 +508,24 @@ class MemoryStore:
         valid_from: datetime | str | None = None,
         valid_to: datetime | str | None = None,
     ) -> Fact:
-        fact = next((f for f in self.recall() if f.id == fact_id), None)
-        if fact is None:
-            raise KeyError(fact_id)
-        if text is not None and (not isinstance(text, str) or not text.strip()):
-            raise ValueError('Fact text must be nonempty')
-        valid = ValidInterval(
-            valid_from or fact.valid_from or fact.created_at or self._event_time(),
-            valid_to if valid_to is not None else fact.valid_to,
-        )
-        return self._save(
-            replace(
-                fact,
-                text=text if text is not None else fact.text,
-                valid_from=valid.start.isoformat(),
-                valid_to=valid.end.isoformat() if valid.end else None,
+        with self._atomic():
+            fact = next((f for f in self.recall() if f.id == fact_id), None)
+            if fact is None:
+                raise KeyError(fact_id)
+            if text is not None and (not isinstance(text, str) or not text.strip()):
+                raise ValueError('Fact text must be nonempty')
+            valid = ValidInterval(
+                valid_from or fact.valid_from or fact.created_at or self._event_time(),
+                valid_to if valid_to is not None else fact.valid_to,
             )
-        )
+            return self._save(
+                replace(
+                    fact,
+                    text=text if text is not None else fact.text,
+                    valid_from=valid.start.isoformat(),
+                    valid_to=valid.end.isoformat() if valid.end else None,
+                )
+            )
 
     def timeline(self, head: str | None = None) -> Timeline:
         timeline = Timeline()
@@ -586,21 +597,22 @@ class MemoryStore:
         return timeline
 
     def invalidate(self, fact_id: str, *, reason: str = 'invalidated') -> str:
-        fact = next((f for f in self.recall() if f.id == fact_id), None)
-        if fact is None:
-            raise KeyError(fact_id)
-        with self.db:
-            from .operations import digest
+        with self._atomic():
+            fact = next((f for f in self.recall() if f.id == fact_id), None)
+            if fact is None:
+                raise KeyError(fact_id)
+            with self._atomic():
+                from .operations import digest
 
-            self._record(
-                'invalidate',
-                fact_id,
-                {'id': fact_id, 'reason': reason},
-                metadata={'reason_hash': digest(reason)},
-            )
-            self.db.execute('DELETE FROM facts WHERE id=?', (fact_id,))
-            self.db.execute('DELETE FROM fact_anchors WHERE fact_id=?', (fact_id,))
-        return fact_id
+                self._record(
+                    'invalidate',
+                    fact_id,
+                    {'id': fact_id, 'reason': reason},
+                    metadata={'reason_hash': digest(reason)},
+                )
+                self.db.execute('DELETE FROM facts WHERE id=?', (fact_id,))
+                self.db.execute('DELETE FROM fact_anchors WHERE fact_id=?', (fact_id,))
+            return fact_id
 
     def is_purged(self, fact_id: str | None) -> bool:
         return (
@@ -612,15 +624,19 @@ class MemoryStore:
         )
 
     def forget(self, fact_id: str) -> list[str]:
-        if self.is_purged(fact_id):
-            return []
-        known = self.db.execute(
-            "SELECT 1 FROM memory_operations WHERE json_extract(canonical,'$.fact_id')=?",
-            (fact_id,),
-        ).fetchone()
-        if not known:
-            raise KeyError(fact_id)
-        return self._purge({fact_id, *self.dependents(fact_id)})
+        with self._atomic():
+            if self.is_purged(fact_id):
+                forgotten = []
+            else:
+                known = self.db.execute(
+                    "SELECT 1 FROM memory_operations WHERE json_extract(canonical,'$.fact_id')=?",
+                    (fact_id,),
+                ).fetchone()
+                if not known:
+                    raise KeyError(fact_id)
+                forgotten = self._purge({fact_id, *self.dependents(fact_id)})
+        self._physical_cleanup()
+        return forgotten
 
     def replay_digest(self, head: str | None = None) -> str:
         from .operations import digest
@@ -665,36 +681,38 @@ class MemoryStore:
             )
 
     def revert(self, operation_id: str) -> str:
-        op = self.operations.get(operation_id)
-        if any(
-            o.metadata.get('reverts') == operation_id for o in self.operations.ancestry(self.head)
-        ):
-            raise ValueError('Operation was already reverted')
-        if operation_id not in {o.id for o in self.operations.ancestry(self.head)}:
-            raise ValueError('Operation is not on the active branch')
-        if op.kind == 'merge':
+        with self._atomic():
+            op = self.operations.get(operation_id)
+            if any(
+                o.metadata.get('reverts') == operation_id
+                for o in self.operations.ancestry(self.head)
+            ):
+                raise ValueError('Operation was already reverted')
+            if operation_id not in {o.id for o in self.operations.ancestry(self.head)}:
+                raise ValueError('Operation is not on the active branch')
+            if op.kind == 'merge':
+                before = self.replay(op.parents[0]) if op.parents else {}
+                with self._atomic():
+                    inverse = self._snapshot('restore', before, metadata={'reverts': operation_id})
+                    self._materialize(before)
+                return inverse.id
+            if op.kind not in ('add', 'update', 'invalidate'):
+                raise ValueError('Operation kind is not reversible')
+            if self.is_purged(op.fact_id):
+                raise ValueError('Forgotten payloads cannot be restored')
             before = self.replay(op.parents[0]) if op.parents else {}
-            with self.db:
-                inverse = self._snapshot('restore', before, metadata={'reverts': operation_id})
-                self._materialize(before)
+            if op.fact_id is None:
+                raise ValueError('Fact event requires a fact ID')
+            prior = before.get(op.fact_id)
+            with self._atomic():
+                inverse = self._record(
+                    'revert',
+                    op.fact_id,
+                    asdict(prior) if prior else None,
+                    metadata={'reverts': operation_id},
+                )
+                self._materialize(self.replay())
             return inverse.id
-        if op.kind not in ('add', 'update', 'invalidate'):
-            raise ValueError('Operation kind is not reversible')
-        if self.is_purged(op.fact_id):
-            raise ValueError('Forgotten payloads cannot be restored')
-        before = self.replay(op.parents[0]) if op.parents else {}
-        if op.fact_id is None:
-            raise ValueError('Fact event requires a fact ID')
-        prior = before.get(op.fact_id)
-        with self.db:
-            inverse = self._record(
-                'revert',
-                op.fact_id,
-                asdict(prior) if prior else None,
-                metadata={'reverts': operation_id},
-            )
-            self._materialize(self.replay())
-        return inverse.id
 
     def verify(self) -> bool:
         stored = {
@@ -747,64 +765,71 @@ class MemoryStore:
         return name
 
     def branch(self, name: str, *, from_head: str | None = None) -> str | None:
-        name = self._branch_name(name)
-        head = self.head if from_head is None else from_head or None
-        if head:
-            self.operations.get(head)
-        with self.db:
-            self.db.execute('INSERT INTO memory_branches VALUES (?,?)', (name, head))
-        return head
+        with self._atomic():
+            name = self._branch_name(name)
+            head = self.head if from_head is None else from_head or None
+            if head:
+                self.operations.get(head)
+            with self._atomic():
+                self.db.execute('INSERT INTO memory_branches VALUES (?,?)', (name, head))
+            return head
 
     def switch(self, name: str) -> str | None:
-        row = self.db.execute('SELECT head FROM memory_branches WHERE name=?', (name,)).fetchone()
-        if row is None:
-            raise KeyError(name)
-        with self.db:
-            self.db.execute("UPDATE memory_meta SET value=? WHERE key='branch'", (name,))
-            self.db.execute("UPDATE memory_meta SET value=? WHERE key='head'", (row[0],))
-            self._materialize(self.replay(row[0]) if row[0] else {})
-        return self.head
+        with self._atomic():
+            row = self.db.execute(
+                'SELECT head FROM memory_branches WHERE name=?', (name,)
+            ).fetchone()
+            if row is None:
+                raise KeyError(name)
+            with self._atomic():
+                self.db.execute("UPDATE memory_meta SET value=? WHERE key='branch'", (name,))
+                self.db.execute("UPDATE memory_meta SET value=? WHERE key='head'", (row[0],))
+                self._materialize(self.replay(row[0]) if row[0] else {})
+            return self.head
 
     def sync_git(self, repository: Path | str) -> str:
-        import subprocess
+        with self._atomic():
+            import subprocess
 
-        result = subprocess.run(
-            ['git', '-C', str(repository), 'symbolic-ref', '--quiet', '--short', 'HEAD'],
-            capture_output=True,
-            text=True,
-        )
-        if result.returncode == 0:
-            name = result.stdout.strip()
-        else:
-            revision = subprocess.run(
-                ['git', '-C', str(repository), 'rev-parse', '--verify', 'HEAD'],
+            result = subprocess.run(
+                ['git', '-C', str(repository), 'symbolic-ref', '--quiet', '--short', 'HEAD'],
                 capture_output=True,
                 text=True,
-                check=True,
-            ).stdout.strip()
-            name = 'detached/' + revision
-        if name not in self.branches():
-            self.branch(name)
-        self.switch(name)
-        return name
+            )
+            if result.returncode == 0:
+                name = result.stdout.strip()
+            else:
+                revision = subprocess.run(
+                    ['git', '-C', str(repository), 'rev-parse', '--verify', 'HEAD'],
+                    capture_output=True,
+                    text=True,
+                    check=True,
+                ).stdout.strip()
+                name = 'detached/' + revision
+            if name not in self.branches():
+                self.branch(name)
+            self.switch(name)
+            return name
 
     def rename_branch(self, old: str, new: str) -> str:
-        new = self._branch_name(new)
-        if old not in self.branches():
-            raise KeyError(old)
-        with self.db:
-            self.db.execute('UPDATE memory_branches SET name=? WHERE name=?', (new, old))
-            if self.current_branch == old:
-                self.db.execute("UPDATE memory_meta SET value=? WHERE key='branch'", (new,))
-        return new
+        with self._atomic():
+            new = self._branch_name(new)
+            if old not in self.branches():
+                raise KeyError(old)
+            with self._atomic():
+                self.db.execute('UPDATE memory_branches SET name=? WHERE name=?', (new, old))
+                if self.current_branch == old:
+                    self.db.execute("UPDATE memory_meta SET value=? WHERE key='branch'", (new,))
+            return new
 
     def delete_branch(self, name: str) -> None:
-        if name == self.current_branch:
-            raise ValueError('Cannot delete the active branch')
-        if name not in self.branches():
-            raise KeyError(name)
-        with self.db:
-            self.db.execute('DELETE FROM memory_branches WHERE name=?', (name,))
+        with self._atomic():
+            if name == self.current_branch:
+                raise ValueError('Cannot delete the active branch')
+            if name not in self.branches():
+                raise KeyError(name)
+            with self._atomic():
+                self.db.execute('DELETE FROM memory_branches WHERE name=?', (name,))
 
     @staticmethod
     def _same_fact(left: Fact | None, right: Fact | None) -> bool:
@@ -868,28 +893,37 @@ class MemoryStore:
         )
 
     def merge(self, source: str, *, resolutions: dict[str, str] | None = None) -> str:
-        preview = self.merge_preview(source)
-        resolutions = resolutions or {}
-        unresolved = {fid: c for fid, c in preview['conflicts'].items() if fid not in resolutions}
-        if unresolved:
-            raise MergeConflict(unresolved)
-        if set(resolutions) - set(preview['conflicts']):
-            raise ValueError('Resolution supplied for a non-conflicting fact')
-        for fid, choice in resolutions.items():
-            if choice not in ('ours', 'theirs', 'base', 'delete'):
-                raise ValueError('Resolution must be ours, theirs, base or delete')
-            selected = None if choice == 'delete' else preview['conflicts'][fid][choice]
-            if selected is not None:
-                preview['state'][fid] = selected
-        with self.db:
-            op = self._snapshot(
-                'merge',
-                preview['state'],
-                metadata={'source': source, 'base': preview['base'], 'resolutions': resolutions},
-                parents=tuple(dict.fromkeys(h for h in (self.head, preview['source_head']) if h)),
-            )
-            self._materialize(preview['state'])
-        return op.id
+        with self._atomic():
+            preview = self.merge_preview(source)
+            resolutions = resolutions or {}
+            unresolved = {
+                fid: c for fid, c in preview['conflicts'].items() if fid not in resolutions
+            }
+            if unresolved:
+                raise MergeConflict(unresolved)
+            if set(resolutions) - set(preview['conflicts']):
+                raise ValueError('Resolution supplied for a non-conflicting fact')
+            for fid, choice in resolutions.items():
+                if choice not in ('ours', 'theirs', 'base', 'delete'):
+                    raise ValueError('Resolution must be ours, theirs, base or delete')
+                selected = None if choice == 'delete' else preview['conflicts'][fid][choice]
+                if selected is not None:
+                    preview['state'][fid] = selected
+            with self._atomic():
+                op = self._snapshot(
+                    'merge',
+                    preview['state'],
+                    metadata={
+                        'source': source,
+                        'base': preview['base'],
+                        'resolutions': resolutions,
+                    },
+                    parents=tuple(
+                        dict.fromkeys(h for h in (self.head, preview['source_head']) if h)
+                    ),
+                )
+                self._materialize(preview['state'])
+            return op.id
 
     def _validate_derivations(self, derived_id: str, sources: Iterable[str]) -> None:
         known = {f.id for f in self.recall()}
@@ -913,18 +947,19 @@ class MemoryStore:
                 )
 
     def add_derivations(self, fact_id: str, sources: Iterable[str]) -> Fact:
-        fact = next((f for f in self.recall() if f.id == fact_id), None)
-        if fact is None:
-            raise KeyError(fact_id)
-        sources = tuple(dict.fromkeys((*fact.derived_from, *sources)))
-        self._validate_derivations(fact_id, sources)
-        with self.db:
-            updated = self._save(replace(fact, derived_from=sources))
-            self.db.executemany(
-                'INSERT OR IGNORE INTO memory_derivations VALUES (?,?)',
-                [(source_id, fact_id) for source_id in sources],
-            )
-        return updated
+        with self._atomic():
+            fact = next((f for f in self.recall() if f.id == fact_id), None)
+            if fact is None:
+                raise KeyError(fact_id)
+            sources = tuple(dict.fromkeys((*fact.derived_from, *sources)))
+            self._validate_derivations(fact_id, sources)
+            with self._atomic():
+                updated = self._save(replace(fact, derived_from=sources))
+                self.db.executemany(
+                    'INSERT OR IGNORE INTO memory_derivations VALUES (?,?)',
+                    [(source_id, fact_id) for source_id in sources],
+                )
+            return updated
 
     def dependents(self, fact_id: str) -> list[str]:
         seen = set()
@@ -941,7 +976,7 @@ class MemoryStore:
 
     def _purge(self, fact_ids: set[str]) -> list[str]:
         forgotten = sorted(fid for fid in fact_ids if not self.is_purged(fid))
-        with self.db:
+        with self._atomic():
             for fid in forgotten:
                 self.db.execute('INSERT OR IGNORE INTO memory_purged VALUES (?)', (fid,))
                 self.db.execute(
@@ -955,24 +990,53 @@ class MemoryStore:
                     (fid, fid, fid),
                 )
                 self._record('forget', fid)
-        if forgotten:
-            self.db.execute('PRAGMA wal_checkpoint(TRUNCATE)')
-            self.db.execute('VACUUM')
         return forgotten
 
     def forget_by(self, *, session: str | None = None, source: str | None = None) -> list[str]:
         if session is None and source is None:
             raise ValueError('Specify session or source')
-        selected = set()
-        for (payload,) in self.db.execute('SELECT payload FROM memory_blobs'):
-            data = json.loads(payload)
-            if (
-                'id' in data
-                and (session is None or data.get('session') == session)
-                and (source is None or data.get('source') == source)
-            ):
-                selected.add(data['id'])
-        ids = set(selected)
-        for fid in selected:
-            ids.update(self.dependents(fid))
-        return self._purge(ids)
+        with self._atomic():
+            selected: set[str] = set()
+            for (payload,) in self.db.execute('SELECT payload FROM memory_blobs'):
+                data = json.loads(payload)
+                if (
+                    'id' in data
+                    and (session is None or data.get('session') == session)
+                    and (source is None or data.get('source') == source)
+                ):
+                    selected.add(str(data['id']))
+            ids = set(selected)
+            for fid in selected:
+                ids.update(self.dependents(fid))
+            forgotten = self._purge(ids)
+        self._physical_cleanup()
+        return forgotten
+
+    @contextmanager
+    def _atomic(self) -> Iterator[None]:
+        nested = self.db.in_transaction
+        token = ''
+        if nested:
+            self._savepoint_seq += 1
+            token = 'memory_' + str(self._savepoint_seq)
+            self.db.execute('SAVEPOINT ' + token)
+        else:
+            self.db.execute('BEGIN IMMEDIATE')
+        try:
+            yield
+        except BaseException:
+            if nested:
+                self.db.execute('ROLLBACK TO SAVEPOINT ' + token)
+                self.db.execute('RELEASE SAVEPOINT ' + token)
+            else:
+                self.db.rollback()
+            raise
+        else:
+            if nested:
+                self.db.execute('RELEASE SAVEPOINT ' + token)
+            else:
+                self.db.commit()
+
+    def _physical_cleanup(self) -> None:
+        self.db.execute('PRAGMA wal_checkpoint(TRUNCATE)')
+        self.db.execute('VACUUM')

@@ -452,7 +452,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P13.26 | Separate optional answer-generation scoring | — |
 | ✅ Done | P13.27 | Choose licensed repositories for commit replay | bench/codemem/repositories.json; pinned LICENSE SHA-256 and Apache-2.0 verification |
 | ✅ Done | P13.28 | Select and record 200-commit replay sequences | requests-200.json contains exactly 200 unique parent-linked public commits; three tamper/count tests; strict mypy and ruff |
-| ❌ Pending | P13.29 | Create anchored fact injection fixtures | — |
+| ✅ Done | P13.29 | Create anchored fact injection fixtures | bench/codemem/injection.py; bench/codemem/results/injection.json; injection fixture tests pass |
 | ❌ Pending | P13.30 | Label expected staleness after each commit | — |
 | ❌ Pending | P13.31 | Measure stale detection precision and recall | — |
 | ❌ Pending | P13.32 | Measure anchor survival through renames | — |
@@ -478,7 +478,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P14.05 | Implement memory freshness view | 4 real repository UI tests passed; source-edit freshness regression; JS syntax checked |
 | ✅ Done | P14.06 | Implement memory history and diff view | 5 real repository UI tests passed; actual before/after memory diff; JS syntax checked |
 | ✅ Done | P14.07 | Implement merge conflict resolution view | 6 actual repository UI tests passed; conflict409 and recorded resolution validated; JS syntax checked |
-| ❌ Pending | P14.08 | Bind local service safely by default | — |
+| ✅ Done | P14.08 | Bind local service safely by default | 8 UI tests pass; strict mypy; Ruff; JavaScript syntax |
 | ❌ Pending | P14.09 | Expand README with verified setup commands | — |
 | ❌ Pending | P14.10 | Document architecture and storage formats | — |
 | ❌ Pending | P14.11 | Document memory temporal and deletion semantics | — |
@@ -489,7 +489,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P14.16 | Build and test Python package artifact | — |
 | ❌ Pending | P14.17 | Create optional Docker build | — |
 | ❌ Pending | P14.18 | Verify clean-install CLI and MCP smoke tests | — |
-| ❌ Pending | P14.19 | Script cold-index and one-line-edit demo | — |
+| ✅ Done | P14.19 | Script cold-index and one-line-edit demo | 20 files cold 2.307s; one changed file edit 0.209s; strict mypy and Ruff |
 | ❌ Pending | P14.20 | Script issue retrieval within 8k-token budget | — |
 | ❌ Pending | P14.21 | Script memory recall across sessions | — |
 | ❌ Pending | P14.22 | Script rename, stale detection, branch, merge, revert | — |
