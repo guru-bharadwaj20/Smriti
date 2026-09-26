@@ -302,6 +302,18 @@ class MemoryTests(unittest.TestCase):
             store.verify()
         store.close()
 
+    def test_clock_ties(self):
+        from datetime import datetime,timezone
+        fixed=datetime(2025,1,1,tzinfo=timezone.utc)
+        store=MemoryStore(":memory:",clock=lambda:fixed)
+        f=store.remember("a")
+        store.update(f.id,"b")
+        operations=store.operations.ancestry(store.head)
+        self.assertLess(operations[0].recorded_at,operations[1].recorded_at)
+        self.assertEqual(len(store.timeline().rows),2)
+        self.assertTrue(store.verify())
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"

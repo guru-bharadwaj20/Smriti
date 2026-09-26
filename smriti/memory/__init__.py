@@ -234,7 +234,12 @@ class MemoryStore:
         return self.db.execute("SELECT value FROM memory_meta WHERE key='head'").fetchone()[0]
 
     def _event_time(self):
-        return timestamp(self._clock()).isoformat()
+        point=timestamp(self._clock())
+        if self.head:
+            prior=timestamp(self.operations.get(self.head).recorded_at)
+            if point<=prior:
+                point=prior+timedelta(microseconds=1)
+        return point.isoformat()
 
     def _record(self,kind,fact_id=None,payload=None,*,metadata=None,recorded_at=None,parents=None):
         op = self.operations.append_uncommitted(kind,fact_id,payload,parents=parents if parents is not None else ((self.head,) if self.head else ()),recorded_at=recorded_at or self._event_time(),metadata=metadata)
@@ -358,3 +363,5 @@ class MemoryStore:
             raise ValueError("Materialized memory differs from verified operation replay")
         return True
 # P10.22
+
+# P10.23
