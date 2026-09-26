@@ -375,8 +375,8 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P11.14 | Represent multi-parent merge history | smriti\memory\__init__.py; P11.14 regression in tests\test_memory.py |
 | ✅ Done | P11.15 | Revert a merged operation consistently | smriti\memory\__init__.py; P11.15 regression in tests\test_memory.py |
 | ✅ Done | P11.16 | Store source-to-derived-fact edges | smriti\memory\__init__.py; P11.16 regression in tests\test_memory.py |
-| ❌ Pending | P11.17 | Reject derivation cycles | — |
-| ❌ Pending | P11.18 | Traverse transitive deletion dependencies | — |
+| ✅ Done | P11.17 | Reject derivation cycles | smriti\memory\__init__.py; P11.17 regression in tests\test_memory.py |
+| ✅ Done | P11.18 | Traverse transitive deletion dependencies | smriti\memory\__init__.py; P11.18 regression in tests\test_memory.py |
 | ❌ Pending | P11.19 | Cascade forget by fact ID | — |
 | ❌ Pending | P11.20 | Cascade forget by session or source | — |
 | ❌ Pending | P11.21 | Define shared-source derivation deletion behavior | — |
@@ -461,7 +461,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P13.35 | Measure cold indexing time and peak memory | — |
 | ❌ Pending | P13.36 | Measure incremental update p50 and p95 | — |
 | ❌ Pending | P13.37 | Measure query p50 and p95 latency | — |
-| ❌ Pending | P13.38 | Record CPU, RAM, OS, seeds, and configs | — |
+| ✅ Done | P13.38 | Record CPU, RAM, OS, seeds, and configs | bench/swebench/hardware.py; actual CPU, RAM and positive process RSS verified; run config/seed recorded per report |
 | ❌ Pending | P13.39 | Export raw results and reproduction commands | — |
 | ❌ Pending | P13.40 | Fill result tables only from measured runs | — |
 
