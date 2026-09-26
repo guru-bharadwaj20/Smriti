@@ -104,6 +104,7 @@ class MemoryStore:
         known={f.id for f in self.recall()}
         if any(source_id not in known or self.is_purged(source_id) for source_id in derived_from):
             raise ValueError("Derivation sources must exist on the active branch")
+        self._validate_derivations(fact.id,derived_from)
         fact = replace(fact,derived_from=derived_from,subject=subject,created_at=recorded_at,valid_from=valid.start.isoformat(),valid_to=valid.end.isoformat() if valid.end else None,recorded_at=recorded_at)
         with self.db:
             self.db.execute("INSERT INTO facts VALUES (?,?)",(fact.id,canonical(asdict(fact))))
@@ -589,3 +590,30 @@ class MemoryStore:
 # P11.15
 
 # P11.16
+    def _validate_derivations(self,derived_id,sources):
+        known={f.id for f in self.recall()}
+        for source_id in sources:
+            if source_id not in known or self.is_purged(source_id):
+                raise ValueError("Derivation source is unavailable")
+            seen=set()
+            stack=[derived_id]
+            while stack:
+                node=stack.pop()
+                if node==source_id:
+                    raise ValueError("Derivation cycle")
+                if node in seen:
+                    continue
+                seen.add(node)
+                stack.extend(r[0] for r in self.db.execute("SELECT derived_id FROM memory_derivations WHERE source_id=?",(node,)))
+
+    def add_derivations(self,fact_id,sources):
+        fact=next((f for f in self.recall() if f.id==fact_id),None)
+        if fact is None:
+            raise KeyError(fact_id)
+        sources=tuple(dict.fromkeys((*fact.derived_from,*sources)))
+        self._validate_derivations(fact_id,sources)
+        with self.db:
+            updated=self._save(replace(fact,derived_from=sources))
+            self.db.executemany("INSERT OR IGNORE INTO memory_derivations VALUES (?,?)",[(source_id,fact_id) for source_id in sources])
+        return updated
+# P11.17

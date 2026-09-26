@@ -375,7 +375,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P11.14 | Represent multi-parent merge history | smriti\memory\__init__.py; P11.14 regression in tests\test_memory.py |
 | ✅ Done | P11.15 | Revert a merged operation consistently | smriti\memory\__init__.py; P11.15 regression in tests\test_memory.py |
 | ✅ Done | P11.16 | Store source-to-derived-fact edges | smriti\memory\__init__.py; P11.16 regression in tests\test_memory.py |
-| ❌ Pending | P11.17 | Reject derivation cycles | — |
+| ✅ Done | P11.17 | Reject derivation cycles | smriti\memory\__init__.py; P11.17 regression in tests\test_memory.py |
 | ❌ Pending | P11.18 | Traverse transitive deletion dependencies | — |
 | ❌ Pending | P11.19 | Cascade forget by fact ID | — |
 | ❌ Pending | P11.20 | Cascade forget by session or source | — |

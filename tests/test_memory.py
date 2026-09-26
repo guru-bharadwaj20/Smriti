@@ -500,6 +500,17 @@ class MemoryTests(unittest.TestCase):
         self.assertTrue(store.verify())
         store.close()
 
+    def test_derivation_cycle_rejection(self):
+        store=MemoryStore(":memory:")
+        a=store.remember("a")
+        b=store.remember("b",derived_from=[a.id])
+        with self.assertRaises(ValueError):
+            store.add_derivations(a.id,[b.id])
+        with self.assertRaises(ValueError):
+            store.add_derivations(a.id,[a.id])
+        self.assertTrue(store.verify())
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"
