@@ -160,3 +160,12 @@ def test_callers_and_callees_ignore_external_refs():
     assert resolver.callers(result.symbols[1].id) == [result.symbols[2]]
     assert resolver.callees(result.symbols[2].id) == [result.symbols[1]]
     assert resolver.callees(result.symbols[1].id) == []
+
+
+def test_hand_labelled_call_edges():
+    from smriti.resolve import LABELLED_FIXTURE
+    result = parse_file("fixture.py", LABELLED_FIXTURE["source"])
+    resolver = Resolver([result])
+    actual = {(resolver.symbols[edge.source].qualname, resolver.symbols[edge.target].qualname)
+              for edge in resolver.resolve() if edge.kind == "calls" and edge.target in resolver.symbols}
+    assert actual == set(LABELLED_FIXTURE["expected_calls"])

@@ -265,3 +265,9 @@ def c3_linearize(class_id: str, bases: dict[str, list[str]], stack=()) -> list[s
             if sequence and sequence[0] == candidate:
                 sequence.pop(0)
     return result
+
+
+LABELLED_FIXTURE = {
+    "source": "def helper():\n    pass\ndef caller():\n    helper()\nclass Base:\n    def work(self):\n        pass\nclass Child(Base):\n    def run(self):\n        self.work()\n",
+    "expected_calls": [("fixture.caller", "fixture.helper"), ("fixture.Child.run", "fixture.Base.work")],
+}
