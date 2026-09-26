@@ -541,6 +541,15 @@ class MemoryTests(unittest.TestCase):
             store.forget_by()
         store.close()
 
+    def test_any_source_deletion_policy(self):
+        store=MemoryStore(":memory:")
+        a=store.remember("first source")
+        b=store.remember("second source")
+        c=store.remember("requires both",derived_from=[a.id,b.id])
+        self.assertEqual(set(store.forget(a.id)),{a.id,c.id})
+        self.assertEqual({f.id for f in store.recall()},{b.id})
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"

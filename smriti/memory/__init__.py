@@ -645,3 +645,5 @@ class MemoryStore:
             ids.update(self.dependents(fid))
         return self._purge(ids)
 # P11.20
+
+# P11.21

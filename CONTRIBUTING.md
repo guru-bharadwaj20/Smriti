@@ -379,7 +379,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P11.18 | Traverse transitive deletion dependencies | smriti\memory\__init__.py; P11.18 regression in tests\test_memory.py |
 | ✅ Done | P11.19 | Cascade forget by fact ID | smriti\memory\__init__.py; P11.19 regression in tests\test_memory.py |
 | ✅ Done | P11.20 | Cascade forget by session or source | smriti\memory\__init__.py; P11.20 regression in tests\test_memory.py |
-| ❌ Pending | P11.21 | Define shared-source derivation deletion behavior | — |
+| ✅ Done | P11.21 | Define shared-source derivation deletion behavior | smriti\memory\__init__.py; P11.21 regression in tests\test_memory.py |
 | ❌ Pending | P11.22 | Purge forgotten payloads across branches and caches | — |
 | ❌ Pending | P11.23 | Prevent replay or rollback resurrecting purged facts | — |
 | ❌ Pending | P11.24 | Test deletion with diamond derivation graphs | — |
