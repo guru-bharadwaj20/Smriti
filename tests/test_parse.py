@@ -201,3 +201,17 @@ def test_staged_languages_are_explicit():
     assert 'Deferred' in LANGUAGE_SUPPORT['go']
     with pytest.raises(KeyError):
         SourceParser().parse('main.go', 'package main', 'go')
+
+
+def test_decorators_are_part_of_anchored_content():
+    from smriti.parse import validate_ranges
+
+    before = parse_file('a.py', '@first\ndef work():\n    return 1\n')
+    after = parse_file('a.py', '@second\ndef work():\n    return 1\n')
+    original, changed = before.symbols[1], after.symbols[1]
+    assert original.id == changed.id
+    assert original.content_hash != changed.content_hash
+    assert original.start_line == 1
+    assert original.body.startswith('@first\ndef work')
+    validate_ranges(before)
+    validate_ranges(after)

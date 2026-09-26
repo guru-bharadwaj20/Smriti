@@ -157,11 +157,16 @@ class SourceParser:
                 assert name_node is not None
                 name = result.source[name_node.start_byte : name_node.end_byte].decode('utf-8')
                 qualname = parent.qualname + '.' + name
-                body = result.source[node.start_byte : node.end_byte]
+                source_node = (
+                    node.parent
+                    if node.parent is not None and node.parent.type == 'decorated_definition'
+                    else node
+                )
+                body = result.source[source_node.start_byte : node.end_byte]
                 body_node = node.child_by_field_name('body')
                 assert body_node is not None
                 signature = (
-                    result.source[node.start_byte : body_node.start_byte]
+                    result.source[source_node.start_byte : body_node.start_byte]
                     .decode('utf-8')
                     .rstrip()
                     .rstrip(':')
@@ -185,9 +190,9 @@ class SourceParser:
                     name,
                     qualname,
                     kind,
-                    node.start_point.row + 1,
+                    source_node.start_point.row + 1,
                     node.end_point.row + 1,
-                    node.start_byte,
+                    source_node.start_byte,
                     node.end_byte,
                     signature=signature,
                     docstring=docstring,

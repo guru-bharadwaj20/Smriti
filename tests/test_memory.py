@@ -541,6 +541,56 @@ class MemoryTests(unittest.TestCase):
             store.forget_by()
         store.close()
 
+    def test_any_source_deletion_policy(self):
+        store=MemoryStore(":memory:")
+        a=store.remember("first source")
+        b=store.remember("second source")
+        c=store.remember("requires both",derived_from=[a.id,b.id])
+        self.assertEqual(set(store.forget(a.id)),{a.id,c.id})
+        self.assertEqual({f.id for f in store.recall()},{b.id})
+        store.close()
+
+    def test_purge_all_branches_and_pages(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path=Path(directory)/"private.db"
+            store=MemoryStore(path)
+            f=store.remember("UNIQUE_PRIVATE_PAYLOAD_91")
+            store.branch("feature")
+            store.update(f.id,"UNIQUE_PRIVATE_PAYLOAD_92")
+            store.switch("feature")
+            store.update(f.id,"UNIQUE_PRIVATE_PAYLOAD_93")
+            store.switch("main")
+            store.merge("feature",resolutions={f.id:"theirs"})
+            store.invalidate(f.id,reason="UNIQUE_PRIVATE_PAYLOAD_REASON")
+            store.forget(f.id)
+            for branch in store.branches():
+                store.switch(branch)
+                self.assertEqual(store.recall(),[])
+                self.assertTrue(store.verify())
+            store.close()
+            self.assertNotIn(b"UNIQUE_PRIVATE_PAYLOAD",path.read_bytes())
+
+    def test_irrevocable_forget(self):
+        store=MemoryStore(":memory:")
+        a=store.remember("secret")
+        add=store.head
+        store.branch("feature")
+        b=store.remember("derived",derived_from=[a.id])
+        store.forget(a.id)
+        store.switch("feature")
+        self.assertEqual(store.recall(),[])
+        with self.assertRaises(ValueError):
+            store.revert(add)
+        with self.assertRaises(ValueError):
+            store.remember("reuse",fact_id=a.id)
+        with self.assertRaises(ValueError):
+            store.remember("new derivative",derived_from=[a.id])
+        store.merge("main")
+        self.assertEqual(store.replay(),{})
+        self.assertEqual(store.replay(add),{})
+        self.assertTrue(store.verify())
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"

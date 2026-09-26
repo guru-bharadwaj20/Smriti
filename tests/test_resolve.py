@@ -243,3 +243,14 @@ def test_resolution_limits_remain_explicit():
     assert any('MRO' in limitation for limitation in RESOLUTION_LIMITATIONS)
     result = parse_file('a.py', 'def caller(factory):\n    factory()\n')
     assert any(edge.target.startswith('dynamic:') for edge in Resolver([result]).resolve())
+
+
+def test_decorated_scopes_preserve_local_shadowing():
+    result = parse_file(
+        'a.py',
+        'def helper():\n    pass\n@decorator\ndef caller(helper):\n    helper()\n',
+    )
+    resolver = Resolver([result])
+    caller = result.symbols[2]
+    assert caller.start_line == 3
+    assert resolver.resolve_name('helper', caller.id) is None
