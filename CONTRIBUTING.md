@@ -404,7 +404,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P12.11 | Implement memory branch and merge commands | — |
 | ✅ Done | P12.12 | Integrate official MCP Python SDK | official ClientSession handshake and status tool passed; strict mypy adapter passed |
 | ✅ Done | P12.13 | Define validated MCP tool schemas | smriti/server/schemas.py; invalid budgets anchors confidence and forget-target tests passed |
-| ❌ Pending | P12.14 | Expose context MCP tool | — |
+| ✅ Done | P12.14 | Expose context MCP tool | real stdio client retrieved indexed code; token count and invalid budget tests passed |
 | ❌ Pending | P12.15 | Expose symbol and graph MCP tools | — |
 | ❌ Pending | P12.16 | Expose memory CRUD MCP tools | — |
 | ❌ Pending | P12.17 | Expose memory history MCP tools | — |
