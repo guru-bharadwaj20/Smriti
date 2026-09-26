@@ -330,6 +330,8 @@ class MemoryStore:
 
     def revert(self,operation_id):
         op=self.operations.get(operation_id)
+        if any(o.metadata.get("reverts")==operation_id for o in self.operations.ancestry(self.head)):
+            raise ValueError("Operation was already reverted")
         if operation_id not in {o.id for o in self.operations.ancestry(self.head)}:
             raise ValueError("Operation is not on the active branch")
         if op.kind not in ("add","update","invalidate"):
@@ -343,3 +345,5 @@ class MemoryStore:
             self._materialize(self.replay())
         return inverse.id
 # P10.19
+
+# P10.20

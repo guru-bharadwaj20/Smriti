@@ -269,6 +269,17 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual(store.log()[1]["id"],update)
         store.close()
 
+    def test_already_reverted(self):
+        store=MemoryStore(":memory:")
+        store.remember("a")
+        operation=store.head
+        store.revert(operation)
+        count=len(store.log())
+        with self.assertRaises(ValueError):
+            store.revert(operation)
+        self.assertEqual(len(store.log()),count)
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"
