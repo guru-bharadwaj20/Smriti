@@ -169,3 +169,15 @@ def test_hand_labelled_call_edges():
     actual = {(resolver.symbols[edge.source].qualname, resolver.symbols[edge.target].qualname)
               for edge in resolver.resolve() if edge.kind == "calls" and edge.target in resolver.symbols}
     assert actual == set(LABELLED_FIXTURE["expected_calls"])
+
+
+def test_reference_agreement_with_jedi():
+    import jedi
+    from smriti.resolve import JEDI_REFERENCE_CASES
+    for source, line, column, expected in JEDI_REFERENCE_CASES:
+        reference = jedi.Script(source).goto(line, column, follow_imports=True)
+        result = parse_file("fixture.py", source)
+        resolver = Resolver([result])
+        targets = {resolver.symbols[edge.target].name for edge in resolver.resolve() if edge.kind == "calls" and edge.target in resolver.symbols}
+        assert expected in targets
+        assert expected in {item.name for item in reference}

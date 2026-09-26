@@ -271,3 +271,10 @@ LABELLED_FIXTURE = {
     "source": "def helper():\n    pass\ndef caller():\n    helper()\nclass Base:\n    def work(self):\n        pass\nclass Child(Base):\n    def run(self):\n        self.work()\n",
     "expected_calls": [("fixture.caller", "fixture.helper"), ("fixture.Child.run", "fixture.Base.work")],
 }
+
+
+JEDI_REFERENCE_CASES = [
+    ("def helper():\n    pass\ndef caller():\n    helper()\n", 4, 5, "helper"),
+    ("def outer():\n    def helper():\n        pass\n    def inner():\n        helper()\n", 5, 9, "helper"),
+    ("class Base:\n    def work(self):\n        pass\nclass Child(Base):\n    def run(self):\n        self.work()\n", 6, 14, "work"),
+]
