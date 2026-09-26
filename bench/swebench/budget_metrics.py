@@ -27,3 +27,22 @@ def recall_at_budget(
         'tokens': result.token_count,
         'function_recall': packed_recall(result, gold_ids),
     }
+
+
+def tokens_to_cover_gold(
+    symbols: Sequence[Symbol],
+    scores: Mapping[str, float],
+    gold_ids: set[str],
+    budgets: Sequence[int],
+    packer: ContextPacker | None = None,
+) -> int | None:
+    """Minimum among explicitly tested budgets; coverage need not be monotone."""
+    if not gold_ids:
+        return None
+    packer = packer or ContextPacker()
+    covered = []
+    for budget in sorted(set(budgets)):
+        result = packer.pack(symbols, scores, budget)
+        if packed_recall(result, gold_ids) == 1.0:
+            covered.append(budget)
+    return min(covered) if covered else None

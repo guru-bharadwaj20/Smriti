@@ -441,7 +441,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P13.15 | Compute packed budget recall at 4k tokens | bench/swebench/budget_metrics.py; executable semantic assertions passed |
 | ✅ Done | P13.16 | Compute packed budget recall at 8k tokens | tests/test_budget_metrics.py; executable semantic assertions passed |
 | ✅ Done | P13.17 | Compute packed budget recall at 16k tokens | tests/test_budget_metrics.py; executable semantic assertions passed |
-| ❌ Pending | P13.18 | Measure tokens required to cover gold locations | — |
+| ✅ Done | P13.18 | Measure tokens required to cover gold locations | bench/swebench/budget_metrics.py; executable semantic assertions passed |
 | ❌ Pending | P13.19 | Separate validation from held-out evaluation | — |
 | ❌ Pending | P13.20 | Run component ablations | — |
 | ❌ Pending | P13.21 | Record retrieval failures and uncertainty | — |
