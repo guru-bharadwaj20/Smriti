@@ -305,3 +305,7 @@ class MemoryStore:
         from .operations import digest
         return digest({fid:asdict(f) for fid,f in sorted(self.replay(head).items())})
 # P10.16
+    def log(self,*,head=None,limit=None):
+        rows = [{**op.to_dict(),"payload":None if self.is_purged(op.fact_id) else self.operations.payload(op)} for op in reversed(self.operations.ancestry(head if head is not None else self.head))]
+        return rows[:limit] if limit is not None else rows
+# P10.17
