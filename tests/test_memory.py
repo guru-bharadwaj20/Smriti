@@ -247,6 +247,17 @@ class MemoryTests(unittest.TestCase):
         self.assertTrue(all(r["payload"] is None for r in store.log()))
         store.close()
 
+    def test_memory_diff(self):
+        store=MemoryStore(":memory:")
+        f=store.remember("a")
+        base=store.head
+        store.update(f.id,"b")
+        other=store.remember("new")
+        delta=store.diff(base)
+        self.assertEqual(delta["changed"][f.id]["after"]["text"],"b")
+        self.assertIn(other.id,delta["added"])
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"
