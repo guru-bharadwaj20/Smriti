@@ -475,7 +475,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P14.02 | Implement repository index status view | tests/test_ui.py passed; real indexed fixture; JS syntax checked |
 | ✅ Done | P14.03 | Implement searchable symbol graph view | 2 real repository UI tests passed; JS syntax checked |
 | ✅ Done | P14.04 | Implement packed-context explanation view | 3 real repository UI tests passed; strict budget and blank query checks; JS syntax checked |
-| ❌ Pending | P14.05 | Implement memory freshness view | — |
+| ✅ Done | P14.05 | Implement memory freshness view | 4 real repository UI tests passed; source-edit freshness regression; JS syntax checked |
 | ❌ Pending | P14.06 | Implement memory history and diff view | — |
 | ❌ Pending | P14.07 | Implement merge conflict resolution view | — |
 | ❌ Pending | P14.08 | Bind local service safely by default | — |

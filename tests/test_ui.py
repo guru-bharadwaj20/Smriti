@@ -52,3 +52,40 @@ def test_ui_context_explains_real_selections_within_budget(tmp_path):
         zero = client.post('/api/context', json={'task': 'work', 'budget': 0}).json()
         assert zero['token_count'] == 0 and zero['text'] == ''
         assert client.post('/api/context', json={'task': ' ', 'budget': 128}).status_code == 422
+
+
+def test_ui_memory_retains_freshness_warning_after_source_edit(tmp_path):
+    from smriti.memory import Anchor, MemoryStore
+
+    source = tmp_path / 'worker.py'
+    source.write_text('def work():\n    return 1\n')
+    service = SmritiService(tmp_path)
+    service.index()
+    work = next(symbol for symbol in service.snapshot().symbols if symbol.kind == 'function')
+    store = MemoryStore(service.config.data_dir / 'memory.sqlite')
+    try:
+        fact = store.remember(
+            'Work returns one.',
+            anchors=(Anchor(work.id, work.content_hash),),
+            source='fixture',
+            session='session-one',
+        )
+    finally:
+        store.close()
+    source.write_text('def work():\n    return 2\n')
+    service.index()
+    store = MemoryStore(service.config.data_dir / 'memory.sqlite')
+    try:
+        store.refresh(
+            {symbol.id: symbol.content_hash for symbol in service.snapshot().symbols},
+            commit='fixture-edit',
+        )
+    finally:
+        store.close()
+    with TestClient(create_app(tmp_path)) as client:
+        response = client.get('/api/memory', params={'q': 'Work'}).json()
+        remembered = next(item for item in response['facts'] if item['id'] == fact.id)
+        assert remembered['freshness'] == 'stale'
+        assert remembered['requires_revalidation'] is True
+        assert remembered['freshness_reason']
+        assert remembered['session'] == 'session-one'

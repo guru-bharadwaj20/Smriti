@@ -105,6 +105,41 @@ async function buildContext(event) {
   finally { button.disabled = false; button.textContent = 'Build context →'; }
 }
 
+async function recallMemory(event) {
+  event?.preventDefault();
+  try {
+    const data = await request(`/api/memory?q=${encodeURIComponent(byId('memory-query').value)}`);
+    byId('memory-branch').textContent = data.branch;
+    byId('memory-count').textContent = `${data.facts.length} remembered facts`;
+    const results = byId('memory-results');
+    results.replaceChildren();
+    for (const fact of data.facts) {
+      const card = element('article', '', 'memory-card');
+      const heading = element('div', '', 'panel-heading');
+      heading.append(element('span', fact.freshness.toUpperCase(), `pill freshness-${fact.freshness}`), element('span', `${fact.confidence.toFixed(2)} confidence`, 'location'));
+      card.append(heading, element('p', fact.text, 'fact-text'));
+      if (fact.freshness !== 'fresh') card.append(element('p', fact.freshness_reason || 'The source needs revalidation.', 'freshness-warning'));
+      const anchors = element('div', '', 'anchor-list');
+      for (const anchor of fact.anchors) {
+        const button = element('button', `↗ ${anchor.symbol_id.slice(0, 12)} · ${anchor.content_hash.slice(0, 8)}`, 'text-button');
+        button.addEventListener('click', () => { document.querySelector('[data-view="symbols"]').click(); showGraph(anchor.symbol_id); });
+        anchors.append(button);
+      }
+      if (!fact.anchors.length) anchors.append(element('span', 'Project fact · no code anchor', 'muted'));
+      card.append(anchors);
+      const details = element('details');
+      details.append(element('summary', 'Provenance'));
+      for (const field of ['id', 'source', 'session', 'user', 'tool', 'subject', 'valid_from', 'valid_to', 'recorded_at', 'triggering_commit']) {
+        if (fact[field]) details.append(element('p', `${field.replaceAll('_', ' ')}: ${fact[field]}`, 'provenance'));
+      }
+      card.append(details);
+      results.append(card);
+    }
+    if (!data.facts.length) results.append(element('p', 'No matching facts on this branch.', 'empty'));
+    notify('');
+  } catch (error) { notify(error.message); }
+}
+
 document.querySelectorAll('[data-view]').forEach((button) => button.addEventListener('click', () => {
   document.querySelectorAll('[data-view]').forEach((item) => item.classList.toggle('active', item === button));
   document.querySelectorAll('.view').forEach((view) => { view.hidden = view.id !== `view-${button.dataset.view}`; });
@@ -112,4 +147,5 @@ document.querySelectorAll('[data-view]').forEach((button) => button.addEventList
 byId('refresh-status').addEventListener('click', refreshStatus);
 byId('symbol-search').addEventListener('submit', searchSymbols);
 byId('context-form').addEventListener('submit', buildContext);
+byId('memory-search').addEventListener('submit', recallMemory);
 refreshStatus();

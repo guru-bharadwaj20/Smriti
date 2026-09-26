@@ -1,5 +1,8 @@
 """Local inspection views backed by the repository service."""
 
+import subprocess
+from collections.abc import Iterator
+from contextlib import contextmanager
 from dataclasses import asdict
 from pathlib import Path
 from typing import Any
@@ -8,11 +11,29 @@ from fastapi import FastAPI, HTTPException, Query
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
+from smriti.memory import MemoryStore
 from smriti.server.schemas import ContextRequest
 from smriti.server.service import SmritiService
 from smriti.server.status import index_status
 
 ASSETS = Path(__file__).parent / 'static'
+
+
+@contextmanager
+def memory_store(root: Path, data_dir: Path) -> Iterator[MemoryStore]:
+    store = MemoryStore(data_dir / 'memory.sqlite')
+    try:
+        inside_git = subprocess.run(
+            ['git', '-C', str(root), 'rev-parse', '--is-inside-work-tree'],
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        if inside_git.returncode == 0:
+            store.sync_git(root)
+        yield store
+    finally:
+        store.close()
 
 
 def create_app(root: Path) -> FastAPI:
@@ -56,5 +77,14 @@ def create_app(root: Path) -> FastAPI:
     @app.post('/api/context')
     def context(request: ContextRequest) -> dict[str, Any]:
         return asdict(service.context(request.task, request.budget))
+
+    @app.get('/api/memory')
+    def memory(q: str = Query(default='', max_length=10000)) -> dict[str, Any]:
+        with memory_store(root, service.config.data_dir) as store:
+            return {
+                'branch': store.current_branch,
+                'head': store.head,
+                'facts': [fact.to_dict() for fact in store.recall(q)],
+            }
 
     return app
