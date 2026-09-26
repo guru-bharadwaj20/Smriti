@@ -359,7 +359,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
-| ❌ Pending | P11.01 | Map repository branches to memory heads | — |
+| ✅ Done | P11.01 | Map repository branches to memory heads | smriti\memory\__init__.py; P11.01 regression in tests\test_memory.py |
 | ❌ Pending | P11.02 | Track common base memory state | — |
 | ❌ Pending | P11.03 | Create memory branch from current head | — |
 | ❌ Pending | P11.04 | Switch memory state on git checkout | — |
