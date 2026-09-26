@@ -196,6 +196,39 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual(store.operations.get(store.head).kind, "add")
         store.close()
 
+    def test_persistent_bitemporal_correction(self):
+        from datetime import datetime,timezone
+        clock = [datetime(2025,3,1,tzinfo=timezone.utc)]
+        store = MemoryStore(":memory:",clock=lambda:clock[0])
+        f = store.remember("old",valid_from="2025-01-01T00:00:00+00:00")
+        clock[0] = datetime(2025,4,1,tzinfo=timezone.utc)
+        store.update(f.id,"new",valid_from="2025-02-01T00:00:00+00:00")
+        self.assertEqual(store.recall(valid_at="2025-02-15T00:00:00+00:00",as_of="2025-03-15T00:00:00+00:00")[0].text,"old")
+        self.assertEqual(store.recall(valid_at="2025-02-15T00:00:00+00:00",as_of="2025-04-15T00:00:00+00:00")[0].text,"new")
+        self.assertEqual(store.recall(valid_at="2025-01-15T00:00:00+00:00",as_of="2025-04-15T00:00:00+00:00")[0].text,"old")
+        self.assertEqual(store.replay()[f.id].text,"new")
+        store.close()
+
+    def test_invalidation_replay(self):
+        store = MemoryStore(":memory:")
+        f = store.remember("obsolete")
+        store.invalidate(f.id)
+        self.assertEqual(store.recall(),[])
+        self.assertEqual(store.replay(),{})
+        store.close()
+
+    def test_forget_payload_purge(self):
+        store = MemoryStore(":memory:")
+        f = store.remember("PRIVATE SECRET")
+        head = store.head
+        store.forget(f.id)
+        self.assertEqual(store.replay(head),{})
+        self.assertEqual(store.db.execute("SELECT COUNT(*) FROM memory_blobs").fetchone()[0],0)
+        with self.assertRaises(ValueError):
+            store.remember("resurrection",fact_id=f.id)
+        self.assertEqual(store.forget(f.id),[])
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"

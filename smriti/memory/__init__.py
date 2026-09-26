@@ -61,6 +61,8 @@ class MemoryStore:
         self.db.execute("INSERT OR IGNORE INTO memory_meta VALUES ('head',NULL)")
         self.db.commit()
         self.operations = OperationLog(self.db)
+        self.db.execute("CREATE TABLE IF NOT EXISTS memory_purged (fact_id TEXT PRIMARY KEY)")
+        self.db.commit()
 
     def close(self):
         self.db.close()
@@ -82,6 +84,8 @@ class MemoryStore:
             raise ValueError("Anchors require symbol IDs and hashes")
         if len({a.symbol_id for a in anchors}) != len(anchors):
             raise ValueError("Duplicate anchors are not allowed")
+        if self.is_purged(fact_id):
+            raise ValueError("Forgotten fact IDs cannot be reused")
         recorded_at = self._event_time()
         valid = ValidInterval(valid_from or recorded_at, valid_to)
         fact = Fact(fact_id or uuid.uuid4().hex,text,user,session,tool,source,float(confidence),anchors)
@@ -92,9 +96,13 @@ class MemoryStore:
             self._record("add",fact.id,asdict(fact),recorded_at=recorded_at)
         return fact
 
-    def recall(self, query: str = "") -> list[Fact]:
-        facts = [self._decode(row[0]) for row in self.db.execute("SELECT payload FROM facts ORDER BY id")]
-        return self._rank_recall(facts, query, True)
+    def recall(self,query="",*,valid_at=None,as_of=None,include_stale=True):
+        if valid_at is None and as_of is None:
+            facts = [self._decode(row[0]) for row in self.db.execute("SELECT payload FROM facts ORDER BY id")]
+        else:
+            now = timestamp(self._clock())
+            facts = [self._decode(canonical(v.payload)) for v in self.timeline().query(valid_at or now,as_of or now)]
+        return self._rank_recall(facts,query,include_stale)
 
     @staticmethod
     def _decode(payload):
@@ -109,11 +117,15 @@ class MemoryStore:
 # P09.07
 
 # P09.08
-    def _save(self, fact):
+    def _save(self,fact):
+        fact = replace(fact,recorded_at=self._event_time())
         with self.db:
-            previous = self.db.execute("SELECT payload FROM facts WHERE id=?", (fact.id,)).fetchone()
-            self.db.execute("INSERT INTO fact_audit(fact_id,before_payload,after_payload) VALUES (?,?,?)", (fact.id, previous[0] if previous else None, json.dumps(asdict(fact))))
-            self.db.execute("UPDATE facts SET payload=? WHERE id=?", (json.dumps(asdict(fact)), fact.id))
+            previous = self.db.execute("SELECT payload FROM facts WHERE id=?",(fact.id,)).fetchone()
+            if previous is None:
+                raise KeyError(fact.id)
+            self.db.execute("INSERT INTO fact_audit(fact_id,before_payload,after_payload) VALUES (?,?,?)",(fact.id,previous[0],canonical(asdict(fact))))
+            self.db.execute("UPDATE facts SET payload=? WHERE id=?",(canonical(asdict(fact)),fact.id))
+            self._record("update",fact.id,asdict(fact),recorded_at=fact.recorded_at)
         return fact
 
     def refresh(self, symbols, *, renames=None, commit=None):
@@ -230,9 +242,62 @@ class MemoryStore:
     def replay(self,head=None):
         state = {}
         for op in self.operations.ancestry(head if head is not None else self.head):
-            if op.kind == "add":
+            if self.is_purged(op.fact_id):
+                continue
+            if op.kind == "invalidate":
+                state.pop(op.fact_id,None)
+            elif op.kind in ("add","update"):
                 payload = self.operations.payload(op)
                 if payload is not None:
                     state[op.fact_id] = self._decode(canonical(payload))
         return state
 # P10.12
+    def update(self,fact_id,text=None,*,valid_from=None,valid_to=None):
+        fact = next((f for f in self.recall() if f.id==fact_id),None)
+        if fact is None:
+            raise KeyError(fact_id)
+        if text is not None and (not isinstance(text,str) or not text.strip()):
+            raise ValueError("Fact text must be nonempty")
+        valid = ValidInterval(valid_from or fact.valid_from,valid_to if valid_to is not None else fact.valid_to)
+        return self._save(replace(fact,text=text if text is not None else fact.text,valid_from=valid.start.isoformat(),valid_to=valid.end.isoformat() if valid.end else None))
+
+    def timeline(self,head=None):
+        timeline = Timeline()
+        for op in self.operations.ancestry(head if head is not None else self.head):
+            if op.kind in ("add","update"):
+                payload = self.operations.payload(op)
+                if payload is not None:
+                    timeline.correct(op.fact_id,payload,ValidInterval(payload["valid_from"],payload.get("valid_to")),op.recorded_at)
+        return timeline
+# P10.13
+    def invalidate(self,fact_id,*,reason="invalidated"):
+        fact = next((f for f in self.recall() if f.id==fact_id),None)
+        if fact is None:
+            raise KeyError(fact_id)
+        with self.db:
+            from .operations import digest
+            self._record("invalidate",fact_id,{"id":fact_id,"reason":reason},metadata={"reason_hash":digest(reason)})
+            self.db.execute("DELETE FROM facts WHERE id=?",(fact_id,))
+            self.db.execute("DELETE FROM fact_anchors WHERE fact_id=?",(fact_id,))
+        return fact_id
+# P10.14
+    def is_purged(self,fact_id):
+        return fact_id is not None and self.db.execute("SELECT 1 FROM memory_purged WHERE fact_id=?",(fact_id,)).fetchone() is not None
+
+    def forget(self,fact_id):
+        if self.is_purged(fact_id):
+            return []
+        exists = self.db.execute("SELECT 1 FROM memory_operations WHERE json_extract(canonical,'$.fact_id')=?",(fact_id,)).fetchone()
+        if not exists:
+            raise KeyError(fact_id)
+        with self.db:
+            self.db.execute("INSERT INTO memory_purged VALUES (?)",(fact_id,))
+            hashes = [self.operations.get(oid).payload_hash for (oid,) in self.db.execute("SELECT oid FROM memory_operations WHERE json_extract(canonical,'$.fact_id')=?",(fact_id,))]
+            self.db.executemany("DELETE FROM memory_blobs WHERE digest=?",[(h,) for h in hashes if h])
+            self.db.execute("DELETE FROM facts WHERE id=?",(fact_id,))
+            self.db.execute("DELETE FROM fact_anchors WHERE fact_id=?",(fact_id,))
+            self.db.execute("DELETE FROM fact_audit WHERE fact_id=?",(fact_id,))
+            self.db.execute("DELETE FROM conflict_audit WHERE fact_id=? OR winner_id=? OR candidate_ids LIKE ?",(fact_id,fact_id,"%"+fact_id+"%"))
+            self._record("forget",fact_id)
+        return [fact_id]
+# P10.15
