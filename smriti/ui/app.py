@@ -8,6 +8,7 @@ from fastapi import FastAPI, HTTPException, Query
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
+from smriti.server.schemas import ContextRequest
 from smriti.server.service import SmritiService
 from smriti.server.status import index_status
 
@@ -51,5 +52,9 @@ def create_app(root: Path) -> FastAPI:
             'neighbors': [asdict(by_id[key]) for key in sorted(neighbors) if key in by_id],
             'index_version': snapshot.version,
         }
+
+    @app.post('/api/context')
+    def context(request: ContextRequest) -> dict[str, Any]:
+        return asdict(service.context(request.task, request.budget))
 
     return app

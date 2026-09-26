@@ -76,3 +76,29 @@ def serve(
     from smriti.server.mcp import create_server
 
     create_server(root.resolve()).run(transport='stdio')
+
+
+@app.command('callers')
+def callers(
+    name: str,
+    root: Annotated[Path, typer.Option('--root', exists=True, file_okay=False)] = DEFAULT_ROOT,
+) -> None:
+    """Show call edges targeting matching definitions."""
+    from smriti.server.service import SmritiService
+
+    typer.echo(
+        json.dumps([asdict(edge) for edge in SmritiService(root).calls(name, incoming=True)])
+    )
+
+
+@app.command('callees')
+def callees(
+    name: str,
+    root: Annotated[Path, typer.Option('--root', exists=True, file_okay=False)] = DEFAULT_ROOT,
+) -> None:
+    """Show call edges originating in matching definitions."""
+    from smriti.server.service import SmritiService
+
+    typer.echo(
+        json.dumps([asdict(edge) for edge in SmritiService(root).calls(name, incoming=False)])
+    )

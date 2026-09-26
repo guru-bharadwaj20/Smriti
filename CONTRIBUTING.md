@@ -396,7 +396,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P12.03 | Implement index status command | smriti/server/status.py; read-only status and indexed CLI tests passed |
 | ✅ Done | P12.04 | Implement context command with budget | smriti/server/retrieval.py; strict budget zero and cached-restart integration tests passed |
 | ✅ Done | P12.05 | Implement find-symbol command | smriti/server/service.py; symbol lookup graph and restart integration tests passed |
-| ❌ Pending | P12.06 | Implement callers and callees commands | — |
+| ✅ Done | P12.06 | Implement callers and callees commands | resolved call graph CLI integration test passed |
 | ❌ Pending | P12.07 | Implement remember and recall commands | — |
 | ❌ Pending | P12.08 | Implement forget command with cascade | — |
 | ❌ Pending | P12.09 | Implement memory log and diff commands | — |
@@ -404,7 +404,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P12.11 | Implement memory branch and merge commands | — |
 | ✅ Done | P12.12 | Integrate official MCP Python SDK | official ClientSession handshake and status tool passed; strict mypy adapter passed |
 | ✅ Done | P12.13 | Define validated MCP tool schemas | smriti/server/schemas.py; invalid budgets anchors confidence and forget-target tests passed |
-| ❌ Pending | P12.14 | Expose context MCP tool | — |
+| ✅ Done | P12.14 | Expose context MCP tool | real stdio client retrieved indexed code; token count and invalid budget tests passed |
 | ❌ Pending | P12.15 | Expose symbol and graph MCP tools | — |
 | ❌ Pending | P12.16 | Expose memory CRUD MCP tools | — |
 | ❌ Pending | P12.17 | Expose memory history MCP tools | — |
@@ -474,7 +474,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P14.01 | Choose minimal UI framework and local API | docs/ui-design.md; view and mutation contracts reviewed |
 | ✅ Done | P14.02 | Implement repository index status view | tests/test_ui.py passed; real indexed fixture; JS syntax checked |
 | ✅ Done | P14.03 | Implement searchable symbol graph view | 2 real repository UI tests passed; JS syntax checked |
-| ❌ Pending | P14.04 | Implement packed-context explanation view | — |
+| ✅ Done | P14.04 | Implement packed-context explanation view | 3 real repository UI tests passed; strict budget and blank query checks; JS syntax checked |
 | ❌ Pending | P14.05 | Implement memory freshness view | — |
 | ❌ Pending | P14.06 | Implement memory history and diff view | — |
 | ❌ Pending | P14.07 | Implement merge conflict resolution view | — |
