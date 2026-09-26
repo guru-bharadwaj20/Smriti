@@ -1,0 +1,44 @@
+{
+  "python": "3.13.1",
+  "os": "Windows-11-10.0.22000-SP0",
+  "cpu": "Intel64 Family 6 Model 61 Stepping 4, GenuineIntel",
+  "seed": 81,
+  "dataset": "synthetic-v1",
+  "note": "Independent additive option values; constrained method packing excluded.",
+  "groups": 40,
+  "options_per_group": 4,
+  "measurements": [
+    {
+      "budget": 256,
+      "dp_ms": 30.30659999785712,
+      "dp_value": 80.65572606628632,
+      "greedy_value": 80.19678792124583,
+      "greedy_to_dp": 0.9943099124213038,
+      "used_cost": 255
+    },
+    {
+      "budget": 512,
+      "dp_ms": 82.36709999619052,
+      "dp_value": 124.71202537365244,
+      "greedy_value": 121.77713349356725,
+      "greedy_to_dp": 0.97646664889539,
+      "used_cost": 511
+    },
+    {
+      "budget": 1024,
+      "dp_ms": 131.16979999904288,
+      "dp_value": 192.04367635115037,
+      "greedy_value": 191.99811021620766,
+      "greedy_to_dp": 0.9997627303548419,
+      "used_cost": 1018
+    },
+    {
+      "budget": 2048,
+      "dp_ms": 237.35120000492316,
+      "dp_value": 277.93951197136084,
+      "greedy_value": 276.87939665816083,
+      "greedy_to_dp": 0.9961858056608042,
+      "used_cost": 2041
+    }
+  ]
+}
