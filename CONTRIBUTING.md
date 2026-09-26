@@ -372,8 +372,8 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P11.11 | Detect delete-versus-update conflicts | smriti\memory\__init__.py; P11.11 regression in tests\test_memory.py |
 | ✅ Done | P11.12 | Expose unresolved conflicts for user decisions | smriti\memory\__init__.py; P11.12 regression in tests\test_memory.py |
 | ✅ Done | P11.13 | Record merge conflict resolutions | smriti\memory\__init__.py; P11.13 regression in tests\test_memory.py |
-| ❌ Pending | P11.14 | Represent multi-parent merge history | — |
-| ❌ Pending | P11.15 | Revert a merged operation consistently | — |
+| ✅ Done | P11.14 | Represent multi-parent merge history | smriti\memory\__init__.py; P11.14 regression in tests\test_memory.py |
+| ✅ Done | P11.15 | Revert a merged operation consistently | smriti\memory\__init__.py; P11.15 regression in tests\test_memory.py |
 | ❌ Pending | P11.16 | Store source-to-derived-fact edges | — |
 | ❌ Pending | P11.17 | Reject derivation cycles | — |
 | ❌ Pending | P11.18 | Traverse transitive deletion dependencies | — |
@@ -440,7 +440,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P13.14 | Compute function recall at k | bench/swebench/function_metrics.py; duplicate missing empty and negative-k tests passed |
 | ✅ Done | P13.15 | Compute packed budget recall at 4k tokens | bench/swebench/budget_metrics.py; executable semantic assertions passed |
 | ✅ Done | P13.16 | Compute packed budget recall at 8k tokens | tests/test_budget_metrics.py; executable semantic assertions passed |
-| ❌ Pending | P13.17 | Compute packed budget recall at 16k tokens | — |
+| ✅ Done | P13.17 | Compute packed budget recall at 16k tokens | tests/test_budget_metrics.py; executable semantic assertions passed |
 | ❌ Pending | P13.18 | Measure tokens required to cover gold locations | — |
 | ❌ Pending | P13.19 | Separate validation from held-out evaluation | — |
 | ❌ Pending | P13.20 | Run component ablations | — |
