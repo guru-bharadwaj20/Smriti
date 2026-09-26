@@ -320,6 +320,38 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual(store.branches(),{"main":store.head})
         store.close()
 
+    def test_common_base(self):
+        store=MemoryStore(":memory:")
+        store.remember("root")
+        a=store.head
+        store.remember("child")
+        self.assertEqual(store.common_base(a,store.head),a)
+        self.assertIsNone(store.common_base(None,store.head))
+        store.close()
+
+    def test_create_branch(self):
+        store=MemoryStore(":memory:")
+        store.remember("root")
+        self.assertEqual(store.branch("feature"),store.head)
+        store.branch("unrelated",from_head="")
+        self.assertIsNone(store.branches()["unrelated"])
+        with self.assertRaises(ValueError):
+            store.branch("../bad")
+        store.close()
+
+    def test_switch_isolates_memory(self):
+        store=MemoryStore(":memory:")
+        root=store.remember("root")
+        store.branch("feature")
+        main_only=store.remember("main only")
+        store.switch("feature")
+        self.assertEqual([f.id for f in store.recall()],[root.id])
+        store.remember("feature only")
+        store.switch("main")
+        self.assertIn(main_only.id,{f.id for f in store.recall()})
+        self.assertTrue(store.verify())
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"

@@ -376,3 +376,40 @@ class MemoryStore:
     def branches(self):
         return dict(self.db.execute("SELECT name,head FROM memory_branches ORDER BY name"))
 # P11.01
+    def common_base(self,left,right):
+        common={o.id for o in self.operations.ancestry(left)} & {o.id for o in self.operations.ancestry(right)}
+        if not common:
+            return None
+        candidates=[]
+        for oid in common:
+            if not any(oid!=other and oid in {a.id for a in self.operations.ancestry(other)} for other in common):
+                candidates.append(oid)
+        if len(candidates)!=1:
+            raise ValueError("Multiple merge bases require explicit resolution")
+        return candidates[0]
+# P11.02
+    @staticmethod
+    def _branch_name(name):
+        if not isinstance(name,str) or not name or any(c.isspace() or c in "~^:?*[" or c == chr(92) for c in name) or ".." in name or "@{" in name or name.startswith((".", "/")) or name.endswith(("/", ".lock", ".")):
+            raise ValueError("Invalid branch name")
+        return name
+
+    def branch(self,name,*,from_head=None):
+        name=self._branch_name(name)
+        head=self.head if from_head is None else (from_head or None)
+        if head:
+            self.operations.get(head)
+        with self.db:
+            self.db.execute("INSERT INTO memory_branches VALUES (?,?)",(name,head))
+        return head
+# P11.03
+    def switch(self,name):
+        row=self.db.execute("SELECT head FROM memory_branches WHERE name=?",(name,)).fetchone()
+        if row is None:
+            raise KeyError(name)
+        with self.db:
+            self.db.execute("UPDATE memory_meta SET value=? WHERE key='branch'",(name,))
+            self.db.execute("UPDATE memory_meta SET value=? WHERE key='head'",(row[0],))
+            self._materialize(self.replay(row[0]) if row[0] else {})
+        return self.head
+# P11.04
