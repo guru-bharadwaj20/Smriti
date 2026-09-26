@@ -118,7 +118,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P02.19 | Remove dangling graph references after deletion | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ✅ Done | P02.20 | Update postings and vectors for changed symbols | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ✅ Done | P02.21 | Commit index changes atomically | tests/test_snapshot_atomic.py; targeted verification passed |
-| ❌ Pending | P02.22 | Recover from interrupted indexing | — |
+| ✅ Done | P02.22 | Recover from interrupted indexing | tests/test_snapshot_recovery.py; targeted verification passed |
 | ✅ Done | P02.23 | Verify incremental and fresh-index equivalence | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ✅ Done | P02.24 | Measure one-line update latency on stated hardware | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 
@@ -340,7 +340,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P10.09 | Define canonical operation serialization | smriti\memory\operations.py; P10.09 regression in tests\test_memory_operations.py |
 | ✅ Done | P10.10 | Hash operations for content addressing | smriti\memory\operations.py; P10.10 regression in tests\test_memory_operations.py |
 | ✅ Done | P10.11 | Link operations to parent history | smriti\memory\operations.py; P10.11 regression in tests\test_memory_operations.py |
-| ❌ Pending | P10.12 | Implement add operation replay | — |
+| ✅ Done | P10.12 | Implement add operation replay | smriti\memory\__init__.py; P10.12 regression in tests\test_memory.py |
 | ❌ Pending | P10.13 | Implement update operation replay | — |
 | ❌ Pending | P10.14 | Implement invalidate operation replay | — |
 | ❌ Pending | P10.15 | Define forget tombstone and payload-purge policy | — |
@@ -413,7 +413,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P12.20 | Keep async server responsive during indexing | smriti/server/jobs.py; concurrent event-loop ticker test passed during real indexing |
 | ❌ Pending | P12.21 | Handle cancellation and worker errors | — |
 | ❌ Pending | P12.22 | Implement graceful shutdown and recovery | — |
-| ❌ Pending | P12.23 | Define concurrent writer transaction policy | — |
+| ✅ Done | P12.23 | Define concurrent writer transaction policy | docs/concurrency.md; targeted verification passed |
 | ❌ Pending | P12.24 | Document coding-agent MCP connection setup | — |
 | ❌ Pending | P12.25 | Verify CLI and MCP return equivalent results | — |
 | ❌ Pending | P12.26 | Run full code retrieval and memory integration demo | — |
@@ -472,7 +472,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
 | ✅ Done | P14.01 | Choose minimal UI framework and local API | docs/ui-design.md; view and mutation contracts reviewed |
-| ❌ Pending | P14.02 | Implement repository index status view | — |
+| ✅ Done | P14.02 | Implement repository index status view | tests/test_ui.py passed; real indexed fixture; JS syntax checked |
 | ❌ Pending | P14.03 | Implement searchable symbol graph view | — |
 | ❌ Pending | P14.04 | Implement packed-context explanation view | — |
 | ❌ Pending | P14.05 | Implement memory freshness view | — |

@@ -166,6 +166,36 @@ class MemoryTests(unittest.TestCase):
             store.revalidate(f.id, {})
         store.close()
 
+    def test_natural_language_memory_recall(self):
+        store=MemoryStore(":memory:")
+        store.remember("parser accepts unicode")
+        store.remember("database uses SQLite")
+        self.assertEqual(store.recall("Does the parser support unicode?")[0].text,"parser accepts unicode")
+        store.close()
+
+    def test_newer_fact_wins_source_tie(self):
+        store=MemoryStore(":memory:")
+        older=store.remember("timeout 5",fact_id="z-older",subject="timeout",source="user")
+        newer=store.remember("timeout 10",fact_id="a-newer",subject="timeout",source="user")
+        self.assertEqual(store.preferred(older.id),newer)
+        self.assertIsNotNone(newer.created_at)
+        self.assertLessEqual(older.created_at,newer.created_at)
+        store.close()
+
+    def test_user_source_beats_newer_inference(self):
+        store=MemoryStore(":memory:")
+        user=store.remember("use timeout 5",subject="timeout",source="user",confidence=.2)
+        agent=store.remember("use timeout 10",subject="timeout",source="agent")
+        self.assertEqual(store.preferred(agent.id),user)
+        store.close()
+
+    def test_add_operation_replay(self):
+        store = MemoryStore(":memory:")
+        f = store.remember("persisted")
+        self.assertEqual(store.replay(), {f.id: f})
+        self.assertEqual(store.operations.get(store.head).kind, "add")
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"

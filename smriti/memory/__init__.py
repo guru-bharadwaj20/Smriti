@@ -4,6 +4,10 @@ import json
 import sqlite3
 import uuid
 import math
+from datetime import datetime, timezone, timedelta
+from .operations import OperationLog, canonical
+from .temporal import Timeline, TemporalVersion, ValidInterval, TransactionInterval, timestamp
+import datetime as _dt
 
 
 @dataclass(frozen=True)
@@ -26,6 +30,10 @@ class Fact:
     freshness_reason: str | None = None
     triggering_commit: str | None = None
     subject: str | None = None
+    valid_from: str | None = None
+    valid_to: str | None = None
+    recorded_at: str | None = None
+    created_at: str | None = None
 
     def to_dict(self):
         return {**asdict(self), 'scope': self.scope, 'requires_revalidation': self.freshness != 'fresh'}
@@ -38,43 +46,55 @@ class Fact:
 class MemoryStore:
     """SQLite-backed fact store. Each write is atomic and survives restart."""
 
-    def __init__(self, db_path):
+    def __init__(self, db_path, *, clock=None):
         self.db = sqlite3.connect(str(db_path))
-        self.db.execute("CREATE TABLE IF NOT EXISTS facts (id TEXT PRIMARY KEY, payload TEXT NOT NULL)")
-        self.db.execute('CREATE TABLE IF NOT EXISTS fact_anchors (fact_id TEXT, symbol_id TEXT, content_hash TEXT, PRIMARY KEY (fact_id, symbol_id))')
-        self.db.execute('CREATE TABLE IF NOT EXISTS fact_audit (seq INTEGER PRIMARY KEY, fact_id TEXT, before_payload TEXT, after_payload TEXT)')
-        self.db.execute('CREATE TABLE IF NOT EXISTS conflict_audit (seq INTEGER PRIMARY KEY, fact_id TEXT, candidate_ids TEXT, winner_id TEXT)')
+        self._clock = clock or (lambda: datetime.now(timezone.utc))
+        schemas = [
+            "CREATE TABLE IF NOT EXISTS facts (id TEXT PRIMARY KEY, payload TEXT NOT NULL)",
+            "CREATE TABLE IF NOT EXISTS fact_anchors (fact_id TEXT, symbol_id TEXT, content_hash TEXT, PRIMARY KEY (fact_id, symbol_id))",
+            "CREATE TABLE IF NOT EXISTS fact_audit (seq INTEGER PRIMARY KEY, fact_id TEXT, before_payload TEXT, after_payload TEXT)",
+            "CREATE TABLE IF NOT EXISTS conflict_audit (seq INTEGER PRIMARY KEY, fact_id TEXT, candidate_ids TEXT, winner_id TEXT)",
+            "CREATE TABLE IF NOT EXISTS memory_meta (key TEXT PRIMARY KEY, value TEXT)",
+        ]
+        for sql in schemas:
+            self.db.execute(sql)
+        self.db.execute("INSERT OR IGNORE INTO memory_meta VALUES ('head',NULL)")
         self.db.commit()
+        self.operations = OperationLog(self.db)
 
     def close(self):
         self.db.close()
 
-    def remember(self, text: str, *, fact_id=None, user=None, session=None, tool=None, source=None, confidence=1.0, anchors=(), selected_context=(), subject=None) -> Fact:
+    def remember(self, text, *, fact_id=None, user=None, session=None, tool=None,
+                 source=None, confidence=1.0, anchors=(), selected_context=(), subject=None,
+                 valid_from=None, valid_to=None):
         if not isinstance(text, str) or not text.strip():
             raise ValueError("Fact text must be nonempty")
-        if not isinstance(confidence, (float, int)) or not math.isfinite(confidence) or not 0 <= confidence <= 1:
-            raise ValueError("Confidence must be finite in [0, 1]")
-        for value in (user, session, tool, source):
-            if value is not None and (not isinstance(value, str) or not value.strip()):
-                raise ValueError("Provenance values must be nonempty strings")
+        if not isinstance(confidence, (int,float)) or not math.isfinite(confidence) or not 0 <= confidence <= 1:
+            raise ValueError("Confidence must be finite in [0,1]")
+        for value in (user,session,tool,source,subject):
+            if value is not None and (not isinstance(value,str) or not value.strip()):
+                raise ValueError("Metadata values must be nonempty strings")
         if not anchors:
-            anchors = tuple(Anchor(s['symbol_id'], s['content_hash']) if isinstance(s, dict) else Anchor(s.id, s.content_hash) for s in selected_context)
-        anchors = tuple(Anchor(**a) if isinstance(a, dict) else a for a in anchors)
-        if any(not isinstance(a, Anchor) or not a.symbol_id for a in anchors):
-            raise ValueError("Anchors require symbol IDs")
-        if any(not a.content_hash or not isinstance(a.content_hash, str) for a in anchors):
-            raise ValueError("Anchors require content hashes")
-        fact = Fact(fact_id or uuid.uuid4().hex, text, user, session, tool, source, float(confidence), anchors)
-        fact = replace(fact, subject=subject)
+            anchors = tuple(Anchor(s["symbol_id"],s["content_hash"]) if isinstance(s,dict) else Anchor(s.id,s.content_hash) for s in selected_context)
+        anchors = tuple(Anchor(**a) if isinstance(a,dict) else a for a in anchors)
+        if any(not isinstance(a,Anchor) or not a.symbol_id or not a.content_hash for a in anchors):
+            raise ValueError("Anchors require symbol IDs and hashes")
+        if len({a.symbol_id for a in anchors}) != len(anchors):
+            raise ValueError("Duplicate anchors are not allowed")
+        recorded_at = self._event_time()
+        valid = ValidInterval(valid_from or recorded_at, valid_to)
+        fact = Fact(fact_id or uuid.uuid4().hex,text,user,session,tool,source,float(confidence),anchors)
+        fact = replace(fact,subject=subject,created_at=recorded_at,valid_from=valid.start.isoformat(),valid_to=valid.end.isoformat() if valid.end else None,recorded_at=recorded_at)
         with self.db:
-            self.db.execute("INSERT INTO facts VALUES (?, ?)", (fact.id, json.dumps(asdict(fact))))
-            self.db.executemany('INSERT INTO fact_anchors VALUES (?, ?, ?)', [(fact.id, a.symbol_id, a.content_hash) for a in anchors])
+            self.db.execute("INSERT INTO facts VALUES (?,?)",(fact.id,canonical(asdict(fact))))
+            self.db.executemany("INSERT INTO fact_anchors VALUES (?,?,?)",[(fact.id,a.symbol_id,a.content_hash) for a in anchors])
+            self._record("add",fact.id,asdict(fact),recorded_at=recorded_at)
         return fact
 
-    def recall(self, query="") -> list[Fact]:
+    def recall(self, query: str = "") -> list[Fact]:
         facts = [self._decode(row[0]) for row in self.db.execute("SELECT payload FROM facts ORDER BY id")]
-        matches = [f for f in facts if query.casefold() in f.text.casefold()]
-        return sorted(matches, key=lambda f: ({'fresh': 0, 'stale': 1, 'orphaned': 2}[f.freshness], -f.confidence, f.id))
+        return self._rank_recall(facts, query, True)
 
     @staticmethod
     def _decode(payload):
@@ -165,7 +185,7 @@ class MemoryStore:
             raise KeyError(fact_id)
         priorities = source_priority or {"code": 3, "test": 2, "user": 1}
         candidates = [fact, *self.contradictions(fact_id)]
-        winner = max(candidates, key=lambda f: (priorities.get(f.source, 0), f.confidence, f.id))
+        winner = max(candidates, key=lambda f: (priorities.get(f.source, 0), *self._revision_order(f), f.confidence, f.id))
         with self.db:
             self.db.execute("INSERT INTO conflict_audit(fact_id,candidate_ids,winner_id) VALUES (?,?,?)", (fact_id, json.dumps(sorted(f.id for f in candidates)), winner.id))
         return winner
@@ -175,3 +195,44 @@ class MemoryStore:
 # P09.20
 
 # P09.21
+    def _rank_recall(self, facts: list[Fact], query: str, include_stale: bool) -> list[Fact]:
+        facts=[f for f in facts if include_stale or f.freshness=="fresh"]
+        scores: dict[str, float]
+        if query.strip():
+            from ..lexical.index import BM25Index
+            index=BM25Index()
+            for fact in facts:
+                index.add(fact.id,{"signature":" ".join(a.symbol_id for a in fact.anchors),"docstring":fact.subject or "","body":fact.text})
+            scores={hit.id:hit.score for hit in index.search(query,k=len(facts))}
+            facts=[f for f in facts if f.id in scores]
+        else:
+            scores={}
+        return sorted(facts,key=lambda f: ({"fresh":0,"stale":1,"orphaned":2}[f.freshness],-scores.get(f.id,0.0),-f.confidence,f.id))
+
+    def _revision_order(self, fact: Fact) -> tuple[str, str, int]:
+        # Persisted insertion order is the fallback for pre-timestamp facts.
+        row = self.db.execute("SELECT rowid FROM facts WHERE id=?", (fact.id,)).fetchone()
+        valid_from = getattr(fact, "valid_from", None) or fact.created_at or ""
+        recorded_at = getattr(fact, "recorded_at", None) or fact.created_at or ""
+        return str(valid_from), str(recorded_at), int(row[0]) if row else 0
+    @property
+    def head(self):
+        return self.db.execute("SELECT value FROM memory_meta WHERE key='head'").fetchone()[0]
+
+    def _event_time(self):
+        return timestamp(self._clock()).isoformat()
+
+    def _record(self,kind,fact_id=None,payload=None,*,metadata=None,recorded_at=None,parents=None):
+        op = self.operations.append_uncommitted(kind,fact_id,payload,parents=parents if parents is not None else ((self.head,) if self.head else ()),recorded_at=recorded_at or self._event_time(),metadata=metadata)
+        self.db.execute("UPDATE memory_meta SET value=? WHERE key='head'",(op.id,))
+        return op
+
+    def replay(self,head=None):
+        state = {}
+        for op in self.operations.ancestry(head if head is not None else self.head):
+            if op.kind == "add":
+                payload = self.operations.payload(op)
+                if payload is not None:
+                    state[op.fact_id] = self._decode(canonical(payload))
+        return state
+# P10.12
