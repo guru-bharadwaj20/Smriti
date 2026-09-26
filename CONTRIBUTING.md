@@ -117,7 +117,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P02.18 | Preserve symbol IDs for verified renames | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ✅ Done | P02.19 | Remove dangling graph references after deletion | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ✅ Done | P02.20 | Update postings and vectors for changed symbols | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
-| ❌ Pending | P02.21 | Commit index changes atomically | — |
+| ✅ Done | P02.21 | Commit index changes atomically | tests/test_snapshot_atomic.py; targeted verification passed |
 | ❌ Pending | P02.22 | Recover from interrupted indexing | — |
 | ✅ Done | P02.23 | Verify incremental and fresh-index equivalence | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ✅ Done | P02.24 | Measure one-line update latency on stated hardware | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
@@ -292,7 +292,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P08.18 | Recount final rendered output tokens | smriti/pack/packer.py; executable assertions passed |
 | ✅ Done | P08.19 | Enforce strict final budget limit | smriti/pack/packer.py; executable assertions passed |
 | ✅ Done | P08.20 | Compare small instances with exhaustive oracle | tests/test_pack.py; executable assertions passed |
-| ❌ Pending | P08.21 | Measure packing quality and latency | — |
+| ✅ Done | P08.21 | Measure packing quality and latency | bench/packing/results.json; bench/packing/run.py; scripts/search_benchmarks.py; measured CPU synthetic run |
 | ✅ Done | P08.22 | Document approximation limits under constraints | docs/packing.md; executable assertions passed |
 
 ### P09 — Anchored memory and freshness
@@ -450,7 +450,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P13.24 | Define retrieval-only memory relevance labels | — |
 | ❌ Pending | P13.25 | Evaluate temporal updates and abstention retrieval | — |
 | ❌ Pending | P13.26 | Separate optional answer-generation scoring | — |
-| ❌ Pending | P13.27 | Choose licensed repositories for commit replay | — |
+| ✅ Done | P13.27 | Choose licensed repositories for commit replay | bench/codemem/repositories.json; pinned LICENSE SHA-256 and Apache-2.0 verification |
 | ❌ Pending | P13.28 | Select and record 200-commit replay sequences | — |
 | ❌ Pending | P13.29 | Create anchored fact injection fixtures | — |
 | ❌ Pending | P13.30 | Label expected staleness after each commit | — |
