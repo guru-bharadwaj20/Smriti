@@ -451,7 +451,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P13.25 | Evaluate temporal updates and abstention retrieval | — |
 | ❌ Pending | P13.26 | Separate optional answer-generation scoring | — |
 | ✅ Done | P13.27 | Choose licensed repositories for commit replay | bench/codemem/repositories.json; pinned LICENSE SHA-256 and Apache-2.0 verification |
-| ❌ Pending | P13.28 | Select and record 200-commit replay sequences | — |
+| ✅ Done | P13.28 | Select and record 200-commit replay sequences | requests-200.json contains exactly 200 unique parent-linked public commits; three tamper/count tests; strict mypy and ruff |
 | ❌ Pending | P13.29 | Create anchored fact injection fixtures | — |
 | ❌ Pending | P13.30 | Label expected staleness after each commit | — |
 | ❌ Pending | P13.31 | Measure stale detection precision and recall | — |
