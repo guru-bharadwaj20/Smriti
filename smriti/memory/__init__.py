@@ -253,6 +253,13 @@ class MemoryStore:
     def replay(self,head=None):
         state = {}
         for op in self.operations.ancestry(head if head is not None else self.head):
+            if op.kind in ("merge","restore"):
+                state={}
+                for fid,payload_hash in op.metadata["state"].items():
+                    row=self.db.execute("SELECT payload FROM memory_blobs WHERE digest=?",(payload_hash,)).fetchone()
+                    if row and not self.is_purged(fid):
+                        state[fid]=self._decode(row[0])
+                continue
             if self.is_purged(op.fact_id):
                 continue
             if op.kind == "revert":
@@ -511,3 +518,24 @@ class MemoryStore:
                 state[fid]=selected
         return {"base":base,"state":state,"conflicts":conflicts,"source_head":source_head}
 # P11.08
+    def _snapshot(self,kind,state,*,metadata=None,parents=None):
+        from .operations import digest
+        references={}
+        for fid,fact in state.items():
+            if self.is_purged(fid):
+                continue
+            payload=asdict(fact)
+            h=digest(payload)
+            self.db.execute("INSERT OR IGNORE INTO memory_blobs VALUES (?,?)",(h,canonical(payload)))
+            references[fid]=h
+        return self._record(kind,metadata={**(metadata or {}),"state":references},parents=parents)
+
+    def merge(self,source,*,resolutions=None):
+        preview=self.merge_preview(source)
+        if preview["conflicts"]:
+            raise ValueError("Merge has unresolved conflicts")
+        with self.db:
+            op=self._snapshot("merge",preview["state"],metadata={"source":source,"base":preview["base"]})
+            self._materialize(preview["state"])
+        return op.id
+# P11.09

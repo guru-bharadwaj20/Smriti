@@ -398,6 +398,18 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual(preview["conflicts"],{})
         store.close()
 
+    def test_auto_merge_additions(self):
+        store=MemoryStore(":memory:")
+        store.branch("feature")
+        a=store.remember("main")
+        store.switch("feature")
+        b=store.remember("feature")
+        store.switch("main")
+        store.merge("feature")
+        self.assertEqual({f.id for f in store.recall()},{a.id,b.id})
+        self.assertTrue(store.verify())
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"
