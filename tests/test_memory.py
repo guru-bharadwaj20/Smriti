@@ -606,6 +606,79 @@ class MemoryTests(unittest.TestCase):
         self.assertTrue(store.verify())
         store.close()
 
+    def test_branch_merge_revert_oracle(self):
+        import random
+        rng=random.Random(24)
+        store=MemoryStore(":memory:")
+        expected={"main":{}}
+        store.branch("feature")
+        expected["feature"]={}
+        for i in range(20):
+            branch=rng.choice(["main","feature"])
+            store.switch(branch)
+            fact_id=f"fact-{i}"
+            text=f"value-{rng.randrange(1000)}"
+            store.remember(text,fact_id=fact_id)
+            expected[branch][fact_id]=text
+            self.assertEqual({f.id:f.text for f in store.recall()},expected[branch])
+            self.assertTrue(store.verify())
+        store.switch("main")
+        before=dict(expected["main"])
+        merged=store.merge("feature")
+        expected["main"].update(expected["feature"])
+        self.assertEqual({f.id:f.text for f in store.recall()},expected["main"])
+        store.revert(merged)
+        self.assertEqual({f.id:f.text for f in store.recall()},before)
+        store.switch("feature")
+        self.assertEqual({f.id:f.text for f in store.recall()},expected["feature"])
+        self.assertTrue(store.verify())
+        store.close()
+
+    def test_historical_invalidation_semantics(self):
+        from datetime import datetime,timezone
+        clock=[datetime(2025,1,1,tzinfo=timezone.utc)]
+        store=MemoryStore(":memory:",clock=lambda:clock[0])
+        f=store.remember("old truth")
+        clock[0]=datetime(2025,2,1,tzinfo=timezone.utc)
+        store.invalidate(f.id)
+        self.assertEqual(store.recall(valid_at="2025-01-15T00:00:00+00:00",as_of="2025-02-15T00:00:00+00:00")[0].id,f.id)
+        self.assertEqual(store.recall(valid_at="2025-02-15T00:00:00+00:00",as_of="2025-02-15T00:00:00+00:00"),[])
+        store.close()
+
+    def test_historical_revert_semantics(self):
+        from datetime import datetime,timezone
+        clock=[datetime(2025,1,1,tzinfo=timezone.utc)]
+        store=MemoryStore(":memory:",clock=lambda:clock[0])
+        f=store.remember("old")
+        clock[0]=datetime(2025,2,1,tzinfo=timezone.utc)
+        store.update(f.id,"new")
+        update=store.head
+        clock[0]=datetime(2025,3,1,tzinfo=timezone.utc)
+        store.revert(update)
+        self.assertEqual(store.recall(valid_at=f.valid_from,as_of="2025-02-15T00:00:00+00:00")[0].text,"new")
+        self.assertEqual(store.recall(valid_at=f.valid_from,as_of="2025-03-15T00:00:00+00:00")[0].text,"old")
+        store.close()
+
+    def test_merge_history_belief_isolation(self):
+        from datetime import datetime,timezone
+        clock=[datetime(2025,1,1,tzinfo=timezone.utc)]
+        store=MemoryStore(":memory:",clock=lambda:clock[0])
+        store.remember("root")
+        store.branch("feature")
+        store.switch("feature")
+        clock[0]=datetime(2025,2,1,tzinfo=timezone.utc)
+        store.remember("feature",valid_from="2025-01-15T00:00:00+00:00")
+        store.switch("main")
+        clock[0]=datetime(2025,3,1,tzinfo=timezone.utc)
+        store.remember("main",valid_from="2025-01-01T00:00:00+00:00")
+        clock[0]=datetime(2025,4,1,tzinfo=timezone.utc)
+        store.merge("feature")
+        old=store.recall(valid_at="2025-01-20T00:00:00+00:00",as_of="2025-02-15T00:00:00+00:00")
+        current=store.recall(valid_at="2025-01-20T00:00:00+00:00",as_of="2025-04-15T00:00:00+00:00")
+        self.assertEqual({f.text for f in old},{"root"})
+        self.assertEqual({f.text for f in current},{"root","main","feature"})
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"
