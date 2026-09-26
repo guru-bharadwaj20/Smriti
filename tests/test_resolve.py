@@ -116,3 +116,14 @@ def test_resolution_confidence_distinguishes_method_dispatch():
     edges = [edge for edge in Resolver([result]).resolve() if edge.kind == "calls"]
     assert next(edge for edge in edges if edge.target == result.symbols[1].id).confidence == 1
     assert next(edge for edge in edges if edge.target == result.symbols[3].id).confidence == 0.9
+
+
+def test_structural_edges_persist(tmp_path):
+    result = parse_file("a.py", "class A:\n    def work(self):\n        pass\n")
+    resolver = Resolver([result])
+    path = tmp_path / "graph.json"
+    resolver.save_graph(path)
+    edges = resolver.load_edges(path)
+    assert edges == resolver.resolve()
+    assert sum(edge.kind == "contains" for edge in edges) == 2
+    assert sum(edge.kind == "defines" for edge in edges) == 2
