@@ -61,6 +61,8 @@ class MemoryStore:
         self.db.execute("INSERT OR IGNORE INTO memory_meta VALUES ('head',NULL)")
         self.db.commit()
         self.operations = OperationLog(self.db)
+        self.db.execute("CREATE TABLE IF NOT EXISTS memory_purged (fact_id TEXT PRIMARY KEY)")
+        self.db.commit()
 
     def close(self):
         self.db.close()
@@ -82,6 +84,8 @@ class MemoryStore:
             raise ValueError("Anchors require symbol IDs and hashes")
         if len({a.symbol_id for a in anchors}) != len(anchors):
             raise ValueError("Duplicate anchors are not allowed")
+        if self.is_purged(fact_id):
+            raise ValueError("Forgotten fact IDs cannot be reused")
         recorded_at = self._event_time()
         valid = ValidInterval(valid_from or recorded_at, valid_to)
         fact = Fact(fact_id or uuid.uuid4().hex,text,user,session,tool,source,float(confidence),anchors)
@@ -238,6 +242,8 @@ class MemoryStore:
     def replay(self,head=None):
         state = {}
         for op in self.operations.ancestry(head if head is not None else self.head):
+            if self.is_purged(op.fact_id):
+                continue
             if op.kind == "invalidate":
                 state.pop(op.fact_id,None)
             elif op.kind in ("add","update"):
@@ -275,3 +281,23 @@ class MemoryStore:
             self.db.execute("DELETE FROM fact_anchors WHERE fact_id=?",(fact_id,))
         return fact_id
 # P10.14
+    def is_purged(self,fact_id):
+        return fact_id is not None and self.db.execute("SELECT 1 FROM memory_purged WHERE fact_id=?",(fact_id,)).fetchone() is not None
+
+    def forget(self,fact_id):
+        if self.is_purged(fact_id):
+            return []
+        exists = self.db.execute("SELECT 1 FROM memory_operations WHERE json_extract(canonical,'$.fact_id')=?",(fact_id,)).fetchone()
+        if not exists:
+            raise KeyError(fact_id)
+        with self.db:
+            self.db.execute("INSERT INTO memory_purged VALUES (?)",(fact_id,))
+            hashes = [self.operations.get(oid).payload_hash for (oid,) in self.db.execute("SELECT oid FROM memory_operations WHERE json_extract(canonical,'$.fact_id')=?",(fact_id,))]
+            self.db.executemany("DELETE FROM memory_blobs WHERE digest=?",[(h,) for h in hashes if h])
+            self.db.execute("DELETE FROM facts WHERE id=?",(fact_id,))
+            self.db.execute("DELETE FROM fact_anchors WHERE fact_id=?",(fact_id,))
+            self.db.execute("DELETE FROM fact_audit WHERE fact_id=?",(fact_id,))
+            self.db.execute("DELETE FROM conflict_audit WHERE fact_id=? OR winner_id=? OR candidate_ids LIKE ?",(fact_id,fact_id,"%"+fact_id+"%"))
+            self._record("forget",fact_id)
+        return [fact_id]
+# P10.15

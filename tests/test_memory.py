@@ -217,6 +217,18 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual(store.replay(),{})
         store.close()
 
+    def test_forget_payload_purge(self):
+        store = MemoryStore(":memory:")
+        f = store.remember("PRIVATE SECRET")
+        head = store.head
+        store.forget(f.id)
+        self.assertEqual(store.replay(head),{})
+        self.assertEqual(store.db.execute("SELECT COUNT(*) FROM memory_blobs").fetchone()[0],0)
+        with self.assertRaises(ValueError):
+            store.remember("resurrection",fact_id=f.id)
+        self.assertEqual(store.forget(f.id),[])
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"
