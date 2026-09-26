@@ -261,7 +261,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P07.12 | Test ranking on a hand-computed graph | tests/test_rank.py; executable assertions passed |
 | ✅ Done | P07.13 | Expand candidate set with callers | smriti/rank/hybrid.py; executable assertions passed |
 | ✅ Done | P07.14 | Include associated tests and configuration | smriti/rank/hybrid.py; executable assertions passed |
-| ❌ Pending | P07.15 | Cache ranking with index-version keys | — |
+| ✅ Done | P07.15 | Cache ranking with index-version keys | smriti/rank/hybrid.py; executable assertions passed |
 | ❌ Pending | P07.16 | Invalidate cache after index updates | — |
 | ✅ Done | P07.17 | Tune fusion weights on validation data only | scripts/fusion_tuning.py; bench/fusion/validation.json; validation-only grid search, separate held-out IDs |
 | ❌ Pending | P07.18 | Emit per-candidate selection explanations | — |

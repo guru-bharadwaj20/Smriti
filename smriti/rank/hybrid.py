@@ -33,3 +33,8 @@ def expand_associations(seeds,edges):
     for source,target,kind,*_ in edges:
         if kind in {'tests','config'} and (source in seeds or target in seeds): selected.update([source,target])
     return selected
+
+class RankingCache:
+    def __init__(self): self.values={}; self.version=None
+    def get(self,version,query): return self.values.get((version,normalize_query(query)))
+    def put(self,version,query,scores): self.values[(version,normalize_query(query))]=dict(scores)
