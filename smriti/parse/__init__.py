@@ -139,3 +139,34 @@ def symbol_chunks(result: ParseResult) -> list[tuple[str, bytes]]:
     """Independent source units follow definitions; modules only when no definitions exist."""
     definitions = [s for s in result.symbols if s.kind != "module"]
     return [(symbol.id, source_slice(result, symbol)) for symbol in definitions or result.symbols]
+
+
+def split_oversized(source: bytes | str, max_bytes: int = 16384) -> list[bytes]:
+    """Keep whole lines where possible; split long lines only at Unicode boundaries.
+
+    Parts retain one anchor identity. Retrieval never invents new function identities.
+    """
+    if max_bytes < 4:
+        raise ValueError("max_bytes must fit any UTF-8 code point")
+    text = source.decode("utf-8") if isinstance(source, bytes) else source
+    parts, current = [], b""
+    for line in text.splitlines(keepends=True):
+        encoded = line.encode("utf-8")
+        if len(current) + len(encoded) <= max_bytes:
+            current += encoded
+            continue
+        if current:
+            parts.append(current)
+            current = b""
+        if len(encoded) <= max_bytes:
+            current = encoded
+        else:
+            for char in line:
+                value = char.encode("utf-8")
+                if len(current) + len(value) > max_bytes:
+                    parts.append(current)
+                    current = b""
+                current += value
+    if current:
+        parts.append(current)
+    return parts

@@ -109,3 +109,12 @@ def test_chunks_follow_symbol_boundaries():
     assert len(chunks) == 2
     assert chunks[0][1].startswith(b"def a")
     assert chunks[1][1].startswith(b"def b")
+
+
+def test_oversized_utf8_function_keeps_all_bytes():
+    from smriti.parse import split_oversized
+    source = ("π" * 21 + "\n" + "line\n" * 20).encode()
+    parts = split_oversized(source, 16)
+    assert b"".join(parts) == source
+    assert all(len(part) <= 16 for part in parts)
+    assert all(part.decode("utf-8") for part in parts)
