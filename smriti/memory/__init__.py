@@ -413,3 +413,16 @@ class MemoryStore:
             self._materialize(self.replay(row[0]) if row[0] else {})
         return self.head
 # P11.04
+    def sync_git(self,repository):
+        import subprocess
+        result=subprocess.run(["git","-C",str(repository),"symbolic-ref","--quiet","--short","HEAD"],capture_output=True,text=True)
+        if result.returncode==0:
+            name=result.stdout.strip()
+        else:
+            revision=subprocess.run(["git","-C",str(repository),"rev-parse","--verify","HEAD"],capture_output=True,text=True,check=True).stdout.strip()
+            name="detached/"+revision
+        if name not in self.branches():
+            self.branch(name)
+        self.switch(name)
+        return name
+# P11.05

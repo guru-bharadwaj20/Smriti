@@ -352,6 +352,15 @@ class MemoryTests(unittest.TestCase):
         self.assertTrue(store.verify())
         store.close()
 
+    def test_detached_head_namespace(self):
+        from unittest.mock import patch
+        import subprocess
+        store=MemoryStore(":memory:")
+        with patch("subprocess.run",side_effect=[subprocess.CompletedProcess([],1,"",""),subprocess.CompletedProcess([],0,"abc123","")]):
+            self.assertEqual(store.sync_git("."),"detached/abc123")
+        self.assertEqual(store.current_branch,"detached/abc123")
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"
