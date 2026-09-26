@@ -478,7 +478,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P14.05 | Implement memory freshness view | 4 real repository UI tests passed; source-edit freshness regression; JS syntax checked |
 | ✅ Done | P14.06 | Implement memory history and diff view | 5 real repository UI tests passed; actual before/after memory diff; JS syntax checked |
 | ✅ Done | P14.07 | Implement merge conflict resolution view | 6 actual repository UI tests passed; conflict409 and recorded resolution validated; JS syntax checked |
-| ❌ Pending | P14.08 | Bind local service safely by default | — |
+| ✅ Done | P14.08 | Bind local service safely by default | 8 UI tests pass; strict mypy; Ruff; JavaScript syntax |
 | ❌ Pending | P14.09 | Expand README with verified setup commands | — |
 | ❌ Pending | P14.10 | Document architecture and storage formats | — |
 | ❌ Pending | P14.11 | Document memory temporal and deletion semantics | — |

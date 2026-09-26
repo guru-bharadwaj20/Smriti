@@ -4,13 +4,16 @@ import subprocess
 from collections.abc import Iterator
 from contextlib import contextmanager
 from dataclasses import asdict
+from ipaddress import ip_address
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlsplit
 
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query, Request, Response
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
+from starlette.middleware.base import RequestResponseEndpoint
 
 from smriti.memory import MemoryStore, MergeConflict
 from smriti.server.schemas import ContextRequest, MergeRequest
@@ -42,6 +45,39 @@ def create_app(root: Path) -> FastAPI:
     service = SmritiService(root)
     app = FastAPI(title='Smriti', docs_url=None, redoc_url=None)
     app.mount('/static', StaticFiles(directory=ASSETS), name='static')
+
+    @app.middleware('http')
+    async def local_boundary(request: Request, call_next: RequestResponseEndpoint) -> Response:
+        try:
+            host = urlsplit('//' + request.headers.get('host', '')).hostname or ''
+            trusted = host == 'localhost' or ip_address(host).is_loopback
+        except ValueError:
+            trusted = False
+        if not trusted:
+            return Response('Local host required', status_code=400)
+        if request.method not in {'GET', 'HEAD', 'OPTIONS'} and request.headers.get('origin'):
+            try:
+                origin = urlsplit(request.headers['origin'])
+                same_origin = (
+                    origin.scheme == request.url.scheme
+                    and origin.hostname == request.url.hostname
+                    and (origin.port or (443 if origin.scheme == 'https' else 80))
+                    == (request.url.port or (443 if request.url.scheme == 'https' else 80))
+                )
+            except ValueError:
+                same_origin = False
+            if not same_origin:
+                return Response('Same origin required', status_code=403)
+        response = await call_next(request)
+        response.headers.update(
+            {
+                'Cache-Control': 'no-store',
+                'X-Content-Type-Options': 'nosniff',
+                'Referrer-Policy': 'no-referrer',
+                'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'",
+            }
+        )
+        return response
 
     @app.get('/', response_class=FileResponse)
     def home() -> FileResponse:

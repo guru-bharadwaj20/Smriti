@@ -7,7 +7,7 @@ from smriti.ui.app import create_app
 def test_ui_status_reflects_published_index(tmp_path):
     (tmp_path / 'worker.py').write_text('def work():\n    return 1\n')
     app = create_app(tmp_path)
-    with TestClient(app) as client:
+    with TestClient(app, base_url='http://127.0.0.1') as client:
         assert client.get('/api/status').json()['indexed'] is False
         assert client.get('/').status_code == 200
         assert 'Your repository' in client.get('/').text
@@ -25,7 +25,7 @@ def test_ui_symbol_graph_uses_real_call_edges(tmp_path):
         'def work():\n    return 1\ndef caller():\n    return work()\n'
     )
     SmritiService(tmp_path).index()
-    with TestClient(create_app(tmp_path)) as client:
+    with TestClient(create_app(tmp_path), base_url='http://127.0.0.1') as client:
         symbols = client.get('/api/symbols', params={'q': 'work'}).json()
         work = next(symbol for symbol in symbols if symbol['name'] == 'work')
         graph = client.get('/api/graph/' + work['id']).json()
@@ -41,7 +41,7 @@ def test_ui_symbol_graph_uses_real_call_edges(tmp_path):
 def test_ui_context_explains_real_selections_within_budget(tmp_path):
     (tmp_path / 'worker.py').write_text('def work():\n    "Do useful work."\n    return 1\n')
     SmritiService(tmp_path).index()
-    with TestClient(create_app(tmp_path)) as client:
+    with TestClient(create_app(tmp_path), base_url='http://127.0.0.1') as client:
         response = client.post('/api/context', json={'task': 'work', 'budget': 128})
         assert response.status_code == 200
         context = response.json()
@@ -82,7 +82,7 @@ def test_ui_memory_retains_freshness_warning_after_source_edit(tmp_path):
         )
     finally:
         store.close()
-    with TestClient(create_app(tmp_path)) as client:
+    with TestClient(create_app(tmp_path), base_url='http://127.0.0.1') as client:
         response = client.get('/api/memory', params={'q': 'Work'}).json()
         remembered = next(item for item in response['facts'] if item['id'] == fact.id)
         assert remembered['freshness'] == 'stale'
@@ -103,7 +103,7 @@ def test_ui_history_diff_contains_actual_before_and_after(tmp_path):
         after = store.head
     finally:
         store.close()
-    with TestClient(create_app(tmp_path)) as client:
+    with TestClient(create_app(tmp_path), base_url='http://127.0.0.1') as client:
         history = client.get('/api/history').json()
         assert history['head'] == after
         assert [item['kind'] for item in history['operations']][:2] == ['update', 'add']
@@ -127,7 +127,7 @@ def test_ui_merge_requires_and_records_explicit_conflict_resolution(tmp_path):
         store.update(fact.id, 'Main version.')
     finally:
         store.close()
-    with TestClient(create_app(tmp_path)) as client:
+    with TestClient(create_app(tmp_path), base_url='http://127.0.0.1') as client:
         assert set(client.get('/api/branches').json()['heads']) == {'main', 'feature'}
         preview = client.get('/api/merge-preview', params={'source': 'feature'}).json()
         assert preview['conflicts'][fact.id]['ours']['text'] == 'Main version.'
@@ -140,3 +140,41 @@ def test_ui_merge_requires_and_records_explicit_conflict_resolution(tmp_path):
         assert merged.json()['operation_id']
         facts = client.get('/api/memory').json()['facts']
         assert next(item for item in facts if item['id'] == fact.id)['text'] == 'Feature version.'
+
+
+def test_ui_rejects_foreign_hosts_and_cross_origin_mutation(tmp_path):
+    with TestClient(create_app(tmp_path), base_url='http://127.0.0.1') as client:
+        status = client.get('/api/status')
+        assert status.status_code == 200
+        assert status.headers['cache-control'] == 'no-store'
+        assert "script-src 'self'" in status.headers['content-security-policy']
+        assert client.get('/api/status', headers={'Host': 'evil.example'}).status_code == 400
+        assert (
+            client.post(
+                '/api/context',
+                headers={'Origin': 'https://evil.example'},
+                json={'task': 'work', 'budget': 0},
+            ).status_code
+            == 403
+        )
+        assert (
+            client.post(
+                '/api/context',
+                headers={'Origin': 'http://127.0.0.1'},
+                json={'task': 'work', 'budget': 0},
+            ).status_code
+            == 200
+        )
+
+
+def test_ui_launcher_refuses_public_binding(tmp_path):
+    import subprocess
+    import sys
+
+    result = subprocess.run(
+        [sys.executable, '-m', 'smriti.ui', str(tmp_path), '--host', '0.0.0.0'],
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 2
+    assert 'loopback host' in result.stderr
