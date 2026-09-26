@@ -43,3 +43,14 @@ def status(
     from smriti.server.status import index_status
 
     typer.echo(json.dumps(asdict(index_status(root))))
+
+
+@app.command('find-symbol')
+def find_symbol(
+    name: str,
+    root: Annotated[Path, typer.Option('--root', exists=True, file_okay=False)] = DEFAULT_ROOT,
+) -> None:
+    """Find indexed source definitions by name, qualified name, or symbol ID."""
+    from smriti.server.service import SmritiService
+
+    typer.echo(json.dumps([asdict(symbol) for symbol in SmritiService(root).find_symbol(name)]))
