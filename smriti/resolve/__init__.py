@@ -33,7 +33,7 @@ class Resolver:
                 parent = self.parents.get(parent)
             return self.resolve_name(name, parent, visited) if parent else None
         if name.startswith(("self.", "cls.")) and self.symbols[scope].kind == "method":
-            return self.children.get(self.parents[scope], {}).get(name.split(".", 1)[1])
+            return self.method_target(self.parents[scope], name.split(".", 1)[1])
         binding = self.bindings.get((scope, name), "@missing")
         if binding is None:
             return None
@@ -152,6 +152,25 @@ class Resolver:
     def own_method(self, class_id: str, name: str) -> str | None:
         return self.children.get(class_id, {}).get(name)
 
+    def class_bases(self) -> dict[str, list[str]]:
+        bases = {}
+        for result in self.results:
+            for declaration in result.inheritance:
+                target = self.resolve_name(declaration["name"], declaration["scope"])
+                if target and self.symbols[target].kind == "class":
+                    bases.setdefault(declaration["class"], []).append(target)
+        return bases
+
+    def method_target(self, class_id: str, name: str, skip_current: bool = False) -> str | None:
+        try:
+            order = c3_linearize(class_id, self.class_bases())
+        except ValueError:
+            return None
+        for owner in order[1:] if skip_current else order:
+            target = self.own_method(owner, name)
+            if target:
+                return target
+        return None
 
 def c3_linearize(class_id: str, bases: dict[str, list[str]], stack=()) -> list[str]:
     """Compute Python's C3 MRO and reject cyclic or inconsistent inheritance."""

@@ -87,3 +87,9 @@ def test_c3_diamond_and_inconsistent_hierarchy():
         c3_linearize("Z", bases)
     with pytest.raises(ValueError, match="cycle"):
         c3_linearize("A", {"A": ["A"]})
+
+
+def test_inherited_method_resolution():
+    result = parse_file("a.py", "class A:\n    def helper(self):\n        pass\nclass B(A):\n    def run(self):\n        self.helper()\n")
+    resolver = Resolver([result])
+    assert resolver.resolve_name("self.helper", result.symbols[4].id) == result.symbols[2].id
