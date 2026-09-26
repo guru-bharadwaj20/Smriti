@@ -28,6 +28,9 @@ class SourceParser:
         import tree_sitter_typescript
         self.parsers["typescript"] = Parser(Language(tree_sitter_typescript.language_typescript()))
 
+        import tree_sitter_java
+        self.parsers["java"] = Parser(Language(tree_sitter_java.language()))
+
     def parse(self, path: str, source: bytes | str, language: str = "python") -> ParseResult:
         data = source.encode("utf-8") if isinstance(source, str) else source
         cached = self.cache.get(path)
@@ -64,8 +67,8 @@ class SourceParser:
             body=result.source.decode("utf-8"), content_hash=sha256(result.source).hexdigest()))
 
         def walk(node, parent):
-            if node.type in {"class_definition", "function_definition", "class_declaration", "function_declaration", "method_definition"} and node.child_by_field_name("name") and node.child_by_field_name("body"):
-                kind = "class" if node.type in {"class_definition", "class_declaration"} else ("method" if parent.kind == "class" else "function")
+            if node.type in {"class_definition", "function_definition", "class_declaration", "function_declaration", "method_definition", "method_declaration", "constructor_declaration", "interface_declaration"} and node.child_by_field_name("name") and node.child_by_field_name("body"):
+                kind = "class" if node.type in {"class_definition", "class_declaration", "interface_declaration"} else ("method" if parent.kind == "class" else "function")
                 name_node = node.child_by_field_name("name")
                 name = result.source[name_node.start_byte:name_node.end_byte].decode("utf-8")
                 qualname = parent.qualname + "." + name

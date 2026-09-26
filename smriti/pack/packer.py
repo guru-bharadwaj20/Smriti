@@ -16,7 +16,7 @@ def name_text(symbol):
     return f'{symbol.path}:{symbol.start_line} {symbol.qualname}\n'
 
 def signature_text(symbol):
-    return name_text(symbol)+symbol.signature+'\n'+((symbol.docstring+'\n') if symbol.docstring else '')
+    return name_text(symbol)+symbol.signature+'\n'+((symbol.docstring+'\n') if symbol.docstring else '')+f'# ... lines {symbol.start_line}-{getattr(symbol,"end_line",symbol.start_line)} omitted\n'
 
 def body_text(symbol):
     return name_text(symbol)+'```python\n'+symbol.body+'\n```\n'

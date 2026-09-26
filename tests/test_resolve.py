@@ -109,3 +109,10 @@ def test_dynamic_call_candidates_have_distinct_edge_kind():
     assert len(uncertain) == 1
     assert uncertain[0].target == result.symbols[1].id
     assert uncertain[0].confidence == 0.25
+
+
+def test_resolution_confidence_distinguishes_method_dispatch():
+    result = parse_file("a.py", "def helper():\n    pass\nclass A:\n    def work(self):\n        helper()\n        self.work()\n")
+    edges = [edge for edge in Resolver([result]).resolve() if edge.kind == "calls"]
+    assert next(edge for edge in edges if edge.target == result.symbols[1].id).confidence == 1
+    assert next(edge for edge in edges if edge.target == result.symbols[3].id).confidence == 0.9

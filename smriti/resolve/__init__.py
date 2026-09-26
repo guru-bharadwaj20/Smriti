@@ -58,7 +58,7 @@ class Resolver:
             for call in result.calls:
                 target = self.resolve_name(call["name"], call["scope"])
                 if target:
-                    edges.append(Edge(call["scope"], target, "calls"))
+                    edges.append(Edge(call["scope"], target, "calls", self.edge_confidence(call["name"], target)))
                 else:
                     target = self.external_reference(call["name"], call["scope"])
                     edges.append(Edge(call["scope"], target, "calls", 0.5))
@@ -183,6 +183,9 @@ class Resolver:
         leaf = name.rsplit(".", 1)[-1]
         return sorted(symbol.id for symbol in self.symbols.values()
                       if symbol.name == leaf and symbol.kind in {"function", "method"})
+    def edge_confidence(self, name: str, target: str) -> float:
+        # Local lexical binding is exact; method dispatch remains runtime-dependent.
+        return 0.9 if name.startswith(("self.", "cls.", "super().")) else 1.0
 
 def c3_linearize(class_id: str, bases: dict[str, list[str]], stack=()) -> list[str]:
     """Compute Python's C3 MRO and reject cyclic or inconsistent inheritance."""
