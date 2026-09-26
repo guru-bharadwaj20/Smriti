@@ -157,3 +157,11 @@ def test_all_language_ranges_are_exact():
     parser = SourceParser()
     for path, code, lang in [("a.py", "def π():\n    return 1\n", "python"), ("a.ts", TYPESCRIPT_FIXTURE, "typescript"), ("A.java", JAVA_FIXTURE, "java")]:
         validate_ranges(parser.parse(path, code, lang))
+
+
+def test_staged_languages_are_explicit():
+    import pytest
+    from smriti.parse import LANGUAGE_SUPPORT
+    assert "Deferred" in LANGUAGE_SUPPORT["go"]
+    with pytest.raises(KeyError):
+        SourceParser().parse("main.go", "package main", "go")

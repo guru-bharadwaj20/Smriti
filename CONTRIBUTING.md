@@ -148,7 +148,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P03.18 | Add Java extraction fixtures | smriti/parse; pytest tests/test_parse.py passed |
 | ✅ Done | P03.19 | Implement Java symbol extraction | smriti/parse; pytest tests/test_parse.py passed |
 | ✅ Done | P03.20 | Validate symbol ranges against source slices | smriti/parse; pytest tests/test_parse.py passed |
-| ❌ Pending | P03.21 | Document staged Go and C/C++ support | — |
+| ✅ Done | P03.21 | Document staged Go and C/C++ support | smriti/parse; pytest tests/test_parse.py passed |
 
 ### P04 — Scope-aware resolution and graph
 
@@ -172,7 +172,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P04.14 | Assign confidence to resolved edges | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.15 | Persist defines and contains edges | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.16 | Persist calls and imports edges | smriti/resolve; pytest tests/test_resolve.py passed |
-| ❌ Pending | P04.17 | Persist inheritance edges | — |
+| ✅ Done | P04.17 | Persist inheritance edges | smriti/resolve; pytest tests/test_resolve.py passed |
 | ❌ Pending | P04.18 | Define test-to-symbol association rules | — |
 | ❌ Pending | P04.19 | Expose callers and callees graph queries | — |
 | ❌ Pending | P04.20 | Create hand-labelled call-edge fixtures | — |
@@ -290,7 +290,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P08.16 | Render stable file and symbol ordering | smriti/pack/packer.py; executable assertions passed |
 | ✅ Done | P08.17 | Render omitted-line markers | smriti/pack/packer.py; executable assertions passed |
 | ✅ Done | P08.18 | Recount final rendered output tokens | smriti/pack/packer.py; executable assertions passed |
-| ❌ Pending | P08.19 | Enforce strict final budget limit | — |
+| ✅ Done | P08.19 | Enforce strict final budget limit | smriti/pack/packer.py; executable assertions passed |
 | ❌ Pending | P08.20 | Compare small instances with exhaustive oracle | — |
 | ❌ Pending | P08.21 | Measure packing quality and latency | — |
 | ❌ Pending | P08.22 | Document approximation limits under constraints | — |
