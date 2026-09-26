@@ -403,3 +403,13 @@ class MemoryStore:
             self.db.execute("INSERT INTO memory_branches VALUES (?,?)",(name,head))
         return head
 # P11.03
+    def switch(self,name):
+        row=self.db.execute("SELECT head FROM memory_branches WHERE name=?",(name,)).fetchone()
+        if row is None:
+            raise KeyError(name)
+        with self.db:
+            self.db.execute("UPDATE memory_meta SET value=? WHERE key='branch'",(name,))
+            self.db.execute("UPDATE memory_meta SET value=? WHERE key='head'",(row[0],))
+            self._materialize(self.replay(row[0]) if row[0] else {})
+        return self.head
+# P11.04

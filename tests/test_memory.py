@@ -339,6 +339,19 @@ class MemoryTests(unittest.TestCase):
             store.branch("../bad")
         store.close()
 
+    def test_switch_isolates_memory(self):
+        store=MemoryStore(":memory:")
+        root=store.remember("root")
+        store.branch("feature")
+        main_only=store.remember("main only")
+        store.switch("feature")
+        self.assertEqual([f.id for f in store.recall()],[root.id])
+        store.remember("feature only")
+        store.switch("main")
+        self.assertIn(main_only.id,{f.id for f in store.recall()})
+        self.assertTrue(store.verify())
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"
