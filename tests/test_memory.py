@@ -372,6 +372,19 @@ class MemoryTests(unittest.TestCase):
             store.delete_branch("trunk")
         store.close()
 
+    def test_unrelated_branch_isolation(self):
+        store=MemoryStore(":memory:")
+        store.remember("private main")
+        store.branch("unrelated",from_head="")
+        store.switch("unrelated")
+        self.assertEqual(store.recall(),[])
+        store.remember("private other")
+        store.switch("main")
+        self.assertEqual([f.text for f in store.recall()],["private main"])
+        self.assertEqual(len(store.log()),1)
+        self.assertEqual([f.text for f in store.recall(valid_at=store._clock())],["private main"])
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"

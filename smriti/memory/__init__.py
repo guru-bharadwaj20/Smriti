@@ -279,12 +279,45 @@ class MemoryStore:
         return self._save(replace(fact,text=text if text is not None else fact.text,valid_from=valid.start.isoformat(),valid_to=valid.end.isoformat() if valid.end else None))
 
     def timeline(self,head=None):
-        timeline = Timeline()
-        for op in self.operations.ancestry(head if head is not None else self.head):
-            if op.kind in ("add","update"):
-                payload = self.operations.payload(op)
+        timeline=Timeline()
+        chain=[]
+        cursor=self.head if head is None else head
+        while cursor:
+            op=self.operations.get(cursor)
+            chain.append(op)
+            cursor=op.parents[0] if op.parents else None
+        def retire(fact_id,at,keep_past=False):
+            rows=[]
+            additions=[]
+            for old in timeline.rows:
+                if old.transaction.end is not None or (fact_id is not None and old.fact_id!=fact_id):
+                    rows.append(old)
+                    continue
+                rows.append(replace(old,transaction=TransactionInterval(old.transaction.start,at)))
+                end=min(old.valid.end,at) if old.valid.end is not None else at
+                if keep_past and old.valid.start<end:
+                    additions.append(TemporalVersion(old.fact_id,dict(old.payload),ValidInterval(old.valid.start,end),TransactionInterval(at)))
+            timeline.rows=rows+additions
+        for op in reversed(chain):
+            if self.is_purged(op.fact_id):
+                continue
+            at=timestamp(op.recorded_at)
+            if op.kind in ("merge","restore"):
+                retire(None,at)
+                for fid,h in op.metadata["state"].items():
+                    row=self.db.execute("SELECT payload FROM memory_blobs WHERE digest=?",(h,)).fetchone()
+                    if row and not self.is_purged(fid):
+                        payload=json.loads(row[0])
+                        timeline.correct(fid,payload,ValidInterval(payload["valid_from"],payload.get("valid_to")),at)
+            elif op.kind=="invalidate":
+                retire(op.fact_id,at,True)
+            elif op.kind in ("add","update","revert"):
+                payload=self.operations.payload(op)
                 if payload is not None:
-                    timeline.correct(op.fact_id,payload,ValidInterval(payload["valid_from"],payload.get("valid_to")),op.recorded_at)
+                    timeline.correct(op.fact_id,payload,ValidInterval(payload["valid_from"],payload.get("valid_to")),at)
+                elif op.kind=="revert":
+                    retire(op.fact_id,at)
+        timeline.rows=[v for v in timeline.rows if not self.is_purged(v.fact_id)]
         return timeline
 # P10.13
     def invalidate(self,fact_id,*,reason="invalidated"):
@@ -444,3 +477,5 @@ class MemoryStore:
         with self.db:
             self.db.execute("DELETE FROM memory_branches WHERE name=?",(name,))
 # P11.06
+
+# P11.07
