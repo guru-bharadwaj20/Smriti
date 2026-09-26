@@ -258,6 +258,17 @@ class MemoryTests(unittest.TestCase):
         self.assertIn(other.id,delta["added"])
         store.close()
 
+    def test_revert_additive_history(self):
+        store=MemoryStore(":memory:")
+        f=store.remember("a")
+        store.update(f.id,"b")
+        update=store.head
+        store.revert(update)
+        self.assertEqual(store.recall()[0].text,"a")
+        self.assertEqual(store.log()[0]["kind"],"revert")
+        self.assertEqual(store.log()[1]["id"],update)
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"

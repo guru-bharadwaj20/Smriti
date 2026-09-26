@@ -78,6 +78,21 @@ def test_verified_rename_preserves_id():
     assert preserve_symbol_ids(old, different)[1] == {}
 
 
+def test_rename_identity_survives_a_following_body_edit():
+    from smriti.parse import parse_file
+    from smriti.watch import preserve_symbol_ids
+
+    original = parse_file('a.py', 'def first():\n    return 1\n').symbols
+    moved, _ = preserve_symbol_ids(
+        original, parse_file('a.py', 'def second():\n    return 1\n').symbols
+    )
+    edited, _ = preserve_symbol_ids(
+        moved, parse_file('a.py', 'def second():\n    return 2\n').symbols
+    )
+    assert edited[1].id == original[1].id
+    assert edited[1].body.endswith('return 2')
+
+
 def test_graph_deletion_prunes_both_directions():
     from smriti.models import Edge
     from smriti.watch import prune_edges

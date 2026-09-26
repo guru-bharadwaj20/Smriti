@@ -244,7 +244,13 @@ class MemoryStore:
         for op in self.operations.ancestry(head if head is not None else self.head):
             if self.is_purged(op.fact_id):
                 continue
-            if op.kind == "invalidate":
+            if op.kind == "revert":
+                payload=self.operations.payload(op)
+                if payload is None:
+                    state.pop(op.fact_id,None)
+                else:
+                    state[op.fact_id]=self._decode(canonical(payload))
+            elif op.kind == "invalidate":
                 state.pop(op.fact_id,None)
             elif op.kind in ("add","update"):
                 payload = self.operations.payload(op)
@@ -313,3 +319,27 @@ class MemoryStore:
         a,b=self.replay(left) if left else {},self.replay(right if right is not None else self.head)
         return {"added":{k:b[k].to_dict() for k in sorted(b.keys()-a.keys())},"removed":{k:a[k].to_dict() for k in sorted(a.keys()-b.keys())},"changed":{k:{"before":a[k].to_dict(),"after":b[k].to_dict()} for k in sorted(a.keys()&b.keys()) if a[k]!=b[k]}}
 # P10.18
+    def _materialize(self,state):
+        self.db.execute("DELETE FROM facts")
+        self.db.execute("DELETE FROM fact_anchors")
+        for fact in state.values():
+            if self.is_purged(fact.id):
+                continue
+            self.db.execute("INSERT INTO facts VALUES (?,?)",(fact.id,canonical(asdict(fact))))
+            self.db.executemany("INSERT INTO fact_anchors VALUES (?,?,?)",[(fact.id,a.symbol_id,a.content_hash) for a in fact.anchors])
+
+    def revert(self,operation_id):
+        op=self.operations.get(operation_id)
+        if operation_id not in {o.id for o in self.operations.ancestry(self.head)}:
+            raise ValueError("Operation is not on the active branch")
+        if op.kind not in ("add","update","invalidate"):
+            raise ValueError("Operation kind is not reversible")
+        if self.is_purged(op.fact_id):
+            raise ValueError("Forgotten payloads cannot be restored")
+        before=self.replay(op.parents[0]) if op.parents else {}
+        prior=before.get(op.fact_id)
+        with self.db:
+            inverse=self._record("revert",op.fact_id,asdict(prior) if prior else None,metadata={"reverts":operation_id})
+            self._materialize(self.replay())
+        return inverse.id
+# P10.19
