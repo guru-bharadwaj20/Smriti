@@ -382,7 +382,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P11.21 | Define shared-source derivation deletion behavior | smriti\memory\__init__.py; P11.21 regression in tests\test_memory.py |
 | ✅ Done | P11.22 | Purge forgotten payloads across branches and caches | smriti\memory\__init__.py; P11.22 regression in tests\test_memory.py |
 | ✅ Done | P11.23 | Prevent replay or rollback resurrecting purged facts | smriti\memory\__init__.py; P11.23 regression in tests\test_memory.py |
-| ❌ Pending | P11.24 | Test deletion with diamond derivation graphs | — |
+| ✅ Done | P11.24 | Test deletion with diamond derivation graphs | smriti\memory\__init__.py; P11.24 regression in tests\test_memory.py |
 | ❌ Pending | P11.25 | Test branch, merge, and revert against state oracle | — |
 
 ### P12 — CLI, MCP, and consistent service

@@ -591,6 +591,21 @@ class MemoryTests(unittest.TestCase):
         self.assertTrue(store.verify())
         store.close()
 
+    def test_diamond_derivation_forget(self):
+        store=MemoryStore(":memory:")
+        a=store.remember("root")
+        b=store.remember("left",derived_from=[a.id])
+        c=store.remember("right",derived_from=[a.id])
+        d=store.remember("join",derived_from=[b.id,c.id])
+        e=store.remember("unrelated")
+        removed=store.forget(a.id)
+        self.assertEqual(len(removed),4)
+        self.assertEqual(set(removed),{a.id,b.id,c.id,d.id})
+        self.assertEqual({f.id for f in store.recall()},{e.id})
+        self.assertEqual(len([r for r in store.log() if r["kind"]=="forget"]),4)
+        self.assertTrue(store.verify())
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"
