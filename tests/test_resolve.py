@@ -75,3 +75,15 @@ def test_self_and_class_method_calls():
     result = parse_file("a.py", "class A:\n    def helper(self):\n        pass\n    def run(self):\n        self.helper()\n")
     resolver = Resolver([result])
     assert resolver.resolve_name("self.helper", result.symbols[3].id) == result.symbols[2].id
+
+
+def test_c3_diamond_and_inconsistent_hierarchy():
+    import pytest
+    from smriti.resolve import c3_linearize
+    bases = {"A": [], "B": ["A"], "C": ["A"], "D": ["B", "C"]}
+    assert c3_linearize("D", bases) == ["D", "B", "C", "A"]
+    bases.update({"X": ["B", "C"], "Y": ["C", "B"], "Z": ["X", "Y"]})
+    with pytest.raises(ValueError, match="Inconsistent"):
+        c3_linearize("Z", bases)
+    with pytest.raises(ValueError, match="cycle"):
+        c3_linearize("A", {"A": ["A"]})

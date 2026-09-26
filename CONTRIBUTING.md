@@ -142,7 +142,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P03.12 | Reuse syntax trees for edited files | smriti/parse; pytest tests/test_parse.py passed |
 | ✅ Done | P03.13 | Handle unicode offsets and line endings | smriti/parse; pytest tests/test_parse.py passed |
 | ✅ Done | P03.14 | Chunk source at symbol boundaries | smriti/parse; pytest tests/test_parse.py passed |
-| ❌ Pending | P03.15 | Define treatment of oversized functions | — |
+| ✅ Done | P03.15 | Define treatment of oversized functions | smriti/parse; pytest tests/test_parse.py passed |
 | ❌ Pending | P03.16 | Add TypeScript extraction fixtures | — |
 | ❌ Pending | P03.17 | Implement TypeScript symbol extraction | — |
 | ❌ Pending | P03.18 | Add Java extraction fixtures | — |
@@ -165,7 +165,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P04.07 | Resolve re-exported names within supported scope | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.08 | Record builtins and external references | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.09 | Resolve self method calls | smriti/resolve; pytest tests/test_resolve.py passed |
-| ❌ Pending | P04.10 | Implement Python C3 linearisation | — |
+| ✅ Done | P04.10 | Implement Python C3 linearisation | smriti/resolve; pytest tests/test_resolve.py passed |
 | ❌ Pending | P04.11 | Resolve inherited methods | — |
 | ❌ Pending | P04.12 | Respect overridden methods | — |
 | ❌ Pending | P04.13 | Record uncertain dynamic-call candidates | — |
@@ -261,7 +261,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P07.12 | Test ranking on a hand-computed graph | tests/test_rank.py; executable assertions passed |
 | ✅ Done | P07.13 | Expand candidate set with callers | smriti/rank/hybrid.py; executable assertions passed |
 | ✅ Done | P07.14 | Include associated tests and configuration | smriti/rank/hybrid.py; executable assertions passed |
-| ❌ Pending | P07.15 | Cache ranking with index-version keys | — |
+| ✅ Done | P07.15 | Cache ranking with index-version keys | smriti/rank/hybrid.py; executable assertions passed |
 | ❌ Pending | P07.16 | Invalidate cache after index updates | — |
 | ✅ Done | P07.17 | Tune fusion weights on validation data only | scripts/fusion_tuning.py; bench/fusion/validation.json; validation-only grid search, separate held-out IDs |
 | ❌ Pending | P07.18 | Emit per-candidate selection explanations | — |
