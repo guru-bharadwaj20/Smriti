@@ -173,7 +173,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P04.15 | Persist defines and contains edges | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.16 | Persist calls and imports edges | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.17 | Persist inheritance edges | smriti/resolve; pytest tests/test_resolve.py passed |
-| ❌ Pending | P04.18 | Define test-to-symbol association rules | — |
+| ✅ Done | P04.18 | Define test-to-symbol association rules | smriti/resolve; pytest tests/test_resolve.py passed |
 | ❌ Pending | P04.19 | Expose callers and callees graph queries | — |
 | ❌ Pending | P04.20 | Create hand-labelled call-edge fixtures | — |
 | ❌ Pending | P04.21 | Compare resolution with pyright or jedi | — |
@@ -291,9 +291,9 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P08.17 | Render omitted-line markers | smriti/pack/packer.py; executable assertions passed |
 | ✅ Done | P08.18 | Recount final rendered output tokens | smriti/pack/packer.py; executable assertions passed |
 | ✅ Done | P08.19 | Enforce strict final budget limit | smriti/pack/packer.py; executable assertions passed |
-| ❌ Pending | P08.20 | Compare small instances with exhaustive oracle | — |
+| ✅ Done | P08.20 | Compare small instances with exhaustive oracle | tests/test_pack.py; executable assertions passed |
 | ❌ Pending | P08.21 | Measure packing quality and latency | — |
-| ❌ Pending | P08.22 | Document approximation limits under constraints | — |
+| ✅ Done | P08.22 | Document approximation limits under constraints | docs/packing.md; executable assertions passed |
 
 ### P09 — Anchored memory and freshness
 

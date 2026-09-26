@@ -145,3 +145,10 @@ def test_inheritance_edges_persist(tmp_path):
     resolver.save_graph(tmp_path / "graph.json")
     edges = resolver.load_edges(tmp_path / "graph.json")
     assert Edge(result.symbols[2].id, result.symbols[1].id, "inherits") in edges
+
+
+def test_associations_require_resolved_calls():
+    helper = parse_file("helper.py", "def work():\n    pass\n")
+    test = parse_file("test_helper.py", "from helper import work\ndef test_work():\n    work()\n")
+    edges = Resolver([helper, test]).resolve()
+    assert Edge(test.symbols[1].id, helper.symbols[1].id, "tests") in edges

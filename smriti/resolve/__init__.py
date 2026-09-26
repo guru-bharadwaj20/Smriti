@@ -67,6 +67,7 @@ class Resolver:
         edges.extend(self.structural_edges())
         edges.extend(self.import_edges())
         edges.extend(self.inheritance_edges())
+        edges.extend(self.test_associations(edges))
         self.edges = sorted(set(edges), key=lambda e: (e.source, e.kind, e.target))
         return self.edges
 
@@ -224,6 +225,18 @@ class Resolver:
         return edges
     def inheritance_edges(self) -> list[Edge]:
         return [Edge(child, parent, "inherits") for child, parents in self.class_bases().items() for parent in parents]
+    def test_associations(self, edges: list[Edge]) -> list[Edge]:
+        """Associate test symbols through resolved calls, avoiding filename guesses."""
+        from pathlib import PurePosixPath
+        associations = []
+        for edge in edges:
+            source = self.symbols.get(edge.source)
+            if edge.kind != "calls" or edge.target not in self.symbols or not source:
+                continue
+            filename = PurePosixPath(source.path).name
+            if source.name.startswith("test_") and (filename.startswith("test_") or filename.endswith("_test.py")):
+                associations.append(Edge(source.id, edge.target, "tests", edge.confidence))
+        return associations
 
 def c3_linearize(class_id: str, bases: dict[str, list[str]], stack=()) -> list[str]:
     """Compute Python's C3 MRO and reject cyclic or inconsistent inheritance."""
