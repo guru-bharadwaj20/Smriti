@@ -14,6 +14,7 @@
     <nav aria-label="Workspace views">
       <button class="nav-button active" data-view="repository">Repository <span>01</span></button>
       <button class="nav-button" data-view="symbols">Symbols &amp; graph <span>02</span></button>
+      <button class="nav-button" data-view="context">Context <span>03</span></button>
     </nav>
     <div class="sidebar-footer"><span class="live-dot"></span> Your code, on your machine.</div>
   </aside>
@@ -38,6 +39,12 @@
         <p class="intro">Find a definition, then follow its callers, imports, inheritance and tests.</p>
         <form id="symbol-search" class="search-form"><label class="sr-only" for="symbol-query">Symbol name or qualified name</label><input id="symbol-query" placeholder="Search a symbol or qualified name…" autocomplete="off"><button class="button">Find symbols</button></form>
         <div class="explorer-grid"><article class="panel"><div class="panel-heading"><h2>Definitions</h2><span class="pill" id="symbol-count">0 FOUND</span></div><div class="table-scroll"><table><thead><tr><th>Name</th><th>Kind</th><th>Location</th></tr></thead><tbody id="symbol-results"></tbody></table></div><p id="symbol-empty" class="empty">Search to explore indexed definitions.</p></article><article class="panel" id="symbol-detail"><h2>Select a definition</h2><p>Its source and connected symbols will appear here.</p></article></div>
+      </section>
+      <section id="view-context" class="view" hidden>
+        <p class="eyebrow">THE RIGHT CODE, WITHIN REACH</p><h1>Build your context.</h1>
+        <p class="intro">Describe a task and inspect the code selected within your token budget.</p>
+        <form id="context-form" class="context-form"><label for="context-task">What are you working on?</label><textarea id="context-task" rows="3" required placeholder="Find the code that validates a request and handles a failed lookup…"></textarea><div class="form-row"><label for="context-budget">Token budget</label><input id="context-budget" type="number" min="0" max="65536" value="8000" required><button class="button" id="context-submit">Build context →</button></div></form>
+        <article class="panel"><div class="panel-heading"><h2>Selected context</h2><span class="pill" id="context-count">WAITING FOR A TASK</span></div><p id="context-metadata" class="muted">Selections and ranking explanations appear after retrieval.</p><pre id="context-output" class="source-code" hidden></pre><div class="table-scroll"><table id="context-table" hidden><thead><tr><th>Source</th><th>Detail</th><th>Why it was selected</th></tr></thead><tbody id="context-items"></tbody></table></div></article>
       </section>
     </div>
   </main>

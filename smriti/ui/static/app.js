@@ -77,10 +77,39 @@ async function searchSymbols(event) {
   } catch (error) { notify(error.message); }
 }
 
+async function buildContext(event) {
+  event.preventDefault();
+  const button = byId('context-submit');
+  button.disabled = true;
+  button.textContent = 'Retrieving…';
+  try {
+    const data = await request('/api/context', {method: 'POST', body: JSON.stringify({task: byId('context-task').value, budget: Number(byId('context-budget').value)})});
+    byId('context-count').textContent = `${data.token_count.toLocaleString()} / ${data.budget.toLocaleString()} TOKENS`;
+    byId('context-metadata').textContent = `${data.items.length} selected definitions · index ${data.index_version} · ${data.tokenizer}`;
+    byId('context-output').textContent = data.text || 'No code fits this budget.';
+    byId('context-output').hidden = false;
+    byId('context-table').hidden = data.items.length === 0;
+    const items = byId('context-items');
+    items.replaceChildren();
+    for (const item of data.items) {
+      const row = element('tr');
+      const name = element('td');
+      const button = element('button', item.path, 'text-button');
+      button.addEventListener('click', () => { document.querySelector('[data-view="symbols"]').click(); showGraph(item.symbol_id); });
+      name.append(button);
+      row.append(name, element('td', {1: 'Name', 2: 'Signature', 3: 'Full body'}[item.level] || String(item.level)), element('td', item.reason));
+      items.append(row);
+    }
+    notify('');
+  } catch (error) { notify(error.message); }
+  finally { button.disabled = false; button.textContent = 'Build context →'; }
+}
+
 document.querySelectorAll('[data-view]').forEach((button) => button.addEventListener('click', () => {
   document.querySelectorAll('[data-view]').forEach((item) => item.classList.toggle('active', item === button));
   document.querySelectorAll('.view').forEach((view) => { view.hidden = view.id !== `view-${button.dataset.view}`; });
 }));
 byId('refresh-status').addEventListener('click', refreshStatus);
 byId('symbol-search').addEventListener('submit', searchSymbols);
+byId('context-form').addEventListener('submit', buildContext);
 refreshStatus();
