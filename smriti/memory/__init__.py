@@ -33,6 +33,7 @@ class Fact:
     valid_from: str | None = None
     valid_to: str | None = None
     recorded_at: str | None = None
+    derived_from: tuple[str, ...] = ()
     created_at: str | None = None
 
     def to_dict(self):
@@ -67,6 +68,7 @@ class MemoryStore:
         self.db.execute("INSERT OR IGNORE INTO memory_meta VALUES ('head',NULL)")
         self.db.commit()
         self.operations = OperationLog(self.db)
+        self.db.execute("CREATE TABLE IF NOT EXISTS memory_derivations (source_id TEXT,derived_id TEXT,PRIMARY KEY(source_id,derived_id))")
         self.db.execute("CREATE TABLE IF NOT EXISTS memory_branches (name TEXT PRIMARY KEY,head TEXT)")
         self.db.execute("INSERT OR IGNORE INTO memory_meta VALUES ('branch','main')")
         self.db.execute("INSERT OR IGNORE INTO memory_branches VALUES ('main',?)",(self.head,))
@@ -78,7 +80,7 @@ class MemoryStore:
 
     def remember(self, text, *, fact_id=None, user=None, session=None, tool=None,
                  source=None, confidence=1.0, anchors=(), selected_context=(), subject=None,
-                 valid_from=None, valid_to=None):
+                 valid_from=None, valid_to=None, derived_from=()):
         if not isinstance(text, str) or not text.strip():
             raise ValueError("Fact text must be nonempty")
         if not isinstance(confidence, (int,float)) or not math.isfinite(confidence) or not 0 <= confidence <= 1:
@@ -98,10 +100,15 @@ class MemoryStore:
         recorded_at = self._event_time()
         valid = ValidInterval(valid_from or recorded_at, valid_to)
         fact = Fact(fact_id or uuid.uuid4().hex,text,user,session,tool,source,float(confidence),anchors)
-        fact = replace(fact,subject=subject,created_at=recorded_at,valid_from=valid.start.isoformat(),valid_to=valid.end.isoformat() if valid.end else None,recorded_at=recorded_at)
+        derived_from=tuple(dict.fromkeys(derived_from))
+        known={f.id for f in self.recall()}
+        if any(source_id not in known or self.is_purged(source_id) for source_id in derived_from):
+            raise ValueError("Derivation sources must exist on the active branch")
+        fact = replace(fact,derived_from=derived_from,subject=subject,created_at=recorded_at,valid_from=valid.start.isoformat(),valid_to=valid.end.isoformat() if valid.end else None,recorded_at=recorded_at)
         with self.db:
             self.db.execute("INSERT INTO facts VALUES (?,?)",(fact.id,canonical(asdict(fact))))
             self.db.executemany("INSERT INTO fact_anchors VALUES (?,?,?)",[(fact.id,a.symbol_id,a.content_hash) for a in anchors])
+            self.db.executemany("INSERT OR IGNORE INTO memory_derivations VALUES (?,?)",[(source_id,fact.id) for source_id in derived_from])
             self._record("add",fact.id,asdict(fact),recorded_at=recorded_at)
         return fact
 
@@ -117,6 +124,7 @@ class MemoryStore:
     def _decode(payload):
         data = json.loads(payload)
         data["anchors"] = tuple(Anchor(**a) for a in data.get("anchors", ()))
+        data["derived_from"] = tuple(data.get("derived_from",()))
         return Fact(**data)
 
 # P09.05
@@ -579,3 +587,5 @@ class MemoryStore:
 # P11.14
 
 # P11.15
+
+# P11.16

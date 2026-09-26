@@ -491,6 +491,15 @@ class MemoryTests(unittest.TestCase):
         self.assertTrue(store.verify())
         store.close()
 
+    def test_derivation_edges(self):
+        store=MemoryStore(":memory:")
+        source=store.remember("source")
+        derived=store.remember("derived",derived_from=[source.id])
+        self.assertEqual(derived.derived_from,(source.id,))
+        self.assertEqual(store.db.execute("SELECT derived_id FROM memory_derivations WHERE source_id=?",(source.id,)).fetchone()[0],derived.id)
+        self.assertTrue(store.verify())
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"
