@@ -126,3 +126,16 @@ class SmritiService:
                 snapshot, self.config.tokenizer, self.config.model_dir, self.config.data_dir
             )
         return self._retrieval.context(request.task, request.budget)
+
+    def calls(self, name: str, *, incoming: bool) -> list[Edge]:
+        """Return possible and resolved calls for matching definitions."""
+        identities = {symbol.id for symbol in self.find_symbol(name)}
+        return sorted(
+            (
+                edge
+                for edge in self.snapshot().edges
+                if edge.kind in {'calls', 'may_call'}
+                and (edge.target if incoming else edge.source) in identities
+            ),
+            key=lambda edge: (edge.source, edge.target, edge.kind, edge.confidence),
+        )

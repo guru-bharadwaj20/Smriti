@@ -396,7 +396,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P12.03 | Implement index status command | smriti/server/status.py; read-only status and indexed CLI tests passed |
 | ✅ Done | P12.04 | Implement context command with budget | smriti/server/retrieval.py; strict budget zero and cached-restart integration tests passed |
 | ✅ Done | P12.05 | Implement find-symbol command | smriti/server/service.py; symbol lookup graph and restart integration tests passed |
-| ❌ Pending | P12.06 | Implement callers and callees commands | — |
+| ✅ Done | P12.06 | Implement callers and callees commands | resolved call graph CLI integration test passed |
 | ❌ Pending | P12.07 | Implement remember and recall commands | — |
 | ❌ Pending | P12.08 | Implement forget command with cascade | — |
 | ❌ Pending | P12.09 | Implement memory log and diff commands | — |
