@@ -140,6 +140,54 @@ async function recallMemory(event) {
   } catch (error) { notify(error.message); }
 }
 
+async function loadHistory() {
+  try {
+    const data = await request('/api/history');
+    byId('history-head').textContent = data.head ? data.head.slice(0, 12) : 'EMPTY HISTORY';
+    const results = byId('history-results');
+    results.replaceChildren();
+    for (const operation of data.operations) {
+      const row = element('article', '', 'history-row');
+      const heading = element('div', '', 'panel-heading');
+      heading.append(element('span', operation.kind.toUpperCase(), 'pill'), element('span', operation.recorded_at || '', 'location'));
+      row.append(heading, element('p', operation.id, 'provenance'));
+      const button = element('button', 'Compare from this operation →', 'text-button');
+      button.addEventListener('click', () => { byId('diff-left').value = operation.id; byId('diff-right').value = ''; byId('diff-form').requestSubmit(); });
+      row.append(button);
+      const details = element('details');
+      details.append(element('summary', 'Operation details'), element('pre', JSON.stringify(operation, null, 2), 'source-code'));
+      row.append(details);
+      results.append(row);
+    }
+    if (!data.operations.length) results.append(element('p', 'No memory operations on this branch.', 'empty'));
+    notify('');
+  } catch (error) { notify(error.message); }
+}
+
+async function compareMemory(event) {
+  event.preventDefault();
+  try {
+    const params = new URLSearchParams({left: byId('diff-left').value.trim(), right: byId('diff-right').value.trim()});
+    const diff = await request(`/api/diff?${params}`);
+    const results = byId('diff-results');
+    results.replaceChildren();
+    let count = 0;
+    for (const kind of ['added', 'removed', 'changed']) {
+      for (const [id, value] of Object.entries(diff[kind] || {})) {
+        count++;
+        const row = element('article', '', 'diff-row');
+        row.append(element('span', kind.toUpperCase(), `pill diff-${kind}`), element('p', id, 'provenance'));
+        if (kind === 'changed') {
+          row.append(element('p', `Before: ${value.before.text}`, 'diff-before'), element('p', `After: ${value.after.text}`, 'fact-text'));
+        } else { row.append(element('p', value.text, 'fact-text')); }
+        results.append(row);
+      }
+    }
+    if (!count) results.append(element('p', 'These memory states have no differences.', 'empty'));
+    notify('');
+  } catch (error) { notify(error.message); }
+}
+
 document.querySelectorAll('[data-view]').forEach((button) => button.addEventListener('click', () => {
   document.querySelectorAll('[data-view]').forEach((item) => item.classList.toggle('active', item === button));
   document.querySelectorAll('.view').forEach((view) => { view.hidden = view.id !== `view-${button.dataset.view}`; });
@@ -148,4 +196,6 @@ byId('refresh-status').addEventListener('click', refreshStatus);
 byId('symbol-search').addEventListener('submit', searchSymbols);
 byId('context-form').addEventListener('submit', buildContext);
 byId('memory-search').addEventListener('submit', recallMemory);
+byId('refresh-history').addEventListener('click', loadHistory);
+byId('diff-form').addEventListener('submit', compareMemory);
 refreshStatus();

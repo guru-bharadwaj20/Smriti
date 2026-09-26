@@ -87,4 +87,21 @@ def create_app(root: Path) -> FastAPI:
                 'facts': [fact.to_dict() for fact in store.recall(q)],
             }
 
+    @app.get('/api/history')
+    def history(limit: int = Query(default=100, ge=1, le=1000)) -> dict[str, Any]:
+        with memory_store(root, service.config.data_dir) as store:
+            return {
+                'branch': store.current_branch,
+                'head': store.head,
+                'operations': store.log(limit=limit),
+            }
+
+    @app.get('/api/diff')
+    def memory_diff(left: str | None = None, right: str | None = None) -> dict[str, Any]:
+        with memory_store(root, service.config.data_dir) as store:
+            try:
+                return store.diff(left or None, right or None)
+            except (KeyError, ValueError) as error:
+                raise HTTPException(404, 'Memory history ID not found') from error
+
     return app

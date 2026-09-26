@@ -89,3 +89,25 @@ def test_ui_memory_retains_freshness_warning_after_source_edit(tmp_path):
         assert remembered['requires_revalidation'] is True
         assert remembered['freshness_reason']
         assert remembered['session'] == 'session-one'
+
+
+def test_ui_history_diff_contains_actual_before_and_after(tmp_path):
+    from smriti.memory import MemoryStore
+
+    service = SmritiService(tmp_path)
+    store = MemoryStore(service.config.data_dir / 'memory.sqlite')
+    try:
+        fact = store.remember('Returns one.', source='fixture')
+        before = store.head
+        store.update(fact.id, 'Returns two.')
+        after = store.head
+    finally:
+        store.close()
+    with TestClient(create_app(tmp_path)) as client:
+        history = client.get('/api/history').json()
+        assert history['head'] == after
+        assert [item['kind'] for item in history['operations']][:2] == ['update', 'add']
+        diff = client.get('/api/diff', params={'left': before, 'right': after}).json()
+        assert diff['changed'][fact.id]['before']['text'] == 'Returns one.'
+        assert diff['changed'][fact.id]['after']['text'] == 'Returns two.'
+        assert client.get('/api/diff', params={'left': 'unknown'}).status_code == 404
