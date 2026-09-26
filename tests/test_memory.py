@@ -361,6 +361,17 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual(store.current_branch,"detached/abc123")
         store.close()
 
+    def test_rename_delete_branch(self):
+        store=MemoryStore(":memory:")
+        store.rename_branch("main","trunk")
+        self.assertEqual(store.current_branch,"trunk")
+        store.branch("feature")
+        store.delete_branch("feature")
+        self.assertEqual(set(store.branches()),{"trunk"})
+        with self.assertRaises(ValueError):
+            store.delete_branch("trunk")
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"

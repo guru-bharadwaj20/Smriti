@@ -426,3 +426,21 @@ class MemoryStore:
         self.switch(name)
         return name
 # P11.05
+    def rename_branch(self,old,new):
+        new=self._branch_name(new)
+        if old not in self.branches():
+            raise KeyError(old)
+        with self.db:
+            self.db.execute("UPDATE memory_branches SET name=? WHERE name=?",(new,old))
+            if self.current_branch==old:
+                self.db.execute("UPDATE memory_meta SET value=? WHERE key='branch'",(new,))
+        return new
+
+    def delete_branch(self,name):
+        if name==self.current_branch:
+            raise ValueError("Cannot delete the active branch")
+        if name not in self.branches():
+            raise KeyError(name)
+        with self.db:
+            self.db.execute("DELETE FROM memory_branches WHERE name=?",(name,))
+# P11.06
