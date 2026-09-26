@@ -4,12 +4,11 @@ from __future__ import annotations
 
 import math
 from collections.abc import Iterable, Mapping
-from typing import TypeAlias
 
 from smriti.models import Edge
 
-Graph: TypeAlias = dict[str, dict[str, float]]
-EdgeTuple: TypeAlias = tuple[str, str, str] | tuple[str, str, str, float]
+type Graph = dict[str, dict[str, float]]
+type EdgeTuple = tuple[str, str, str] | tuple[str, str, str, float]
 EDGE_WEIGHTS = {
     'calls': 1.0,
     'imports': 0.5,
