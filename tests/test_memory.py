@@ -463,6 +463,20 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual(store.log()[0]["metadata"]["resolutions"],{f.id:"theirs"})
         store.close()
 
+    def test_multi_parent_merge(self):
+        store=MemoryStore(":memory:")
+        store.branch("feature")
+        store.remember("main")
+        left=store.head
+        store.switch("feature")
+        store.remember("feature")
+        right=store.head
+        store.switch("main")
+        store.merge("feature")
+        self.assertEqual(store.operations.get(store.head).parents,(left,right))
+        self.assertTrue(store.verify())
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"

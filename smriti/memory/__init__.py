@@ -251,7 +251,13 @@ class MemoryStore:
         return point.isoformat()
 
     def _record(self,kind,fact_id=None,payload=None,*,metadata=None,recorded_at=None,parents=None):
-        op = self.operations.append_uncommitted(kind,fact_id,payload,parents=parents if parents is not None else ((self.head,) if self.head else ()),recorded_at=recorded_at or self._event_time(),metadata=metadata)
+        parents=tuple(parents if parents is not None else ((self.head,) if self.head else ()))
+        point=timestamp(recorded_at or self._event_time())
+        for parent in parents:
+            prior=timestamp(self.operations.get(parent).recorded_at)
+            if point<=prior:
+                point=prior+timedelta(microseconds=1)
+        op=self.operations.append_uncommitted(kind,fact_id,payload,parents=parents,recorded_at=point.isoformat(),metadata=metadata)
         self.db.execute("UPDATE memory_meta SET value=? WHERE key='head'",(op.id,))
         self.db.execute("UPDATE memory_branches SET head=? WHERE name=?",(op.id,self.current_branch))
         return op
@@ -551,7 +557,7 @@ class MemoryStore:
             if selected is not None:
                 preview["state"][fid]=selected
         with self.db:
-            op=self._snapshot("merge",preview["state"],metadata={"source":source,"base":preview["base"],"resolutions":resolutions})
+            op=self._snapshot("merge",preview["state"],metadata={"source":source,"base":preview["base"],"resolutions":resolutions},parents=tuple(dict.fromkeys(h for h in (self.head,preview["source_head"]) if h)))
             self._materialize(preview["state"])
         return op.id
 # P11.09
@@ -563,3 +569,5 @@ class MemoryStore:
 # P11.12
 
 # P11.13
+
+# P11.14

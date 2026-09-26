@@ -372,7 +372,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P11.11 | Detect delete-versus-update conflicts | smriti\memory\__init__.py; P11.11 regression in tests\test_memory.py |
 | ✅ Done | P11.12 | Expose unresolved conflicts for user decisions | smriti\memory\__init__.py; P11.12 regression in tests\test_memory.py |
 | ✅ Done | P11.13 | Record merge conflict resolutions | smriti\memory\__init__.py; P11.13 regression in tests\test_memory.py |
-| ❌ Pending | P11.14 | Represent multi-parent merge history | — |
+| ✅ Done | P11.14 | Represent multi-parent merge history | smriti\memory\__init__.py; P11.14 regression in tests\test_memory.py |
 | ❌ Pending | P11.15 | Revert a merged operation consistently | — |
 | ❌ Pending | P11.16 | Store source-to-derived-fact edges | — |
 | ❌ Pending | P11.17 | Reject derivation cycles | — |
