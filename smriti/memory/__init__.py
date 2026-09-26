@@ -632,3 +632,16 @@ class MemoryStore:
                 self._record("forget",fid)
         return forgotten
 # P11.19
+    def forget_by(self,*,session=None,source=None):
+        if session is None and source is None:
+            raise ValueError("Specify session or source")
+        selected=set()
+        for (payload,) in self.db.execute("SELECT payload FROM memory_blobs"):
+            data=json.loads(payload)
+            if "id" in data and (session is None or data.get("session")==session) and (source is None or data.get("source")==source):
+                selected.add(data["id"])
+        ids=set(selected)
+        for fid in selected:
+            ids.update(self.dependents(fid))
+        return self._purge(ids)
+# P11.20

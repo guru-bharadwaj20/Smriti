@@ -530,6 +530,17 @@ class MemoryTests(unittest.TestCase):
         self.assertTrue(store.verify())
         store.close()
 
+    def test_forget_by_session_source(self):
+        store=MemoryStore(":memory:")
+        a=store.remember("session secret",session="s1",source="review")
+        b=store.remember("derived",derived_from=[a.id])
+        c=store.remember("other",session="s2")
+        self.assertEqual(set(store.forget_by(session="s1")),{a.id,b.id})
+        self.assertEqual(store.recall()[0].id,c.id)
+        with self.assertRaises(ValueError):
+            store.forget_by()
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"
