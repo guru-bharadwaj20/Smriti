@@ -617,3 +617,14 @@ class MemoryStore:
             self.db.executemany("INSERT OR IGNORE INTO memory_derivations VALUES (?,?)",[(source_id,fact_id) for source_id in sources])
         return updated
 # P11.17
+    def dependents(self,fact_id):
+        seen=set()
+        stack=[fact_id]
+        while stack:
+            source_id=stack.pop()
+            for (derived_id,) in self.db.execute("SELECT derived_id FROM memory_derivations WHERE source_id=?",(source_id,)):
+                if derived_id not in seen:
+                    seen.add(derived_id)
+                    stack.append(derived_id)
+        return sorted(seen-{fact_id})
+# P11.18

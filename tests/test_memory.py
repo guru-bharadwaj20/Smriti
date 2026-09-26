@@ -511,6 +511,14 @@ class MemoryTests(unittest.TestCase):
         self.assertTrue(store.verify())
         store.close()
 
+    def test_transitive_dependents(self):
+        store=MemoryStore(":memory:")
+        a=store.remember("a")
+        b=store.remember("b",derived_from=[a.id])
+        c=store.remember("c",derived_from=[b.id])
+        self.assertEqual(set(store.dependents(a.id)),{b.id,c.id})
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"
