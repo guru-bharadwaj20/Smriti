@@ -125,6 +125,8 @@ class MemoryStore:
                 raise KeyError(fact.id)
             self.db.execute("INSERT INTO fact_audit(fact_id,before_payload,after_payload) VALUES (?,?,?)",(fact.id,previous[0],canonical(asdict(fact))))
             self.db.execute("UPDATE facts SET payload=? WHERE id=?",(canonical(asdict(fact)),fact.id))
+            self.db.execute("DELETE FROM fact_anchors WHERE fact_id=?",(fact.id,))
+            self.db.executemany("INSERT INTO fact_anchors VALUES (?,?,?)",[(fact.id,a.symbol_id,a.content_hash) for a in fact.anchors])
             self._record("update",fact.id,asdict(fact),recorded_at=fact.recorded_at)
         return fact
 
@@ -347,3 +349,5 @@ class MemoryStore:
 # P10.19
 
 # P10.20
+
+# P10.21

@@ -280,6 +280,19 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual(len(store.log()),count)
         store.close()
 
+    def test_atomic_log_and_view(self):
+        store=MemoryStore(":memory:")
+        f=store.remember("a")
+        head=store.head
+        store.db.execute("CREATE TRIGGER fail_head BEFORE UPDATE ON memory_meta BEGIN SELECT RAISE(ABORT,'simulated failure'); END")
+        store.db.commit()
+        with self.assertRaises(Exception):
+            store.update(f.id,"b")
+        self.assertEqual(store.head,head)
+        self.assertEqual(store.recall()[0].text,"a")
+        self.assertEqual(len(store.log()),1)
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"
