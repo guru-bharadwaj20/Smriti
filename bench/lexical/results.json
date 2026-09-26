@@ -1,0 +1,13 @@
+{
+  "python": "3.13.1",
+  "os": "Windows-11-10.0.22000-SP0",
+  "cpu": "Intel64 Family 6 Model 61 Stepping 4, GenuineIntel",
+  "seed": 81,
+  "dataset": "synthetic-v1",
+  "note": "Component smoke benchmark; not SWE-bench or semantic retrieval quality.",
+  "symbols": 200,
+  "queries": 100,
+  "query_ms_p50": 1.0704000014811754,
+  "query_ms_p95": 2.3285999996005557,
+  "storage_bytes": 38363
+}

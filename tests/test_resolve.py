@@ -152,3 +152,11 @@ def test_associations_require_resolved_calls():
     test = parse_file("test_helper.py", "from helper import work\ndef test_work():\n    work()\n")
     edges = Resolver([helper, test]).resolve()
     assert Edge(test.symbols[1].id, helper.symbols[1].id, "tests") in edges
+
+
+def test_callers_and_callees_ignore_external_refs():
+    result = parse_file("a.py", "def work():\n    len([])\ndef caller():\n    work()\n")
+    resolver = Resolver([result])
+    assert resolver.callers(result.symbols[1].id) == [result.symbols[2]]
+    assert resolver.callees(result.symbols[2].id) == [result.symbols[1]]
+    assert resolver.callees(result.symbols[1].id) == []

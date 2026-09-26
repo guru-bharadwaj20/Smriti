@@ -174,7 +174,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P04.16 | Persist calls and imports edges | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.17 | Persist inheritance edges | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.18 | Define test-to-symbol association rules | smriti/resolve; pytest tests/test_resolve.py passed |
-| ❌ Pending | P04.19 | Expose callers and callees graph queries | — |
+| ✅ Done | P04.19 | Expose callers and callees graph queries | smriti/resolve; pytest tests/test_resolve.py passed |
 | ❌ Pending | P04.20 | Create hand-labelled call-edge fixtures | — |
 | ❌ Pending | P04.21 | Compare resolution with pyright or jedi | — |
 | ❌ Pending | P04.22 | Report edge precision and recall | — |
@@ -206,7 +206,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P05.18 | Persist and reload lexical index | smriti/lexical/index.py; executable assertions passed |
 | ✅ Done | P05.19 | Define deterministic tie breaking | tests/test_lexical_index.py; executable assertions passed |
 | ✅ Done | P05.20 | Validate scoring against hand-computed examples | tests/test_lexical_index.py; executable assertions passed |
-| ❌ Pending | P05.21 | Benchmark lexical query time and storage | — |
+| ✅ Done | P05.21 | Benchmark lexical query time and storage | bench/lexical/results.json; bench/lexical/run.py; scripts/search_benchmarks.py; measured CPU synthetic run |
 
 ### P06 — CPU embeddings and custom HNSW
 
@@ -410,7 +410,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P12.17 | Expose memory history MCP tools | — |
 | ✅ Done | P12.18 | Serve immutable index snapshots to queries | smriti/server/snapshots.py; snapshot immutability and stale-writer tests passed |
 | ✅ Done | P12.19 | Move indexing to background worker process | smriti/server/jobs.py; spawned-worker persisted-snapshot integration test passed |
-| ❌ Pending | P12.20 | Keep async server responsive during indexing | — |
+| ✅ Done | P12.20 | Keep async server responsive during indexing | smriti/server/jobs.py; concurrent event-loop ticker test passed during real indexing |
 | ❌ Pending | P12.21 | Handle cancellation and worker errors | — |
 | ❌ Pending | P12.22 | Implement graceful shutdown and recovery | — |
 | ❌ Pending | P12.23 | Define concurrent writer transaction policy | — |

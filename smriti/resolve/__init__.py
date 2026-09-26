@@ -237,6 +237,15 @@ class Resolver:
             if source.name.startswith("test_") and (filename.startswith("test_") or filename.endswith("_test.py")):
                 associations.append(Edge(source.id, edge.target, "tests", edge.confidence))
         return associations
+    def callers(self, symbol_id: str, include_uncertain: bool = False) -> list[Symbol]:
+        kinds = {"calls", "may_call"} if include_uncertain else {"calls"}
+        ids = {edge.source for edge in self.resolve() if edge.target == symbol_id and edge.kind in kinds}
+        return sorted((self.symbols[key] for key in ids if key in self.symbols), key=lambda s: s.qualname)
+
+    def callees(self, symbol_id: str, include_uncertain: bool = False) -> list[Symbol]:
+        kinds = {"calls", "may_call"} if include_uncertain else {"calls"}
+        ids = {edge.target for edge in self.resolve() if edge.source == symbol_id and edge.kind in kinds}
+        return sorted((self.symbols[key] for key in ids if key in self.symbols), key=lambda s: s.qualname)
 
 def c3_linearize(class_id: str, bases: dict[str, list[str]], stack=()) -> list[str]:
     """Compute Python's C3 MRO and reject cyclic or inconsistent inheritance."""
