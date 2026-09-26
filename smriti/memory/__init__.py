@@ -92,9 +92,13 @@ class MemoryStore:
             self._record("add",fact.id,asdict(fact),recorded_at=recorded_at)
         return fact
 
-    def recall(self, query: str = "") -> list[Fact]:
-        facts = [self._decode(row[0]) for row in self.db.execute("SELECT payload FROM facts ORDER BY id")]
-        return self._rank_recall(facts, query, True)
+    def recall(self,query="",*,valid_at=None,as_of=None,include_stale=True):
+        if valid_at is None and as_of is None:
+            facts = [self._decode(row[0]) for row in self.db.execute("SELECT payload FROM facts ORDER BY id")]
+        else:
+            now = timestamp(self._clock())
+            facts = [self._decode(canonical(v.payload)) for v in self.timeline().query(valid_at or now,as_of or now)]
+        return self._rank_recall(facts,query,include_stale)
 
     @staticmethod
     def _decode(payload):
@@ -109,11 +113,15 @@ class MemoryStore:
 # P09.07
 
 # P09.08
-    def _save(self, fact):
+    def _save(self,fact):
+        fact = replace(fact,recorded_at=self._event_time())
         with self.db:
-            previous = self.db.execute("SELECT payload FROM facts WHERE id=?", (fact.id,)).fetchone()
-            self.db.execute("INSERT INTO fact_audit(fact_id,before_payload,after_payload) VALUES (?,?,?)", (fact.id, previous[0] if previous else None, json.dumps(asdict(fact))))
-            self.db.execute("UPDATE facts SET payload=? WHERE id=?", (json.dumps(asdict(fact)), fact.id))
+            previous = self.db.execute("SELECT payload FROM facts WHERE id=?",(fact.id,)).fetchone()
+            if previous is None:
+                raise KeyError(fact.id)
+            self.db.execute("INSERT INTO fact_audit(fact_id,before_payload,after_payload) VALUES (?,?,?)",(fact.id,previous[0],canonical(asdict(fact))))
+            self.db.execute("UPDATE facts SET payload=? WHERE id=?",(canonical(asdict(fact)),fact.id))
+            self._record("update",fact.id,asdict(fact),recorded_at=fact.recorded_at)
         return fact
 
     def refresh(self, symbols, *, renames=None, commit=None):
@@ -230,9 +238,27 @@ class MemoryStore:
     def replay(self,head=None):
         state = {}
         for op in self.operations.ancestry(head if head is not None else self.head):
-            if op.kind == "add":
+            if op.kind in ("add","update"):
                 payload = self.operations.payload(op)
                 if payload is not None:
                     state[op.fact_id] = self._decode(canonical(payload))
         return state
 # P10.12
+    def update(self,fact_id,text=None,*,valid_from=None,valid_to=None):
+        fact = next((f for f in self.recall() if f.id==fact_id),None)
+        if fact is None:
+            raise KeyError(fact_id)
+        if text is not None and (not isinstance(text,str) or not text.strip()):
+            raise ValueError("Fact text must be nonempty")
+        valid = ValidInterval(valid_from or fact.valid_from,valid_to if valid_to is not None else fact.valid_to)
+        return self._save(replace(fact,text=text if text is not None else fact.text,valid_from=valid.start.isoformat(),valid_to=valid.end.isoformat() if valid.end else None))
+
+    def timeline(self,head=None):
+        timeline = Timeline()
+        for op in self.operations.ancestry(head if head is not None else self.head):
+            if op.kind in ("add","update"):
+                payload = self.operations.payload(op)
+                if payload is not None:
+                    timeline.correct(op.fact_id,payload,ValidInterval(payload["valid_from"],payload.get("valid_to")),op.recorded_at)
+        return timeline
+# P10.13
