@@ -450,7 +450,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P13.24 | Define retrieval-only memory relevance labels | — |
 | ❌ Pending | P13.25 | Evaluate temporal updates and abstention retrieval | — |
 | ❌ Pending | P13.26 | Separate optional answer-generation scoring | — |
-| ❌ Pending | P13.27 | Choose licensed repositories for commit replay | — |
+| ✅ Done | P13.27 | Choose licensed repositories for commit replay | bench/codemem/repositories.json; pinned LICENSE SHA-256 and Apache-2.0 verification |
 | ❌ Pending | P13.28 | Select and record 200-commit replay sequences | — |
 | ❌ Pending | P13.29 | Create anchored fact injection fixtures | — |
 | ❌ Pending | P13.30 | Label expected staleness after each commit | — |
