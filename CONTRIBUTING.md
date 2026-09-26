@@ -285,7 +285,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P08.11 | Implement greedy marginal-value baseline | smriti/pack/packer.py; executable assertions passed |
 | ✅ Done | P08.12 | Require minimum class context for methods | smriti/pack/packer.py; executable assertions passed |
 | ✅ Done | P08.13 | Deduplicate class and method bodies | smriti/pack/packer.py; executable assertions passed |
-| ❌ Pending | P08.14 | Handle dependency costs during packing | — |
+| ✅ Done | P08.14 | Handle dependency costs during packing | docs/packing.md; executable assertions passed |
 | ❌ Pending | P08.15 | Handle symbols larger than available budget | — |
 | ❌ Pending | P08.16 | Render stable file and symbol ordering | — |
 | ❌ Pending | P08.17 | Render omitted-line markers | — |
