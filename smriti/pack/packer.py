@@ -100,3 +100,27 @@ def covered_symbols(chosen,symbols):
 def stable_order(chosen,symbols):
     by_id={s.id:s for s in symbols}
     return sorted(chosen,key=lambda o:(by_id[o.id].path,by_id[o.id].start_line,o.id))
+
+@dataclass(frozen=True)
+class PackedContext:
+    text: str
+    token_count: int
+    items: list[Representation]
+    tokenizer: str
+    omitted_ids: list[str]
+    covered_ids: list[str] = field(default_factory=list)
+
+class ContextPacker:
+    def __init__(self,counter=None):
+        from .tokens import TokenCounter
+        self.counter=counter or TokenCounter()
+    def pack(self,symbols,scores,budget,memory_tokens=0,framing_tokens=0,bucket=1):
+        symbols=list(symbols); available=available_budget(budget,memory_tokens,framing_tokens)
+        groups=[representations(s,max(0,scores.get(s.id,0)),self.counter) for s in symbols]
+        groups=add_parent_context(groups,symbols,self.counter)
+        selected=knapsack(groups,available,bucket)
+        selected=stable_order(deduplicate_bodies(selected,symbols),symbols)
+        text=''.join(o.text for o in selected)
+        count=self.counter.count(text)
+        covered=covered_symbols(selected,symbols)
+        return PackedContext(text,count,selected,self.counter.encoding_name,[s.id for s in symbols if s.id not in covered],sorted(covered))

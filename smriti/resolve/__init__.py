@@ -64,6 +64,8 @@ class Resolver:
                     edges.append(Edge(call["scope"], target, "calls", 0.5))
                     for candidate in self.dynamic_candidates(call["name"]):
                         edges.append(Edge(call["scope"], candidate, "may_call", 0.25))
+        edges.extend(self.structural_edges())
+        edges.extend(self.import_edges())
         self.edges = sorted(set(edges), key=lambda e: (e.source, e.kind, e.target))
         return self.edges
 
@@ -186,6 +188,39 @@ class Resolver:
     def edge_confidence(self, name: str, target: str) -> float:
         # Local lexical binding is exact; method dispatch remains runtime-dependent.
         return 0.9 if name.startswith(("self.", "cls.", "super().")) else 1.0
+    def structural_edges(self) -> list[Edge]:
+        return [Edge(symbol.parent_id, symbol.id, kind)
+                for symbol in self.symbols.values() if symbol.parent_id
+                for kind in ("defines", "contains")]
+
+    def save_graph(self, path) -> None:
+        from pathlib import Path
+        from dataclasses import asdict
+        import json
+        import os
+        path = Path(path)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        temporary = path.with_suffix(path.suffix + ".tmp")
+        with temporary.open("w", encoding="utf-8") as stream:
+            json.dump({"version": 1, "edges": [asdict(edge) for edge in self.resolve()]}, stream, sort_keys=True)
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.replace(temporary, path)
+
+    @staticmethod
+    def load_edges(path) -> list[Edge]:
+        from pathlib import Path
+        import json
+        data = json.loads(Path(path).read_text(encoding="utf-8"))
+        if data.get("version") != 1:
+            raise ValueError("Unsupported graph version")
+        return [Edge(**edge) for edge in data["edges"]]
+    def import_edges(self) -> list[Edge]:
+        edges = []
+        for (scope, alias), declaration in self.imports.items():
+            target = self.resolve_import(alias, scope) or self.external_reference(alias, scope)
+            edges.append(Edge(scope, target, "imports", 1 if target in self.symbols else 0.5))
+        return edges
 
 def c3_linearize(class_id: str, bases: dict[str, list[str]], stack=()) -> list[str]:
     """Compute Python's C3 MRO and reject cyclic or inconsistent inheritance."""

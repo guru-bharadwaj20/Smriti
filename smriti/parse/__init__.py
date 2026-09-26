@@ -182,3 +182,15 @@ TYPESCRIPT_FIXTURE = "export class Worker { run(value: number): number { return 
 
 
 JAVA_FIXTURE = "package demo; class Worker { int run(int value) { return value + 1; } }"
+
+
+def validate_ranges(result: ParseResult) -> None:
+    """Fail explicitly if an extraction range or its source content is inconsistent."""
+    for symbol in result.symbols:
+        if not 0 <= symbol.start_byte <= symbol.end_byte <= len(result.source):
+            raise ValueError("Symbol byte range outside source")
+        if source_slice(result, symbol).decode("utf-8") != symbol.body:
+            raise ValueError("Symbol body disagrees with source range")
+        actual = byte_point(result.source, symbol.start_byte)[0] + 1
+        if actual != symbol.start_line:
+            raise ValueError("Symbol line disagrees with source range")
