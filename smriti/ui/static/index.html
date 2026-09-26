@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smriti · Local context</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="/" aria-label="Smriti home"><span class="brand-mark">S</span> smriti</a>
+    <p class="side-label">LOCAL WORKSPACE</p>
+    <nav aria-label="Workspace views">
+      <button class="nav-button active" data-view="repository">Repository <span>01</span></button>
+    </nav>
+    <div class="sidebar-footer"><span class="live-dot"></span> Your code, on your machine.</div>
+  </aside>
+  <main>
+    <header class="topbar"><span id="repository-name">Workspace</span><span class="local-label">LOCAL / CPU</span></header>
+    <div class="workspace">
+      <div id="notice" role="status" aria-live="polite" hidden></div>
+      <section id="view-repository" class="view">
+        <div class="page-heading"><div><p class="eyebrow">CONTEXT THAT LASTS</p><h1>Your repository,<br>remembered.</h1></div><button class="button secondary" id="refresh-status">Refresh status ↻</button></div>
+        <p class="intro">Explore the code your agent sees and the knowledge it carries between sessions.</p>
+        <div class="status-band"><span class="live-dot" id="index-dot"></span><span id="index-state">Loading repository status…</span><code id="repository-root"></code></div>
+        <div class="metric-grid">
+          <article class="metric"><span>Indexed files</span><strong id="metric-files">—</strong><small>Source coverage</small></article>
+          <article class="metric"><span>Code symbols</span><strong id="metric-symbols">—</strong><small>Definitions and scopes</small></article>
+          <article class="metric"><span>Graph edges</span><strong id="metric-edges">—</strong><small>Connected code</small></article>
+          <article class="metric"><span>Index version</span><strong id="metric-version">—</strong><small>Published snapshot</small></article>
+        </div>
+        <article class="panel"><div class="panel-heading"><h2>A workspace with continuity</h2><span class="pill">SMRITI</span></div><p>Code retrieval and anchored memory share one repository. When the code changes, its memories can show you what needs another look.</p><p class="muted">Run <code>smriti index</code> in your repository to publish the first index.</p></article>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
