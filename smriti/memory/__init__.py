@@ -43,6 +43,12 @@ class Fact:
         return 'symbol' if self.anchors else 'project'
 
 
+class MergeConflict(ValueError):
+    def __init__(self, conflicts):
+        self.conflicts=conflicts
+        super().__init__("Unresolved memory merge conflicts: "+", ".join(sorted(conflicts)))
+
+
 class MemoryStore:
     """SQLite-backed fact store. Each write is atomic and survives restart."""
 
@@ -533,7 +539,7 @@ class MemoryStore:
     def merge(self,source,*,resolutions=None):
         preview=self.merge_preview(source)
         if preview["conflicts"]:
-            raise ValueError("Merge has unresolved conflicts")
+            raise MergeConflict(preview["conflicts"])
         with self.db:
             op=self._snapshot("merge",preview["state"],metadata={"source":source,"base":preview["base"]})
             self._materialize(preview["state"])
@@ -543,3 +549,5 @@ class MemoryStore:
 # P11.10
 
 # P11.11
+
+# P11.12

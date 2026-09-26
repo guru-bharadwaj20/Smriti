@@ -436,6 +436,20 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual(store.merge_preview("feature")["conflicts"][f.id]["kind"],"delete_update")
         store.close()
 
+    def test_conflicts_exposed(self):
+        from smriti.memory import MergeConflict
+        store=MemoryStore(":memory:")
+        f=store.remember("base")
+        store.branch("feature")
+        store.update(f.id,"ours")
+        store.switch("feature")
+        store.update(f.id,"theirs")
+        store.switch("main")
+        with self.assertRaises(MergeConflict) as caught:
+            store.merge("feature")
+        self.assertEqual(caught.exception.conflicts[f.id]["theirs"].text,"theirs")
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"

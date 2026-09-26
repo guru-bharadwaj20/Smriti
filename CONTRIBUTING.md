@@ -370,7 +370,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P11.09 | Auto-merge disjoint fact additions | smriti\memory\__init__.py; P11.09 regression in tests\test_memory.py |
 | ✅ Done | P11.10 | Detect concurrent edits to the same fact | smriti\memory\__init__.py; P11.10 regression in tests\test_memory.py |
 | ✅ Done | P11.11 | Detect delete-versus-update conflicts | smriti\memory\__init__.py; P11.11 regression in tests\test_memory.py |
-| ❌ Pending | P11.12 | Expose unresolved conflicts for user decisions | — |
+| ✅ Done | P11.12 | Expose unresolved conflicts for user decisions | smriti\memory\__init__.py; P11.12 regression in tests\test_memory.py |
 | ❌ Pending | P11.13 | Record merge conflict resolutions | — |
 | ❌ Pending | P11.14 | Represent multi-parent merge history | — |
 | ❌ Pending | P11.15 | Revert a merged operation consistently | — |
