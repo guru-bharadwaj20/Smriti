@@ -329,6 +329,16 @@ class MemoryTests(unittest.TestCase):
         self.assertIsNone(store.common_base(None,store.head))
         store.close()
 
+    def test_create_branch(self):
+        store=MemoryStore(":memory:")
+        store.remember("root")
+        self.assertEqual(store.branch("feature"),store.head)
+        store.branch("unrelated",from_head="")
+        self.assertIsNone(store.branches()["unrelated"])
+        with self.assertRaises(ValueError):
+            store.branch("../bad")
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"

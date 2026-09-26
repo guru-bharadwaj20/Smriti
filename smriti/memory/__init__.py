@@ -388,3 +388,18 @@ class MemoryStore:
             raise ValueError("Multiple merge bases require explicit resolution")
         return candidates[0]
 # P11.02
+    @staticmethod
+    def _branch_name(name):
+        if not isinstance(name,str) or not name or any(c.isspace() or c in "~^:?*[" or c == chr(92) for c in name) or ".." in name or "@{" in name or name.startswith((".", "/")) or name.endswith(("/", ".lock", ".")):
+            raise ValueError("Invalid branch name")
+        return name
+
+    def branch(self,name,*,from_head=None):
+        name=self._branch_name(name)
+        head=self.head if from_head is None else (from_head or None)
+        if head:
+            self.operations.get(head)
+        with self.db:
+            self.db.execute("INSERT INTO memory_branches VALUES (?,?)",(name,head))
+        return head
+# P11.03
