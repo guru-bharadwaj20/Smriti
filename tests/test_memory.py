@@ -385,6 +385,19 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual([f.text for f in store.recall(valid_at=store._clock())],["private main"])
         store.close()
 
+    def test_three_way_preview(self):
+        store=MemoryStore(":memory:")
+        store.remember("root")
+        store.branch("feature")
+        store.remember("ours")
+        store.switch("feature")
+        store.remember("theirs")
+        store.switch("main")
+        preview=store.merge_preview("feature")
+        self.assertEqual({f.text for f in preview["state"].values()},{"root","ours","theirs"})
+        self.assertEqual(preview["conflicts"],{})
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"

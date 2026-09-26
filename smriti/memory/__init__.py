@@ -479,3 +479,35 @@ class MemoryStore:
 # P11.06
 
 # P11.07
+    @staticmethod
+    def _same_fact(left,right):
+        if left is None or right is None:
+            return left is right
+        return replace(left,recorded_at=None)==replace(right,recorded_at=None)
+
+    def merge_preview(self,source):
+        if source not in self.branches():
+            raise KeyError(source)
+        source_head=self.branches()[source]
+        base=self.common_base(self.head,source_head)
+        ancestor=self.replay(base) if base else {}
+        ours=self.replay(self.head) if self.head else {}
+        theirs=self.replay(source_head) if source_head else {}
+        state,conflicts={},{}
+        for fid in sorted(ancestor.keys()|ours.keys()|theirs.keys()):
+            if self.is_purged(fid):
+                continue
+            a,o,t=ancestor.get(fid),ours.get(fid),theirs.get(fid)
+            if self._same_fact(o,t):
+                selected=o
+            elif self._same_fact(o,a):
+                selected=t
+            elif self._same_fact(t,a):
+                selected=o
+            else:
+                conflicts[fid]={"base":a,"ours":o,"theirs":t}
+                continue
+            if selected is not None:
+                state[fid]=selected
+        return {"base":base,"state":state,"conflicts":conflicts,"source_head":source_head}
+# P11.08
