@@ -174,7 +174,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P04.16 | Persist calls and imports edges | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.17 | Persist inheritance edges | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.18 | Define test-to-symbol association rules | smriti/resolve; pytest tests/test_resolve.py passed |
-| ❌ Pending | P04.19 | Expose callers and callees graph queries | — |
+| ✅ Done | P04.19 | Expose callers and callees graph queries | smriti/resolve; pytest tests/test_resolve.py passed |
 | ❌ Pending | P04.20 | Create hand-labelled call-edge fixtures | — |
 | ❌ Pending | P04.21 | Compare resolution with pyright or jedi | — |
 | ❌ Pending | P04.22 | Report edge precision and recall | — |
