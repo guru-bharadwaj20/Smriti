@@ -122,8 +122,55 @@ class RepositoryScanner:
             snapshot.directories['' if relative == '.' else relative] = hash_directory(children)
             return snapshot.directories['' if relative == '.' else relative]
 
-        walk(root)
+        exclude = root / '.git' / 'info' / 'exclude'
+        initial_rules: tuple[tuple[Path, GitIgnoreSpec], ...] = ()
+        if exclude.is_file():
+            initial_rules = (
+                (root, GitIgnoreSpec.from_lines(exclude.read_text(encoding='utf-8').splitlines())),
+            )
+        walk(root, initial_rules)
         return snapshot
+
+    def ignored_path(self, root: str | Path, relative: str) -> bool:
+        """Evaluate an event path using the same ordered rules as a full scan."""
+        from pathspec import GitIgnoreSpec
+
+        root = Path(root).resolve()
+        parts = Path(relative).parts
+        if Path(relative).is_absolute() or '..' in parts or not parts:
+            raise ValueError('Expected repository-relative path')
+        if any(part in self.ignored for part in parts):
+            return True
+        rules: list[tuple[Path, GitIgnoreSpec]] = []
+        exclude = root / '.git' / 'info' / 'exclude'
+        if exclude.is_file():
+            rules.append(
+                (root, GitIgnoreSpec.from_lines(exclude.read_text(encoding='utf-8').splitlines()))
+            )
+        directory = root
+        for index, part in enumerate(parts):
+            ignore_file = directory / '.gitignore'
+            if ignore_file.is_file():
+                rules.append(
+                    (
+                        directory,
+                        GitIgnoreSpec.from_lines(
+                            ignore_file.read_text(encoding='utf-8').splitlines()
+                        ),
+                    )
+                )
+            candidate = directory / part
+            is_directory = index < len(parts) - 1 or candidate.is_dir()
+            ignored = False
+            for base, spec in rules:
+                name = candidate.relative_to(base).as_posix() + ('/' if is_directory else '')
+                inclusion = spec.check_file(name).include
+                if inclusion is not None:
+                    ignored = inclusion
+            if ignored:
+                return True
+            directory = candidate
+        return False
 
 
 def changed_paths(old: MerkleSnapshot, new: MerkleSnapshot) -> set[str]:

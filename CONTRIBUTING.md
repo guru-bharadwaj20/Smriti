@@ -168,7 +168,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P04.10 | Implement Python C3 linearisation | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.11 | Resolve inherited methods | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.12 | Respect overridden methods | smriti/resolve; pytest tests/test_resolve.py passed |
-| ❌ Pending | P04.13 | Record uncertain dynamic-call candidates | — |
+| ✅ Done | P04.13 | Record uncertain dynamic-call candidates | smriti/resolve; pytest tests/test_resolve.py passed |
 | ❌ Pending | P04.14 | Assign confidence to resolved edges | — |
 | ❌ Pending | P04.15 | Persist defines and contains edges | — |
 | ❌ Pending | P04.16 | Persist calls and imports edges | — |
