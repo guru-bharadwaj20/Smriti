@@ -368,8 +368,8 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P11.07 | Prevent facts leaking across unrelated branches | smriti\memory\__init__.py; P11.07 regression in tests\test_memory.py |
 | ✅ Done | P11.08 | Compute three-way memory merge | smriti\memory\__init__.py; P11.08 regression in tests\test_memory.py |
 | ✅ Done | P11.09 | Auto-merge disjoint fact additions | smriti\memory\__init__.py; P11.09 regression in tests\test_memory.py |
-| ❌ Pending | P11.10 | Detect concurrent edits to the same fact | — |
-| ❌ Pending | P11.11 | Detect delete-versus-update conflicts | — |
+| ✅ Done | P11.10 | Detect concurrent edits to the same fact | smriti\memory\__init__.py; P11.10 regression in tests\test_memory.py |
+| ✅ Done | P11.11 | Detect delete-versus-update conflicts | smriti\memory\__init__.py; P11.11 regression in tests\test_memory.py |
 | ❌ Pending | P11.12 | Expose unresolved conflicts for user decisions | — |
 | ❌ Pending | P11.13 | Record merge conflict resolutions | — |
 | ❌ Pending | P11.14 | Represent multi-parent merge history | — |
@@ -434,7 +434,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P13.08 | Prevent patch and post-fix code leakage | — |
 | ✅ Done | P13.09 | Implement issue-word grep baseline | bench/swebench/grep_baseline.py; executable semantic assertions passed |
 | ✅ Done | P13.10 | Implement lexical-only baseline | bench/swebench/lexical_baseline.py; executable semantic assertions passed |
-| ❌ Pending | P13.11 | Implement embedding-only baseline | — |
+| ✅ Done | P13.11 | Implement embedding-only baseline | bench/swebench/embedding_baseline.py; executable semantic assertions passed |
 | ❌ Pending | P13.12 | Implement Aider-style repo-map baseline | — |
 | ✅ Done | P13.13 | Compute file recall at k | bench/swebench/metrics.py; independent duplicate and empty-gold checks passed |
 | ✅ Done | P13.14 | Compute function recall at k | bench/swebench/function_metrics.py; duplicate missing empty and negative-k tests passed |
