@@ -301,3 +301,15 @@ class MemoryStore:
             self._record("forget",fact_id)
         return [fact_id]
 # P10.15
+    def replay_digest(self,head=None):
+        from .operations import digest
+        return digest({fid:asdict(f) for fid,f in sorted(self.replay(head).items())})
+# P10.16
+    def log(self,*,head=None,limit=None):
+        rows = [{**op.to_dict(),"payload":None if self.is_purged(op.fact_id) else self.operations.payload(op)} for op in reversed(self.operations.ancestry(head if head is not None else self.head))]
+        return rows[:limit] if limit is not None else rows
+# P10.17
+    def diff(self,left,right=None):
+        a,b=self.replay(left) if left else {},self.replay(right if right is not None else self.head)
+        return {"added":{k:b[k].to_dict() for k in sorted(b.keys()-a.keys())},"removed":{k:a[k].to_dict() for k in sorted(a.keys()-b.keys())},"changed":{k:{"before":a[k].to_dict(),"after":b[k].to_dict()} for k in sorted(a.keys()&b.keys()) if a[k]!=b[k]}}
+# P10.18

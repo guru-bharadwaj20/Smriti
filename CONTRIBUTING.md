@@ -344,9 +344,9 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P10.13 | Implement update operation replay | smriti\memory\__init__.py; P10.13 regression in tests\test_memory.py |
 | ✅ Done | P10.14 | Implement invalidate operation replay | smriti\memory\__init__.py; P10.14 regression in tests\test_memory.py |
 | ✅ Done | P10.15 | Define forget tombstone and payload-purge policy | smriti\memory\__init__.py; P10.15 regression in tests\test_memory.py |
-| ❌ Pending | P10.16 | Implement deterministic log replay | — |
-| ❌ Pending | P10.17 | Implement memory history inspection | — |
-| ❌ Pending | P10.18 | Implement memory state diff | — |
+| ✅ Done | P10.16 | Implement deterministic log replay | smriti\memory\__init__.py; P10.16 regression in tests\test_memory.py |
+| ✅ Done | P10.17 | Implement memory history inspection | smriti\memory\__init__.py; P10.17 regression in tests\test_memory.py |
+| ✅ Done | P10.18 | Implement memory state diff | smriti\memory\__init__.py; P10.18 regression in tests\test_memory.py |
 | ❌ Pending | P10.19 | Implement operation revert as new history | — |
 | ❌ Pending | P10.20 | Handle revert of already-reverted operations | — |
 | ❌ Pending | P10.21 | Persist log and materialized view atomically | — |

@@ -229,6 +229,35 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual(store.forget(f.id),[])
         store.close()
 
+    def test_replay_determinism(self):
+        store = MemoryStore(":memory:")
+        store.remember("a",fact_id="a")
+        store.remember("b",fact_id="b")
+        self.assertEqual(store.replay_digest(),store.replay_digest())
+        for op in store.operations.ancestry(store.head):
+            self.assertEqual(store.operations.get(op.id),op)
+        store.close()
+
+    def test_memory_history(self):
+        store = MemoryStore(":memory:")
+        f=store.remember("old")
+        store.update(f.id,"new")
+        self.assertEqual([r["kind"] for r in store.log()],["update","add"])
+        store.forget(f.id)
+        self.assertTrue(all(r["payload"] is None for r in store.log()))
+        store.close()
+
+    def test_memory_diff(self):
+        store=MemoryStore(":memory:")
+        f=store.remember("a")
+        base=store.head
+        store.update(f.id,"b")
+        other=store.remember("new")
+        delta=store.diff(base)
+        self.assertEqual(delta["changed"][f.id]["after"]["text"],"b")
+        self.assertIn(other.id,delta["added"])
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"
