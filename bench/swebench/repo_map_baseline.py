@@ -18,6 +18,9 @@ def repo_map_baseline(
     seeds = {
         symbol.id: float(len(words & set(code_tokens(symbol.qualname)))) for symbol in selected
     }
-    graph = adjacency([symbol.id for symbol in selected], edges)
+    ids = {symbol.id for symbol in selected}
+    graph = adjacency(ids, [edge for edge in edges if edge.source in ids and edge.target in ids])
     scores = personalized_pagerank(graph, seeds)
-    return [SearchHit(id, score) for id, score in scores.items()][:k]
+    return sorted(
+        [SearchHit(id, score) for id, score in scores.items()], key=lambda hit: (-hit.score, hit.id)
+    )[:k]

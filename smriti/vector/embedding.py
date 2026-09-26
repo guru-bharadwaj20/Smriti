@@ -1,11 +1,21 @@
 """Explicit local ONNX CPU encoder with attention-mask mean pooling."""
 
+import hashlib
 import importlib
 from collections.abc import Sequence
 from pathlib import Path
 from typing import Any, Protocol
 
 from .math import normalize
+
+
+def encoder_identity(model_path: str | Path, tokenizer_path: str | Path) -> str:
+    """Cache identity includes weights, tokenizer and preprocessing semantics."""
+    digests = []
+    for path in (model_path, tokenizer_path):
+        with Path(path).open('rb') as stream:
+            digests.append(hashlib.file_digest(stream, 'sha256').hexdigest())
+    return hashlib.sha256(('\0'.join(digests) + '\0mean-mask-l2-max256-v1').encode()).hexdigest()
 
 
 class ONNXEmbedder:
@@ -17,8 +27,6 @@ class ONNXEmbedder:
         version: str | None = None,
     ) -> None:
         ort = importlib.import_module('onnxruntime')
-        import hashlib
-
         from tokenizers import Tokenizer
 
         options = ort.SessionOptions()
@@ -29,9 +37,7 @@ class ONNXEmbedder:
         self.tokenizer = Tokenizer.from_file(str(tokenizer_path))
         self.tokenizer.enable_truncation(max_length=256)
         self.tokenizer.enable_padding()
-        self.version = (
-            version or hashlib.file_digest(Path(model_path).open('rb'), 'sha256').hexdigest()
-        )
+        self.version = version or encoder_identity(model_path, tokenizer_path)
 
     def embed(self, texts: Sequence[str]) -> list[tuple[float, ...]]:
         import numpy as np
