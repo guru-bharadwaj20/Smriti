@@ -519,6 +519,17 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual(set(store.dependents(a.id)),{b.id,c.id})
         store.close()
 
+    def test_cascade_forget(self):
+        store=MemoryStore(":memory:")
+        a=store.remember("private source")
+        b=store.remember("derived",derived_from=[a.id])
+        c=store.remember("transitive",derived_from=[b.id])
+        unaffected=store.remember("unrelated")
+        self.assertEqual(set(store.forget(a.id)),{a.id,b.id,c.id})
+        self.assertEqual({f.id for f in store.recall()},{unaffected.id})
+        self.assertTrue(store.verify())
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"

@@ -365,19 +365,10 @@ class MemoryStore:
     def forget(self,fact_id):
         if self.is_purged(fact_id):
             return []
-        exists = self.db.execute("SELECT 1 FROM memory_operations WHERE json_extract(canonical,'$.fact_id')=?",(fact_id,)).fetchone()
-        if not exists:
+        known=self.db.execute("SELECT 1 FROM memory_operations WHERE json_extract(canonical,'$.fact_id')=?",(fact_id,)).fetchone()
+        if not known:
             raise KeyError(fact_id)
-        with self.db:
-            self.db.execute("INSERT INTO memory_purged VALUES (?)",(fact_id,))
-            hashes = [self.operations.get(oid).payload_hash for (oid,) in self.db.execute("SELECT oid FROM memory_operations WHERE json_extract(canonical,'$.fact_id')=?",(fact_id,))]
-            self.db.executemany("DELETE FROM memory_blobs WHERE digest=?",[(h,) for h in hashes if h])
-            self.db.execute("DELETE FROM facts WHERE id=?",(fact_id,))
-            self.db.execute("DELETE FROM fact_anchors WHERE fact_id=?",(fact_id,))
-            self.db.execute("DELETE FROM fact_audit WHERE fact_id=?",(fact_id,))
-            self.db.execute("DELETE FROM conflict_audit WHERE fact_id=? OR winner_id=? OR candidate_ids LIKE ?",(fact_id,fact_id,"%"+fact_id+"%"))
-            self._record("forget",fact_id)
-        return [fact_id]
+        return self._purge({fact_id,*self.dependents(fact_id)})
 # P10.15
     def replay_digest(self,head=None):
         from .operations import digest
@@ -628,3 +619,16 @@ class MemoryStore:
                     stack.append(derived_id)
         return sorted(seen-{fact_id})
 # P11.18
+    def _purge(self,fact_ids):
+        forgotten=sorted(fid for fid in fact_ids if not self.is_purged(fid))
+        with self.db:
+            for fid in forgotten:
+                self.db.execute("INSERT OR IGNORE INTO memory_purged VALUES (?)",(fid,))
+                self.db.execute("DELETE FROM memory_blobs WHERE json_extract(payload,'$.id')=?",(fid,))
+                self.db.execute("DELETE FROM facts WHERE id=?",(fid,))
+                self.db.execute("DELETE FROM fact_anchors WHERE fact_id=?",(fid,))
+                self.db.execute("DELETE FROM fact_audit WHERE fact_id=?",(fid,))
+                self.db.execute("DELETE FROM conflict_audit WHERE fact_id=? OR winner_id=? OR EXISTS (SELECT 1 FROM json_each(candidate_ids) WHERE value=?)",(fid,fid,fid))
+                self._record("forget",fid)
+        return forgotten
+# P11.19
