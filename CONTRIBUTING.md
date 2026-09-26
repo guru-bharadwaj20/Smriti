@@ -206,7 +206,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P05.18 | Persist and reload lexical index | smriti/lexical/index.py; executable assertions passed |
 | ✅ Done | P05.19 | Define deterministic tie breaking | tests/test_lexical_index.py; executable assertions passed |
 | ✅ Done | P05.20 | Validate scoring against hand-computed examples | tests/test_lexical_index.py; executable assertions passed |
-| ❌ Pending | P05.21 | Benchmark lexical query time and storage | — |
+| ✅ Done | P05.21 | Benchmark lexical query time and storage | bench/lexical/results.json; bench/lexical/run.py; scripts/search_benchmarks.py; measured CPU synthetic run |
 
 ### P06 — CPU embeddings and custom HNSW
 
