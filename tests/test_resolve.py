@@ -160,3 +160,24 @@ def test_callers_and_callees_ignore_external_refs():
     assert resolver.callers(result.symbols[1].id) == [result.symbols[2]]
     assert resolver.callees(result.symbols[2].id) == [result.symbols[1]]
     assert resolver.callees(result.symbols[1].id) == []
+
+
+def test_hand_labelled_call_edges():
+    from smriti.resolve import LABELLED_FIXTURE
+    result = parse_file("fixture.py", LABELLED_FIXTURE["source"])
+    resolver = Resolver([result])
+    actual = {(resolver.symbols[edge.source].qualname, resolver.symbols[edge.target].qualname)
+              for edge in resolver.resolve() if edge.kind == "calls" and edge.target in resolver.symbols}
+    assert actual == set(LABELLED_FIXTURE["expected_calls"])
+
+
+def test_reference_agreement_with_jedi():
+    import jedi
+    from smriti.resolve import JEDI_REFERENCE_CASES
+    for source, line, column, expected in JEDI_REFERENCE_CASES:
+        reference = jedi.Script(source).goto(line, column, follow_imports=True)
+        result = parse_file("fixture.py", source)
+        resolver = Resolver([result])
+        targets = {resolver.symbols[edge.target].name for edge in resolver.resolve() if edge.kind == "calls" and edge.target in resolver.symbols}
+        assert expected in targets
+        assert expected in {item.name for item in reference}

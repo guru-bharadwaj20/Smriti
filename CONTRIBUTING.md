@@ -175,8 +175,8 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P04.17 | Persist inheritance edges | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.18 | Define test-to-symbol association rules | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.19 | Expose callers and callees graph queries | smriti/resolve; pytest tests/test_resolve.py passed |
-| ❌ Pending | P04.20 | Create hand-labelled call-edge fixtures | — |
-| ❌ Pending | P04.21 | Compare resolution with pyright or jedi | — |
+| ✅ Done | P04.20 | Create hand-labelled call-edge fixtures | smriti/resolve; pytest tests/test_resolve.py passed |
+| ✅ Done | P04.21 | Compare resolution with pyright or jedi | smriti/resolve; pytest tests/test_resolve.py passed |
 | ❌ Pending | P04.22 | Report edge precision and recall | — |
 | ❌ Pending | P04.23 | Document unresolved dynamic-language cases | — |
 
@@ -239,7 +239,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P06.23 | Validate graph invariants after updates | smriti/vector/hnsw.py; executable assertions passed |
 | ✅ Done | P06.24 | Compare recall at 10 against exact search | tests/test_vector.py; executable assertions passed |
 | ✅ Done | P06.25 | Compare quality and throughput with hnswlib | bench/vector/hnsw_reference.py; bench/vector/hnsw_reference.json; real exact-oracle recall and throughput |
-| ❌ Pending | P06.26 | Measure memory and CPU query latency | — |
+| ✅ Done | P06.26 | Measure memory and CPU query latency | bench/vector/results.json; bench/vector/run.py; scripts/search_benchmarks.py; measured CPU synthetic run |
 
 ### P07 — Hybrid retrieval and graph ranking
 
