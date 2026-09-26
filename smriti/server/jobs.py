@@ -1,5 +1,6 @@
 """Background repository indexing in a separate worker process."""
 
+import asyncio
 from concurrent.futures import Future, ProcessPoolExecutor
 from pathlib import Path
 
@@ -18,6 +19,10 @@ class BackgroundIndexer:
 
     def submit(self, root: Path) -> Future[IndexResult]:
         return self._pool.submit(_index_repository, str(root.resolve()))
+
+    async def index_async(self, root: Path) -> IndexResult:
+        """Await worker output without blocking the agent server's event loop."""
+        return await asyncio.wrap_future(self.submit(root))
 
     def close(self) -> None:
         self._pool.shutdown(wait=True, cancel_futures=True)
