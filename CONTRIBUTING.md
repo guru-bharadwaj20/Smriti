@@ -366,8 +366,8 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P11.05 | Handle detached HEAD explicitly | smriti\memory\__init__.py; P11.05 regression in tests\test_memory.py |
 | ✅ Done | P11.06 | Handle branch rename and deletion | smriti\memory\__init__.py; P11.06 regression in tests\test_memory.py |
 | ✅ Done | P11.07 | Prevent facts leaking across unrelated branches | smriti\memory\__init__.py; P11.07 regression in tests\test_memory.py |
-| ❌ Pending | P11.08 | Compute three-way memory merge | — |
-| ❌ Pending | P11.09 | Auto-merge disjoint fact additions | — |
+| ✅ Done | P11.08 | Compute three-way memory merge | smriti\memory\__init__.py; P11.08 regression in tests\test_memory.py |
+| ✅ Done | P11.09 | Auto-merge disjoint fact additions | smriti\memory\__init__.py; P11.09 regression in tests\test_memory.py |
 | ❌ Pending | P11.10 | Detect concurrent edits to the same fact | — |
 | ❌ Pending | P11.11 | Detect delete-versus-update conflicts | — |
 | ❌ Pending | P11.12 | Expose unresolved conflicts for user decisions | — |
@@ -432,8 +432,8 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P13.06 | Map changed functions to base-commit symbols | bench/swebench/mapping.py; neighboring nested and added-function cases passed |
 | ✅ Done | P13.07 | Define handling of added and deleted functions | docs/evaluation-labels.md; base-commit label policy reviewed |
 | ❌ Pending | P13.08 | Prevent patch and post-fix code leakage | — |
-| ❌ Pending | P13.09 | Implement issue-word grep baseline | — |
-| ❌ Pending | P13.10 | Implement lexical-only baseline | — |
+| ✅ Done | P13.09 | Implement issue-word grep baseline | bench/swebench/grep_baseline.py; executable semantic assertions passed |
+| ✅ Done | P13.10 | Implement lexical-only baseline | bench/swebench/lexical_baseline.py; executable semantic assertions passed |
 | ❌ Pending | P13.11 | Implement embedding-only baseline | — |
 | ❌ Pending | P13.12 | Implement Aider-style repo-map baseline | — |
 | ✅ Done | P13.13 | Compute file recall at k | bench/swebench/metrics.py; independent duplicate and empty-gold checks passed |
