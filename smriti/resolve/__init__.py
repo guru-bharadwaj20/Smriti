@@ -278,3 +278,11 @@ JEDI_REFERENCE_CASES = [
     ("def outer():\n    def helper():\n        pass\n    def inner():\n        helper()\n", 5, 9, "helper"),
     ("class Base:\n    def work(self):\n        pass\nclass Child(Base):\n    def run(self):\n        self.work()\n", 6, 14, "work"),
 ]
+
+
+def edge_metrics(actual: set[tuple[str, str]], expected: set[tuple[str, str]]) -> dict[str, float | int]:
+    true_positive = len(actual & expected)
+    return {"true_positive": true_positive, "false_positive": len(actual - expected),
+        "false_negative": len(expected - actual),
+        "precision": true_positive / len(actual) if actual else (1.0 if not expected else 0.0),
+        "recall": true_positive / len(expected) if expected else 1.0}

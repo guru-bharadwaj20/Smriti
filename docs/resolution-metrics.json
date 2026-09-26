@@ -1,0 +1,11 @@
+{
+  "true_positive": 2,
+  "false_positive": 0,
+  "false_negative": 0,
+  "precision": 1.0,
+  "recall": 1.0,
+  "fixture": "LABELLED_FIXTURE",
+  "gold_edge_count": 2,
+  "scope": "small hand-labelled unit fixture, not a repository-wide evaluation",
+  "python": "3.13.1"
+}

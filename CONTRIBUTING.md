@@ -177,7 +177,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P04.19 | Expose callers and callees graph queries | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.20 | Create hand-labelled call-edge fixtures | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.21 | Compare resolution with pyright or jedi | smriti/resolve; pytest tests/test_resolve.py passed |
-| ❌ Pending | P04.22 | Report edge precision and recall | — |
+| ✅ Done | P04.22 | Report edge precision and recall | smriti/resolve; pytest tests/test_resolve.py passed |
 | ❌ Pending | P04.23 | Document unresolved dynamic-language cases | — |
 
 ### P05 — Code tokenizer and BM25F

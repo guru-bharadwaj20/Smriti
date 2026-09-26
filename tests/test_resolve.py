@@ -181,3 +181,15 @@ def test_reference_agreement_with_jedi():
         targets = {resolver.symbols[edge.target].name for edge in resolver.resolve() if edge.kind == "calls" and edge.target in resolver.symbols}
         assert expected in targets
         assert expected in {item.name for item in reference}
+
+
+def test_report_edge_precision_and_recall():
+    from smriti.resolve import edge_metrics, LABELLED_FIXTURE
+    result = parse_file("fixture.py", LABELLED_FIXTURE["source"])
+    resolver = Resolver([result])
+    actual = {(resolver.symbols[e.source].qualname, resolver.symbols[e.target].qualname)
+              for e in resolver.resolve() if e.kind == "calls" and e.target in resolver.symbols}
+    report = edge_metrics(actual, set(LABELLED_FIXTURE["expected_calls"]))
+    assert report["precision"] == report["recall"] == 1.0
+    assert report["true_positive"] == 2
+    assert edge_metrics({("a", "b")}, {("a", "c")})["precision"] == 0
