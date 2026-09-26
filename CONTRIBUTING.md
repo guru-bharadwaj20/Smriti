@@ -166,7 +166,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P04.08 | Record builtins and external references | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.09 | Resolve self method calls | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.10 | Implement Python C3 linearisation | smriti/resolve; pytest tests/test_resolve.py passed |
-| ❌ Pending | P04.11 | Resolve inherited methods | — |
+| ✅ Done | P04.11 | Resolve inherited methods | smriti/resolve; pytest tests/test_resolve.py passed |
 | ❌ Pending | P04.12 | Respect overridden methods | — |
 | ❌ Pending | P04.13 | Record uncertain dynamic-call candidates | — |
 | ❌ Pending | P04.14 | Assign confidence to resolved edges | — |
@@ -262,7 +262,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P07.13 | Expand candidate set with callers | smriti/rank/hybrid.py; executable assertions passed |
 | ✅ Done | P07.14 | Include associated tests and configuration | smriti/rank/hybrid.py; executable assertions passed |
 | ✅ Done | P07.15 | Cache ranking with index-version keys | smriti/rank/hybrid.py; executable assertions passed |
-| ❌ Pending | P07.16 | Invalidate cache after index updates | — |
+| ✅ Done | P07.16 | Invalidate cache after index updates | smriti/rank/hybrid.py; executable assertions passed |
 | ✅ Done | P07.17 | Tune fusion weights on validation data only | scripts/fusion_tuning.py; bench/fusion/validation.json; validation-only grid search, separate held-out IDs |
 | ❌ Pending | P07.18 | Emit per-candidate selection explanations | — |
 
@@ -284,7 +284,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P08.10 | Implement bucketed budget option | tests/test_pack.py; executable assertions passed |
 | ✅ Done | P08.11 | Implement greedy marginal-value baseline | smriti/pack/packer.py; executable assertions passed |
 | ✅ Done | P08.12 | Require minimum class context for methods | smriti/pack/packer.py; executable assertions passed |
-| ❌ Pending | P08.13 | Deduplicate class and method bodies | — |
+| ✅ Done | P08.13 | Deduplicate class and method bodies | smriti/pack/packer.py; executable assertions passed |
 | ❌ Pending | P08.14 | Handle dependency costs during packing | — |
 | ❌ Pending | P08.15 | Handle symbols larger than available budget | — |
 | ❌ Pending | P08.16 | Render stable file and symbol ordering | — |

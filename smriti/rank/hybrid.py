@@ -38,3 +38,6 @@ class RankingCache:
     def __init__(self): self.values={}; self.version=None
     def get(self,version,query): return self.values.get((version,normalize_query(query)))
     def put(self,version,query,scores): self.values[(version,normalize_query(query))]=dict(scores)
+
+    def invalidate(self,version):
+        self.values={key:value for key,value in self.values.items() if key[0]==version}; self.version=version
