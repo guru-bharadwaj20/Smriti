@@ -41,3 +41,8 @@ class RankingCache:
 
     def invalidate(self,version):
         self.values={key:value for key,value in self.values.items() if key[0]==version}; self.version=version
+
+def explain_candidates(scores,lexical=(),vector=(),graph_scores=None):
+    lexical={hit if isinstance(hit,str) else hit.id for hit in lexical}
+    vector={hit if isinstance(hit,str) else hit.id for hit in vector}
+    return {id:{'score':score,'lexical':id in lexical,'vector':id in vector,'graph_score':(graph_scores or {}).get(id,0)} for id,score in scores.items()}

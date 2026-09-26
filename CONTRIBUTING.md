@@ -264,7 +264,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P07.15 | Cache ranking with index-version keys | smriti/rank/hybrid.py; executable assertions passed |
 | ✅ Done | P07.16 | Invalidate cache after index updates | smriti/rank/hybrid.py; executable assertions passed |
 | ✅ Done | P07.17 | Tune fusion weights on validation data only | scripts/fusion_tuning.py; bench/fusion/validation.json; validation-only grid search, separate held-out IDs |
-| ❌ Pending | P07.18 | Emit per-candidate selection explanations | — |
+| ✅ Done | P07.18 | Emit per-candidate selection explanations | smriti/rank/hybrid.py; executable assertions passed |
 
 ### P08 — Token-budgeted context packing
 
