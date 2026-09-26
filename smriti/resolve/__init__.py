@@ -65,6 +65,7 @@ class Resolver:
                     for candidate in self.dynamic_candidates(call["name"]):
                         edges.append(Edge(call["scope"], candidate, "may_call", 0.25))
         edges.extend(self.structural_edges())
+        edges.extend(self.import_edges())
         self.edges = sorted(set(edges), key=lambda e: (e.source, e.kind, e.target))
         return self.edges
 
@@ -214,6 +215,12 @@ class Resolver:
         if data.get("version") != 1:
             raise ValueError("Unsupported graph version")
         return [Edge(**edge) for edge in data["edges"]]
+    def import_edges(self) -> list[Edge]:
+        edges = []
+        for (scope, alias), declaration in self.imports.items():
+            target = self.resolve_import(alias, scope) or self.external_reference(alias, scope)
+            edges.append(Edge(scope, target, "imports", 1 if target in self.symbols else 0.5))
+        return edges
 
 def c3_linearize(class_id: str, bases: dict[str, list[str]], stack=()) -> list[str]:
     """Compute Python's C3 MRO and reject cyclic or inconsistent inheritance."""

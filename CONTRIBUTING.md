@@ -171,7 +171,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P04.13 | Record uncertain dynamic-call candidates | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.14 | Assign confidence to resolved edges | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.15 | Persist defines and contains edges | smriti/resolve; pytest tests/test_resolve.py passed |
-| ❌ Pending | P04.16 | Persist calls and imports edges | — |
+| ✅ Done | P04.16 | Persist calls and imports edges | smriti/resolve; pytest tests/test_resolve.py passed |
 | ❌ Pending | P04.17 | Persist inheritance edges | — |
 | ❌ Pending | P04.18 | Define test-to-symbol association rules | — |
 | ❌ Pending | P04.19 | Expose callers and callees graph queries | — |
