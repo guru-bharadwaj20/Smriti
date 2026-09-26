@@ -432,7 +432,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P13.06 | Map changed functions to base-commit symbols | bench/swebench/mapping.py; neighboring nested and added-function cases passed |
 | ✅ Done | P13.07 | Define handling of added and deleted functions | docs/evaluation-labels.md; base-commit label policy reviewed |
 | ❌ Pending | P13.08 | Prevent patch and post-fix code leakage | — |
-| ❌ Pending | P13.09 | Implement issue-word grep baseline | — |
+| ✅ Done | P13.09 | Implement issue-word grep baseline | bench/swebench/grep_baseline.py; executable semantic assertions passed |
 | ❌ Pending | P13.10 | Implement lexical-only baseline | — |
 | ❌ Pending | P13.11 | Implement embedding-only baseline | — |
 | ❌ Pending | P13.12 | Implement Aider-style repo-map baseline | — |
