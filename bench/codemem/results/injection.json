@@ -1,0 +1,455 @@
+{
+  "schema_version": 1,
+  "initial_commit": "881281250f74549f560408e5546d95a8cd73ce28",
+  "policy": "Deterministic SHA256-ranked library functions; facts assert implementation fingerprints, not semantic claims.",
+  "probes": [
+    {
+      "fact_id": "probe-002012b6a50eb43ec10d1887",
+      "symbol_id": "5b66e38b64aa13acee96316e21aee0dcd5ef29aae61be11abdb9f7cfc447b33f",
+      "path": "src/requests/utils.py",
+      "qualname": "src.requests.utils.default_headers",
+      "content_hash": "a17d2ccc1b54463aa5b341100edd145e274a8ba14b6f65adbd90d3d5e372ef7e"
+    },
+    {
+      "fact_id": "probe-012f663d554587813c248f61",
+      "symbol_id": "a07d0cd218b0ab9f00b1403c1e2d4a12fc40a19994009cf5733e3806895eecd1",
+      "path": "src/requests/models.py",
+      "qualname": "src.requests.models.Response.__setstate__",
+      "content_hash": "16266f5b3e1a428fa3ae021e03dde72b35d9697d2ea5ae32d448920286e92650"
+    },
+    {
+      "fact_id": "probe-03849495377c6283be8691e7",
+      "symbol_id": "eebb423012025e13536d7dcd9f507b6ef62fb7a33645031f113582763115f308",
+      "path": "src/requests/models.py",
+      "qualname": "src.requests.models.RequestHooksMixin.register_hook",
+      "content_hash": "b03022001618ab73d6f83c3a3be7ffc44a5953c4834ada19fdad68af6acfa695"
+    },
+    {
+      "fact_id": "probe-03f91ec9c690f36c9b7ec313",
+      "symbol_id": "135222c42d5809eed771e682458b845849799c0ed3b77d67da2aa00d83954c28",
+      "path": "src/requests/sessions.py",
+      "qualname": "src.requests.sessions.Session.get",
+      "content_hash": "59dc4a661096ba2559c87780d581c8920c1ae24f50a1bb5eb7c0b67c2e706730"
+    },
+    {
+      "fact_id": "probe-052482b2a36ba87aaf6089da",
+      "symbol_id": "3a95df0d4f715477b503c3112f9a2d8e7673805e0ff193d4420aca01de94ee0f",
+      "path": "src/requests/utils.py",
+      "qualname": "src.requests.utils.check_header_validity",
+      "content_hash": "a6f39c793e5761af407d323b0384e595f49bb64fd160cfc9c9aafc0127bb4904"
+    },
+    {
+      "fact_id": "probe-052eb244e3dca6c7b53a150d",
+      "symbol_id": "5829970e3878fa83dec4a662bdbe8cf64f48e6f6cf4d3216b62b5ecd19cf2ad4",
+      "path": "src/requests/models.py",
+      "qualname": "src.requests.models.Response.json",
+      "content_hash": "a00e4d27a14e05b5bc31949c188633a677691b8652c25ee309ab9fd97390cb03"
+    },
+    {
+      "fact_id": "probe-06134bd6a035c6009fc85e3a",
+      "symbol_id": "2d644bb578cb2208d4e3d166f39a617e5cf62ff9b653d26afbfbb3cd04341a5c",
+      "path": "src/requests/cookies.py",
+      "qualname": "src.requests.cookies.MockRequest.get_new_headers",
+      "content_hash": "4ac84d6da16b7a18754da74203c32bd553561aa1b27d8f67b738f5427fb692b3"
+    },
+    {
+      "fact_id": "probe-06d705d383e38c3a3de08e34",
+      "symbol_id": "4141da5b81d2d7ccdd410395b65734c3bfc9d59c356b11bd49e493cbb7ac066d",
+      "path": "src/requests/models.py",
+      "qualname": "src.requests.models.Response.__nonzero__",
+      "content_hash": "286fea47f5d21d5a736d2c7202a82754ec6414cffc8d19eb3fe709d9fe3d3d1c"
+    },
+    {
+      "fact_id": "probe-0a1e6074f843a31cdba2aa07",
+      "symbol_id": "33742673cb7a7fb81126c39e9697118b82c582c818d48b0ff5afb965ce8bdbd0",
+      "path": "src/requests/utils.py",
+      "qualname": "src.requests.utils.set_environ",
+      "content_hash": "67d39a77a462a03ed6a261492314ebce0483929bb45b6941c6f5e50f80bde893"
+    },
+    {
+      "fact_id": "probe-0b7e58f1296f1306e60938f5",
+      "symbol_id": "b7bf54a5ec46549228577d4db8426cbda7ea2ab07807281ccbfe68c453aba4fc",
+      "path": "src/requests/models.py",
+      "qualname": "src.requests.models.Request.__repr__",
+      "content_hash": "8552f6bd900f65bbed7f8a37391b963fba965f551f095ad00f7ace64e49b113b"
+    },
+    {
+      "fact_id": "probe-0b7f01f97ecc026434fa5b86",
+      "symbol_id": "5b0d4b66004c7fbc67124e2cded0fd6e0e96ae9c70241b1f7b380c5f71ac5fc4",
+      "path": "src/requests/models.py",
+      "qualname": "src.requests.models.PreparedRequest.prepare_cookies",
+      "content_hash": "f61d987c6f35a5441debae1dcc41bcd86a35078bc6377ccb1a693812a4cd22cf"
+    },
+    {
+      "fact_id": "probe-0be3486ada1b68e839d80fa4",
+      "symbol_id": "5426b6480e755f639f1b5d22e8635af16178bf6c19fd77e0e31336a4f2f3960c",
+      "path": "src/requests/utils.py",
+      "qualname": "src.requests.utils.is_valid_cidr",
+      "content_hash": "8a4dcc48c558442256786c856b0c4858df669f7627adb0efcaad652919eb9e36"
+    },
+    {
+      "fact_id": "probe-0ceab979add7ee4fdf528d31",
+      "symbol_id": "6f8a991682981aa1a814598616e9550ada90d9cca171ea17c2c3d0eb51f33137",
+      "path": "src/requests/utils.py",
+      "qualname": "src.requests.utils.to_key_val_list",
+      "content_hash": "8010356deeb50e7358d3b9af154ab238fae8d93f27229ad29b75e0ef256f2c6b"
+    },
+    {
+      "fact_id": "probe-0d1588e12d074225082ffd42",
+      "symbol_id": "680d7400024057c5a3872c83b7b8a766f1522efe5f1d95ebc73aab613e0cf329",
+      "path": "src/requests/models.py",
+      "qualname": "src.requests.models.Request.prepare",
+      "content_hash": "529cd6ed08b147f8c1aa3496f3ca52ac13032ead8fab6732032d7fe92be77ad9"
+    },
+    {
+      "fact_id": "probe-0d648ac66ac1e944d2fd0b01",
+      "symbol_id": "25842068581c9326ce12c3f3b22e07d5d9e1bcce17631cb22a35edbd9eaffab1",
+      "path": "src/requests/sessions.py",
+      "qualname": "src.requests.sessions.Session.head",
+      "content_hash": "cc365cee0da817ce19287ef34726af1f003d5d4e3ccdb31f09cb96740e689943"
+    },
+    {
+      "fact_id": "probe-0dcabe9f3923fe28bc1b39f0",
+      "symbol_id": "7857d4aca5a38c6eab0203653e11cba286269c325c5e6c8e58ca3b47bc4fcbf2",
+      "path": "src/requests/sessions.py",
+      "qualname": "src.requests.sessions.Session.prepare_request",
+      "content_hash": "9353f4e1fc7f8cdf36f775428392e046b63309640081cddf7a8840cfed86f74f"
+    },
+    {
+      "fact_id": "probe-0ec5921c3b75b0297f101559",
+      "symbol_id": "24e92191e7fc55a35cc769d50446c8abd920b981a5ac521fc0ebe499063cb3b7",
+      "path": "src/requests/cookies.py",
+      "qualname": "src.requests.cookies.merge_cookies",
+      "content_hash": "f46eab2ae2c37e42d0c68105cecf6c1b457b47375b70ef1a8e3c5c474291e369"
+    },
+    {
+      "fact_id": "probe-0edfb660a97619513f28e821",
+      "symbol_id": "c2ea993a27a428aa04792d9a27c89e577cc63c1b1056c2d022660600fd896bd3",
+      "path": "src/requests/sessions.py",
+      "qualname": "src.requests.sessions.Session.__getstate__",
+      "content_hash": "28323497da8574c627847e7938bb5267cd363b01ea566cd5c7ba7d22b9398637"
+    },
+    {
+      "fact_id": "probe-0fa713b436512638e571fdf4",
+      "symbol_id": "c983ca200bcf033408be6a9437492668733851ca3adf17fce276295ea6fe5b2e",
+      "path": "src/requests/adapters.py",
+      "qualname": "src.requests.adapters.HTTPAdapter.get_connection",
+      "content_hash": "369231f86357c1e34626c273a34c629908db9282203be0dee8cb64f882a2007c"
+    },
+    {
+      "fact_id": "probe-1030bffde2e1d6535c7f6650",
+      "symbol_id": "cd95e9072f023dff625290836376043942318937f0e89c2c5cbd8b896931f684",
+      "path": "src/requests/cookies.py",
+      "qualname": "src.requests.cookies.RequestsCookieJar.itervalues",
+      "content_hash": "15f54eb7f05c6b975cc3bc77c8a33302a1e01bf12877c4a9ccff41b3d8fefcaf"
+    },
+    {
+      "fact_id": "probe-1216fb49be6b7cc3087ea7ea",
+      "symbol_id": "7b644e97bae2b9594020befedfe463d76b5cbf91ad2d2d0f060efe01b00754ae",
+      "path": "src/requests/adapters.py",
+      "qualname": "src.requests.adapters.HTTPAdapter.proxy_manager_for",
+      "content_hash": "ac3cabe069cbdbb9bcd727e0dfdf5dc06e315a7d5ca560aecad3e50cefc85d8c"
+    },
+    {
+      "fact_id": "probe-125333e3b070787bff715a72",
+      "symbol_id": "e9152e84a6c499cddcfa1b18aa48fa417e311cf672aaa15c761d02d31b92ded7",
+      "path": "src/requests/sessions.py",
+      "qualname": "src.requests.sessions.session",
+      "content_hash": "a7f766c344d758def2cc85217544a465ea54cf3981bca2de56f9aee3e99434e4"
+    },
+    {
+      "fact_id": "probe-16b41fad366f41f1a0be1746",
+      "symbol_id": "9877af8da44697c97ce9aee01ba957c7a76ce026851bd651c6b0a64b076bc55c",
+      "path": "src/requests/cookies.py",
+      "qualname": "src.requests.cookies.RequestsCookieJar.copy",
+      "content_hash": "37346cf729f3869049232d32e0798990b155a1310362b04baf2b5399534939b9"
+    },
+    {
+      "fact_id": "probe-17475d28652f171735e1c2a3",
+      "symbol_id": "151ce9ba916a2b892864add8d02a1db27139cfb1a3f4f5b461aa0d754f848b87",
+      "path": "src/requests/models.py",
+      "qualname": "src.requests.models.Response.is_redirect",
+      "content_hash": "c2c5a8a86682c790e3b932488d1960da99085a2d0e82ff932ff69916ac3303df"
+    },
+    {
+      "fact_id": "probe-1b28d9e66ad3357affd6cb94",
+      "symbol_id": "4ffa48329354e5cecf0263573e1f4c9a1bf96f9a41a64a9b0fa8245ce6967887",
+      "path": "src/requests/sessions.py",
+      "qualname": "src.requests.sessions.Session.merge_environment_settings",
+      "content_hash": "d0881a3b0b8f2c2eda29ecee5852ac6a3a3c8fad7c9af9e2fc2250472967627b"
+    },
+    {
+      "fact_id": "probe-1d1f24a96fa28bc71c8e268f",
+      "symbol_id": "0c86f65f7f8af4da8c1b748b3091ab3ba5233225266156c9bb6a3333f1ef7627",
+      "path": "src/requests/api.py",
+      "qualname": "src.requests.api.delete",
+      "content_hash": "1a0be90283c5e934775069230caf0ed360867ec42d852ce2e0497c73921c3259"
+    },
+    {
+      "fact_id": "probe-1db6892b6f03a8efbfb17c4f",
+      "symbol_id": "c1fd2b07df18f4f69cc4ce8fdd6099446e28e9aeb527f06e49499e0643324985",
+      "path": "src/requests/adapters.py",
+      "qualname": "src.requests.adapters.HTTPAdapter.build_response",
+      "content_hash": "dd463cdaed3aaa74b54c8b2815dea4b07de4fc68cdf6e9bb5b781d325d222d3b"
+    },
+    {
+      "fact_id": "probe-1e6c1061be675b70695861f7",
+      "symbol_id": "ed55ac3b49459c6590ba2bfc61a9daa15b1884d3cc0d28d92b78914d3b2611a5",
+      "path": "src/requests/models.py",
+      "qualname": "src.requests.models.RequestEncodingMixin.path_url",
+      "content_hash": "d50ae6f3296757a4b16fd53f0aee5ce6b0506ab8b6056621026db8b3e8dc2596"
+    },
+    {
+      "fact_id": "probe-1ed44702aa3f55a0cf19c4bc",
+      "symbol_id": "bdd38441acbe7f465002f3fe14b3a75c34346acd6f21ea597bc4ff8285650809",
+      "path": "src/requests/models.py",
+      "qualname": "src.requests.models.Response.__getstate__",
+      "content_hash": "9cded944385e88e373407072b2ef6ed13dc20de87d328f55799bc6b74747d364"
+    },
+    {
+      "fact_id": "probe-1fe1c6790c8f9c1971a4cf53",
+      "symbol_id": "76c10535da110d54a8202b46c1f2b50586f940ed54f8ae789f257e47105cb46b",
+      "path": "src/requests/utils.py",
+      "qualname": "src.requests.utils.parse_dict_header",
+      "content_hash": "0fd2298b7fbd5031cdfc929f9f8501d56b21f6a7e0a5a1eaf9e8e9a03ed26726"
+    },
+    {
+      "fact_id": "probe-201fc02f29c6d66d7473a51e",
+      "symbol_id": "69b19da1573e59adf6b68a5148bae43f37450d975c27ec0263943fc5fa37d924",
+      "path": "src/requests/models.py",
+      "qualname": "src.requests.models.Response.__exit__",
+      "content_hash": "406e587061fb3cc90665e980b3bdbbddde6e8307b88083f6d53a44580616020f"
+    },
+    {
+      "fact_id": "probe-2334bd7b0572ede825d2d543",
+      "symbol_id": "0b195a06dbc7e90989b4f25acbde675af2f0b64572e52f576c03f49f9068b081",
+      "path": "src/requests/models.py",
+      "qualname": "src.requests.models.PreparedRequest.prepare_auth",
+      "content_hash": "bf8c99032a6d49e43e80590b2924f2783802254bdcea7c901b592038dcf2a9cd"
+    },
+    {
+      "fact_id": "probe-23bb5343dca2de648bee498e",
+      "symbol_id": "2a1c01abd83ef42db8c91b8ef6c4152edffa3c5966ba9da1afba9992be1e8877",
+      "path": "src/requests/structures.py",
+      "qualname": "src.requests.structures.CaseInsensitiveDict.__setitem__",
+      "content_hash": "6aea781229f94a7c37524c4c467ee07b5040a8c720f95f975eb57d85fe6c9a40"
+    },
+    {
+      "fact_id": "probe-25090938b7f0f23407b843b9",
+      "symbol_id": "f8f504578e8f950324d4d40810592b74d00f4745c6aaf0d6a717a9ee15c6fa93",
+      "path": "src/requests/auth.py",
+      "qualname": "src.requests.auth.HTTPDigestAuth.build_digest_header.sha_utf8",
+      "content_hash": "1adc1430d9485544b5da0bf6a0b831ca02c256eb10dd33f6e3c4fbe59b49952d"
+    },
+    {
+      "fact_id": "probe-296a2ce46468edc638a1c617",
+      "symbol_id": "34efdf426f49ac2f338c79b8ac61f5be2e0399bfca19dce347cea4d638d89da1",
+      "path": "src/requests/cookies.py",
+      "qualname": "src.requests.cookies.MockRequest.add_unredirected_header",
+      "content_hash": "372b399b91b26618ca2e18b1f4b671e8dc95c13338228a3c90af0062206ba87e"
+    },
+    {
+      "fact_id": "probe-2b7d8c776004d04210b571c9",
+      "symbol_id": "06479b20da61c1baea8c69810b2e1ab5a9a500e866fdaaab1ac45495b0f0b7ad",
+      "path": "src/requests/_internal_utils.py",
+      "qualname": "src.requests._internal_utils.to_native_string",
+      "content_hash": "f1b9159e6c1849e2b5c97058690a34d8b87dab7fc11edfca3d4b2d930ef7479e"
+    },
+    {
+      "fact_id": "probe-2c968df5dceb6981ab1417cc",
+      "symbol_id": "51ff7aca01f93ec51ecadc0f9c21f8b363050cd05bea3c3c5f30c53c70d20a15",
+      "path": "src/requests/models.py",
+      "qualname": "src.requests.models.PreparedRequest.__repr__",
+      "content_hash": "03f10333e49acdc3ed34bfd95a2fca0572283fd4a4e47bc03309b631d4b2dbfd"
+    },
+    {
+      "fact_id": "probe-2cf8c4a43dbaf2a28eef6a12",
+      "symbol_id": "e8e0763d20c4e46b37d777e16f93d501ddb92e24ceea6741ce41adf676bffcd6",
+      "path": "src/requests/utils.py",
+      "qualname": "src.requests.utils.proxy_bypass",
+      "content_hash": "6c3eb9f12aaff664f0fa436d102bca37432893535db93629cf3f3452c05ada99"
+    },
+    {
+      "fact_id": "probe-2d397ae886b8f2bbcd4b05c2",
+      "symbol_id": "1c2891d7d443889f80d5ac34f9f443a7908add022aff51fc2989bc1528a456c0",
+      "path": "src/requests/models.py",
+      "qualname": "src.requests.models.Response.__repr__",
+      "content_hash": "73a575d109cae2cadfe32ab49f397581edf0f677a156d706f011fd9de2d4730f"
+    },
+    {
+      "fact_id": "probe-2d80e3ab54e1b5cdb8dbc539",
+      "symbol_id": "fd3840fa420012bc57b9cc3751b9ecbff3885a86cb3292e88c538ecd4393581b",
+      "path": "src/requests/__init__.py",
+      "qualname": "src.requests.check_compatibility",
+      "content_hash": "bd428c8efb0febe9228e8ba49f0fac4ed336633c408d8a9ae1909f4e4801c5b4"
+    },
+    {
+      "fact_id": "probe-2f5153c23e3a51079c589dab",
+      "symbol_id": "8693853ec434dce262c4ef2adad9d39287df97f33bdf912d0620fa1fe0a87a3b",
+      "path": "src/requests/utils.py",
+      "qualname": "src.requests.utils.dotted_netmask",
+      "content_hash": "c46d4f1b1a5516bdb992e6a2d8915f5618f1d01a2a099a2378b7c1031e6330b8"
+    },
+    {
+      "fact_id": "probe-2ff7de17ee402ad3de450c11",
+      "symbol_id": "92ffb97b566769dd0228c5f0604f117fc3162287bbba7145f342e06d308c6f64",
+      "path": "src/requests/auth.py",
+      "qualname": "src.requests.auth.HTTPDigestAuth.build_digest_header.sha256_utf8",
+      "content_hash": "5a2fd2e4a54033ff6c5848261c4adca2cb98ee12f31c911bf4bd24fc7a00e99d"
+    },
+    {
+      "fact_id": "probe-30f0ae5ad214905252706927",
+      "symbol_id": "7048ad5ebe3d910ed181938c8f5a73c5fc900aacf0a1f267b04f3c7c0e3fb114",
+      "path": "src/requests/cookies.py",
+      "qualname": "src.requests.cookies.RequestsCookieJar.set_cookie",
+      "content_hash": "233ca0bd9f12c09e8c62f4d2803ab81207eca97e9d1c45c4c34ef703904af5bc"
+    },
+    {
+      "fact_id": "probe-33581ef31adde7b53fa38775",
+      "symbol_id": "a15b81e5240c1cd6f167da9ce45271c8c59fcd316dcbcf3f00f48a3c56fef7a3",
+      "path": "src/requests/models.py",
+      "qualname": "src.requests.models.Response.is_permanent_redirect",
+      "content_hash": "2e81f5ee9c97d09796346afe67ae06d4003c3d809ff6a235e4fe611dfe67dbfa"
+    },
+    {
+      "fact_id": "probe-33f4c5accaddfada44ef5690",
+      "symbol_id": "79877e41c233e91802c62fdbd609b8aa2a2d29739c55b5b34fc035131e13e74c",
+      "path": "src/requests/models.py",
+      "qualname": "src.requests.models.RequestEncodingMixin._encode_files",
+      "content_hash": "343eba219f2eb75222ad4fb8397f392febdcbeeec6fc1f280fa7e93323b7786a"
+    },
+    {
+      "fact_id": "probe-34822776e00ba442c5ac9b1e",
+      "symbol_id": "687e0612812e18391c9bd0b8728d3c91531732e64f3e0c67e414f2e9da2cf58d",
+      "path": "src/requests/adapters.py",
+      "qualname": "src.requests.adapters.HTTPAdapter.request_url",
+      "content_hash": "6ed365ff1f0557b8d345e0b8e0bef767a876990d671ab31203a93c1b00855e2e"
+    },
+    {
+      "fact_id": "probe-34a29367255e5429052a59bd",
+      "symbol_id": "1b7da0cb49281bcfeb389b439bcd53c553f679abd5f93091e284acd940f0575a",
+      "path": "src/requests/adapters.py",
+      "qualname": "src.requests.adapters.HTTPAdapter.__getstate__",
+      "content_hash": "b9429da233486e9063bc94bc6b31eb8dd7b28d30ad2548ef5396615372a9a5b8"
+    },
+    {
+      "fact_id": "probe-3647e19bf7fa50fd4c7c0b90",
+      "symbol_id": "13171a7f3153b7bd2f41d7aab09632265c4168e638102a3956f81116043327bd",
+      "path": "src/requests/cookies.py",
+      "qualname": "src.requests.cookies.MockResponse.getheaders",
+      "content_hash": "933601a4cacc8126cb94cb611bfea635447f6cf5f09f8d52189b208813518175"
+    },
+    {
+      "fact_id": "probe-36fbb669ede84c4ef5fbdf78",
+      "symbol_id": "a9ef521041d929e9e823c469bf4a92e0d4d15203810732635e082f9ccdebbf54",
+      "path": "src/requests/utils.py",
+      "qualname": "src.requests.utils.proxy_bypass_registry",
+      "content_hash": "52787908ddec94ba3b8a01c884cbfe4e38df10afad71fa924d4ad648147e4172"
+    },
+    {
+      "fact_id": "probe-375b854e25fed0f77a242fc3",
+      "symbol_id": "02ccd22d8ea5a34ea80102d4581b30dfa51cab73f5c9dcb241045ce625cc4f4f",
+      "path": "src/requests/cookies.py",
+      "qualname": "src.requests.cookies.RequestsCookieJar.__getstate__",
+      "content_hash": "ca3d9442998b2f63d916feae3a685d3f3b9eadc19302cada6f0110aabc950811"
+    },
+    {
+      "fact_id": "probe-38cee511e323d14d5e45f098",
+      "symbol_id": "da4e5d8dd69d0d91ef6df8dc9d734053fde7e59f5974d6ec7a5efefa218ef4b3",
+      "path": "src/requests/utils.py",
+      "qualname": "src.requests.utils.urldefragauth",
+      "content_hash": "8b9455e71e4e42c5060015da877d95fc65bc184816465c5615bb75464a433590"
+    },
+    {
+      "fact_id": "probe-3b4c80eefe1ab1580ef5437e",
+      "symbol_id": "4a07baec8780c63c4bdd1a756b49336b5b1cf9c04f9a5c7c22b4e67aa14268a9",
+      "path": "src/requests/models.py",
+      "qualname": "src.requests.models.Response.links",
+      "content_hash": "2997f279a40c76571604a40b07551e411e1eeffc79c19cf6e5518e071ca0b712"
+    },
+    {
+      "fact_id": "probe-3c0b8f4d8d8caa4322282e9f",
+      "symbol_id": "cac78b2f57ba01bb8dac8127d4ebd6472422d25918b64e61b95abf4a05ecbcf4",
+      "path": "src/requests/sessions.py",
+      "qualname": "src.requests.sessions.SessionRedirectMixin.rebuild_auth",
+      "content_hash": "e3e3241af0f798973e9ebf16b749002dd199b083c7cd0ba7844ea6ce6d391e21"
+    },
+    {
+      "fact_id": "probe-3c290efebf1ab4a26e782598",
+      "symbol_id": "7e9a968601e44f8de611e20aac8ac72588a5b0af4ccef7d45ee8f24e548a5fc8",
+      "path": "src/requests/cookies.py",
+      "qualname": "src.requests.cookies.RequestsCookieJar.list_paths",
+      "content_hash": "7f6bb63c71c0a387ce822c9a7f7002f59625321a6240ff6804fb40be13743290"
+    },
+    {
+      "fact_id": "probe-3ce8e0b1166a373c2b458a8c",
+      "symbol_id": "0a68c385ce358bafb2c0bc8ecf6556a87a44f41e96532890a00a1d35bf985877",
+      "path": "src/requests/utils.py",
+      "qualname": "src.requests.utils.guess_json_utf",
+      "content_hash": "daa659d6a5e5b1a8a69e2abfd5865f06540bae2ed69e502551580f6daa2fcc9d"
+    },
+    {
+      "fact_id": "probe-3fd2c2dad8375d43be30fa48",
+      "symbol_id": "837b324546440a6fe8fbd5e152f89a48d89f86bf21791c0d8083c21a70390d04",
+      "path": "src/requests/sessions.py",
+      "qualname": "src.requests.sessions.Session.__enter__",
+      "content_hash": "ee6468d9d1fba0af6de8bccaa29792a5f430126774add0187116824888a8fbaa"
+    },
+    {
+      "fact_id": "probe-41142bc0338fc3c923348e0a",
+      "symbol_id": "da547e8cb3fcec1665fc7b03e3d9386ea58c9b4c6060187c1043cf834465ccdd",
+      "path": "src/requests/sessions.py",
+      "qualname": "src.requests.sessions.Session.options",
+      "content_hash": "e73bfe6e991cd86b97c1df9f7cb307e466b6b30496407fe1ceaf1dea74921f1d"
+    },
+    {
+      "fact_id": "probe-41200d9d82e367f153e84fbe",
+      "symbol_id": "b9a4f5987cfdbd1a11f5fa9cb1c853c0844c6491157c1817ebea7a977ddc956a",
+      "path": "src/requests/cookies.py",
+      "qualname": "src.requests.cookies.MockRequest.__init__",
+      "content_hash": "4317d5b77aa85489aeed7bbfc5c79df800c3b0da9596e101cafb300c3a4157b7"
+    },
+    {
+      "fact_id": "probe-41437a963708bccafbff59c3",
+      "symbol_id": "d565624d4ca06553db48d84e5093409e8ae0efdca339432d6830e0d5798e2904",
+      "path": "src/requests/help.py",
+      "qualname": "src.requests.help._implementation",
+      "content_hash": "3e442ec4a856747732edb57775de3b75b5ca14b7ddad59dcb614bd8032a3fef8"
+    },
+    {
+      "fact_id": "probe-42ec7199834614e0940c5db2",
+      "symbol_id": "8dee86a4a3d987f052e51392e72ca1b2dc0d1b49cb77aad39dcddc1337d4a673",
+      "path": "src/requests/utils.py",
+      "qualname": "src.requests.utils.resolve_proxies",
+      "content_hash": "60e55bf86ea5d1b043a9d8986b211d7af14bdb6441a8e4ba165cdb14fc402226"
+    },
+    {
+      "fact_id": "probe-44d58cb00aa867d5bf579ffb",
+      "symbol_id": "1a83f169cd268a134be1c45a32dd3289743a9efbf982a48646809bd239c1e25f",
+      "path": "src/requests/api.py",
+      "qualname": "src.requests.api.put",
+      "content_hash": "4ceb0f71463455c45615339a5f8866520427a4ab0fc8a40a4363a4e34af29105"
+    },
+    {
+      "fact_id": "probe-46d6d754fcd6183f781f9ec1",
+      "symbol_id": "7c7724bc2fba0e7030be0317089c1fb722445123e6e5a57f3e8071a2bedfe84f",
+      "path": "src/requests/cookies.py",
+      "qualname": "src.requests.cookies.extract_cookies_to_jar",
+      "content_hash": "39c05c8cf86e33eea291e409e82a686c3fca613058496ebeb878080bd839a6d7"
+    },
+    {
+      "fact_id": "probe-46f791145a97cfd0af75e291",
+      "symbol_id": "3b46a1834e8952fa8acaef431ec9bfc44693e114d58fa876921ca5513bee07a0",
+      "path": "src/requests/adapters.py",
+      "qualname": "src.requests.adapters.BaseAdapter.__init__",
+      "content_hash": "5d670bd83454ce9a4abbb05e1965bd47e796bc55aa1ac9abcff959075f00c7c2"
+    },
+    {
+      "fact_id": "probe-472e60ad394bfcf5144db6ad",
+      "symbol_id": "9eb78698d95ebc740798e6eb90082f7f6aed7a6d2abeeab40776c02644c75598",
+      "path": "src/requests/cookies.py",
+      "qualname": "src.requests.cookies.RequestsCookieJar.get_dict",
+      "content_hash": "9e793684e1248706c2e2d6e53d0f4d612475d29b15c403e7469aff384eab79bd"
+    }
+  ]
+}
