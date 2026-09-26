@@ -293,6 +293,15 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual(len(store.log()),1)
         store.close()
 
+    def test_verify_detects_corruption(self):
+        store=MemoryStore(":memory:")
+        f=store.remember("a")
+        self.assertTrue(store.verify())
+        store.db.execute("DELETE FROM facts WHERE id=?",(f.id,))
+        with self.assertRaises(ValueError):
+            store.verify()
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"

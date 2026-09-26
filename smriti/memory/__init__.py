@@ -351,3 +351,10 @@ class MemoryStore:
 # P10.20
 
 # P10.21
+    def verify(self):
+        stored={row[0]:self._decode(row[1]) for row in self.db.execute("SELECT id,payload FROM facts")}
+        expected=self.replay()
+        if stored!=expected:
+            raise ValueError("Materialized memory differs from verified operation replay")
+        return True
+# P10.22
