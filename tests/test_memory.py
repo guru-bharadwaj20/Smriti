@@ -570,6 +570,27 @@ class MemoryTests(unittest.TestCase):
             store.close()
             self.assertNotIn(b"UNIQUE_PRIVATE_PAYLOAD",path.read_bytes())
 
+    def test_irrevocable_forget(self):
+        store=MemoryStore(":memory:")
+        a=store.remember("secret")
+        add=store.head
+        store.branch("feature")
+        b=store.remember("derived",derived_from=[a.id])
+        store.forget(a.id)
+        store.switch("feature")
+        self.assertEqual(store.recall(),[])
+        with self.assertRaises(ValueError):
+            store.revert(add)
+        with self.assertRaises(ValueError):
+            store.remember("reuse",fact_id=a.id)
+        with self.assertRaises(ValueError):
+            store.remember("new derivative",derived_from=[a.id])
+        store.merge("main")
+        self.assertEqual(store.replay(),{})
+        self.assertEqual(store.replay(add),{})
+        self.assertTrue(store.verify())
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"
