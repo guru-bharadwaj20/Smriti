@@ -538,10 +538,20 @@ class MemoryStore:
 
     def merge(self,source,*,resolutions=None):
         preview=self.merge_preview(source)
-        if preview["conflicts"]:
-            raise MergeConflict(preview["conflicts"])
+        resolutions=resolutions or {}
+        unresolved={fid:c for fid,c in preview["conflicts"].items() if fid not in resolutions}
+        if unresolved:
+            raise MergeConflict(unresolved)
+        if set(resolutions)-set(preview["conflicts"]):
+            raise ValueError("Resolution supplied for a non-conflicting fact")
+        for fid,choice in resolutions.items():
+            if choice not in ("ours","theirs","base","delete"):
+                raise ValueError("Resolution must be ours, theirs, base or delete")
+            selected=None if choice=="delete" else preview["conflicts"][fid][choice]
+            if selected is not None:
+                preview["state"][fid]=selected
         with self.db:
-            op=self._snapshot("merge",preview["state"],metadata={"source":source,"base":preview["base"]})
+            op=self._snapshot("merge",preview["state"],metadata={"source":source,"base":preview["base"],"resolutions":resolutions})
             self._materialize(preview["state"])
         return op.id
 # P11.09
@@ -551,3 +561,5 @@ class MemoryStore:
 # P11.11
 
 # P11.12
+
+# P11.13
