@@ -194,3 +194,12 @@ def validate_ranges(result: ParseResult) -> None:
         actual = byte_point(result.source, symbol.start_byte)[0] + 1
         if actual != symbol.start_line:
             raise ValueError("Symbol line disagrees with source range")
+
+
+LANGUAGE_SUPPORT = {
+    "python": "Definitions, imports, calls, inheritance and incremental trees",
+    "typescript": "Definitions and methods; full type-based call resolution is deferred",
+    "java": "Definitions and methods; full overload resolution is deferred",
+    "go": "Deferred optional phase P15.01; rejected until a grammar is installed",
+    "cpp": "Deferred optional phase P15.02; templates and macros need explicit policy",
+}
