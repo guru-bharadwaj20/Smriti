@@ -118,3 +118,12 @@ def test_oversized_utf8_function_keeps_all_bytes():
     assert b"".join(parts) == source
     assert all(len(part) <= 16 for part in parts)
     assert all(part.decode("utf-8") for part in parts)
+
+
+def test_typescript_grammar_fixture():
+    from tree_sitter import Language, Parser
+    import tree_sitter_typescript
+    from smriti.parse import TYPESCRIPT_FIXTURE
+    tree = Parser(Language(tree_sitter_typescript.language_typescript())).parse(TYPESCRIPT_FIXTURE.encode())
+    assert not tree.root_node.has_error
+    assert tree.root_node.named_children[0].type == "export_statement"

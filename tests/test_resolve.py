@@ -93,3 +93,10 @@ def test_inherited_method_resolution():
     result = parse_file("a.py", "class A:\n    def helper(self):\n        pass\nclass B(A):\n    def run(self):\n        self.helper()\n")
     resolver = Resolver([result])
     assert resolver.resolve_name("self.helper", result.symbols[4].id) == result.symbols[2].id
+
+
+def test_overrides_and_super():
+    result = parse_file("a.py", "class A:\n    def work(self):\n        pass\nclass B(A):\n    def work(self):\n        super().work()\n    def run(self):\n        self.work()\n")
+    resolver = Resolver([result])
+    assert resolver.resolve_name("self.work", result.symbols[5].id) == result.symbols[4].id
+    assert resolver.resolve_name("super().work", result.symbols[4].id) == result.symbols[2].id

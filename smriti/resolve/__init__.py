@@ -32,6 +32,8 @@ class Resolver:
             elif parent and self.symbols[parent].kind == "class":
                 parent = self.parents.get(parent)
             return self.resolve_name(name, parent, visited) if parent else None
+        if name.startswith("super().") and self.symbols[scope].kind == "method":
+            return self.method_target(self.parents[scope], name[len("super()."):], skip_current=True)
         if name.startswith(("self.", "cls.")) and self.symbols[scope].kind == "method":
             return self.method_target(self.parents[scope], name.split(".", 1)[1])
         binding = self.bindings.get((scope, name), "@missing")
@@ -171,6 +173,9 @@ class Resolver:
             if target:
                 return target
         return None
+    def dispatch_order(self, class_id: str) -> list[str]:
+        """Inspect the exact override precedence used for self and super calls."""
+        return c3_linearize(class_id, self.class_bases())
 
 def c3_linearize(class_id: str, bases: dict[str, list[str]], stack=()) -> list[str]:
     """Compute Python's C3 MRO and reject cyclic or inconsistent inheritance."""

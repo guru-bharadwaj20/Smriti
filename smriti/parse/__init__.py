@@ -170,3 +170,6 @@ def split_oversized(source: bytes | str, max_bytes: int = 16384) -> list[bytes]:
     if current:
         parts.append(current)
     return parts
+
+
+TYPESCRIPT_FIXTURE = "export class Worker { run(value: number): number { return value + 1; } }\nexport function launch(): Worker { return new Worker(); }"
