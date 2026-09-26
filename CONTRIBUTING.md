@@ -284,7 +284,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P08.10 | Implement bucketed budget option | tests/test_pack.py; executable assertions passed |
 | ✅ Done | P08.11 | Implement greedy marginal-value baseline | smriti/pack/packer.py; executable assertions passed |
 | ✅ Done | P08.12 | Require minimum class context for methods | smriti/pack/packer.py; executable assertions passed |
-| ❌ Pending | P08.13 | Deduplicate class and method bodies | — |
+| ✅ Done | P08.13 | Deduplicate class and method bodies | smriti/pack/packer.py; executable assertions passed |
 | ❌ Pending | P08.14 | Handle dependency costs during packing | — |
 | ❌ Pending | P08.15 | Handle symbols larger than available budget | — |
 | ❌ Pending | P08.16 | Render stable file and symbol ordering | — |

@@ -74,3 +74,25 @@ def add_parent_context(groups,symbols,counter):
             options=[Representation(o.id,o.level,header+o.text,counter.count(header+o.text),o.value) if o.level!='omit' else o for o in options]
         result.append(options)
     return result
+
+def deduplicate_bodies(chosen,symbols):
+    by_id={s.id:s for s in symbols}; full={o.id for o in chosen if o.level=='body'}
+    result=[]
+    for option in chosen:
+        symbol=by_id[option.id]; parent=getattr(symbol,'parent_id',None)
+        covered=False
+        while parent and parent in by_id:
+            if parent in full: covered=True; break
+            parent=getattr(by_id[parent],'parent_id',None)
+        if not covered and option.level!='omit': result.append(option)
+    return result
+
+def covered_symbols(chosen,symbols):
+    by_id={s.id:s for s in symbols}; full={o.id for o in chosen if o.level=='body'}
+    covered={o.id for o in chosen if o.level!='omit'}
+    for symbol in symbols:
+        parent=getattr(symbol,'parent_id',None)
+        while parent and parent in by_id:
+            if parent in full: covered.add(symbol.id); break
+            parent=getattr(by_id[parent],'parent_id',None)
+    return covered
