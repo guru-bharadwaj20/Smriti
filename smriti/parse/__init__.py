@@ -25,6 +25,9 @@ class SourceParser:
         self.cache = {}
         self.parsers = {"python": Parser(Language(tree_sitter_python.language()))}
 
+        import tree_sitter_typescript
+        self.parsers["typescript"] = Parser(Language(tree_sitter_typescript.language_typescript()))
+
     def parse(self, path: str, source: bytes | str, language: str = "python") -> ParseResult:
         data = source.encode("utf-8") if isinstance(source, str) else source
         cached = self.cache.get(path)
@@ -54,15 +57,15 @@ class SourceParser:
     def _extract(self, result: ParseResult, language: str) -> None:
         path = result.path
         name = PurePosixPath(path).stem
-        module = path.removesuffix(".py").replace("/", ".").removesuffix(".__init__")
+        module = str(PurePosixPath(path).with_suffix("")).replace("/", ".").removesuffix(".__init__")
         root = result.tree.root_node
         result.symbols.append(Symbol(sha256((path + ":module").encode()).hexdigest(), path, name,
             module, "module", 1, max(1, len(result.source.splitlines())), 0, len(result.source),
             body=result.source.decode("utf-8"), content_hash=sha256(result.source).hexdigest()))
 
         def walk(node, parent):
-            if node.type in {"class_definition", "function_definition"} and node.child_by_field_name("name") and node.child_by_field_name("body"):
-                kind = "class" if node.type == "class_definition" else ("method" if parent.kind == "class" else "function")
+            if node.type in {"class_definition", "function_definition", "class_declaration", "function_declaration", "method_definition"} and node.child_by_field_name("name") and node.child_by_field_name("body"):
+                kind = "class" if node.type in {"class_definition", "class_declaration"} else ("method" if parent.kind == "class" else "function")
                 name_node = node.child_by_field_name("name")
                 name = result.source[name_node.start_byte:name_node.end_byte].decode("utf-8")
                 qualname = parent.qualname + "." + name
@@ -91,7 +94,7 @@ class SourceParser:
                             result.inheritance.append({"class": symbol.id, "scope": parent.id,
                                 "name": result.source[base.start_byte:base.end_byte].decode("utf-8")})
                 parent = symbol
-            if node.type in {"import_statement", "import_from_statement"}:
+            if language == "python" and node.type in {"import_statement", "import_from_statement"}:
                 import ast
                 statement = ast.parse(result.source[node.start_byte:node.end_byte].decode("utf-8")).body[0]
                 for alias in statement.names:
