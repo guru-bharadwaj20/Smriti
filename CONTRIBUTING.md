@@ -492,7 +492,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P14.19 | Script cold-index and one-line-edit demo | 20 files cold 2.307s; one changed file edit 0.209s; strict mypy and Ruff |
 | ✅ Done | P14.20 | Script issue retrieval within 8k-token budget | Real service functional demo selected101 cl100k tokens within8000; strict mypy and Ruff |
 | ✅ Done | P14.21 | Script memory recall across sessions | Closed and reopened actual SQLite store; recalled same ID anchor and session; strict mypy and Ruff |
-| ❌ Pending | P14.22 | Script rename, stale detection, branch, merge, revert | — |
+| ✅ Done | P14.22 | Script rename, stale detection, branch, merge, revert | Real parser rename preserves identity; stale hash detected; conflict blocks; explicit merge and revert verified; strict mypy and Ruff |
 | ❌ Pending | P14.23 | Record demo video with real timing evidence | — |
 | ❌ Pending | P14.24 | Write project report and benchmark findings | — |
 | ❌ Pending | P14.25 | Fill resume bullet numbers from published results | — |
