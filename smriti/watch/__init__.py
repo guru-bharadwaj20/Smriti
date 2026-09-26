@@ -153,6 +153,18 @@ def preserve_symbol_ids(
     removed = [s for s in old if s.id not in after]
     added = [s for s in new if s.id not in before]
     mapping: dict[str, str] = {}
+    # A verified rename changes the stored ID, so match its later edits by location identity.
+    for target in added:
+        sources = [
+            source
+            for source in removed
+            if (source.path, source.qualname, source.kind)
+            == (target.path, target.qualname, target.kind)
+        ]
+        if len(sources) == 1:
+            mapping[target.id] = sources[0].id
+    removed = [source for source in removed if source.id not in mapping.values()]
+    added = [target for target in added if target.id not in mapping]
     fingerprints = {structural_fingerprint(s) for s in removed}
     for fingerprint in fingerprints:
         sources = [s for s in removed if structural_fingerprint(s) == fingerprint]
