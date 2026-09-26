@@ -146,7 +146,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P03.16 | Add TypeScript extraction fixtures | smriti/parse; pytest tests/test_parse.py passed |
 | ✅ Done | P03.17 | Implement TypeScript symbol extraction | smriti/parse; pytest tests/test_parse.py passed |
 | ✅ Done | P03.18 | Add Java extraction fixtures | smriti/parse; pytest tests/test_parse.py passed |
-| ❌ Pending | P03.19 | Implement Java symbol extraction | — |
+| ✅ Done | P03.19 | Implement Java symbol extraction | smriti/parse; pytest tests/test_parse.py passed |
 | ❌ Pending | P03.20 | Validate symbol ranges against source slices | — |
 | ❌ Pending | P03.21 | Document staged Go and C/C++ support | — |
 

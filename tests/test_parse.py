@@ -143,3 +143,10 @@ def test_java_grammar_fixture():
     tree = Parser(Language(tree_sitter_java.language())).parse(JAVA_FIXTURE.encode())
     assert not tree.root_node.has_error
     assert tree.root_node.named_children[1].type == "class_declaration"
+
+
+def test_java_symbol_extraction():
+    from smriti.parse import JAVA_FIXTURE
+    result = SourceParser().parse("Worker.java", JAVA_FIXTURE, "java")
+    assert [(s.name, s.kind) for s in result.symbols[1:]] == [("Worker", "class"), ("run", "method")]
+    assert result.symbols[2].parent_id == result.symbols[1].id
