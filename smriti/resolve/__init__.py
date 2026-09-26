@@ -286,3 +286,11 @@ def edge_metrics(actual: set[tuple[str, str]], expected: set[tuple[str, str]]) -
         "false_negative": len(expected - actual),
         "precision": true_positive / len(actual) if actual else (1.0 if not expected else 0.0),
         "recall": true_positive / len(expected) if expected else 1.0}
+
+
+RESOLUTION_LIMITATIONS = (
+    "Runtime monkey-patching and decorators are not exact",
+    "Declared-class self dispatch can differ from runtime subclass dispatch",
+    "Unresolved external bases can change MRO",
+    "Path-sensitive type inference, reflection and computed imports remain uncertain",
+)

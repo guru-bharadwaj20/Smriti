@@ -193,3 +193,10 @@ def test_report_edge_precision_and_recall():
     assert report["precision"] == report["recall"] == 1.0
     assert report["true_positive"] == 2
     assert edge_metrics({("a", "b")}, {("a", "c")})["precision"] == 0
+
+
+def test_resolution_limits_remain_explicit():
+    from smriti.resolve import RESOLUTION_LIMITATIONS
+    assert any("MRO" in limitation for limitation in RESOLUTION_LIMITATIONS)
+    result = parse_file("a.py", "def caller(factory):\n    factory()\n")
+    assert any(edge.target.startswith("dynamic:") for edge in Resolver([result]).resolve())
