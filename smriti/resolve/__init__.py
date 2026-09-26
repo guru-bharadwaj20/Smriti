@@ -151,3 +151,23 @@ class Resolver:
 
     def own_method(self, class_id: str, name: str) -> str | None:
         return self.children.get(class_id, {}).get(name)
+
+
+def c3_linearize(class_id: str, bases: dict[str, list[str]], stack=()) -> list[str]:
+    """Compute Python's C3 MRO and reject cyclic or inconsistent inheritance."""
+    if class_id in stack:
+        raise ValueError("Inheritance cycle")
+    parents = bases.get(class_id, [])
+    sequences = [c3_linearize(parent, bases, (*stack, class_id)) for parent in parents] + [list(parents)]
+    result = [class_id]
+    while any(sequences):
+        sequences = [sequence for sequence in sequences if sequence]
+        candidate = next((sequence[0] for sequence in sequences
+            if all(sequence[0] not in other[1:] for other in sequences)), None)
+        if candidate is None:
+            raise ValueError("Inconsistent C3 inheritance order")
+        result.append(candidate)
+        for sequence in sequences:
+            if sequence and sequence[0] == candidate:
+                sequence.pop(0)
+    return result
