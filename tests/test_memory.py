@@ -209,6 +209,14 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual(store.replay()[f.id].text,"new")
         store.close()
 
+    def test_invalidation_replay(self):
+        store = MemoryStore(":memory:")
+        f = store.remember("obsolete")
+        store.invalidate(f.id)
+        self.assertEqual(store.recall(),[])
+        self.assertEqual(store.replay(),{})
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"

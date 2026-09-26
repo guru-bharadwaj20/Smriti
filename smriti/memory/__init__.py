@@ -238,7 +238,9 @@ class MemoryStore:
     def replay(self,head=None):
         state = {}
         for op in self.operations.ancestry(head if head is not None else self.head):
-            if op.kind in ("add","update"):
+            if op.kind == "invalidate":
+                state.pop(op.fact_id,None)
+            elif op.kind in ("add","update"):
                 payload = self.operations.payload(op)
                 if payload is not None:
                     state[op.fact_id] = self._decode(canonical(payload))
@@ -262,3 +264,14 @@ class MemoryStore:
                     timeline.correct(op.fact_id,payload,ValidInterval(payload["valid_from"],payload.get("valid_to")),op.recorded_at)
         return timeline
 # P10.13
+    def invalidate(self,fact_id,*,reason="invalidated"):
+        fact = next((f for f in self.recall() if f.id==fact_id),None)
+        if fact is None:
+            raise KeyError(fact_id)
+        with self.db:
+            from .operations import digest
+            self._record("invalidate",fact_id,{"id":fact_id,"reason":reason},metadata={"reason_hash":digest(reason)})
+            self.db.execute("DELETE FROM facts WHERE id=?",(fact_id,))
+            self.db.execute("DELETE FROM fact_anchors WHERE fact_id=?",(fact_id,))
+        return fact_id
+# P10.14
