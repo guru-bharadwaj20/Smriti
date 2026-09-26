@@ -397,6 +397,12 @@ class MemoryStore:
             raise ValueError("Operation was already reverted")
         if operation_id not in {o.id for o in self.operations.ancestry(self.head)}:
             raise ValueError("Operation is not on the active branch")
+        if op.kind == "merge":
+            before=self.replay(op.parents[0]) if op.parents else {}
+            with self.db:
+                inverse=self._snapshot("restore",before,metadata={"reverts":operation_id})
+                self._materialize(before)
+            return inverse.id
         if op.kind not in ("add","update","invalidate"):
             raise ValueError("Operation kind is not reversible")
         if self.is_purged(op.fact_id):
@@ -571,3 +577,5 @@ class MemoryStore:
 # P11.13
 
 # P11.14
+
+# P11.15

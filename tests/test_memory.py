@@ -477,6 +477,20 @@ class MemoryTests(unittest.TestCase):
         self.assertTrue(store.verify())
         store.close()
 
+    def test_revert_merge(self):
+        store=MemoryStore(":memory:")
+        store.branch("feature")
+        a=store.remember("main")
+        store.switch("feature")
+        store.remember("feature")
+        store.switch("main")
+        merged=store.merge("feature")
+        store.revert(merged)
+        self.assertEqual({f.id for f in store.recall()},{a.id})
+        self.assertEqual(store.log()[0]["kind"],"restore")
+        self.assertTrue(store.verify())
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"
