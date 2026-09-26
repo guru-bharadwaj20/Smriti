@@ -340,7 +340,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P10.09 | Define canonical operation serialization | smriti\memory\operations.py; P10.09 regression in tests\test_memory_operations.py |
 | ✅ Done | P10.10 | Hash operations for content addressing | smriti\memory\operations.py; P10.10 regression in tests\test_memory_operations.py |
 | ✅ Done | P10.11 | Link operations to parent history | smriti\memory\operations.py; P10.11 regression in tests\test_memory_operations.py |
-| ❌ Pending | P10.12 | Implement add operation replay | — |
+| ✅ Done | P10.12 | Implement add operation replay | smriti\memory\__init__.py; P10.12 regression in tests\test_memory.py |
 | ❌ Pending | P10.13 | Implement update operation replay | — |
 | ❌ Pending | P10.14 | Implement invalidate operation replay | — |
 | ❌ Pending | P10.15 | Define forget tombstone and payload-purge policy | — |
