@@ -17,6 +17,7 @@
       <button class="nav-button" data-view="context">Context <span>03</span></button>
       <button class="nav-button" data-view="memory">Memory <span>04</span></button>
       <button class="nav-button" data-view="history">History &amp; diff <span>05</span></button>
+      <button class="nav-button" data-view="conflicts">Branch merge <span>06</span></button>
     </nav>
     <div class="sidebar-footer"><span class="live-dot"></span> Your code, on your machine.</div>
   </aside>
@@ -59,6 +60,12 @@
         <p class="intro">Review memory operations and compare two points in the active branch's history.</p>
         <article class="panel"><h2>Compare memory states</h2><form id="diff-form" class="context-form"><label for="diff-left">Before history ID · blank starts from empty</label><input id="diff-left" class="history-input" placeholder="Choose an operation below"><label for="diff-right">After history ID · blank uses the current head</label><input id="diff-right" class="history-input" placeholder="Current head"><button class="button">Compare states →</button></form><div id="diff-results"></div></article>
         <article class="panel"><div class="panel-heading"><h2>Operations</h2><span class="pill" id="history-head">CURRENT HEAD</span></div><div id="history-results"><p class="empty">Load history to inspect recorded operations.</p></div></article>
+      </section>
+      <section id="view-conflicts" class="view" hidden>
+        <div class="page-heading"><div><p class="eyebrow">MAKE THE DECISION VISIBLE</p><h1>Bring knowledge together.</h1></div><button class="button secondary" id="load-branches">Load branches ↻</button></div>
+        <p class="intro">Preview a memory merge, compare conflicting facts, and choose the version to retain.</p>
+        <form id="merge-form" class="search-form"><label class="sr-only" for="merge-source">Source memory branch</label><select id="merge-source" required><option value="">Load branches to select a source</option></select><button class="button">Preview merge →</button></form>
+        <p id="merge-state" class="muted">No merge preview loaded.</p><div id="merge-conflicts"></div><button class="button" id="apply-merge" disabled>Apply merge</button>
       </section>
     </div>
   </main>

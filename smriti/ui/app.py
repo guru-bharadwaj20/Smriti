@@ -8,11 +8,12 @@ from pathlib import Path
 from typing import Any
 
 from fastapi import FastAPI, HTTPException, Query
+from fastapi.encoders import jsonable_encoder
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
-from smriti.memory import MemoryStore
-from smriti.server.schemas import ContextRequest
+from smriti.memory import MemoryStore, MergeConflict
+from smriti.server.schemas import ContextRequest, MergeRequest
 from smriti.server.service import SmritiService
 from smriti.server.status import index_status
 
@@ -103,5 +104,47 @@ def create_app(root: Path) -> FastAPI:
                 return store.diff(left or None, right or None)
             except (KeyError, ValueError) as error:
                 raise HTTPException(404, 'Memory history ID not found') from error
+
+    @app.get('/api/branches')
+    def branches() -> dict[str, Any]:
+        with memory_store(root, service.config.data_dir) as store:
+            return {'current': store.current_branch, 'heads': store.branches()}
+
+    @app.get('/api/merge-preview')
+    def merge_preview(source: str = Query(min_length=1, max_length=200)) -> dict[str, Any]:
+        with memory_store(root, service.config.data_dir) as store:
+            try:
+                preview = store.merge_preview(source)
+                return {
+                    'current': store.current_branch,
+                    'source': source,
+                    'base': preview['base'],
+                    'source_head': preview['source_head'],
+                    'conflicts': jsonable_encoder(preview['conflicts']),
+                }
+            except KeyError as error:
+                raise HTTPException(404, 'Memory branch not found') from error
+
+    @app.post('/api/merge')
+    def merge(request: MergeRequest) -> dict[str, str]:
+        with memory_store(root, service.config.data_dir) as store:
+            try:
+                operation = store.merge(
+                    request.source,
+                    resolutions={key: str(value) for key, value in request.resolutions.items()},
+                )
+                return {'operation_id': operation, 'branch': store.current_branch}
+            except MergeConflict as error:
+                raise HTTPException(
+                    409,
+                    {
+                        'message': 'Choose a resolution for every conflict',
+                        'conflicts': jsonable_encoder(error.conflicts),
+                    },
+                ) from error
+            except KeyError as error:
+                raise HTTPException(404, 'Memory branch not found') from error
+            except ValueError as error:
+                raise HTTPException(400, str(error)) from error
 
     return app

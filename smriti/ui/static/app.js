@@ -188,6 +188,82 @@ async function compareMemory(event) {
   } catch (error) { notify(error.message); }
 }
 
+let mergeState = null;
+
+async function loadBranches() {
+  try {
+    const data = await request('/api/branches');
+    const source = byId('merge-source');
+    source.replaceChildren();
+    const placeholder = element('option', `Merge into ${data.current} from…`);
+    placeholder.value = '';
+    source.append(placeholder);
+    for (const name of Object.keys(data.heads).filter((name) => name !== data.current).sort()) {
+      const option = element('option', name);
+      option.value = name;
+      source.append(option);
+    }
+    mergeState = null;
+    byId('apply-merge').disabled = true;
+    notify('');
+  } catch (error) { notify(error.message); }
+}
+
+function updateMergeButton() {
+  const choices = [...document.querySelectorAll('[data-conflict-id]')];
+  byId('apply-merge').disabled = !mergeState || choices.some((choice) => !choice.value);
+}
+
+async function previewMerge(event) {
+  event.preventDefault();
+  try {
+    mergeState = await request(`/api/merge-preview?source=${encodeURIComponent(byId('merge-source').value)}`);
+    const conflicts = Object.entries(mergeState.conflicts);
+    byId('merge-state').textContent = `${mergeState.current} ← ${mergeState.source} · ${conflicts.length} conflicts`;
+    const results = byId('merge-conflicts');
+    results.replaceChildren();
+    for (const [id, conflict] of conflicts) {
+      const card = element('article', '', 'panel conflict-card');
+      card.append(element('h2', conflict.kind === 'delete_update' ? 'Deletion conflicts with an update' : 'Both branches changed this fact'), element('p', id, 'provenance'));
+      const versions = element('div', '', 'conflict-grid');
+      for (const [key, label] of [['base', 'Common ancestor'], ['ours', 'Current branch'], ['theirs', 'Source branch']]) {
+        const variant = element('div', '', 'conflict-variant');
+        variant.append(element('h3', label), element('p', conflict[key]?.text || 'Fact absent', 'fact-text'));
+        versions.append(variant);
+      }
+      card.append(versions);
+      const label = element('label', 'Retain this version', 'conflict-label');
+      const choice = element('select', '', 'history-input');
+      choice.dataset.conflictId = id;
+      for (const [key, text] of [['', 'Choose a resolution…'], ['ours', 'Current branch'], ['theirs', 'Source branch'], ['base', 'Common ancestor'], ['delete', 'Delete the fact']]) {
+        const option = element('option', text);
+        option.value = key;
+        choice.append(option);
+      }
+      choice.addEventListener('change', updateMergeButton);
+      label.append(choice);
+      card.append(label);
+      results.append(card);
+    }
+    if (!conflicts.length) results.append(element('p', 'No conflicts. The branches can merge directly.', 'empty'));
+    updateMergeButton();
+    notify('');
+  } catch (error) { mergeState = null; updateMergeButton(); notify(error.message); }
+}
+
+async function applyMerge() {
+  if (!mergeState) return;
+  const resolutions = Object.fromEntries([...document.querySelectorAll('[data-conflict-id]')].map((choice) => [choice.dataset.conflictId, choice.value]));
+  byId('apply-merge').disabled = true;
+  try {
+    const result = await request('/api/merge', {method: 'POST', body: JSON.stringify({source: mergeState.source, resolutions})});
+    byId('merge-state').textContent = `Merged into ${result.branch} · operation ${result.operation_id.slice(0, 12)}`;
+    byId('merge-conflicts').replaceChildren(element('p', 'The selected resolutions are recorded in memory history.', 'empty'));
+    mergeState = null;
+    notify('');
+  } catch (error) { updateMergeButton(); notify(error.message); }
+}
+
 document.querySelectorAll('[data-view]').forEach((button) => button.addEventListener('click', () => {
   document.querySelectorAll('[data-view]').forEach((item) => item.classList.toggle('active', item === button));
   document.querySelectorAll('.view').forEach((view) => { view.hidden = view.id !== `view-${button.dataset.view}`; });
@@ -198,4 +274,7 @@ byId('context-form').addEventListener('submit', buildContext);
 byId('memory-search').addEventListener('submit', recallMemory);
 byId('refresh-history').addEventListener('click', loadHistory);
 byId('diff-form').addEventListener('submit', compareMemory);
+byId('load-branches').addEventListener('click', loadBranches);
+byId('merge-form').addEventListener('submit', previewMerge);
+byId('apply-merge').addEventListener('click', applyMerge);
 refreshStatus();

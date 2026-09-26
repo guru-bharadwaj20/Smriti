@@ -111,3 +111,32 @@ def test_ui_history_diff_contains_actual_before_and_after(tmp_path):
         assert diff['changed'][fact.id]['before']['text'] == 'Returns one.'
         assert diff['changed'][fact.id]['after']['text'] == 'Returns two.'
         assert client.get('/api/diff', params={'left': 'unknown'}).status_code == 404
+
+
+def test_ui_merge_requires_and_records_explicit_conflict_resolution(tmp_path):
+    from smriti.memory import MemoryStore
+
+    service = SmritiService(tmp_path)
+    store = MemoryStore(service.config.data_dir / 'memory.sqlite')
+    try:
+        fact = store.remember('Base version.')
+        store.branch('feature')
+        store.switch('feature')
+        store.update(fact.id, 'Feature version.')
+        store.switch('main')
+        store.update(fact.id, 'Main version.')
+    finally:
+        store.close()
+    with TestClient(create_app(tmp_path)) as client:
+        assert set(client.get('/api/branches').json()['heads']) == {'main', 'feature'}
+        preview = client.get('/api/merge-preview', params={'source': 'feature'}).json()
+        assert preview['conflicts'][fact.id]['ours']['text'] == 'Main version.'
+        assert preview['conflicts'][fact.id]['theirs']['text'] == 'Feature version.'
+        assert client.post('/api/merge', json={'source': 'feature'}).status_code == 409
+        merged = client.post(
+            '/api/merge', json={'source': 'feature', 'resolutions': {fact.id: 'theirs'}}
+        )
+        assert merged.status_code == 200
+        assert merged.json()['operation_id']
+        facts = client.get('/api/memory').json()['facts']
+        assert next(item for item in facts if item['id'] == fact.id)['text'] == 'Feature version.'
