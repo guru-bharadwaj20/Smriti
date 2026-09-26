@@ -433,7 +433,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P13.07 | Define handling of added and deleted functions | docs/evaluation-labels.md; base-commit label policy reviewed |
 | ❌ Pending | P13.08 | Prevent patch and post-fix code leakage | — |
 | ✅ Done | P13.09 | Implement issue-word grep baseline | bench/swebench/grep_baseline.py; executable semantic assertions passed |
-| ❌ Pending | P13.10 | Implement lexical-only baseline | — |
+| ✅ Done | P13.10 | Implement lexical-only baseline | bench/swebench/lexical_baseline.py; executable semantic assertions passed |
 | ❌ Pending | P13.11 | Implement embedding-only baseline | — |
 | ❌ Pending | P13.12 | Implement Aider-style repo-map baseline | — |
 | ✅ Done | P13.13 | Compute file recall at k | bench/swebench/metrics.py; independent duplicate and empty-gold checks passed |
