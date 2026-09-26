@@ -363,9 +363,9 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P11.02 | Track common base memory state | smriti\memory\__init__.py; P11.02 regression in tests\test_memory.py |
 | ✅ Done | P11.03 | Create memory branch from current head | smriti\memory\__init__.py; P11.03 regression in tests\test_memory.py |
 | ✅ Done | P11.04 | Switch memory state on git checkout | smriti\memory\__init__.py; P11.04 regression in tests\test_memory.py |
-| ❌ Pending | P11.05 | Handle detached HEAD explicitly | — |
-| ❌ Pending | P11.06 | Handle branch rename and deletion | — |
-| ❌ Pending | P11.07 | Prevent facts leaking across unrelated branches | — |
+| ✅ Done | P11.05 | Handle detached HEAD explicitly | smriti\memory\__init__.py; P11.05 regression in tests\test_memory.py |
+| ✅ Done | P11.06 | Handle branch rename and deletion | smriti\memory\__init__.py; P11.06 regression in tests\test_memory.py |
+| ✅ Done | P11.07 | Prevent facts leaking across unrelated branches | smriti\memory\__init__.py; P11.07 regression in tests\test_memory.py |
 | ❌ Pending | P11.08 | Compute three-way memory merge | — |
 | ❌ Pending | P11.09 | Auto-merge disjoint fact additions | — |
 | ❌ Pending | P11.10 | Detect concurrent edits to the same fact | — |

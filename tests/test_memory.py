@@ -352,6 +352,39 @@ class MemoryTests(unittest.TestCase):
         self.assertTrue(store.verify())
         store.close()
 
+    def test_detached_head_namespace(self):
+        from unittest.mock import patch
+        import subprocess
+        store=MemoryStore(":memory:")
+        with patch("subprocess.run",side_effect=[subprocess.CompletedProcess([],1,"",""),subprocess.CompletedProcess([],0,"abc123","")]):
+            self.assertEqual(store.sync_git("."),"detached/abc123")
+        self.assertEqual(store.current_branch,"detached/abc123")
+        store.close()
+
+    def test_rename_delete_branch(self):
+        store=MemoryStore(":memory:")
+        store.rename_branch("main","trunk")
+        self.assertEqual(store.current_branch,"trunk")
+        store.branch("feature")
+        store.delete_branch("feature")
+        self.assertEqual(set(store.branches()),{"trunk"})
+        with self.assertRaises(ValueError):
+            store.delete_branch("trunk")
+        store.close()
+
+    def test_unrelated_branch_isolation(self):
+        store=MemoryStore(":memory:")
+        store.remember("private main")
+        store.branch("unrelated",from_head="")
+        store.switch("unrelated")
+        self.assertEqual(store.recall(),[])
+        store.remember("private other")
+        store.switch("main")
+        self.assertEqual([f.text for f in store.recall()],["private main"])
+        self.assertEqual(len(store.log()),1)
+        self.assertEqual([f.text for f in store.recall(valid_at=store._clock())],["private main"])
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"
