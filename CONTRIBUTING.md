@@ -290,7 +290,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P08.16 | Render stable file and symbol ordering | smriti/pack/packer.py; executable assertions passed |
 | ✅ Done | P08.17 | Render omitted-line markers | smriti/pack/packer.py; executable assertions passed |
 | ✅ Done | P08.18 | Recount final rendered output tokens | smriti/pack/packer.py; executable assertions passed |
-| ❌ Pending | P08.19 | Enforce strict final budget limit | — |
+| ✅ Done | P08.19 | Enforce strict final budget limit | smriti/pack/packer.py; executable assertions passed |
 | ❌ Pending | P08.20 | Compare small instances with exhaustive oracle | — |
 | ❌ Pending | P08.21 | Measure packing quality and latency | — |
 | ❌ Pending | P08.22 | Document approximation limits under constraints | — |

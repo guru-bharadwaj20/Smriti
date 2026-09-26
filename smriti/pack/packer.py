@@ -122,5 +122,10 @@ class ContextPacker:
         selected=stable_order(deduplicate_bodies(selected,symbols),symbols)
         text=''.join(o.text for o in selected)
         count=self.counter.count(text)
+        # Token merges at concatenation boundaries are not assumed additive.
+        while count>available and selected:
+            selected.pop(min(range(len(selected)),key=lambda i:(selected[i].value/max(selected[i].cost,1),selected[i].id)))
+            text=''.join(o.text for o in selected); count=self.counter.count(text)
+        if count>available: raise ValueError('framing exceeds budget')
         covered=covered_symbols(selected,symbols)
         return PackedContext(text,count,selected,self.counter.encoding_name,[s.id for s in symbols if s.id not in covered],sorted(covered))
