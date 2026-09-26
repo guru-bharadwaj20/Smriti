@@ -370,7 +370,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P11.09 | Auto-merge disjoint fact additions | smriti\memory\__init__.py; P11.09 regression in tests\test_memory.py |
 | ✅ Done | P11.10 | Detect concurrent edits to the same fact | smriti\memory\__init__.py; P11.10 regression in tests\test_memory.py |
 | ✅ Done | P11.11 | Detect delete-versus-update conflicts | smriti\memory\__init__.py; P11.11 regression in tests\test_memory.py |
-| ❌ Pending | P11.12 | Expose unresolved conflicts for user decisions | — |
+| ✅ Done | P11.12 | Expose unresolved conflicts for user decisions | smriti\memory\__init__.py; P11.12 regression in tests\test_memory.py |
 | ❌ Pending | P11.13 | Record merge conflict resolutions | — |
 | ❌ Pending | P11.14 | Represent multi-parent merge history | — |
 | ❌ Pending | P11.15 | Revert a merged operation consistently | — |
@@ -435,10 +435,10 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P13.09 | Implement issue-word grep baseline | bench/swebench/grep_baseline.py; executable semantic assertions passed |
 | ✅ Done | P13.10 | Implement lexical-only baseline | bench/swebench/lexical_baseline.py; executable semantic assertions passed |
 | ✅ Done | P13.11 | Implement embedding-only baseline | bench/swebench/embedding_baseline.py; executable semantic assertions passed |
-| ❌ Pending | P13.12 | Implement Aider-style repo-map baseline | — |
+| ✅ Done | P13.12 | Implement Aider-style repo-map baseline | bench/swebench/repo_map_baseline.py; executable semantic assertions passed |
 | ✅ Done | P13.13 | Compute file recall at k | bench/swebench/metrics.py; independent duplicate and empty-gold checks passed |
 | ✅ Done | P13.14 | Compute function recall at k | bench/swebench/function_metrics.py; duplicate missing empty and negative-k tests passed |
-| ❌ Pending | P13.15 | Compute packed budget recall at 4k tokens | — |
+| ✅ Done | P13.15 | Compute packed budget recall at 4k tokens | bench/swebench/budget_metrics.py; executable semantic assertions passed |
 | ❌ Pending | P13.16 | Compute packed budget recall at 8k tokens | — |
 | ❌ Pending | P13.17 | Compute packed budget recall at 16k tokens | — |
 | ❌ Pending | P13.18 | Measure tokens required to cover gold locations | — |
