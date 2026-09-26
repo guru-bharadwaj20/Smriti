@@ -118,7 +118,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P02.19 | Remove dangling graph references after deletion | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ✅ Done | P02.20 | Update postings and vectors for changed symbols | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ✅ Done | P02.21 | Commit index changes atomically | tests/test_snapshot_atomic.py; targeted verification passed |
-| ❌ Pending | P02.22 | Recover from interrupted indexing | — |
+| ✅ Done | P02.22 | Recover from interrupted indexing | tests/test_snapshot_recovery.py; targeted verification passed |
 | ✅ Done | P02.23 | Verify incremental and fresh-index equivalence | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 | ✅ Done | P02.24 | Measure one-line update latency on stated hardware | smriti\watch\__init__.py; pytest tests\test_merkle_watch.py passed |
 
