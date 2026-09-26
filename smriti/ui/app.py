@@ -1,18 +1,40 @@
 """Local inspection views backed by the repository service."""
 
+import subprocess
+from collections.abc import Iterator
+from contextlib import contextmanager
 from dataclasses import asdict
 from pathlib import Path
 from typing import Any
 
 from fastapi import FastAPI, HTTPException, Query
+from fastapi.encoders import jsonable_encoder
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
-from smriti.server.schemas import ContextRequest
+from smriti.memory import MemoryStore, MergeConflict
+from smriti.server.schemas import ContextRequest, MergeRequest
 from smriti.server.service import SmritiService
 from smriti.server.status import index_status
 
 ASSETS = Path(__file__).parent / 'static'
+
+
+@contextmanager
+def memory_store(root: Path, data_dir: Path) -> Iterator[MemoryStore]:
+    store = MemoryStore(data_dir / 'memory.sqlite')
+    try:
+        inside_git = subprocess.run(
+            ['git', '-C', str(root), 'rev-parse', '--is-inside-work-tree'],
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        if inside_git.returncode == 0:
+            store.sync_git(root)
+        yield store
+    finally:
+        store.close()
 
 
 def create_app(root: Path) -> FastAPI:
@@ -56,5 +78,73 @@ def create_app(root: Path) -> FastAPI:
     @app.post('/api/context')
     def context(request: ContextRequest) -> dict[str, Any]:
         return asdict(service.context(request.task, request.budget))
+
+    @app.get('/api/memory')
+    def memory(q: str = Query(default='', max_length=10000)) -> dict[str, Any]:
+        with memory_store(root, service.config.data_dir) as store:
+            return {
+                'branch': store.current_branch,
+                'head': store.head,
+                'facts': [fact.to_dict() for fact in store.recall(q)],
+            }
+
+    @app.get('/api/history')
+    def history(limit: int = Query(default=100, ge=1, le=1000)) -> dict[str, Any]:
+        with memory_store(root, service.config.data_dir) as store:
+            return {
+                'branch': store.current_branch,
+                'head': store.head,
+                'operations': store.log(limit=limit),
+            }
+
+    @app.get('/api/diff')
+    def memory_diff(left: str | None = None, right: str | None = None) -> dict[str, Any]:
+        with memory_store(root, service.config.data_dir) as store:
+            try:
+                return store.diff(left or None, right or None)
+            except (KeyError, ValueError) as error:
+                raise HTTPException(404, 'Memory history ID not found') from error
+
+    @app.get('/api/branches')
+    def branches() -> dict[str, Any]:
+        with memory_store(root, service.config.data_dir) as store:
+            return {'current': store.current_branch, 'heads': store.branches()}
+
+    @app.get('/api/merge-preview')
+    def merge_preview(source: str = Query(min_length=1, max_length=200)) -> dict[str, Any]:
+        with memory_store(root, service.config.data_dir) as store:
+            try:
+                preview = store.merge_preview(source)
+                return {
+                    'current': store.current_branch,
+                    'source': source,
+                    'base': preview['base'],
+                    'source_head': preview['source_head'],
+                    'conflicts': jsonable_encoder(preview['conflicts']),
+                }
+            except KeyError as error:
+                raise HTTPException(404, 'Memory branch not found') from error
+
+    @app.post('/api/merge')
+    def merge(request: MergeRequest) -> dict[str, str]:
+        with memory_store(root, service.config.data_dir) as store:
+            try:
+                operation = store.merge(
+                    request.source,
+                    resolutions={key: str(value) for key, value in request.resolutions.items()},
+                )
+                return {'operation_id': operation, 'branch': store.current_branch}
+            except MergeConflict as error:
+                raise HTTPException(
+                    409,
+                    {
+                        'message': 'Choose a resolution for every conflict',
+                        'conflicts': jsonable_encoder(error.conflicts),
+                    },
+                ) from error
+            except KeyError as error:
+                raise HTTPException(404, 'Memory branch not found') from error
+            except ValueError as error:
+                raise HTTPException(400, str(error)) from error
 
     return app

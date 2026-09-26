@@ -52,3 +52,91 @@ def test_ui_context_explains_real_selections_within_budget(tmp_path):
         zero = client.post('/api/context', json={'task': 'work', 'budget': 0}).json()
         assert zero['token_count'] == 0 and zero['text'] == ''
         assert client.post('/api/context', json={'task': ' ', 'budget': 128}).status_code == 422
+
+
+def test_ui_memory_retains_freshness_warning_after_source_edit(tmp_path):
+    from smriti.memory import Anchor, MemoryStore
+
+    source = tmp_path / 'worker.py'
+    source.write_text('def work():\n    return 1\n')
+    service = SmritiService(tmp_path)
+    service.index()
+    work = next(symbol for symbol in service.snapshot().symbols if symbol.kind == 'function')
+    store = MemoryStore(service.config.data_dir / 'memory.sqlite')
+    try:
+        fact = store.remember(
+            'Work returns one.',
+            anchors=(Anchor(work.id, work.content_hash),),
+            source='fixture',
+            session='session-one',
+        )
+    finally:
+        store.close()
+    source.write_text('def work():\n    return 2\n')
+    service.index()
+    store = MemoryStore(service.config.data_dir / 'memory.sqlite')
+    try:
+        store.refresh(
+            {symbol.id: symbol.content_hash for symbol in service.snapshot().symbols},
+            commit='fixture-edit',
+        )
+    finally:
+        store.close()
+    with TestClient(create_app(tmp_path)) as client:
+        response = client.get('/api/memory', params={'q': 'Work'}).json()
+        remembered = next(item for item in response['facts'] if item['id'] == fact.id)
+        assert remembered['freshness'] == 'stale'
+        assert remembered['requires_revalidation'] is True
+        assert remembered['freshness_reason']
+        assert remembered['session'] == 'session-one'
+
+
+def test_ui_history_diff_contains_actual_before_and_after(tmp_path):
+    from smriti.memory import MemoryStore
+
+    service = SmritiService(tmp_path)
+    store = MemoryStore(service.config.data_dir / 'memory.sqlite')
+    try:
+        fact = store.remember('Returns one.', source='fixture')
+        before = store.head
+        store.update(fact.id, 'Returns two.')
+        after = store.head
+    finally:
+        store.close()
+    with TestClient(create_app(tmp_path)) as client:
+        history = client.get('/api/history').json()
+        assert history['head'] == after
+        assert [item['kind'] for item in history['operations']][:2] == ['update', 'add']
+        diff = client.get('/api/diff', params={'left': before, 'right': after}).json()
+        assert diff['changed'][fact.id]['before']['text'] == 'Returns one.'
+        assert diff['changed'][fact.id]['after']['text'] == 'Returns two.'
+        assert client.get('/api/diff', params={'left': 'unknown'}).status_code == 404
+
+
+def test_ui_merge_requires_and_records_explicit_conflict_resolution(tmp_path):
+    from smriti.memory import MemoryStore
+
+    service = SmritiService(tmp_path)
+    store = MemoryStore(service.config.data_dir / 'memory.sqlite')
+    try:
+        fact = store.remember('Base version.')
+        store.branch('feature')
+        store.switch('feature')
+        store.update(fact.id, 'Feature version.')
+        store.switch('main')
+        store.update(fact.id, 'Main version.')
+    finally:
+        store.close()
+    with TestClient(create_app(tmp_path)) as client:
+        assert set(client.get('/api/branches').json()['heads']) == {'main', 'feature'}
+        preview = client.get('/api/merge-preview', params={'source': 'feature'}).json()
+        assert preview['conflicts'][fact.id]['ours']['text'] == 'Main version.'
+        assert preview['conflicts'][fact.id]['theirs']['text'] == 'Feature version.'
+        assert client.post('/api/merge', json={'source': 'feature'}).status_code == 409
+        merged = client.post(
+            '/api/merge', json={'source': 'feature', 'resolutions': {fact.id: 'theirs'}}
+        )
+        assert merged.status_code == 200
+        assert merged.json()['operation_id']
+        facts = client.get('/api/memory').json()['facts']
+        assert next(item for item in facts if item['id'] == fact.id)['text'] == 'Feature version.'
