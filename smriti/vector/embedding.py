@@ -79,33 +79,53 @@ class BatchedEmbedder:
 class EmbeddingCache:
     def __init__(self, path: str | Path, encoder: Encoder) -> None:
         import sqlite3
+        import threading
 
-        self.connection = sqlite3.connect(str(path))
+        self.connection = sqlite3.connect(str(path), check_same_thread=False)
         self.encoder = encoder
+        self.lock = threading.RLock()
         self.connection.execute(
             'CREATE TABLE IF NOT EXISTS embeddings (key TEXT PRIMARY KEY, vector TEXT NOT NULL)'
         )
+
+    @property
+    def version(self) -> str:
+        return self.encoder.version
 
     def embed(self, texts: Sequence[str]) -> list[tuple[float, ...]]:
         import hashlib
         import json
 
-        output = []
-        for text in texts:
-            key = hashlib.sha256((self.encoder.version + '\0' + text).encode()).hexdigest()
-            row = self.connection.execute(
-                'SELECT vector FROM embeddings WHERE key=?', (key,)
-            ).fetchone()
-            if row:
-                vector = tuple(json.loads(row[0]))
-            else:
-                vector = self.encoder.embed([text])[0]
-                self.connection.execute(
-                    'INSERT OR REPLACE INTO embeddings VALUES (?,?)', (key, json.dumps(vector))
-                )
-                self.connection.commit()
-            output.append(vector)
-        return output
+        with self.lock:
+            keys = [
+                hashlib.sha256((self.encoder.version + '\0' + text).encode()).hexdigest()
+                for text in texts
+            ]
+            found: dict[str, tuple[float, ...]] = {}
+            missing: dict[str, str] = {}
+            for key, text in zip(keys, texts, strict=True):
+                if key in found or key in missing:
+                    continue
+                row = self.connection.execute(
+                    'SELECT vector FROM embeddings WHERE key=?', (key,)
+                ).fetchone()
+                if row:
+                    found[key] = tuple(float(x) for x in json.loads(row[0]))
+                else:
+                    missing[key] = text
+            if missing:
+                vectors = self.encoder.embed(list(missing.values()))
+                if len(vectors) != len(missing):
+                    raise ValueError('encoder returned incorrect batch size')
+                with self.connection:
+                    for key, vector in zip(missing, vectors, strict=True):
+                        found[key] = vector
+                        self.connection.execute(
+                            'INSERT OR REPLACE INTO embeddings VALUES (?,?)',
+                            (key, json.dumps(vector)),
+                        )
+            return [found[key] for key in keys]
 
     def close(self) -> None:
-        self.connection.close()
+        with self.lock:
+            self.connection.close()

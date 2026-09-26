@@ -229,6 +229,15 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual(store.forget(f.id),[])
         store.close()
 
+    def test_replay_determinism(self):
+        store = MemoryStore(":memory:")
+        store.remember("a",fact_id="a")
+        store.remember("b",fact_id="b")
+        self.assertEqual(store.replay_digest(),store.replay_digest())
+        for op in store.operations.ancestry(store.head):
+            self.assertEqual(store.operations.get(op.id),op)
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"

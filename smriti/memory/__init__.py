@@ -301,3 +301,7 @@ class MemoryStore:
             self._record("forget",fact_id)
         return [fact_id]
 # P10.15
+    def replay_digest(self,head=None):
+        from .operations import digest
+        return digest({fid:asdict(f) for fid,f in sorted(self.replay(head).items())})
+# P10.16
