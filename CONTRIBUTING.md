@@ -489,7 +489,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P14.16 | Build and test Python package artifact | — |
 | ❌ Pending | P14.17 | Create optional Docker build | — |
 | ❌ Pending | P14.18 | Verify clean-install CLI and MCP smoke tests | — |
-| ❌ Pending | P14.19 | Script cold-index and one-line-edit demo | — |
+| ✅ Done | P14.19 | Script cold-index and one-line-edit demo | 20 files cold 2.307s; one changed file edit 0.209s; strict mypy and Ruff |
 | ❌ Pending | P14.20 | Script issue retrieval within 8k-token budget | — |
 | ❌ Pending | P14.21 | Script memory recall across sessions | — |
 | ❌ Pending | P14.22 | Script rename, stale detection, branch, merge, revert | — |
