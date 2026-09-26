@@ -350,8 +350,8 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P10.19 | Implement operation revert as new history | smriti\memory\__init__.py; P10.19 regression in tests\test_memory.py |
 | ✅ Done | P10.20 | Handle revert of already-reverted operations | smriti\memory\__init__.py; P10.20 regression in tests\test_memory.py |
 | ✅ Done | P10.21 | Persist log and materialized view atomically | smriti\memory\__init__.py; P10.21 regression in tests\test_memory.py |
-| ❌ Pending | P10.22 | Verify replay matches stored state | — |
-| ❌ Pending | P10.23 | Test clock ties and deterministic ordering | — |
+| ✅ Done | P10.22 | Verify replay matches stored state | smriti\memory\__init__.py; P10.22 regression in tests\test_memory.py |
+| ✅ Done | P10.23 | Test clock ties and deterministic ordering | smriti\memory\__init__.py; P10.23 regression in tests\test_memory.py |
 
 ### P11 — Git branches, merge, and cascading deletion
 
@@ -359,7 +359,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
-| ❌ Pending | P11.01 | Map repository branches to memory heads | — |
+| ✅ Done | P11.01 | Map repository branches to memory heads | smriti\memory\__init__.py; P11.01 regression in tests\test_memory.py |
 | ❌ Pending | P11.02 | Track common base memory state | — |
 | ❌ Pending | P11.03 | Create memory branch from current head | — |
 | ❌ Pending | P11.04 | Switch memory state on git checkout | — |

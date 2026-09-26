@@ -293,6 +293,33 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual(len(store.log()),1)
         store.close()
 
+    def test_verify_detects_corruption(self):
+        store=MemoryStore(":memory:")
+        f=store.remember("a")
+        self.assertTrue(store.verify())
+        store.db.execute("DELETE FROM facts WHERE id=?",(f.id,))
+        with self.assertRaises(ValueError):
+            store.verify()
+        store.close()
+
+    def test_clock_ties(self):
+        from datetime import datetime,timezone
+        fixed=datetime(2025,1,1,tzinfo=timezone.utc)
+        store=MemoryStore(":memory:",clock=lambda:fixed)
+        f=store.remember("a")
+        store.update(f.id,"b")
+        operations=store.operations.ancestry(store.head)
+        self.assertLess(operations[0].recorded_at,operations[1].recorded_at)
+        self.assertEqual(len(store.timeline().rows),2)
+        self.assertTrue(store.verify())
+        store.close()
+
+    def test_branch_heads(self):
+        store=MemoryStore(":memory:")
+        store.remember("a")
+        self.assertEqual(store.branches(),{"main":store.head})
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"

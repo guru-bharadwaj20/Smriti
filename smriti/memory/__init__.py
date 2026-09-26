@@ -61,6 +61,9 @@ class MemoryStore:
         self.db.execute("INSERT OR IGNORE INTO memory_meta VALUES ('head',NULL)")
         self.db.commit()
         self.operations = OperationLog(self.db)
+        self.db.execute("CREATE TABLE IF NOT EXISTS memory_branches (name TEXT PRIMARY KEY,head TEXT)")
+        self.db.execute("INSERT OR IGNORE INTO memory_meta VALUES ('branch','main')")
+        self.db.execute("INSERT OR IGNORE INTO memory_branches VALUES ('main',?)",(self.head,))
         self.db.execute("CREATE TABLE IF NOT EXISTS memory_purged (fact_id TEXT PRIMARY KEY)")
         self.db.commit()
 
@@ -234,11 +237,17 @@ class MemoryStore:
         return self.db.execute("SELECT value FROM memory_meta WHERE key='head'").fetchone()[0]
 
     def _event_time(self):
-        return timestamp(self._clock()).isoformat()
+        point=timestamp(self._clock())
+        if self.head:
+            prior=timestamp(self.operations.get(self.head).recorded_at)
+            if point<=prior:
+                point=prior+timedelta(microseconds=1)
+        return point.isoformat()
 
     def _record(self,kind,fact_id=None,payload=None,*,metadata=None,recorded_at=None,parents=None):
         op = self.operations.append_uncommitted(kind,fact_id,payload,parents=parents if parents is not None else ((self.head,) if self.head else ()),recorded_at=recorded_at or self._event_time(),metadata=metadata)
         self.db.execute("UPDATE memory_meta SET value=? WHERE key='head'",(op.id,))
+        self.db.execute("UPDATE memory_branches SET head=? WHERE name=?",(op.id,self.current_branch))
         return op
 
     def replay(self,head=None):
@@ -351,3 +360,19 @@ class MemoryStore:
 # P10.20
 
 # P10.21
+    def verify(self):
+        stored={row[0]:self._decode(row[1]) for row in self.db.execute("SELECT id,payload FROM facts")}
+        expected=self.replay()
+        if stored!=expected:
+            raise ValueError("Materialized memory differs from verified operation replay")
+        return True
+# P10.22
+
+# P10.23
+    @property
+    def current_branch(self):
+        return self.db.execute("SELECT value FROM memory_meta WHERE key='branch'").fetchone()[0]
+
+    def branches(self):
+        return dict(self.db.execute("SELECT name,head FROM memory_branches ORDER BY name"))
+# P11.01
