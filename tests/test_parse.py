@@ -150,3 +150,10 @@ def test_java_symbol_extraction():
     result = SourceParser().parse("Worker.java", JAVA_FIXTURE, "java")
     assert [(s.name, s.kind) for s in result.symbols[1:]] == [("Worker", "class"), ("run", "method")]
     assert result.symbols[2].parent_id == result.symbols[1].id
+
+
+def test_all_language_ranges_are_exact():
+    from smriti.parse import validate_ranges, TYPESCRIPT_FIXTURE, JAVA_FIXTURE
+    parser = SourceParser()
+    for path, code, lang in [("a.py", "def π():\n    return 1\n", "python"), ("a.ts", TYPESCRIPT_FIXTURE, "typescript"), ("A.java", JAVA_FIXTURE, "java")]:
+        validate_ranges(parser.parse(path, code, lang))
