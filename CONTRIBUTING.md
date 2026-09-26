@@ -293,7 +293,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P08.19 | Enforce strict final budget limit | smriti/pack/packer.py; executable assertions passed |
 | ✅ Done | P08.20 | Compare small instances with exhaustive oracle | tests/test_pack.py; executable assertions passed |
 | ❌ Pending | P08.21 | Measure packing quality and latency | — |
-| ❌ Pending | P08.22 | Document approximation limits under constraints | — |
+| ✅ Done | P08.22 | Document approximation limits under constraints | docs/packing.md; executable assertions passed |
 
 ### P09 — Anchored memory and freshness
 
