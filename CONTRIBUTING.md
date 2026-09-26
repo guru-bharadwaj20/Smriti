@@ -368,7 +368,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P11.07 | Prevent facts leaking across unrelated branches | smriti\memory\__init__.py; P11.07 regression in tests\test_memory.py |
 | ✅ Done | P11.08 | Compute three-way memory merge | smriti\memory\__init__.py; P11.08 regression in tests\test_memory.py |
 | ✅ Done | P11.09 | Auto-merge disjoint fact additions | smriti\memory\__init__.py; P11.09 regression in tests\test_memory.py |
-| ❌ Pending | P11.10 | Detect concurrent edits to the same fact | — |
+| ✅ Done | P11.10 | Detect concurrent edits to the same fact | smriti\memory\__init__.py; P11.10 regression in tests\test_memory.py |
 | ❌ Pending | P11.11 | Detect delete-versus-update conflicts | — |
 | ❌ Pending | P11.12 | Expose unresolved conflicts for user decisions | — |
 | ❌ Pending | P11.13 | Record merge conflict resolutions | — |

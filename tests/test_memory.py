@@ -410,6 +410,21 @@ class MemoryTests(unittest.TestCase):
         self.assertTrue(store.verify())
         store.close()
 
+    def test_concurrent_edit_conflict(self):
+        store=MemoryStore(":memory:")
+        f=store.remember("base")
+        store.branch("feature")
+        store.update(f.id,"ours")
+        store.switch("feature")
+        store.update(f.id,"theirs")
+        store.switch("main")
+        conflict=store.merge_preview("feature")["conflicts"][f.id]
+        self.assertEqual(conflict["base"].text,"base")
+        with self.assertRaises(ValueError):
+            store.merge("feature")
+        self.assertEqual(store.recall()[0].text,"ours")
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"

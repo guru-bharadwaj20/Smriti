@@ -539,3 +539,5 @@ class MemoryStore:
             self._materialize(preview["state"])
         return op.id
 # P11.09
+
+# P11.10
