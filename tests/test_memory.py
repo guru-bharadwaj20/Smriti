@@ -550,6 +550,26 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual({f.id for f in store.recall()},{b.id})
         store.close()
 
+    def test_purge_all_branches_and_pages(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path=Path(directory)/"private.db"
+            store=MemoryStore(path)
+            f=store.remember("UNIQUE_PRIVATE_PAYLOAD_91")
+            store.branch("feature")
+            store.update(f.id,"UNIQUE_PRIVATE_PAYLOAD_92")
+            store.switch("feature")
+            store.update(f.id,"UNIQUE_PRIVATE_PAYLOAD_93")
+            store.switch("main")
+            store.merge("feature",resolutions={f.id:"theirs"})
+            store.invalidate(f.id,reason="UNIQUE_PRIVATE_PAYLOAD_REASON")
+            store.forget(f.id)
+            for branch in store.branches():
+                store.switch(branch)
+                self.assertEqual(store.recall(),[])
+                self.assertTrue(store.verify())
+            store.close()
+            self.assertNotIn(b"UNIQUE_PRIVATE_PAYLOAD",path.read_bytes())
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"

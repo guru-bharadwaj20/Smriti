@@ -97,9 +97,20 @@ class Resolver:
                 tree = ast.parse(result.source)
             except SyntaxError:
                 continue
-            by_location = {
-                (s.start_line, s.name): s.id for s in result.symbols if s.kind != 'module'
-            }
+            by_location = {}
+            for symbol in result.symbols:
+                if symbol.kind == 'module':
+                    continue
+                # Symbol ranges include decorators; ast.lineno points at the definition.
+                offset = next(
+                    (
+                        index
+                        for index, line in enumerate(symbol.signature.splitlines())
+                        if line.lstrip().startswith(('def ', 'async def ', 'class '))
+                    ),
+                    0,
+                )
+                by_location[(symbol.start_line + offset, symbol.name)] = symbol.id
 
             def visit(
                 node: ast.AST,

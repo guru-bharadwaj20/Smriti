@@ -55,6 +55,7 @@ class MemoryStore:
 
     def __init__(self, db_path, *, clock=None):
         self.db = sqlite3.connect(str(db_path))
+        self.db.execute("PRAGMA secure_delete=ON")
         self._clock = clock or (lambda: datetime.now(timezone.utc))
         schemas = [
             "CREATE TABLE IF NOT EXISTS facts (id TEXT PRIMARY KEY, payload TEXT NOT NULL)",
@@ -630,6 +631,9 @@ class MemoryStore:
                 self.db.execute("DELETE FROM fact_audit WHERE fact_id=?",(fid,))
                 self.db.execute("DELETE FROM conflict_audit WHERE fact_id=? OR winner_id=? OR EXISTS (SELECT 1 FROM json_each(candidate_ids) WHERE value=?)",(fid,fid,fid))
                 self._record("forget",fid)
+        if forgotten:
+            self.db.execute("PRAGMA wal_checkpoint(TRUNCATE)")
+            self.db.execute("VACUUM")
         return forgotten
 # P11.19
     def forget_by(self,*,session=None,source=None):
@@ -647,3 +651,5 @@ class MemoryStore:
 # P11.20
 
 # P11.21
+
+# P11.22
