@@ -145,3 +145,24 @@ def test_symlink_leaf_never_reads_target_directory(tmp_path, monkeypatch):
     snapshot = RepositoryScanner().scan(tmp_path)
     assert snapshot.files == {'linked': hash_content(b'symlink\0external-target')}
     assert set(snapshot.directories) == {''}
+
+
+def test_nested_ignore_events_and_repository_excludes(tmp_path):
+    from smriti.merkle import RepositoryScanner
+
+    (tmp_path / '.git' / 'info').mkdir(parents=True)
+    (tmp_path / '.git' / 'info' / 'exclude').write_text('private.py\n')
+    (tmp_path / '.gitignore').write_text('*.log\ncache/\n!keep.log\n')
+    (tmp_path / 'pkg').mkdir()
+    (tmp_path / 'pkg' / '.gitignore').write_text('!nested.log\n')
+    (tmp_path / 'cache').mkdir()
+    (tmp_path / 'cache' / '.gitignore').write_text('!inside.py\n')
+    files = ['private.py', 'drop.log', 'keep.log', 'pkg/nested.log', 'cache/inside.py']
+    for name in files:
+        (tmp_path / name).write_text('source')
+    scanner = RepositoryScanner()
+    snapshot = scanner.scan(tmp_path)
+    assert 'pkg/nested.log' in snapshot.files
+    assert 'keep.log' in snapshot.files
+    for name in files:
+        assert scanner.ignored_path(tmp_path, name) == (name not in snapshot.files)

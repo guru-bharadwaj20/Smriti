@@ -145,7 +145,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P03.15 | Define treatment of oversized functions | smriti/parse; pytest tests/test_parse.py passed |
 | ✅ Done | P03.16 | Add TypeScript extraction fixtures | smriti/parse; pytest tests/test_parse.py passed |
 | ✅ Done | P03.17 | Implement TypeScript symbol extraction | smriti/parse; pytest tests/test_parse.py passed |
-| ❌ Pending | P03.18 | Add Java extraction fixtures | — |
+| ✅ Done | P03.18 | Add Java extraction fixtures | smriti/parse; pytest tests/test_parse.py passed |
 | ❌ Pending | P03.19 | Implement Java symbol extraction | — |
 | ❌ Pending | P03.20 | Validate symbol ranges against source slices | — |
 | ❌ Pending | P03.21 | Document staged Go and C/C++ support | — |
@@ -168,7 +168,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P04.10 | Implement Python C3 linearisation | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.11 | Resolve inherited methods | smriti/resolve; pytest tests/test_resolve.py passed |
 | ✅ Done | P04.12 | Respect overridden methods | smriti/resolve; pytest tests/test_resolve.py passed |
-| ❌ Pending | P04.13 | Record uncertain dynamic-call candidates | — |
+| ✅ Done | P04.13 | Record uncertain dynamic-call candidates | smriti/resolve; pytest tests/test_resolve.py passed |
 | ❌ Pending | P04.14 | Assign confidence to resolved edges | — |
 | ❌ Pending | P04.15 | Persist defines and contains edges | — |
 | ❌ Pending | P04.16 | Persist calls and imports edges | — |
@@ -287,7 +287,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P08.13 | Deduplicate class and method bodies | smriti/pack/packer.py; executable assertions passed |
 | ✅ Done | P08.14 | Handle dependency costs during packing | docs/packing.md; executable assertions passed |
 | ✅ Done | P08.15 | Handle symbols larger than available budget | tests/test_pack.py; executable assertions passed |
-| ❌ Pending | P08.16 | Render stable file and symbol ordering | — |
+| ✅ Done | P08.16 | Render stable file and symbol ordering | smriti/pack/packer.py; executable assertions passed |
 | ❌ Pending | P08.17 | Render omitted-line markers | — |
 | ❌ Pending | P08.18 | Recount final rendered output tokens | — |
 | ❌ Pending | P08.19 | Enforce strict final budget limit | — |

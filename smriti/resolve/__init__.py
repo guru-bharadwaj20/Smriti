@@ -62,6 +62,8 @@ class Resolver:
                 else:
                     target = self.external_reference(call["name"], call["scope"])
                     edges.append(Edge(call["scope"], target, "calls", 0.5))
+                    for candidate in self.dynamic_candidates(call["name"]):
+                        edges.append(Edge(call["scope"], candidate, "may_call", 0.25))
         self.edges = sorted(set(edges), key=lambda e: (e.source, e.kind, e.target))
         return self.edges
 
@@ -176,6 +178,11 @@ class Resolver:
     def dispatch_order(self, class_id: str) -> list[str]:
         """Inspect the exact override precedence used for self and super calls."""
         return c3_linearize(class_id, self.class_bases())
+    def dynamic_candidates(self, name: str) -> list[str]:
+        """Potential same-name targets remain explicitly uncertain, never exact calls."""
+        leaf = name.rsplit(".", 1)[-1]
+        return sorted(symbol.id for symbol in self.symbols.values()
+                      if symbol.name == leaf and symbol.kind in {"function", "method"})
 
 def c3_linearize(class_id: str, bases: dict[str, list[str]], stack=()) -> list[str]:
     """Compute Python's C3 MRO and reject cyclic or inconsistent inheritance."""

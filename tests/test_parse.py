@@ -134,3 +134,12 @@ def test_typescript_symbol_extraction():
     result = SourceParser().parse("worker.ts", TYPESCRIPT_FIXTURE, "typescript")
     assert [(s.name, s.kind) for s in result.symbols[1:]] == [("Worker", "class"), ("run", "method"), ("launch", "function")]
     assert result.symbols[2].parent_id == result.symbols[1].id
+
+
+def test_java_grammar_fixture():
+    from tree_sitter import Language, Parser
+    import tree_sitter_java
+    from smriti.parse import JAVA_FIXTURE
+    tree = Parser(Language(tree_sitter_java.language())).parse(JAVA_FIXTURE.encode())
+    assert not tree.root_node.has_error
+    assert tree.root_node.named_children[1].type == "class_declaration"

@@ -100,3 +100,12 @@ def test_overrides_and_super():
     resolver = Resolver([result])
     assert resolver.resolve_name("self.work", result.symbols[5].id) == result.symbols[4].id
     assert resolver.resolve_name("super().work", result.symbols[4].id) == result.symbols[2].id
+
+
+def test_dynamic_call_candidates_have_distinct_edge_kind():
+    result = parse_file("a.py", "def run():\n    pass\ndef caller(obj):\n    obj.run()\n")
+    edges = Resolver([result]).resolve()
+    uncertain = [edge for edge in edges if edge.kind == "may_call"]
+    assert len(uncertain) == 1
+    assert uncertain[0].target == result.symbols[1].id
+    assert uncertain[0].confidence == 0.25
