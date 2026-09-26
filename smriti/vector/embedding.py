@@ -55,7 +55,8 @@ class ONNXEmbedder:
 
 
 class Encoder(Protocol):
-    version: str
+    @property
+    def version(self) -> str: ...
 
     def embed(self, texts: Sequence[str]) -> list[tuple[float, ...]]: ...
 

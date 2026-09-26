@@ -14,7 +14,11 @@ class LexicalBaseline:
                 continue
             self.index.add(
                 symbol.id,
-                {'signature': symbol.signature, 'docstring': symbol.docstring, 'body': symbol.body},
+                {
+                    'signature': symbol.qualname + ' ' + symbol.signature,
+                    'docstring': symbol.docstring,
+                    'body': symbol.body,
+                },
             )
 
     def search(self, query: str, k: int = 50) -> list[SearchHit]:
