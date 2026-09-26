@@ -512,7 +512,7 @@ class MemoryStore:
             elif self._same_fact(t,a):
                 selected=o
             else:
-                conflicts[fid]={"base":a,"ours":o,"theirs":t}
+                conflicts[fid]={"base":a,"ours":o,"theirs":t,"kind":"delete_update" if (o is None or t is None) else "concurrent_update"}
                 continue
             if selected is not None:
                 state[fid]=selected
@@ -541,3 +541,5 @@ class MemoryStore:
 # P11.09
 
 # P11.10
+
+# P11.11
