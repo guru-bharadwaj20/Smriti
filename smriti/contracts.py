@@ -26,6 +26,7 @@ class ContextResponse:
     tokenizer: str
     index_version: int
     items: tuple[ContextItem, ...] = ()
+    covered_ids: tuple[str, ...] = ()
 
     def __post_init__(self) -> None:
         if self.budget < 0 or not 0 <= self.token_count <= self.budget:

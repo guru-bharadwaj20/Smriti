@@ -377,8 +377,8 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P11.16 | Store source-to-derived-fact edges | smriti\memory\__init__.py; P11.16 regression in tests\test_memory.py |
 | ✅ Done | P11.17 | Reject derivation cycles | smriti\memory\__init__.py; P11.17 regression in tests\test_memory.py |
 | ✅ Done | P11.18 | Traverse transitive deletion dependencies | smriti\memory\__init__.py; P11.18 regression in tests\test_memory.py |
-| ❌ Pending | P11.19 | Cascade forget by fact ID | — |
-| ❌ Pending | P11.20 | Cascade forget by session or source | — |
+| ✅ Done | P11.19 | Cascade forget by fact ID | smriti\memory\__init__.py; P11.19 regression in tests\test_memory.py |
+| ✅ Done | P11.20 | Cascade forget by session or source | smriti\memory\__init__.py; P11.20 regression in tests\test_memory.py |
 | ❌ Pending | P11.21 | Define shared-source derivation deletion behavior | — |
 | ❌ Pending | P11.22 | Purge forgotten payloads across branches and caches | — |
 | ❌ Pending | P11.23 | Prevent replay or rollback resurrecting purged facts | — |
@@ -394,7 +394,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P12.01 | Create Typer CLI entry point | smriti/server/cli.py; CLI version test passed |
 | ✅ Done | P12.02 | Implement index command | smriti/server/service.py; create/restart/update/delete integration test passed |
 | ✅ Done | P12.03 | Implement index status command | smriti/server/status.py; read-only status and indexed CLI tests passed |
-| ❌ Pending | P12.04 | Implement context command with budget | — |
+| ✅ Done | P12.04 | Implement context command with budget | smriti/server/retrieval.py; strict budget zero and cached-restart integration tests passed |
 | ✅ Done | P12.05 | Implement find-symbol command | smriti/server/service.py; symbol lookup graph and restart integration tests passed |
 | ❌ Pending | P12.06 | Implement callers and callees commands | — |
 | ❌ Pending | P12.07 | Implement remember and recall commands | — |
@@ -451,7 +451,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P13.25 | Evaluate temporal updates and abstention retrieval | — |
 | ❌ Pending | P13.26 | Separate optional answer-generation scoring | — |
 | ✅ Done | P13.27 | Choose licensed repositories for commit replay | bench/codemem/repositories.json; pinned LICENSE SHA-256 and Apache-2.0 verification |
-| ❌ Pending | P13.28 | Select and record 200-commit replay sequences | — |
+| ✅ Done | P13.28 | Select and record 200-commit replay sequences | requests-200.json contains exactly 200 unique parent-linked public commits; three tamper/count tests; strict mypy and ruff |
 | ❌ Pending | P13.29 | Create anchored fact injection fixtures | — |
 | ❌ Pending | P13.30 | Label expected staleness after each commit | — |
 | ❌ Pending | P13.31 | Measure stale detection precision and recall | — |
