@@ -473,7 +473,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | --- | --- | --- | --- |
 | ✅ Done | P14.01 | Choose minimal UI framework and local API | docs/ui-design.md; view and mutation contracts reviewed |
 | ✅ Done | P14.02 | Implement repository index status view | tests/test_ui.py passed; real indexed fixture; JS syntax checked |
-| ❌ Pending | P14.03 | Implement searchable symbol graph view | — |
+| ✅ Done | P14.03 | Implement searchable symbol graph view | 2 real repository UI tests passed; JS syntax checked |
 | ❌ Pending | P14.04 | Implement packed-context explanation view | — |
 | ❌ Pending | P14.05 | Implement memory freshness view | — |
 | ❌ Pending | P14.06 | Implement memory history and diff view | — |
