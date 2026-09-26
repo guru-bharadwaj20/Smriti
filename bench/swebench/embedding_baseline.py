@@ -11,9 +11,7 @@ from smriti.vector.math import normalize
 
 
 def embedding_text(symbol: Symbol) -> str:
-    return (
-        f'{symbol.path}\n{symbol.qualname}\n{symbol.signature}\n{symbol.docstring}\n{symbol.body}'
-    )
+    return symbol.qualname + '\n' + symbol.signature + '\n' + symbol.body
 
 
 class EmbeddingBaseline:

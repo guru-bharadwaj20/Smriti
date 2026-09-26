@@ -90,7 +90,7 @@ class Retriever:
                     # Another complete builder won. Remove only our own private
                     # directory, whose resolved path stays under the cache root.
                     if not build.resolve().is_relative_to(cache.parent.resolve()):
-                        raise ValueError('Cache cleanup escaped its state directory')
+                        raise ValueError('Cache cleanup escaped its state directory') from None
                     shutil.rmtree(build)
         self._reasons: dict[str, str] = {}
 

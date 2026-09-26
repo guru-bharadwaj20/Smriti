@@ -382,8 +382,8 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P11.21 | Define shared-source derivation deletion behavior | smriti\memory\__init__.py; P11.21 regression in tests\test_memory.py |
 | ✅ Done | P11.22 | Purge forgotten payloads across branches and caches | smriti\memory\__init__.py; P11.22 regression in tests\test_memory.py |
 | ✅ Done | P11.23 | Prevent replay or rollback resurrecting purged facts | smriti\memory\__init__.py; P11.23 regression in tests\test_memory.py |
-| ❌ Pending | P11.24 | Test deletion with diamond derivation graphs | — |
-| ❌ Pending | P11.25 | Test branch, merge, and revert against state oracle | — |
+| ✅ Done | P11.24 | Test deletion with diamond derivation graphs | smriti\memory\__init__.py; P11.24 regression in tests\test_memory.py |
+| ✅ Done | P11.25 | Test branch, merge, and revert against state oracle | smriti\memory\__init__.py; P11.25 regression in tests\test_memory.py |
 
 ### P12 — CLI, MCP, and consistent service
 
@@ -402,7 +402,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P12.09 | Implement memory log and diff commands | — |
 | ❌ Pending | P12.10 | Implement memory revert command | — |
 | ❌ Pending | P12.11 | Implement memory branch and merge commands | — |
-| ❌ Pending | P12.12 | Integrate official MCP Python SDK | — |
+| ✅ Done | P12.12 | Integrate official MCP Python SDK | official ClientSession handshake and status tool passed; strict mypy adapter passed |
 | ✅ Done | P12.13 | Define validated MCP tool schemas | smriti/server/schemas.py; invalid budgets anchors confidence and forget-target tests passed |
 | ❌ Pending | P12.14 | Expose context MCP tool | — |
 | ❌ Pending | P12.15 | Expose symbol and graph MCP tools | — |

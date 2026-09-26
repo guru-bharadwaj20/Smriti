@@ -66,3 +66,13 @@ def context(
     from smriti.server.service import SmritiService
 
     typer.echo(SmritiService(root).context(task, budget).text)
+
+
+@app.command('serve')
+def serve(
+    root: Annotated[Path, typer.Option('--root', exists=True, file_okay=False)] = DEFAULT_ROOT,
+) -> None:
+    """Serve agent tools through the official MCP stdio transport."""
+    from smriti.server.mcp import create_server
+
+    create_server(root.resolve()).run(transport='stdio')
