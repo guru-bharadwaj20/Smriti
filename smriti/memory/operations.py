@@ -5,7 +5,7 @@ from __future__ import annotations
 import hashlib
 import json
 import sqlite3
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass
 from datetime import UTC, datetime
 from typing import Any
 
@@ -20,21 +20,54 @@ def digest(value: Any) -> str:
     return hashlib.sha256(canonical(value).encode('utf-8')).hexdigest()
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, init=False)
 class Operation:
     kind: str
     fact_id: str | None
     payload_hash: str | None
     parents: tuple[str, ...]
     recorded_at: str
-    metadata: dict[str, Any]
+    _metadata_json: str
 
     @property
     def id(self) -> str:
-        return digest(asdict(self))
+        return digest(self.record())
 
     def to_dict(self) -> dict[str, Any]:
-        return {'id': self.id, **asdict(self)}
+        return {'id': self.id, **self.record()}
+
+    def __init__(
+        self,
+        kind: str,
+        fact_id: str | None,
+        payload_hash: str | None,
+        parents: tuple[str, ...],
+        recorded_at: str,
+        metadata: dict[str, Any],
+    ) -> None:
+        point = datetime.fromisoformat(recorded_at)
+        if point.tzinfo is None or point.utcoffset() is None:
+            raise ValueError('Operation timestamp must be timezone-aware')
+        object.__setattr__(self, 'kind', kind)
+        object.__setattr__(self, 'fact_id', fact_id)
+        object.__setattr__(self, 'payload_hash', payload_hash)
+        object.__setattr__(self, 'parents', tuple(parents))
+        object.__setattr__(self, 'recorded_at', recorded_at)
+        object.__setattr__(self, '_metadata_json', canonical(metadata))
+
+    @property
+    def metadata(self) -> dict[str, Any]:
+        return dict(json.loads(self._metadata_json))
+
+    def record(self) -> dict[str, Any]:
+        return {
+            'kind': self.kind,
+            'fact_id': self.fact_id,
+            'payload_hash': self.payload_hash,
+            'parents': self.parents,
+            'recorded_at': self.recorded_at,
+            'metadata': self.metadata,
+        }
 
 
 class OperationLog:
@@ -83,7 +116,7 @@ class OperationLog:
             )
         self.db.execute(
             'INSERT OR IGNORE INTO memory_operations(oid,canonical) VALUES (?,?)',
-            (op.id, canonical(asdict(op))),
+            (op.id, canonical(op.record())),
         )
         return op
 
