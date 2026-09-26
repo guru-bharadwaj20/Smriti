@@ -376,3 +376,15 @@ class MemoryStore:
     def branches(self):
         return dict(self.db.execute("SELECT name,head FROM memory_branches ORDER BY name"))
 # P11.01
+    def common_base(self,left,right):
+        common={o.id for o in self.operations.ancestry(left)} & {o.id for o in self.operations.ancestry(right)}
+        if not common:
+            return None
+        candidates=[]
+        for oid in common:
+            if not any(oid!=other and oid in {a.id for a in self.operations.ancestry(other)} for other in common):
+                candidates.append(oid)
+        if len(candidates)!=1:
+            raise ValueError("Multiple merge bases require explicit resolution")
+        return candidates[0]
+# P11.02

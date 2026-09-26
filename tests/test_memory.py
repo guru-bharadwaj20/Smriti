@@ -320,6 +320,15 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual(store.branches(),{"main":store.head})
         store.close()
 
+    def test_common_base(self):
+        store=MemoryStore(":memory:")
+        store.remember("root")
+        a=store.head
+        store.remember("child")
+        self.assertEqual(store.common_base(a,store.head),a)
+        self.assertIsNone(store.common_base(None,store.head))
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"
