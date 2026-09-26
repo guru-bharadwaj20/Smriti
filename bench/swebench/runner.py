@@ -76,6 +76,15 @@ def run(limit=None, repo_filter=None):
     output = workspace / 'swebench-results.jsonl'
     failures = workspace / 'swebench-failures.jsonl'
     model = ROOT / '.smriti/models'
+    model_manifest = json.loads((ROOT / 'smriti/vector/model_manifest.json').read_text())
+    for artifact, local_name in [
+        ('onnx/model.onnx', 'model.onnx'),
+        ('tokenizer.json', 'tokenizer.json'),
+    ]:
+        with (model / local_name).open('rb') as stream:
+            digest = hashlib.file_digest(stream, 'sha256').hexdigest()
+        if digest != model_manifest['sha256'][artifact]:
+            raise ValueError(f'Pinned model checksum mismatch: {local_name}')
     encoder = EmbeddingCache(
         workspace / 'embeddings.sqlite',
         BatchedEmbedder(ONNXEmbedder(model / 'model.onnx', model / 'tokenizer.json')),
@@ -98,6 +107,7 @@ def run(limit=None, repo_filter=None):
     }
     config_id = hashlib.sha256(json.dumps(configuration, sort_keys=True).encode()).hexdigest()
     metadata = {
+        'model_manifest': model_manifest,
         'configuration': configuration,
         'configuration_id': config_id,
         'hardware': hardware_metadata(),

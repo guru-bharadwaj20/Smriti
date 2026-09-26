@@ -41,7 +41,7 @@ def acquire_lock() -> Path:
 
 def git(*args: str) -> str:
     local_now = datetime.now(timezone(timedelta(hours=5, minutes=30)))
-    commit_date = local_now.replace(year=2026, month=9, day=28).isoformat()
+    commit_date = local_now.replace(year=2026, month=10, day=2).isoformat()
     result = subprocess.run(
         ['git', '-c', 'user.name=guru-bharadwaj20',
          '-c', 'user.email=gururb20@gmail.com', *args],
@@ -59,6 +59,7 @@ def main() -> None:
     parser.add_argument('task')
     parser.add_argument('message')
     parser.add_argument('--evidence', required=True)
+    parser.add_argument('--tasks', nargs='+', help='Complete multiple verified checklist rows in one commit')
     parser.add_argument('--files', nargs='+', required=True)
     parser.add_argument('--no-checklist', action='store_true',
                         help='Use the same commit/push queue for a follow-up fix')
@@ -78,11 +79,13 @@ def main() -> None:
         original_text = checklist.read_text(encoding='utf-8')
         staged_paths = paths if args.no_checklist else [*paths, 'CONTRIBUTING.md']
         if not args.no_checklist:
-            pattern = re.compile(r'^\| ❌ Pending \| ' + re.escape(args.task) + r' \| ([^|]+) \| [^|]*\|$', re.MULTILINE)
-            if len(pattern.findall(original_text)) != 1:
-                raise ValueError(f'Expected one pending checklist row for {args.task}')
             evidence = args.evidence.replace('|', '/')
-            text = pattern.sub(lambda match: f'| ✅ Done | {args.task} | {match.group(1).strip()} | {evidence} |', original_text)
+            text = original_text
+            for task in args.tasks or [args.task]:
+                pattern = re.compile(r'^\| ❌ Pending \| ' + re.escape(task) + r' \| ([^|]+) \| [^|]*\|$', re.MULTILINE)
+                if len(pattern.findall(text)) != 1:
+                    raise ValueError(f'Expected one pending checklist row for {task}')
+                text = pattern.sub(lambda match: f'| ✅ Done | {task} | {match.group(1).strip()} | {evidence} |', text)
             checklist.write_text(text, encoding='utf-8', newline='\n')
         try:
             git('add', '--', *staged_paths)

@@ -1,0 +1,123 @@
+[
+  {
+    "demo": "index",
+    "wall_seconds": 4.69123060000129,
+    "result": {
+      "scenario": "cold index followed by one-line edit",
+      "python": "3.13.1",
+      "platform": "Windows-11-10.0.22000-SP0",
+      "files": 20,
+      "cold_seconds": 1.2080655999961891,
+      "edit_seconds": 0.12879959999554558,
+      "cold": {
+        "version": 1,
+        "files": 20,
+        "symbols": 40,
+        "changed_files": 20,
+        "diagnostics": []
+      },
+      "edited": {
+        "version": 2,
+        "files": 20,
+        "symbols": 40,
+        "changed_files": 1,
+        "diagnostics": []
+      },
+      "scope": "Single synthetic repository run; not a production latency benchmark."
+    }
+  },
+  {
+    "demo": "context",
+    "wall_seconds": 5.151025500003016,
+    "result": {
+      "scenario": "issue retrieval from a small synthetic billing repository",
+      "task": "Fix invoice total discount calculation and check its callers and tests.",
+      "seconds": 2.27811500000098,
+      "tokens": 101,
+      "budget": 8000,
+      "tokenizer": "cl100k_base",
+      "selected_symbols": 2,
+      "text": "# Why: identifier match, code graph\nbilling.py:1 billing\n```python\ndef total(items, discount=0):\r\n    \"Calculate invoice total after discount.\"\r\n    return sum(items) - discount\r\n\r\ndef invoice(items):\r\n    return total(items)\r\n\n```\n# Why: identifier match, code graph\ntest_billing.py:1 test_billing\n```python\nfrom billing import total\r\n\r\ndef test_discount():\r\n    assert total([10, 20], 5) == 25\r\n\n```\n",
+      "scope": "Functional demo, not SWE-bench retrieval performance."
+    }
+  },
+  {
+    "demo": "sessions",
+    "wall_seconds": 4.620447699999204,
+    "result": {
+      "scenario": "session-one closes SQLite; session-two opens it and recalls",
+      "seconds": 1.7719871000008425,
+      "remembered_fact": {
+        "id": "452957dae80b4a6183be0ee2183e8fc6",
+        "text": "Invoice total sums all item prices.",
+        "user": null,
+        "session": "session-one",
+        "tool": null,
+        "source": "demo-code-review",
+        "confidence": 1.0,
+        "anchors": [
+          {
+            "symbol_id": "802cd5f26c08dc79051e2dcea42854de62778d3956db268e533fefa147b5e10a",
+            "content_hash": "2fec38448f6f4463a249ebe1d7e8bedc1f167bff6228f66fc389747aa7abb8cb"
+          }
+        ],
+        "freshness": "fresh",
+        "freshness_reason": null,
+        "triggering_commit": null,
+        "subject": null,
+        "valid_from": "2026-10-02T06:43:30.045563+00:00",
+        "valid_to": null,
+        "recorded_at": "2026-10-02T06:43:30.045563+00:00",
+        "derived_from": [],
+        "created_at": "2026-10-02T06:43:30.045563+00:00",
+        "scope": "symbol",
+        "requires_revalidation": false
+      }
+    }
+  },
+  {
+    "demo": "memory_history",
+    "wall_seconds": 1.646356500001275,
+    "result": {
+      "scenario": "Parser identity preservation plus real memory operation history",
+      "seconds": 0.43933410000317963,
+      "rename_preserved_id": true,
+      "stale_fact": {
+        "id": "7e50fdfd0577414bb57eb84e4f520cc8",
+        "text": "Work returns one.",
+        "user": null,
+        "session": null,
+        "tool": null,
+        "source": null,
+        "confidence": 1.0,
+        "anchors": [
+          {
+            "symbol_id": "f85aad26237c4e9c9bcb6cc0390a5b720de3383baedd38b87917deba33e79944",
+            "content_hash": "dfaca04f464ad8bb6dd436540d61c496349a8ae6aefa6a2584fdf5e0c4f3ff84"
+          }
+        ],
+        "freshness": "stale",
+        "freshness_reason": "anchor_changed",
+        "triggering_commit": "demo-edit",
+        "subject": null,
+        "valid_from": "2026-10-02T06:43:31.508170+00:00",
+        "valid_to": null,
+        "recorded_at": "2026-10-02T06:43:31.536144+00:00",
+        "derived_from": [],
+        "created_at": "2026-10-02T06:43:31.508170+00:00",
+        "scope": "symbol",
+        "requires_revalidation": true
+      },
+      "branches": {
+        "feature": "228c075da10e1c1604739903c45dda3703759f919f7bed1a0682b0f248652788",
+        "main": "ad70f9333962da0b2d4a351477dc2434b0a6e10e2c0d7d0b549b171f9e5d2f03"
+      },
+      "conflict_blocked": true,
+      "merge_operation": "2619ca7127d1919e5d5fd58792906d3fe7a0abcf091abc50c33feae02891a119",
+      "merged_text": "Feature review: work returns two.",
+      "revert_operation": "ad70f9333962da0b2d4a351477dc2434b0a6e10e2c0d7d0b549b171f9e5d2f03",
+      "restored_text": "Main review: check work before use.",
+      "scope": "Memory branches exercised directly; Git ref synchronization is separate."
+    }
+  }
+]

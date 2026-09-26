@@ -1,19 +1,19 @@
 # Contributing to Smriti
 
-Smriti is a planned local, CPU-first memory and context engine for coding agents, exposed through MCP. Its central feature is code-anchored memory with freshness tracking, bitemporal history, branches, merges, rollback, and cascading deletion. Retrieval combines incremental indexing, a symbol graph, BM25F, a custom HNSW index, personalised PageRank, and token-budgeted context packing.
+Smriti is a local, CPU-first memory and context engine for coding agents, exposed through MCP. Its central feature is code-anchored memory with freshness tracking, bitemporal history, branches, merges, rollback, and cascading deletion. Retrieval combines incremental indexing, a symbol graph, BM25F, a custom HNSW index, personalised PageRank, and token-budgeted context packing.
 
-This checklist translates the project proposal into individually trackable work. It describes planned work, not existing functionality. The proposal and linked articles are design inputs; this document records the project's contribution workflow.
+This checklist tracks implementation and verification. Green rows record completed work with evidence; red rows remain unfinished. The proposal and linked articles are design inputs; this document records the project's contribution workflow.
 
 ## Mandatory workflow
 
-**Commit every minor, coherent change.** Do not accumulate unrelated edits into one commit. This applies to code, documentation, configuration, fixes, and task-status updates.
+**Batch related, verified work into as few commits as practical.** This supersedes the earlier requirement to commit every minor subtask. Push immediately after each commit. New commits must use October 2, 2026 for both author and committer dates in Asia/Calcutta; existing history retains its dates.
 
 1. Choose a pending task by its stable ID; split it further if it contains independently reviewable changes.
 2. Inspect related code and agree on the expected behavior before editing.
-3. Make one small change and run the checks appropriate to that change.
+3. Finish a coherent batch of changes and run the checks appropriate to that batch.
 4. Change its status to ✅ Done only when its deliverable and relevant checks are complete. Add a file, test, report, or commit reference in Evidence. Keep unfinished work ❌ Pending and describe any blocker there.
 5. Commit the implementation and its checklist update together. Use messages such as `feat(memory): P09.04 track anchor hashes` or `docs: P00.02 introduce project idea`.
-6. Review the staged diff and repository status before starting the next minor change. Stage only files belonging to that change; do not commit unrelated work or generated indexes, model weights, credentials, or benchmark checkouts.
+6. Review the staged diff and repository status, commit, and push immediately. Stage only files belonging to the batch; do not commit unrelated work or generated indexes, model weights, credentials, or benchmark checkouts.
 
 Use the requested repository-local identity for this project:
 
@@ -26,7 +26,7 @@ git commit -m "docs: describe the completed minor change"
 git status --short
 ```
 
-Never rewrite shared commit history merely to update a checklist. Contributors and coding agents must follow the minor-change commit rule throughout the project.
+Never rewrite shared commit history merely to update a checklist. The queued commit helper supports `--tasks P12.07 P12.08` to update multiple verified rows in one commit while preventing parallel contributors from mixing changes.
 
 ## Status and completion rules
 
@@ -493,7 +493,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P14.20 | Script issue retrieval within 8k-token budget | Real service functional demo selected101 cl100k tokens within8000; strict mypy and Ruff |
 | ✅ Done | P14.21 | Script memory recall across sessions | Closed and reopened actual SQLite store; recalled same ID anchor and session; strict mypy and Ruff |
 | ✅ Done | P14.22 | Script rename, stale detection, branch, merge, revert | Real parser rename preserves identity; stale hash detected; conflict blocks; explicit merge and revert verified; strict mypy and Ruff |
-| ❌ Pending | P14.23 | Record demo video with real timing evidence | — |
+| ✅ Done | P14.23 | Record demo video with real timing evidence | Four actual demos rerun;20secondVP9 WebM35106bytes; final PNG visually checked; Ruff; full timing JSON |
 | ❌ Pending | P14.24 | Write project report and benchmark findings | — |
 | ❌ Pending | P14.25 | Fill resume bullet numbers from published results | — |
 | ❌ Pending | P14.26 | Prepare interview answers with algorithm tradeoffs | — |
