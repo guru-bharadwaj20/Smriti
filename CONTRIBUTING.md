@@ -371,7 +371,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P11.10 | Detect concurrent edits to the same fact | smriti\memory\__init__.py; P11.10 regression in tests\test_memory.py |
 | ✅ Done | P11.11 | Detect delete-versus-update conflicts | smriti\memory\__init__.py; P11.11 regression in tests\test_memory.py |
 | ✅ Done | P11.12 | Expose unresolved conflicts for user decisions | smriti\memory\__init__.py; P11.12 regression in tests\test_memory.py |
-| ❌ Pending | P11.13 | Record merge conflict resolutions | — |
+| ✅ Done | P11.13 | Record merge conflict resolutions | smriti\memory\__init__.py; P11.13 regression in tests\test_memory.py |
 | ❌ Pending | P11.14 | Represent multi-parent merge history | — |
 | ❌ Pending | P11.15 | Revert a merged operation consistently | — |
 | ❌ Pending | P11.16 | Store source-to-derived-fact edges | — |
@@ -439,7 +439,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P13.13 | Compute file recall at k | bench/swebench/metrics.py; independent duplicate and empty-gold checks passed |
 | ✅ Done | P13.14 | Compute function recall at k | bench/swebench/function_metrics.py; duplicate missing empty and negative-k tests passed |
 | ✅ Done | P13.15 | Compute packed budget recall at 4k tokens | bench/swebench/budget_metrics.py; executable semantic assertions passed |
-| ❌ Pending | P13.16 | Compute packed budget recall at 8k tokens | — |
+| ✅ Done | P13.16 | Compute packed budget recall at 8k tokens | tests/test_budget_metrics.py; executable semantic assertions passed |
 | ❌ Pending | P13.17 | Compute packed budget recall at 16k tokens | — |
 | ❌ Pending | P13.18 | Measure tokens required to cover gold locations | — |
 | ❌ Pending | P13.19 | Separate validation from held-out evaluation | — |
@@ -473,7 +473,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | --- | --- | --- | --- |
 | ✅ Done | P14.01 | Choose minimal UI framework and local API | docs/ui-design.md; view and mutation contracts reviewed |
 | ✅ Done | P14.02 | Implement repository index status view | tests/test_ui.py passed; real indexed fixture; JS syntax checked |
-| ❌ Pending | P14.03 | Implement searchable symbol graph view | — |
+| ✅ Done | P14.03 | Implement searchable symbol graph view | 2 real repository UI tests passed; JS syntax checked |
 | ❌ Pending | P14.04 | Implement packed-context explanation view | — |
 | ❌ Pending | P14.05 | Implement memory freshness view | — |
 | ❌ Pending | P14.06 | Implement memory history and diff view | — |

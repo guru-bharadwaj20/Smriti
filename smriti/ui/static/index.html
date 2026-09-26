@@ -13,6 +13,7 @@
     <p class="side-label">LOCAL WORKSPACE</p>
     <nav aria-label="Workspace views">
       <button class="nav-button active" data-view="repository">Repository <span>01</span></button>
+      <button class="nav-button" data-view="symbols">Symbols &amp; graph <span>02</span></button>
     </nav>
     <div class="sidebar-footer"><span class="live-dot"></span> Your code, on your machine.</div>
   </aside>
@@ -31,6 +32,12 @@
           <article class="metric"><span>Index version</span><strong id="metric-version">—</strong><small>Published snapshot</small></article>
         </div>
         <article class="panel"><div class="panel-heading"><h2>A workspace with continuity</h2><span class="pill">SMRITI</span></div><p>Code retrieval and anchored memory share one repository. When the code changes, its memories can show you what needs another look.</p><p class="muted">Run <code>smriti index</code> in your repository to publish the first index.</p></article>
+      </section>
+      <section id="view-symbols" class="view" hidden>
+        <p class="eyebrow">FOLLOW THE CONNECTIONS</p><h1>Explore your code.</h1>
+        <p class="intro">Find a definition, then follow its callers, imports, inheritance and tests.</p>
+        <form id="symbol-search" class="search-form"><label class="sr-only" for="symbol-query">Symbol name or qualified name</label><input id="symbol-query" placeholder="Search a symbol or qualified name…" autocomplete="off"><button class="button">Find symbols</button></form>
+        <div class="explorer-grid"><article class="panel"><div class="panel-heading"><h2>Definitions</h2><span class="pill" id="symbol-count">0 FOUND</span></div><div class="table-scroll"><table><thead><tr><th>Name</th><th>Kind</th><th>Location</th></tr></thead><tbody id="symbol-results"></tbody></table></div><p id="symbol-empty" class="empty">Search to explore indexed definitions.</p></article><article class="panel" id="symbol-detail"><h2>Select a definition</h2><p>Its source and connected symbols will appear here.</p></article></div>
       </section>
     </div>
   </main>

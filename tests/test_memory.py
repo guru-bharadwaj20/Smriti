@@ -450,6 +450,19 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual(caught.exception.conflicts[f.id]["theirs"].text,"theirs")
         store.close()
 
+    def test_merge_resolution_audit(self):
+        store=MemoryStore(":memory:")
+        f=store.remember("base")
+        store.branch("feature")
+        store.update(f.id,"ours")
+        store.switch("feature")
+        store.update(f.id,"theirs")
+        store.switch("main")
+        store.merge("feature",resolutions={f.id:"theirs"})
+        self.assertEqual(store.recall()[0].text,"theirs")
+        self.assertEqual(store.log()[0]["metadata"]["resolutions"],{f.id:"theirs"})
+        store.close()
+
     def test_fact_survives_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.db"
