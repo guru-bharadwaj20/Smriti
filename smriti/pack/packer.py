@@ -96,3 +96,7 @@ def covered_symbols(chosen,symbols):
             if parent in full: covered.add(symbol.id); break
             parent=getattr(by_id[parent],'parent_id',None)
     return covered
+
+def stable_order(chosen,symbols):
+    by_id={s.id:s for s in symbols}
+    return sorted(chosen,key=lambda o:(by_id[o.id].path,by_id[o.id].start_line,o.id))
