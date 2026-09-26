@@ -5,6 +5,7 @@ from hashlib import sha256
 from pathlib import Path
 
 from smriti.config import Config, load_config
+from smriti.contracts import ContextResponse
 from smriti.identity import repository_id
 from smriti.merkle import RepositoryScanner
 from smriti.models import Edge, Symbol
@@ -31,6 +32,7 @@ class SmritiService:
         self.store = IndexStore(self.config.data_dir / 'index.sqlite')
         self.parser = SourceParser()
         self._parsed: dict[str, ParseResult] = {}
+        self._retrieval: object | None = None
 
     def snapshot(self) -> IndexSnapshot:
         return self.store.load()
@@ -109,3 +111,18 @@ class SmritiService:
             ),
             key=lambda symbol: (symbol.path, symbol.start_line, symbol.id),
         )
+
+    def context(self, task: str, budget: int | None = None) -> ContextResponse:
+        from smriti.server.retrieval import Retriever
+        from smriti.server.schemas import ContextRequest
+
+        request = ContextRequest(task=task, budget=self.config.budget if budget is None else budget)
+        snapshot = self.snapshot()
+        if (
+            not isinstance(self._retrieval, Retriever)
+            or self._retrieval.snapshot.version != snapshot.version
+        ):
+            self._retrieval = Retriever(
+                snapshot, self.config.tokenizer, self.config.model_dir, self.config.data_dir
+            )
+        return self._retrieval.context(request.task, request.budget)

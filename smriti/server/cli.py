@@ -54,3 +54,15 @@ def find_symbol(
     from smriti.server.service import SmritiService
 
     typer.echo(json.dumps([asdict(symbol) for symbol in SmritiService(root).find_symbol(name)]))
+
+
+@app.command('context')
+def context(
+    task: str,
+    budget: Annotated[int, typer.Option('--budget', min=0, max=65536)] = 8000,
+    root: Annotated[Path, typer.Option('--root', exists=True, file_okay=False)] = DEFAULT_ROOT,
+) -> None:
+    """Retrieve code context with explanations within a token budget."""
+    from smriti.server.service import SmritiService
+
+    typer.echo(SmritiService(root).context(task, budget).text)

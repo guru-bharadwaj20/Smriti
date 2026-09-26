@@ -394,7 +394,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P12.01 | Create Typer CLI entry point | smriti/server/cli.py; CLI version test passed |
 | ✅ Done | P12.02 | Implement index command | smriti/server/service.py; create/restart/update/delete integration test passed |
 | ✅ Done | P12.03 | Implement index status command | smriti/server/status.py; read-only status and indexed CLI tests passed |
-| ❌ Pending | P12.04 | Implement context command with budget | — |
+| ✅ Done | P12.04 | Implement context command with budget | smriti/server/retrieval.py; strict budget zero and cached-restart integration tests passed |
 | ✅ Done | P12.05 | Implement find-symbol command | smriti/server/service.py; symbol lookup graph and restart integration tests passed |
 | ❌ Pending | P12.06 | Implement callers and callees commands | — |
 | ❌ Pending | P12.07 | Implement remember and recall commands | — |
