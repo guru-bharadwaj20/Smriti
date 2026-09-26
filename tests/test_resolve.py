@@ -137,3 +137,11 @@ def test_call_and_import_edges_roundtrip(tmp_path):
     edges = resolver.load_edges(tmp_path / "graph.json")
     assert any(edge.kind == "imports" and edge.target == helper.symbols[1].id for edge in edges)
     assert any(edge.kind == "calls" and edge.target == helper.symbols[1].id for edge in edges)
+
+
+def test_inheritance_edges_persist(tmp_path):
+    result = parse_file("a.py", "class A:\n    pass\nclass B(A):\n    pass\n")
+    resolver = Resolver([result])
+    resolver.save_graph(tmp_path / "graph.json")
+    edges = resolver.load_edges(tmp_path / "graph.json")
+    assert Edge(result.symbols[2].id, result.symbols[1].id, "inherits") in edges
