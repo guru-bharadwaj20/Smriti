@@ -144,7 +144,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P03.14 | Chunk source at symbol boundaries | smriti/parse; pytest tests/test_parse.py passed |
 | ✅ Done | P03.15 | Define treatment of oversized functions | smriti/parse; pytest tests/test_parse.py passed |
 | ✅ Done | P03.16 | Add TypeScript extraction fixtures | smriti/parse; pytest tests/test_parse.py passed |
-| ❌ Pending | P03.17 | Implement TypeScript symbol extraction | — |
+| ✅ Done | P03.17 | Implement TypeScript symbol extraction | smriti/parse; pytest tests/test_parse.py passed |
 | ❌ Pending | P03.18 | Add Java extraction fixtures | — |
 | ❌ Pending | P03.19 | Implement Java symbol extraction | — |
 | ❌ Pending | P03.20 | Validate symbol ranges against source slices | — |
@@ -264,7 +264,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P07.15 | Cache ranking with index-version keys | smriti/rank/hybrid.py; executable assertions passed |
 | ✅ Done | P07.16 | Invalidate cache after index updates | smriti/rank/hybrid.py; executable assertions passed |
 | ✅ Done | P07.17 | Tune fusion weights on validation data only | scripts/fusion_tuning.py; bench/fusion/validation.json; validation-only grid search, separate held-out IDs |
-| ❌ Pending | P07.18 | Emit per-candidate selection explanations | — |
+| ✅ Done | P07.18 | Emit per-candidate selection explanations | smriti/rank/hybrid.py; executable assertions passed |
 
 ### P08 — Token-budgeted context packing
 
@@ -286,7 +286,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P08.12 | Require minimum class context for methods | smriti/pack/packer.py; executable assertions passed |
 | ✅ Done | P08.13 | Deduplicate class and method bodies | smriti/pack/packer.py; executable assertions passed |
 | ✅ Done | P08.14 | Handle dependency costs during packing | docs/packing.md; executable assertions passed |
-| ❌ Pending | P08.15 | Handle symbols larger than available budget | — |
+| ✅ Done | P08.15 | Handle symbols larger than available budget | tests/test_pack.py; executable assertions passed |
 | ❌ Pending | P08.16 | Render stable file and symbol ordering | — |
 | ❌ Pending | P08.17 | Render omitted-line markers | — |
 | ❌ Pending | P08.18 | Recount final rendered output tokens | — |

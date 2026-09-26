@@ -127,3 +127,10 @@ def test_typescript_grammar_fixture():
     tree = Parser(Language(tree_sitter_typescript.language_typescript())).parse(TYPESCRIPT_FIXTURE.encode())
     assert not tree.root_node.has_error
     assert tree.root_node.named_children[0].type == "export_statement"
+
+
+def test_typescript_symbol_extraction():
+    from smriti.parse import TYPESCRIPT_FIXTURE
+    result = SourceParser().parse("worker.ts", TYPESCRIPT_FIXTURE, "typescript")
+    assert [(s.name, s.kind) for s in result.symbols[1:]] == [("Worker", "class"), ("run", "method"), ("launch", "function")]
+    assert result.symbols[2].parent_id == result.symbols[1].id
