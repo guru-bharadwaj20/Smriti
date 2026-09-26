@@ -176,3 +176,6 @@ def split_oversized(source: bytes | str, max_bytes: int = 16384) -> list[bytes]:
 
 
 TYPESCRIPT_FIXTURE = "export class Worker { run(value: number): number { return value + 1; } }\nexport function launch(): Worker { return new Worker(); }"
+
+
+JAVA_FIXTURE = "package demo; class Worker { int run(int value) { return value + 1; } }"
