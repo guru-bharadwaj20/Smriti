@@ -38,3 +38,42 @@ def test_symbol_and_graph_tools(tmp_path: Path) -> None:
     assert not found.is_error and 'm.py' in found.content[0].text
     assert not incoming.is_error and 'calls' in incoming.content[0].text
     assert not outgoing.is_error and 'calls' in outgoing.content[0].text
+
+
+def test_memory_crud_tools(tmp_path: Path) -> None:
+    remembered, recalled, forgotten, empty, invalid = run_tools(
+        tmp_path,
+        [
+            ('remember', {'fact': 'Use the cache', 'source': 'notes'}),
+            ('recall', {'query': 'cache'}),
+            ('forget', {'source': 'notes'}),
+            ('recall', {}),
+            ('forget', {}),
+        ],
+    )
+    assert not remembered.is_error and 'Use the cache' in remembered.content[0].text
+    assert 'Use the cache' in recalled.content[0].text
+    assert not forgotten.is_error
+    assert empty.content == [] or 'Use the cache' not in empty.content[0].text
+    assert invalid.is_error
+
+
+def test_memory_history_tools(tmp_path: Path) -> None:
+    results = run_tools(
+        tmp_path,
+        [
+            ('remember', {'fact': 'Base'}),
+            ('memory_branch', {'name': 'feature', 'switch': True}),
+            ('remember', {'fact': 'Feature'}),
+            ('memory_switch', {'name': 'main'}),
+            ('memory_merge', {'source': 'feature'}),
+            ('memory_log', {'limit': 1}),
+            ('memory_diff', {}),
+        ],
+    )
+    assert not any(result.is_error for result in results)
+    assert results[4].structured_content['merged'] is True
+    assert 'Feature' in results[6].content[0].text
+    operation = results[5].structured_content['result'][0]['id']
+    reverted = run_tools(tmp_path, [('memory_revert', {'operation_id': operation})])[0]
+    assert not reverted.is_error
