@@ -21,8 +21,17 @@ def _index_repository(root: str) -> IndexResult:
 class BackgroundIndexer:
     def __init__(self) -> None:
         self._pool = ProcessPoolExecutor(max_workers=1)
+        self._closed = False
+
+    def __enter__(self) -> 'BackgroundIndexer':
+        return self
+
+    def __exit__(self, *_: object) -> None:
+        self.close()
 
     def submit(self, root: Path) -> Future[IndexResult]:
+        if self._closed:
+            raise IndexingError('Indexer is shut down')
         return self._pool.submit(_index_repository, str(root.resolve()))
 
     async def index_async(self, root: Path) -> IndexResult:
@@ -48,4 +57,11 @@ class BackgroundIndexer:
             raise IndexingError(f'Indexing failed: {error}') from error
 
     def close(self) -> None:
-        self._pool.shutdown(wait=True, cancel_futures=True)
+        """Cancel queued jobs, let a running job publish or roll back, then stop.
+
+        Idempotent. A job interrupted mid-write never publishes a partial index:
+        the next service start loads the last committed snapshot.
+        """
+        if not self._closed:
+            self._closed = True
+            self._pool.shutdown(wait=True, cancel_futures=True)

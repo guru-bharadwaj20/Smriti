@@ -75,7 +75,11 @@ def serve(
     """Serve agent tools through the official MCP stdio transport."""
     from smriti.server.mcp import create_server
 
-    create_server(root.resolve()).run(transport='stdio')
+    try:
+        create_server(root.resolve()).run(transport='stdio')
+    except KeyboardInterrupt:
+        # Committed snapshots and memory operations are atomic; nothing to flush.
+        raise typer.Exit(0) from None
 
 
 @app.command('callers')
