@@ -431,7 +431,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P13.05 | Extract patch ground truth outside indexed tree | bench/swebench/ground_truth.py; changed-context and added-file tests passed |
 | ✅ Done | P13.06 | Map changed functions to base-commit symbols | bench/swebench/mapping.py; neighboring nested and added-function cases passed |
 | ✅ Done | P13.07 | Define handling of added and deleted functions | docs/evaluation-labels.md; base-commit label policy reviewed |
-| ❌ Pending | P13.08 | Prevent patch and post-fix code leakage | — |
+| ✅ Done | P13.08 | Prevent patch and post-fix code leakage | bench/swebench/leakage.py run per task before retrieval (rejects diff in query and post-fix lines in index); tests/test_swebench_leakage.py passed; leakage_check recorded per result row |
 | ✅ Done | P13.09 | Implement issue-word grep baseline | bench/swebench/grep_baseline.py; executable semantic assertions passed |
 | ✅ Done | P13.10 | Implement lexical-only baseline | bench/swebench/lexical_baseline.py; executable semantic assertions passed |
 | ✅ Done | P13.11 | Implement embedding-only baseline | bench/swebench/embedding_baseline.py; executable semantic assertions passed |
@@ -449,7 +449,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P13.23 | Implement LongMemEval session ingestion adapter | bench/longmemeval/runner.py ingest; tests/test_longmemeval_adapter.py passed (labels and future sessions excluded) |
 | ✅ Done | P13.24 | Define retrieval-only memory relevance labels | docs/longmemeval.md: answer_session_ids as binary gold, answer/has_answer never ingested |
 | ✅ Done | P13.25 | Evaluate temporal updates and abstention retrieval | bench/longmemeval/results: 500/500 questions; session recall@5 0.848 overall, knowledge-update 0.968, temporal-reasoning 0.655, abstention 0.756; empty-retrieval abstention rate 0.0 |
-| ❌ Pending | P13.26 | Separate optional answer-generation scoring | — |
+| ✅ Done | P13.26 | Separate optional answer-generation scoring | bench/longmemeval/answers.py scores external hypotheses separately (official_llm_judge false); retrieval summary keeps answer_accuracy null; tests/test_longmemeval_answers.py passed |
 | ✅ Done | P13.27 | Choose licensed repositories for commit replay | bench/codemem/repositories.json; pinned LICENSE SHA-256 and Apache-2.0 verification |
 | ✅ Done | P13.28 | Select and record 200-commit replay sequences | requests-200.json contains exactly 200 unique parent-linked public commits; three tamper/count tests; strict mypy and ruff |
 | ✅ Done | P13.29 | Create anchored fact injection fixtures | bench/codemem/injection.py; bench/codemem/results/injection.json; injection fixture tests pass |
@@ -486,7 +486,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P14.13 | Document benchmark reproduction | — |
 | ✅ Done | P14.14 | Review third-party dependency and model licenses | docs/licenses.md from installed package metadata; model manifest pins tokenizer.json SHA-256 (verified against local artifact) |
 | ✅ Done | P14.15 | Verify package name availability before publication | docs/release.md: smriti-engine 404 on PyPI JSON and simple index (2026-10-02); smriti and smriti-mcp taken |
-| ❌ Pending | P14.16 | Build and test Python package artifact | — |
+| ✅ Done | P14.16 | Build and test Python package artifact | docs/release.md: wheel and sdist build, twine check PASSED, wheel contents audited (60 entries, package only) |
 | ❌ Pending | P14.17 | Create optional Docker build | — |
 | ❌ Pending | P14.18 | Verify clean-install CLI and MCP smoke tests | — |
 | ✅ Done | P14.19 | Script cold-index and one-line-edit demo | 20 files cold 2.307s; one changed file edit 0.209s; strict mypy and Ruff |
