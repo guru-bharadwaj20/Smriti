@@ -480,7 +480,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P14.07 | Implement merge conflict resolution view | 6 actual repository UI tests passed; conflict409 and recorded resolution validated; JS syntax checked |
 | ✅ Done | P14.08 | Bind local service safely by default | 8 UI tests pass; strict mypy; Ruff; JavaScript syntax |
 | ❌ Pending | P14.09 | Expand README with verified setup commands | — |
-| ❌ Pending | P14.10 | Document architecture and storage formats | — |
+| ✅ Done | P14.10 | Document architecture and storage formats | docs/architecture.md data flow and every index.sqlite/memory.sqlite table checked against CREATE TABLE statements |
 | ❌ Pending | P14.11 | Document memory temporal and deletion semantics | — |
 | ❌ Pending | P14.12 | Document limitations and prior work | — |
 | ❌ Pending | P14.13 | Document benchmark reproduction | — |
