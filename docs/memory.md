@@ -67,3 +67,18 @@ Compression preserves canonical bytes, temporal metadata, anchors, provenance,
 operation identities and authentication. It produces no semantic summaries.
 `python -m bench.codemem.compression` measures these properties against the real
 commit-replay memory database and records raw and compressed byte counts.
+
+## Optional local summaries
+
+`smriti.memory.summaries.summarize(store, fact_ids, generator)` asks a local
+model to condense two or more fresh facts and stores the result as a new fact
+with `derived_from` set to every source and `tool='local-summary:<model>@<sha>'`.
+Forgetting any source therefore deletes the summary too, and summaries never
+replace or edit their sources. Stale or orphaned sources are refused, so a
+summary cannot turn an outdated claim back into a fresh one. The summary's
+confidence is the minimum of its sources.
+
+`LlamaCppGenerator(path)` runs a GGUF model on CPU with temperature 0 and a fixed
+seed (`pip install ".[summaries]"`). The tests use Qwen2.5-0.5B-Instruct Q4_K_M
+when it is present at `.smriti/models/` or `SMRITI_SUMMARY_MODEL`. Model output is
+not fact-checked: summaries are machine-written and labelled as such.

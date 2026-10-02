@@ -16,6 +16,7 @@ dependencies = ["typer>=0.27,<1", "mcp>=2.2,<3", "pydantic>=2.12,<3", "tree-sitt
 eval = ["pyarrow>=25,<26"]
 vectors = ["onnxruntime>=1.30,<2", "tokenizers>=0.22,<1"]
 ui = ["fastapi>=0.115,<1", "uvicorn>=0.34,<1"]
+summaries = ["llama-cpp-python>=0.3.36,<0.4"]
 dev = ["pytest>=9,<10", "hypothesis>=6,<7", "ruff>=0.16,<1", "mypy>=2.4,<3", "build>=1.6,<2", "jedi>=0.20,<1", "scipy>=1.18,<2"]
 
 [project.scripts]

@@ -479,10 +479,10 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P14.06 | Implement memory history and diff view | 5 real repository UI tests passed; actual before/after memory diff; JS syntax checked |
 | ✅ Done | P14.07 | Implement merge conflict resolution view | 6 actual repository UI tests passed; conflict409 and recorded resolution validated; JS syntax checked |
 | ✅ Done | P14.08 | Bind local service safely by default | 8 UI tests pass; strict mypy; Ruff; JavaScript syntax |
-| ❌ Pending | P14.09 | Expand README with verified setup commands | — |
+| ✅ Done | P14.09 | Expand README with verified setup commands | README.md; every install and CLI command executed verbatim in a fresh venv (pip install .), which found and fixed stale-freshness-after-index bug |
 | ✅ Done | P14.10 | Document architecture and storage formats | docs/architecture.md data flow and every index.sqlite/memory.sqlite table checked against CREATE TABLE statements |
 | ✅ Done | P14.11 | Document memory temporal and deletion semantics | docs/memory-semantics.md; every example executed by tests/test_memory_semantics_doc.py (4 passed) |
-| ❌ Pending | P14.12 | Document limitations and prior work | — |
+| ✅ Done | P14.12 | Document limitations and prior work | docs/limitations.md (code, retrieval, memory, evaluation limits with measured figures); docs/prior-work.md evaluation boundaries |
 | ❌ Pending | P14.13 | Document benchmark reproduction | — |
 | ✅ Done | P14.14 | Review third-party dependency and model licenses | docs/licenses.md from installed package metadata; model manifest pins tokenizer.json SHA-256 (verified against local artifact) |
 | ✅ Done | P14.15 | Verify package name availability before publication | docs/release.md: smriti-engine 404 on PyPI JSON and simple index (2026-10-02); smriti and smriti-mcp taken |
@@ -516,6 +516,6 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P15.09 | Design signed memory-log synchronization | smriti/memory/sync.py HMAC-SHA256 bundles; docs/memory.md offline synchronization; tests/test_memory_sync.py authentication, rewind and active-branch tests passed |
 | ✅ Done | P15.10 | Test synchronization conflicts between teammates | tests/test_memory_sync.py divergent edits, tombstones, resurrection and merge-base tests passed; smriti/memory/__init__.py single-pass common base |
 | ❌ Pending | P15.11 | Create VS Code anchored-memory extension | — |
-| ❌ Pending | P15.12 | Implement optional local-model summaries | — |
+| ✅ Done | P15.12 | Implement optional local-model summaries | smriti/memory/summaries.py (derived facts, model provenance, refuses stale sources); tests/test_memory_summaries.py 3 passed incl. real Qwen2.5-0.5B GGUF via llama-cpp-python 0.3.36; docs/memory.md |
 | ✅ Done | P15.13 | Evaluate memory compression without losing provenance | bench/codemem/results/compression.json: real replay log 379,929 -> 79,465 bytes (0.209), byte-identical, provenance and HMAC preserved; tests/test_memory_sync.py passed |
 | ❌ Pending | P15.14 | Implement optional coding-agent task-success comparison | — |

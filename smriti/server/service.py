@@ -1,5 +1,6 @@
 """Repository service shared by local command and agent interfaces."""
 
+from collections.abc import Iterable
 from dataclasses import dataclass
 from hashlib import sha256
 from pathlib import Path
@@ -104,12 +105,42 @@ class SmritiService:
             }
         )
         version = self.store.publish(symbols, edges, paths, expected_version=previous.version)
+        self._refresh_memory(previous.symbols, source_symbols)
         diagnostics = tuple(
             f'{path}: {diagnostic}'
             for path, result in self._parsed.items()
             for diagnostic in result.diagnostics
         )
         return IndexResult(version, len(paths), len(symbols), len(changed), diagnostics)
+
+    def _refresh_memory(self, before: Iterable[Symbol], after: Iterable[Symbol]) -> None:
+        """Mark anchored facts stale or orphaned against the newly published index."""
+        database = self.config.data_dir / 'memory.sqlite'
+        if not database.exists():
+            return
+        from collections import defaultdict
+
+        from smriti.memory import MemoryStore
+
+        old = {s.id: s.content_hash for s in before if s.path != '<external>'}
+        new = {s.id: s.content_hash for s in after}
+        removed: dict[str, list[str]] = defaultdict(list)
+        added: dict[str, list[str]] = defaultdict(list)
+        for identity in old.keys() - new.keys():
+            removed[old[identity]].append(identity)
+        for identity in new.keys() - old.keys():
+            added[new[identity]].append(identity)
+        # Only an unambiguous identical-content move is a verified rename.
+        renames = {
+            ids[0]: added[digest][0]
+            for digest, ids in removed.items()
+            if len(ids) == 1 and len(added.get(digest, ())) == 1
+        }
+        store = MemoryStore(database)
+        try:
+            store.refresh(new, renames=renames)
+        finally:
+            store.close()
 
     def find_symbol(self, name: str) -> list[Symbol]:
         query = name.casefold()
