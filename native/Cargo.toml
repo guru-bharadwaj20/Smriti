@@ -1,0 +1,12 @@
+[package]
+name = "smriti-native"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+
+[lib]
+name = "smriti_native"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 = { version = "=0.29.3", features = ["abi3-py312"] }

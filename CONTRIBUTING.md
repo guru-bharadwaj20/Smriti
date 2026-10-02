@@ -509,7 +509,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P15.02 | Add C/C++ parser and resolution support | smriti/parse/languages.py; smriti/resolve/languages.py; docs/languages.md; tests/test_parse_languages.py and tests/test_parse.py passed; tree-sitter pinned <0.26 per docs/parser-compatibility.md |
 | ✅ Done | P15.03 | Implement cross-language API edges | smriti/resolve/api.py; docs/languages.md; tests/test_resolve_api.py passed |
 | ✅ Done | P15.04 | Profile candidate Rust hot path | bench/vector/native_profile.py cProfile: vector.math.distance 46.39s of 48.30s (96%) building/querying 120x384 HNSW |
-| ❌ Pending | P15.05 | Implement Rust and PyO3 optimization | — |
+| ✅ Done | P15.05 | Implement Rust and PyO3 optimization | native/ PyO3 0.29.3 distance kernel, Cargo.lock; built with Rust 1.99.0 via pip install ./native |
 | ❌ Pending | P15.06 | Compare speedup with identical correctness checks | — |
 | ✅ Done | P15.07 | Evaluate push-based approximate PageRank | smriti/rank/push.py residual L1 bound; tests/test_rank_push.py passed against power iteration |
 | ✅ Done | P15.08 | Train CPU ranking model without evaluation leakage | smriti/rank/learned.py fit_validation rejects held-out IDs; tests/test_rank_learned.py passed; strict mypy |
