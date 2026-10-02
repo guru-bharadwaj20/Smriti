@@ -496,7 +496,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P14.23 | Record demo video with real timing evidence | Four actual demos rerun;20secondVP9 WebM35106bytes; final PNG visually checked; Ruff; full timing JSON |
 | ❌ Pending | P14.24 | Write project report and benchmark findings | — |
 | ❌ Pending | P14.25 | Fill resume bullet numbers from published results | — |
-| ❌ Pending | P14.26 | Prepare interview answers with algorithm tradeoffs | — |
+| ✅ Done | P14.26 | Prepare interview answers with algorithm tradeoffs | docs/interview.md: indexing, retrieval, packing, memory and evaluation trade-offs with parameters checked against code and measured results |
 | ❌ Pending | P14.27 | Tag release after required phases are complete | — |
 
 ### P15 — Optional extensions
