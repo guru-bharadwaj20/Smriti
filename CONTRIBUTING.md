@@ -497,7 +497,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P14.24 | Write project report and benchmark findings | docs/report.md: system, setup, CodeMem, LongMemEval, SWE-bench subset, performance, agent comparison, findings, limitations; every number cross-checked against committed result files; docs/limitations.md updated with measured gaps |
 | ✅ Done | P14.25 | Fill resume bullet numbers from published results | docs/resume.md: 8 bullets, every number cross-checked against committed result files with sources, plus claims-to-avoid list |
 | ✅ Done | P14.26 | Prepare interview answers with algorithm tradeoffs | docs/interview.md: indexing, retrieval, packing, memory and evaluation trade-offs with parameters checked against code and measured results |
-| ❌ Pending | P14.27 | Tag release after required phases are complete | — |
+| ✅ Done | P14.27 | Tag release after required phases are complete | Annotated tag v0.1.0 on this commit after all P00-P15 rows done; 284 passed / 1 skipped (Windows symlink privilege), ruff, format, strict mypy and extension tests green |
 
 ### P15 — Optional extensions
 
