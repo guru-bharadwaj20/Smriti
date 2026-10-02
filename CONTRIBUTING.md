@@ -479,7 +479,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P14.06 | Implement memory history and diff view | 5 real repository UI tests passed; actual before/after memory diff; JS syntax checked |
 | ✅ Done | P14.07 | Implement merge conflict resolution view | 6 actual repository UI tests passed; conflict409 and recorded resolution validated; JS syntax checked |
 | ✅ Done | P14.08 | Bind local service safely by default | 8 UI tests pass; strict mypy; Ruff; JavaScript syntax |
-| ❌ Pending | P14.09 | Expand README with verified setup commands | — |
+| ✅ Done | P14.09 | Expand README with verified setup commands | README.md; every install and CLI command executed verbatim in a fresh venv (pip install .), which found and fixed stale-freshness-after-index bug |
 | ✅ Done | P14.10 | Document architecture and storage formats | docs/architecture.md data flow and every index.sqlite/memory.sqlite table checked against CREATE TABLE statements |
 | ✅ Done | P14.11 | Document memory temporal and deletion semantics | docs/memory-semantics.md; every example executed by tests/test_memory_semantics_doc.py (4 passed) |
 | ✅ Done | P14.12 | Document limitations and prior work | docs/limitations.md (code, retrieval, memory, evaluation limits with measured figures); docs/prior-work.md evaluation boundaries |
