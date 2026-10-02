@@ -447,7 +447,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P13.21 | Record retrieval failures and uncertainty | — |
 | ✅ Done | P13.22 | Pin LongMemEval revision and usage terms | bench/longmemeval/manifest.json; HF revision 98d7416c, MIT, SHA-256 d6f21ea9 verified locally |
 | ✅ Done | P13.23 | Implement LongMemEval session ingestion adapter | bench/longmemeval/runner.py ingest; tests/test_longmemeval_adapter.py passed (labels and future sessions excluded) |
-| ❌ Pending | P13.24 | Define retrieval-only memory relevance labels | — |
+| ✅ Done | P13.24 | Define retrieval-only memory relevance labels | docs/longmemeval.md: answer_session_ids as binary gold, answer/has_answer never ingested |
 | ❌ Pending | P13.25 | Evaluate temporal updates and abstention retrieval | — |
 | ❌ Pending | P13.26 | Separate optional answer-generation scoring | — |
 | ✅ Done | P13.27 | Choose licensed repositories for commit replay | bench/codemem/repositories.json; pinned LICENSE SHA-256 and Apache-2.0 verification |
