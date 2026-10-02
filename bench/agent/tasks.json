@@ -1,0 +1,82 @@
+[
+  {
+    "id": "cents",
+    "issue": "Prices come out ten times too small: a $4.05 item is charged as 40 cents instead of 405.",
+    "check": "from shop.money import to_cents\nassert to_cents(4.05) == 405 and to_cents(0.1) == 10",
+    "inject": {
+      "path": "shop/money.py",
+      "correct": "return round(amount * 100)",
+      "bug": "return int(amount * 10)"
+    }
+  },
+  {
+    "id": "format",
+    "issue": "Receipts show '$4.5' for four dollars and five cents; it should read '$4.05'.",
+    "check": "from shop.money import format_price\nassert format_price(405) == '$4.05' and format_price(1250) == '$12.50'",
+    "inject": {
+      "path": "shop/money.py",
+      "correct": "{cents % 100:02d}",
+      "bug": "{cents % 100}"
+    }
+  },
+  {
+    "id": "quantity",
+    "issue": "Buying three of the same item only charges for one in the cart subtotal.",
+    "check": "from shop.cart import subtotal\nassert subtotal([{'price': 2.0, 'quantity': 3}, {'price': 1.5, 'quantity': 1}]) == 750",
+    "inject": {
+      "path": "shop/cart.py",
+      "correct": "to_cents(item['price']) * item.get('quantity', 1)",
+      "bug": "to_cents(item['price'])"
+    }
+  },
+  {
+    "id": "total",
+    "issue": "Checkout always shows a total of zero, even for a full cart without a discount code.",
+    "check": "from shop.cart import total\nassert total([{'price': 2.0, 'quantity': 1}]) == 200 and total([{'price': 2.0, 'quantity': 1}], 'HALF') == 100",
+    "inject": {
+      "path": "shop/cart.py",
+      "correct": "return max(amount, 0)",
+      "bug": "return min(amount, 0)"
+    }
+  },
+  {
+    "id": "unknown_code",
+    "issue": "Entering a mistyped coupon such as 'SAVE11' crashes checkout with a KeyError; unknown coupons should simply be ignored.",
+    "check": "from shop.discounts import apply_discount\nassert apply_discount(1000, 'SAVE11') == 1000 and apply_discount(1000, 'SAVE10') == 900",
+    "inject": {
+      "path": "shop/discounts.py",
+      "correct": "CODES.get(code, 0)",
+      "bug": "CODES[code]"
+    }
+  },
+  {
+    "id": "last_unit",
+    "issue": "When exactly one unit is left, the store says the product is out of stock and refuses to sell it.",
+    "check": "from shop.inventory import in_stock\nassert in_stock({'a': 1}, 'a', 1) and not in_stock({'a': 0}, 'a', 1)",
+    "inject": {
+      "path": "shop/inventory.py",
+      "correct": "stock.get(sku, 0) >= quantity",
+      "bug": "stock.get(sku, 0) > quantity"
+    }
+  },
+  {
+    "id": "reserve",
+    "issue": "Reserving units increases the remaining stock count instead of decreasing it.",
+    "check": "from shop.inventory import reserve\nstock = {'a': 5}\nassert reserve(stock, 'a', 2) == 3 and stock['a'] == 3",
+    "inject": {
+      "path": "shop/inventory.py",
+      "correct": "stock[sku] - quantity",
+      "bug": "stock[sku] + quantity"
+    }
+  },
+  {
+    "id": "slug",
+    "issue": "Product URLs use underscores ('blue_shirt') but should use hyphens ('blue-shirt').",
+    "check": "from shop.text import slugify\nassert slugify('Blue Shirt') == 'blue-shirt'",
+    "inject": {
+      "path": "shop/text.py",
+      "correct": "replace(' ', '-')",
+      "bug": "replace(' ', '_')"
+    }
+  }
+]

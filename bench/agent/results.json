@@ -1,0 +1,164 @@
+{
+  "schema_version": 1,
+  "model": "qwen2.5-0.5b-instruct-q4_k_m.gguf@74a4da8c9fdb",
+  "decoding": "temperature 0, seed 0, single attempt per task and condition",
+  "context_budget_tokens": 1500,
+  "summary": {
+    "baseline": {
+      "tasks": 8,
+      "solved": 0,
+      "edited_some_function": 0
+    },
+    "smriti": {
+      "tasks": 8,
+      "solved": 0,
+      "edited_some_function": 0
+    }
+  },
+  "rows": [
+    {
+      "task": "cents",
+      "condition": "baseline",
+      "function": "adjust_price",
+      "edited_path": null,
+      "success": false,
+      "prompt_chars": 408,
+      "generation_seconds": 8.740996100001212
+    },
+    {
+      "task": "cents",
+      "condition": "smriti",
+      "function": "calculate_price",
+      "edited_path": null,
+      "success": false,
+      "prompt_chars": 313,
+      "generation_seconds": 6.119960500000161
+    },
+    {
+      "task": "format",
+      "condition": "baseline",
+      "function": "update_receipts",
+      "edited_path": null,
+      "success": false,
+      "prompt_chars": 397,
+      "generation_seconds": 5.211521099998208
+    },
+    {
+      "task": "format",
+      "condition": "smriti",
+      "function": "fix_receipts",
+      "edited_path": null,
+      "success": false,
+      "prompt_chars": 302,
+      "generation_seconds": 31.417292299996916
+    },
+    {
+      "task": "quantity",
+      "condition": "baseline",
+      "function": "calculate_subtotal",
+      "edited_path": null,
+      "success": false,
+      "prompt_chars": 392,
+      "generation_seconds": 31.130521700000827
+    },
+    {
+      "task": "quantity",
+      "condition": "smriti",
+      "function": "calculate_subtotal",
+      "edited_path": null,
+      "success": false,
+      "prompt_chars": 297,
+      "generation_seconds": 16.303062000002683
+    },
+    {
+      "task": "total",
+      "condition": "baseline",
+      "function": "checkout",
+      "edited_path": null,
+      "success": false,
+      "prompt_chars": 404,
+      "generation_seconds": 4.753231300001062
+    },
+    {
+      "task": "total",
+      "condition": "smriti",
+      "function": "checkout",
+      "edited_path": null,
+      "success": false,
+      "prompt_chars": 309,
+      "generation_seconds": 4.598019900000509
+    },
+    {
+      "task": "unknown_code",
+      "condition": "baseline",
+      "function": "handle_coupon_error",
+      "edited_path": null,
+      "success": false,
+      "prompt_chars": 439,
+      "generation_seconds": 6.803929999998218
+    },
+    {
+      "task": "unknown_code",
+      "condition": "smriti",
+      "function": "handle_coupon_error",
+      "edited_path": null,
+      "success": false,
+      "prompt_chars": 344,
+      "generation_seconds": 8.618949800002156
+    },
+    {
+      "task": "last_unit",
+      "condition": "baseline",
+      "function": "handle_stock_out_of_stock",
+      "edited_path": null,
+      "success": false,
+      "prompt_chars": 417,
+      "generation_seconds": 12.367644400001154
+    },
+    {
+      "task": "last_unit",
+      "condition": "smriti",
+      "function": "check_stock",
+      "edited_path": null,
+      "success": false,
+      "prompt_chars": 322,
+      "generation_seconds": 21.071770099999412
+    },
+    {
+      "task": "reserve",
+      "condition": "baseline",
+      "function": "adjust_stock",
+      "edited_path": null,
+      "success": false,
+      "prompt_chars": 397,
+      "generation_seconds": 8.727274900000339
+    },
+    {
+      "task": "reserve",
+      "condition": "smriti",
+      "function": "reserve_units",
+      "edited_path": null,
+      "success": false,
+      "prompt_chars": 302,
+      "generation_seconds": 7.24229700000069
+    },
+    {
+      "task": "slug",
+      "condition": "baseline",
+      "function": "fix_product_urls",
+      "edited_path": null,
+      "success": false,
+      "prompt_chars": 402,
+      "generation_seconds": 12.127202800002124
+    },
+    {
+      "task": "slug",
+      "condition": "smriti",
+      "function": "fix_product_urls",
+      "edited_path": null,
+      "success": false,
+      "prompt_chars": 307,
+      "generation_seconds": 10.581274100000883
+    }
+  ]
+}
