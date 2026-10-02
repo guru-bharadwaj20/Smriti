@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "repository": "https://github.com/psf/requests.git",
+  "sequence_sha256": "6564447e69fa6070adc8cacf372f8f69d9a64f71ccf15c9705c64a29af036609",
+  "actual_commits": 200,
+  "parser_mode": "incremental trees",
+  "probes": 64,
+  "policy": "Assess implementation changes against previous validated fingerprint, then explicitly revalidate existing symbols. Missing anchors remain conservative.",
+  "staleness": {
+    "true_positive": 87,
+    "false_positive": 0,
+    "true_negative": 12649,
+    "false_negative": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "observations": 12736
+  },
+  "rename_survival": {
+    "eligible_events": 0,
+    "survived": 0,
+    "rate": null
+  },
+  "cascade": {
+    "expected_removed": [
+      "cascade-join",
+      "cascade-left",
+      "cascade-right",
+      "probe-002012b6a50eb43ec10d1887"
+    ],
+    "actual_removed": [
+      "cascade-join",
+      "cascade-left",
+      "cascade-right",
+      "probe-002012b6a50eb43ec10d1887"
+    ],
+    "exact_closure": true,
+    "resurrected_ids": [],
+    "history_branches_checked": 201,
+    "operation_log_verifies": true
+  }
+}

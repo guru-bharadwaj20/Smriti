@@ -454,7 +454,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P13.28 | Select and record 200-commit replay sequences | requests-200.json contains exactly 200 unique parent-linked public commits; three tamper/count tests; strict mypy and ruff |
 | ✅ Done | P13.29 | Create anchored fact injection fixtures | bench/codemem/injection.py; bench/codemem/results/injection.json; injection fixture tests pass |
 | ✅ Done | P13.30 | Label expected staleness after each commit | bench/codemem/labels.py; bench/codemem/replay.py; results/labels.jsonl 12,736 labels over 200 real requests commits; tests/test_codemem_labels.py passed |
-| ❌ Pending | P13.31 | Measure stale detection precision and recall | — |
+| ✅ Done | P13.31 | Measure stale detection precision and recall | bench/codemem/results/metrics.json: TP 87, FP 0, FN 0, TN 12649; precision 1.0, recall 1.0 on 64 probes x 199 steps; tests/test_codemem_metrics.py passed |
 | ❌ Pending | P13.32 | Measure anchor survival through renames | — |
 | ❌ Pending | P13.33 | Measure cascade deletion correctness | — |
 | ❌ Pending | P13.34 | Publish commit-replay dataset construction scripts | — |
