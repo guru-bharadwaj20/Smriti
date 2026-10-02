@@ -75,3 +75,19 @@ Seeds are fixed (HNSW seed 17 for the native profile, 0 for SWE-bench ANN,
 SHA-256 ranking for CodeMem probes and the validation split). Timings vary
 between runs and machines. Labels, recall and precision are deterministic for a
 given source revision and dataset.
+
+## Expected results
+
+A reproduction matches when deterministic values are equal and timings are of
+the same order on comparable hardware.
+
+| Output | Deterministic values to compare |
+| --- | --- |
+| `bench/codemem/results/metrics.json` | 12,736 observations; TP 87, FP 0, FN 0; exact cascade closure; 201 branches checked |
+| `bench/codemem/results/injection.json` | byte-identical (64 probes) |
+| `bench/codemem/results/rename_survival.json` | file moves 64/64 survived; identifier renames 64/64 flagged |
+| `bench/codemem/results/compression.json` | `byte_identical`, `provenance_equal`, `signature_preserved` all true |
+| `bench/longmemeval/results/longmemeval_s.summary.json` | 500 questions; session recall@5 0.8479 |
+| `bench/swebench/results/report.json` | 16 measured tasks; held-out function recall@10 full 0.267, BM25 0.333 |
+| `bench/vector/native_profile.json` | identical seeded graph and query IDs (speedup varies by machine) |
+| `bench/agent/results.json` | depends on the model; the oracle check in `tests/test_agent_compare.py` must give 8/8 |
