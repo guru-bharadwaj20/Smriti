@@ -487,7 +487,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P14.14 | Review third-party dependency and model licenses | docs/licenses.md from installed package metadata; model manifest pins tokenizer.json SHA-256 (verified against local artifact) |
 | ✅ Done | P14.15 | Verify package name availability before publication | docs/release.md: smriti-engine 404 on PyPI JSON and simple index (2026-10-02); smriti and smriti-mcp taken |
 | ✅ Done | P14.16 | Build and test Python package artifact | docs/release.md: wheel and sdist build, twine check PASSED, wheel contents audited (60 entries, package only) |
-| ❌ Pending | P14.17 | Create optional Docker build | — |
+| ✅ Done | P14.17 | Create optional Docker build | Dockerfile, .dockerignore, docs/docker.md; built with Docker Engine 29.1.3 in WSL2 and smoke_install.py passed inside the container (CLI + MCP stdio, 14 tools) |
 | ✅ Done | P14.18 | Verify clean-install CLI and MCP smoke tests | scripts/smoke_install.py passed in a fresh venv with only the wheel installed: CLI index/find-symbol/callers/context/remember/recall and MCP stdio (14 tools, find_symbol, context) |
 | ✅ Done | P14.19 | Script cold-index and one-line-edit demo | 20 files cold 2.307s; one changed file edit 0.209s; strict mypy and Ruff |
 | ✅ Done | P14.20 | Script issue retrieval within 8k-token budget | Real service functional demo selected101 cl100k tokens within8000; strict mypy and Ruff |
