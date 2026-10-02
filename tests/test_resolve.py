@@ -254,3 +254,16 @@ def test_decorated_scopes_preserve_local_shadowing():
     caller = result.symbols[2]
     assert caller.start_line == 3
     assert resolver.resolve_name('helper', caller.id) is None
+
+
+def test_class_base_through_self_inside_method_terminates():
+    source = (
+        'class Outer:\n'
+        '    def build(self):\n'
+        '        class Inner(self.Base):\n'
+        '            def run(self):\n'
+        '                self.go()\n'
+        '        return Inner\n'
+    )
+    edges = Resolver([parse_file('a.py', source)]).resolve()
+    assert edges
