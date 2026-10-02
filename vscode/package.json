@@ -1,0 +1,58 @@
+{
+  "name": "smriti-anchored-memory",
+  "displayName": "Smriti Anchored Memory",
+  "description": "Show and record code-anchored Smriti memory facts with freshness.",
+  "version": "0.1.0",
+  "publisher": "guru-bharadwaj20",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/guru-bharadwaj20/SMRITI.git"
+  },
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./out/src/extension.js",
+  "activationEvents": [
+    "workspaceContains:.smriti/memory.sqlite",
+    "onLanguage:python"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "smriti.remember",
+        "title": "Smriti: Remember Fact About This Symbol"
+      },
+      {
+        "command": "smriti.refresh",
+        "title": "Smriti: Re-index and Refresh Memory"
+      }
+    ],
+    "configuration": {
+      "title": "Smriti",
+      "properties": {
+        "smriti.executable": {
+          "type": "string",
+          "default": "smriti",
+          "description": "Path to the smriti CLI."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p .",
+    "test": "tsc -p . && node --test out/test/memory.test.js",
+    "test:integration": "tsc -p . && node out/test/integration/runTest.js",
+    "package": "vsce package --out smriti-anchored-memory.vsix"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/vscode": "~1.90.0",
+    "@vscode/test-electron": "^3.1.0",
+    "@vscode/vsce": "^3.2.0",
+    "typescript": "^5.6.0"
+  }
+}
