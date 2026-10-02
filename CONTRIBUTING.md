@@ -447,8 +447,8 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P13.21 | Record retrieval failures and uncertainty | — |
 | ✅ Done | P13.22 | Pin LongMemEval revision and usage terms | bench/longmemeval/manifest.json; HF revision 98d7416c, MIT, SHA-256 d6f21ea9 verified locally |
 | ✅ Done | P13.23 | Implement LongMemEval session ingestion adapter | bench/longmemeval/runner.py ingest; tests/test_longmemeval_adapter.py passed (labels and future sessions excluded) |
-| ❌ Pending | P13.24 | Define retrieval-only memory relevance labels | — |
-| ❌ Pending | P13.25 | Evaluate temporal updates and abstention retrieval | — |
+| ✅ Done | P13.24 | Define retrieval-only memory relevance labels | docs/longmemeval.md: answer_session_ids as binary gold, answer/has_answer never ingested |
+| ✅ Done | P13.25 | Evaluate temporal updates and abstention retrieval | bench/longmemeval/results: 500/500 questions; session recall@5 0.848 overall, knowledge-update 0.968, temporal-reasoning 0.655, abstention 0.756; empty-retrieval abstention rate 0.0 |
 | ❌ Pending | P13.26 | Separate optional answer-generation scoring | — |
 | ✅ Done | P13.27 | Choose licensed repositories for commit replay | bench/codemem/repositories.json; pinned LICENSE SHA-256 and Apache-2.0 verification |
 | ✅ Done | P13.28 | Select and record 200-commit replay sequences | requests-200.json contains exactly 200 unique parent-linked public commits; three tamper/count tests; strict mypy and ruff |
@@ -485,7 +485,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P14.12 | Document limitations and prior work | — |
 | ❌ Pending | P14.13 | Document benchmark reproduction | — |
 | ✅ Done | P14.14 | Review third-party dependency and model licenses | docs/licenses.md from installed package metadata; model manifest pins tokenizer.json SHA-256 (verified against local artifact) |
-| ❌ Pending | P14.15 | Verify package name availability before publication | — |
+| ✅ Done | P14.15 | Verify package name availability before publication | docs/release.md: smriti-engine 404 on PyPI JSON and simple index (2026-10-02); smriti and smriti-mcp taken |
 | ❌ Pending | P14.16 | Build and test Python package artifact | — |
 | ❌ Pending | P14.17 | Create optional Docker build | — |
 | ❌ Pending | P14.18 | Verify clean-install CLI and MCP smoke tests | — |
