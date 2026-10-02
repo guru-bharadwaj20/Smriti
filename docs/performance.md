@@ -23,3 +23,27 @@ snapshot publication still process the whole repository, so an incremental
 update costs about 90% of a cold index here. The earlier 0.21 s figure in
 `docs/demo.md` was a 20-file demo repository. Making resolution and publication
 incremental per changed file is the main performance gap.
+
+## Query latency (P13.37)
+
+Source: `bench/swebench/results/report.json`, held-out split, 15 real SWE-bench
+issue queries against requests and flask (588–1,629 indexed symbols), warm
+in-process indexes. Ranking excludes index construction; packing includes
+rendering and the final tokenizer recount.
+
+| Method | p50 (s) | p95 (s) |
+| --- | --- | --- |
+| BM25 baseline | 0.024 | 0.055 |
+| Exact embedding baseline | 0.006 | 0.287 |
+| Substring grep baseline | 0.105 | 0.245 |
+| Aider-style repo map baseline | 0.546 | 1.875 |
+| Full ranking (BM25F + HNSW + RRF + PageRank) | 0.642 | 1.997 |
+| Full ranking without graph | 0.064 | 0.155 |
+| Full ranking without vectors | 0.638 | 1.760 |
+| Pack 8,192 tokens, knapsack (after ranking) | 4.277 | 6.888 |
+| Pack 8,192 tokens, greedy (after ranking) | 0.863 | 2.272 |
+
+Personalized PageRank accounts for nearly all ranking time (0.64 s vs 0.06 s
+without it) and the knapsack dominates end-to-end latency: about 5 s at p50 for
+an 8k-token context on this laptop. Greedy packing is 5x faster and reached the
+same mean coverage (0.567) on these tasks.
