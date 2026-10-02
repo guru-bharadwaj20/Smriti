@@ -398,7 +398,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P12.05 | Implement find-symbol command | smriti/server/service.py; symbol lookup graph and restart integration tests passed |
 | ✅ Done | P12.06 | Implement callers and callees commands | resolved call graph CLI integration test passed |
 | ✅ Done | P12.07 | Implement remember and recall commands | smriti/server/cli.py, MemoryService in smriti/server/service.py; tests/test_memory_cli.py passed |
-| ❌ Pending | P12.08 | Implement forget command with cascade | — |
+| ✅ Done | P12.08 | Implement forget command with cascade | smriti/server/cli.py forget; cascade CLI test in tests/test_memory_cli.py passed |
 | ❌ Pending | P12.09 | Implement memory log and diff commands | — |
 | ❌ Pending | P12.10 | Implement memory revert command | — |
 | ❌ Pending | P12.11 | Implement memory branch and merge commands | — |

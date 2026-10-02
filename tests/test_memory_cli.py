@@ -23,3 +23,14 @@ def test_remember_and_recall(tmp_path: Path) -> None:
     assert isinstance(recalled, list) and recalled[0]['id'] == fact['id']
     bad = runner.invoke(app, ['remember', 'x', '--anchor', 'nohash', '--root', str(tmp_path)])
     assert bad.exit_code != 0
+
+
+def test_forget_cascades_by_fact_and_source(tmp_path: Path) -> None:
+    first = invoke(tmp_path, 'remember', 'From the log', '--source', 'log', '--session', 's1')
+    other = invoke(tmp_path, 'remember', 'Kept fact')
+    assert isinstance(first, dict) and isinstance(other, dict)
+    assert invoke(tmp_path, 'forget', '--source', 'log') == {'forgotten': [first['id']]}
+    assert invoke(tmp_path, 'forget', other['id']) == {'forgotten': [other['id']]}
+    assert invoke(tmp_path, 'recall') == []
+    both = runner.invoke(app, ['forget', 'x', '--source', 'y', '--root', str(tmp_path)])
+    assert both.exit_code != 0

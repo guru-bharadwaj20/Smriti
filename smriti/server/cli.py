@@ -158,3 +158,18 @@ def recall(
         _emit(service.recall(query, include_stale=not fresh_only))
     finally:
         service.close()
+
+
+@app.command('forget')
+def forget(
+    fact_id: Annotated[str | None, typer.Argument()] = None,
+    source: Annotated[str | None, typer.Option('--source')] = None,
+    session: Annotated[str | None, typer.Option('--session')] = None,
+    root: RootOption = DEFAULT_ROOT,
+) -> None:
+    """Purge a fact, source, or session and every derived fact."""
+    service = _memory(root)
+    try:
+        _emit({'forgotten': service.forget(fact_id=fact_id, source=source, session=session)})
+    finally:
+        service.close()

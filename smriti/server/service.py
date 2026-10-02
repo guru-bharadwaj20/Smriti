@@ -186,3 +186,13 @@ class MemoryService:
 
     def recall(self, query: str = '', include_stale: bool = True) -> list[dict[str, Any]]:
         return [f.to_dict() for f in self.store.recall(query, include_stale=include_stale)]
+
+    def forget(
+        self, *, fact_id: str | None = None, source: str | None = None, session: str | None = None
+    ) -> list[str]:
+        from smriti.server.schemas import ForgetRequest
+
+        request = ForgetRequest(fact_id=fact_id, source=source, session=session)
+        if request.fact_id is not None:
+            return self.store.forget(request.fact_id)
+        return self.store.forget_by(session=request.session, source=request.source)
