@@ -416,7 +416,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P12.23 | Define concurrent writer transaction policy | docs/concurrency.md; targeted verification passed |
 | ✅ Done | P12.24 | Document coding-agent MCP connection setup | docs/mcp-setup.md; tool list matches registered MCP tools |
 | ✅ Done | P12.25 | Verify CLI and MCP return equivalent results | tests/test_cli_mcp_equivalence.py compares symbol, graph, context, recall, log outputs; passed |
-| ❌ Pending | P12.26 | Run full code retrieval and memory integration demo | — |
+| ✅ Done | P12.26 | Run full code retrieval and memory integration demo | scripts/demo_integration.py; tests/test_demo_integration.py passed (index, context, callers, anchored fact goes stale, cascade forget) |
 
 ### P13 — CPU evaluation and benchmarks
 
