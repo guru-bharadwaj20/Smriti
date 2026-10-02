@@ -445,7 +445,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P13.19 | Separate validation from held-out evaluation | bench/swebench/splits.py; executable semantic assertions passed |
 | ❌ Pending | P13.20 | Run component ablations | — |
 | ❌ Pending | P13.21 | Record retrieval failures and uncertainty | — |
-| ❌ Pending | P13.22 | Pin LongMemEval revision and usage terms | — |
+| ✅ Done | P13.22 | Pin LongMemEval revision and usage terms | bench/longmemeval/manifest.json; HF revision 98d7416c, MIT, SHA-256 d6f21ea9 verified locally |
 | ❌ Pending | P13.23 | Implement LongMemEval session ingestion adapter | — |
 | ❌ Pending | P13.24 | Define retrieval-only memory relevance labels | — |
 | ❌ Pending | P13.25 | Evaluate temporal updates and abstention retrieval | — |
