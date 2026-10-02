@@ -739,13 +739,10 @@ class MemoryStore:
         }
         if not common:
             return None
-        candidates = []
-        for oid in common:
-            if not any(
-                oid != other and oid in {a.id for a in self.operations.ancestry(other)}
-                for other in common
-            ):
-                candidates.append(oid)
+        # Common ancestors are parent-closed. Every nonmaximal common ancestor
+        # therefore has a child in this set; discard parents in a single pass.
+        parents = {parent for oid in common for parent in self.operations.get(oid).parents}
+        candidates = sorted(common - parents)
         if len(candidates) != 1:
             raise ValueError('Multiple merge bases require explicit resolution')
         return candidates[0]
