@@ -66,6 +66,8 @@ class Resolver:
     def resolve(self) -> list[Edge]:
         edges = []
         for result in self.results:
+            if result.language in {'go', 'c', 'cpp'}:
+                continue
             for call in result.calls:
                 target = self.resolve_name(call['name'], call['scope'])
                 if target:
@@ -82,6 +84,9 @@ class Resolver:
                     edges.append(Edge(call['scope'], target, 'calls', 0.5))
                     for candidate in self.dynamic_candidates(call['name']):
                         edges.append(Edge(call['scope'], candidate, 'may_call', 0.25))
+        from .languages import resolve_calls
+
+        edges.extend(resolve_calls(self.results))
         edges.extend(self.structural_edges())
         edges.extend(self.import_edges())
         edges.extend(self.inheritance_edges())
@@ -93,6 +98,8 @@ class Resolver:
         import ast
 
         for result in self.results:
+            if result.language != 'python':
+                continue
             try:
                 tree = ast.parse(result.source)
             except SyntaxError:

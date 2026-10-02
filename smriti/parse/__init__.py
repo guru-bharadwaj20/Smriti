@@ -57,6 +57,10 @@ class ParseResult:
     inheritance: list[InheritanceDeclaration] = field(default_factory=list)
     diagnostics: list[ParseDiagnostic] = field(default_factory=list)
     comprehensions: list[ComprehensionScope] = field(default_factory=list)
+    language: str = 'python'
+    package: str = ''
+    receiver_bindings: dict[str, tuple[str, str]] = field(default_factory=dict)
+    local_names: dict[str, set[str]] = field(default_factory=dict)
 
 
 class SourceParser:
@@ -71,10 +75,22 @@ class SourceParser:
         import tree_sitter_java
 
         self.parsers['java'] = Parser(Language(tree_sitter_java.language()))
+        import tree_sitter_c
+        import tree_sitter_cpp
+        import tree_sitter_go
+
+        for name, grammar in (
+            ('go', tree_sitter_go),
+            ('c', tree_sitter_c),
+            ('cpp', tree_sitter_cpp),
+        ):
+            self.parsers[name] = Parser(Language(grammar.language()))
 
     def parse(self, path: str, source: bytes | str, language: str = 'python') -> ParseResult:
         data = source.encode('utf-8') if isinstance(source, str) else source
         cached = self.cache.get(path)
+        if cached is not None and cached.language != language:
+            cached = None
         if cached is not None:
             old = cached.source
             prefix = 0
@@ -104,11 +120,17 @@ class SourceParser:
         else:
             tree = self.parsers[language].parse(data)
         result = ParseResult(path.replace('\\', '/'), data, tree)
+        result.language = language
         self._extract(result, language)
         self.cache[path] = result
         return result
 
     def _extract(self, result: ParseResult, language: str) -> None:
+        if language in {'go', 'c', 'cpp'}:
+            from .languages import extract
+
+            extract(result)
+            return
         path = result.path
         name = PurePosixPath(path).stem
         module = (
@@ -360,6 +382,7 @@ LANGUAGE_SUPPORT = {
     'python': 'Definitions, imports, calls, inheritance and incremental trees',
     'typescript': 'Definitions and methods; full type-based call resolution is deferred',
     'java': 'Definitions and methods; full overload resolution is deferred',
-    'go': 'Deferred optional phase P15.01; rejected until a grammar is installed',
-    'cpp': 'Deferred optional phase P15.02; templates and macros need explicit policy',
+    'go': 'Definitions, imports, receiver methods, conservative package calls',
+    'c': 'Definitions, includes and conservative direct calls; no macro expansion',
+    'cpp': 'Namespaces, classes and direct calls; unresolved overloads remain uncertain',
 }
