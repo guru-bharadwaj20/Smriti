@@ -29,3 +29,21 @@ entries: the 54 `smriti/` package files (Python modules, `py.typed`, UI static
 assets, `vector/model_manifest.json`) and dist-info with the MIT license. Tests,
 benchmarks, scripts and model weights are not packaged. The console entry point
 is `smriti = smriti.server.cli:app`.
+
+## Clean-install smoke test
+
+Install the wheel into a fresh environment and run the smoke script from outside
+the source tree, so the installed package rather than the checkout is imported:
+
+```powershell
+python -m venv $env:TEMP/smriti-clean
+$env:TEMP/smriti-clean/Scripts/python.exe -m pip install dist/smriti_engine-0.1.0-py3-none-any.whl
+cd $env:TEMP
+$env:TEMP/smriti-clean/Scripts/python.exe <repo>/scripts/smoke_install.py
+```
+
+It indexes a temporary repository with the `smriti` console script, checks
+`find-symbol`, `callers`, `context`, `remember` and `recall`, then starts
+`smriti serve` over MCP stdio, lists the tools and calls `find_symbol` and
+`context`. Verified 2 October 2026 on Windows 11 / Python 3.13.1 with only the
+wheel's declared dependencies installed; all 14 MCP tools were listed.
