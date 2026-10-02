@@ -484,7 +484,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P14.11 | Document memory temporal and deletion semantics | — |
 | ❌ Pending | P14.12 | Document limitations and prior work | — |
 | ❌ Pending | P14.13 | Document benchmark reproduction | — |
-| ❌ Pending | P14.14 | Review third-party dependency and model licenses | — |
+| ✅ Done | P14.14 | Review third-party dependency and model licenses | docs/licenses.md from installed package metadata; model manifest pins tokenizer.json SHA-256 (verified against local artifact) |
 | ❌ Pending | P14.15 | Verify package name availability before publication | — |
 | ❌ Pending | P14.16 | Build and test Python package artifact | — |
 | ❌ Pending | P14.17 | Create optional Docker build | — |

@@ -4,8 +4,11 @@
   "license": "Apache-2.0",
   "sha256": {
     "onnx/model.onnx": "6fd5d72fe4589f189f8ebc006442dbb529bb7ce38f8082112682524616046452",
-    "onnx/model_quint8_avx2.onnx": "b941bf19f1f1283680f449fa6a7336bb5600bdcd5f84d10ddc5cd72218a0fd21"
+    "onnx/model_quint8_avx2.onnx": "b941bf19f1f1283680f449fa6a7336bb5600bdcd5f84d10ddc5cd72218a0fd21",
+    "tokenizer.json": "be50c3628f2bf5bb5e3a7f17b1f74611b2561a3a27eeab05e5aa30f411572037"
   },
   "tokenizer": "tokenizer.json",
-  "max_length": 256
+  "max_length": 256,
+  "tokenizer_git_blob_sha1": "cb202bfe2e3c98645018a6d12f182a434c9d3e02",
+  "tokenizer_metadata_source": "https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/1110a243fdf4706b3f48f1d95db1a4f5529b4d41"
 }
