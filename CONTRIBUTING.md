@@ -517,5 +517,5 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P15.10 | Test synchronization conflicts between teammates | tests/test_memory_sync.py divergent edits, tombstones, resurrection and merge-base tests passed; smriti/memory/__init__.py single-pass common base |
 | ❌ Pending | P15.11 | Create VS Code anchored-memory extension | — |
 | ❌ Pending | P15.12 | Implement optional local-model summaries | — |
-| ❌ Pending | P15.13 | Evaluate memory compression without losing provenance | — |
+| ✅ Done | P15.13 | Evaluate memory compression without losing provenance | bench/codemem/results/compression.json: real replay log 379,929 -> 79,465 bytes (0.209), byte-identical, provenance and HMAC preserved; tests/test_memory_sync.py passed |
 | ❌ Pending | P15.14 | Implement optional coding-agent task-success comparison | — |

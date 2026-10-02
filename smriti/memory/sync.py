@@ -1,4 +1,4 @@
-"""Offline shared-secret authenticated memory bundles.
+"""Offline shared-secret authenticated memory bundles and lossless compression.
 
 HMAC identifies a trusted group, not an individual author: every key holder can
 sign bundles for that group. Callers provision and rotate keys out of band.
@@ -9,12 +9,14 @@ from __future__ import annotations
 import hashlib
 import hmac
 import json
+import zlib
 from typing import Any
 
 from . import MemoryStore
 from .operations import Operation, canonical, digest
 
 DOMAIN = b'SMRITI-MEMORY-SYNC-v1\0'
+MAX_UNCOMPRESSED = 64 * 1024 * 1024
 
 
 def _key(key: bytes) -> None:
@@ -137,3 +139,34 @@ def import_bundle(
     if purged:
         store._physical_cleanup()
     return str(head) if head is not None else None
+
+
+def compress_bundle(bundle: dict[str, Any]) -> bytes:
+    return zlib.compress(canonical(bundle).encode('utf-8'), level=9)
+
+
+def decompress_bundle(payload: bytes, max_bytes: int = MAX_UNCOMPRESSED) -> dict[str, Any]:
+    if max_bytes < 1:
+        raise ValueError('Decompression size limit must be positive')
+    decoder = zlib.decompressobj()
+    raw = decoder.decompress(payload, max_bytes + 1)
+    if len(raw) > max_bytes or decoder.unconsumed_tail or not decoder.eof or decoder.unused_data:
+        raise ValueError('Compressed bundle exceeds its limit or has trailing/truncated data')
+    document = json.loads(raw)
+    if not isinstance(document, dict):
+        raise ValueError('A bundle must be an object')
+    return dict(document)
+
+
+def compression_metrics(bundle: dict[str, Any]) -> dict[str, int | float | bool]:
+    raw = canonical(bundle).encode('utf-8')
+    compressed = compress_bundle(bundle)
+    restored = decompress_bundle(compressed)
+    return {
+        'original_bytes': len(raw),
+        'compressed_bytes': len(compressed),
+        'ratio': len(compressed) / len(raw),
+        'byte_identical': canonical(restored).encode('utf-8') == raw,
+        'provenance_equal': restored['document'] == bundle['document'],
+        'signature_preserved': restored['signature'] == bundle['signature'],
+    }

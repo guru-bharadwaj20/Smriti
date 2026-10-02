@@ -6,6 +6,9 @@ from unittest.mock import patch
 
 from smriti.memory import Anchor, MemoryStore, MergeConflict
 from smriti.memory.sync import (
+    compress_bundle,
+    compression_metrics,
+    decompress_bundle,
     export_bundle,
     import_bundle,
     verify_bundle,
@@ -122,6 +125,32 @@ class SyncTests(unittest.TestCase):
         ) as ancestry:
             self.assertEqual(self.alice.common_base(left, right), base)
             self.assertLessEqual(ancestry.call_count, 2)
+
+    def test_lossless_compression_preserves_history_and_provenance(self):
+        for i in range(20):
+            self.alice.remember(
+                'Repeated implementation details ' * 10,
+                fact_id=str(i),
+                user='Alice',
+                session='session',
+                source='code',
+                anchors=[Anchor('symbol-' + str(i), 'digest')],
+            )
+        bundle = export_bundle(self.alice, REPO, KEY)
+        compressed = compress_bundle(bundle)
+        restored = decompress_bundle(compressed)
+        self.assertEqual(restored, bundle)
+        metrics = compression_metrics(bundle)
+        self.assertTrue(metrics['byte_identical'])
+        self.assertTrue(metrics['provenance_equal'])
+        self.assertLess(metrics['ratio'], 1)
+        import_bundle(self.bob, restored, REPO, KEY, 'peer/alice')
+        self.bob.switch('peer/alice')
+        self.assertEqual(self.bob.recall(), self.alice.recall())
+        with self.assertRaises(ValueError):
+            decompress_bundle(compressed, max_bytes=10)
+        with self.assertRaises(ValueError):
+            decompress_bundle(compressed + b'trailing')
 
 
 if __name__ == '__main__':
