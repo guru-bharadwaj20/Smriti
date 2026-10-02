@@ -516,6 +516,6 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P15.09 | Design signed memory-log synchronization | smriti/memory/sync.py HMAC-SHA256 bundles; docs/memory.md offline synchronization; tests/test_memory_sync.py authentication, rewind and active-branch tests passed |
 | ✅ Done | P15.10 | Test synchronization conflicts between teammates | tests/test_memory_sync.py divergent edits, tombstones, resurrection and merge-base tests passed; smriti/memory/__init__.py single-pass common base |
 | ❌ Pending | P15.11 | Create VS Code anchored-memory extension | — |
-| ❌ Pending | P15.12 | Implement optional local-model summaries | — |
+| ✅ Done | P15.12 | Implement optional local-model summaries | smriti/memory/summaries.py (derived facts, model provenance, refuses stale sources); tests/test_memory_summaries.py 3 passed incl. real Qwen2.5-0.5B GGUF via llama-cpp-python 0.3.36; docs/memory.md |
 | ✅ Done | P15.13 | Evaluate memory compression without losing provenance | bench/codemem/results/compression.json: real replay log 379,929 -> 79,465 bytes (0.209), byte-identical, provenance and HMAC preserved; tests/test_memory_sync.py passed |
 | ❌ Pending | P15.14 | Implement optional coding-agent task-success comparison | — |
