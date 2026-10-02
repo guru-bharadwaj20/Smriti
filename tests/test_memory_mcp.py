@@ -56,3 +56,24 @@ def test_memory_crud_tools(tmp_path: Path) -> None:
     assert not forgotten.is_error
     assert empty.content == [] or 'Use the cache' not in empty.content[0].text
     assert invalid.is_error
+
+
+def test_memory_history_tools(tmp_path: Path) -> None:
+    results = run_tools(
+        tmp_path,
+        [
+            ('remember', {'fact': 'Base'}),
+            ('memory_branch', {'name': 'feature', 'switch': True}),
+            ('remember', {'fact': 'Feature'}),
+            ('memory_switch', {'name': 'main'}),
+            ('memory_merge', {'source': 'feature'}),
+            ('memory_log', {'limit': 1}),
+            ('memory_diff', {}),
+        ],
+    )
+    assert not any(result.is_error for result in results)
+    assert results[4].structured_content['merged'] is True
+    assert 'Feature' in results[6].content[0].text
+    operation = results[5].structured_content['result'][0]['id']
+    reverted = run_tools(tmp_path, [('memory_revert', {'operation_id': operation})])[0]
+    assert not reverted.is_error

@@ -407,7 +407,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P12.14 | Expose context MCP tool | real stdio client retrieved indexed code; token count and invalid budget tests passed |
 | ✅ Done | P12.15 | Expose symbol and graph MCP tools | smriti/server/mcp.py find_symbol/callers/callees; stdio test in tests/test_memory_mcp.py passed |
 | ✅ Done | P12.16 | Expose memory CRUD MCP tools | smriti/server/mcp.py remember/recall/forget; stdio test passed |
-| ❌ Pending | P12.17 | Expose memory history MCP tools | — |
+| ✅ Done | P12.17 | Expose memory history MCP tools | smriti/server/mcp.py memory_log/diff/revert/branch/switch/merge; stdio test passed |
 | ✅ Done | P12.18 | Serve immutable index snapshots to queries | smriti/server/snapshots.py; snapshot immutability and stale-writer tests passed |
 | ✅ Done | P12.19 | Move indexing to background worker process | smriti/server/jobs.py; spawned-worker persisted-snapshot integration test passed |
 | ✅ Done | P12.20 | Keep async server responsive during indexing | smriti/server/jobs.py; concurrent event-loop ticker test passed during real indexing |
