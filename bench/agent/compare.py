@@ -22,11 +22,13 @@ from collections.abc import Callable
 from pathlib import Path
 
 from smriti.config import Config
+from smriti.pack.tokens import TokenCounter
 from smriti.parse import SourceParser
 from smriti.server.service import SmritiService
 
 HERE = Path(__file__).resolve().parent
 FIXTURE = HERE / 'fixture'
+CONDITIONS = ('baseline', 'whole_repo', 'smriti')
 INSTRUCTION = (
     'You are fixing a bug in a Python project. Reply with exactly one corrected '
     'Python function definition inside a ```python code block and nothing else. '
@@ -35,12 +37,24 @@ INSTRUCTION = (
 
 
 def prompt(issue: str, condition: str, workdir: Path, budget: int) -> str:
+    files = sorted(p.relative_to(workdir).as_posix() for p in workdir.rglob('*.py'))
     if condition == 'baseline':
-        files = sorted(p.relative_to(workdir).as_posix() for p in workdir.rglob('*.py'))
         material = 'Repository files:\n' + '\n'.join(files)
-    else:
+    elif condition == 'whole_repo':
+        # Naive context: every file in path order, truncated to the same token budget.
+        counter = TokenCounter('cl100k_base')
+        material = 'Repository code:\n'
+        for name in files:
+            chunk = f'# File: {name}\n{(workdir / name).read_text(encoding="utf-8")}\n'
+            if counter.count(material + chunk) > budget:
+                break
+            material += chunk
+    elif condition == 'smriti':
         service = SmritiService(workdir, Config(workdir, workdir.parent / 'state'))
+        service.index()  # context() on an unindexed service returns nothing
         material = 'Relevant code:\n' + service.context(issue, budget).text
+    else:
+        raise ValueError(f'Unknown condition: {condition}')
     return f'{INSTRUCTION}\n\nIssue: {issue}\n\n{material}\n'
 
 
@@ -101,7 +115,7 @@ def run(generate: Callable[[str], str], model: str, budget: int = 1500) -> dict[
     tasks = json.loads((HERE / 'tasks.json').read_text(encoding='utf-8'))
     rows = []
     for task in tasks:
-        for condition in ('baseline', 'smriti'):
+        for condition in CONDITIONS:
             # SQLite handles can outlive the service on Windows; never fail on cleanup.
             with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as directory:
                 workdir = Path(directory) / 'repo'
@@ -133,7 +147,7 @@ def run(generate: Callable[[str], str], model: str, budget: int = 1500) -> dict[
                 r['edited_path'] is not None for r in rows if r['condition'] == condition
             ),
         }
-        for condition in ('baseline', 'smriti')
+        for condition in CONDITIONS
     }
     return {
         'schema_version': 1,

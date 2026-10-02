@@ -38,3 +38,16 @@ def test_smriti_prompt_contains_the_buggy_function() -> None:
     assert Path(FIXTURE / 'shop/money.py').exists()
     text = prompt(TASKS[0]['issue'], 'baseline', FIXTURE, 800)
     assert 'shop/money.py' in text and 'def to_cents' not in text
+
+
+def test_smriti_prompt_contains_each_tasks_buggy_function(tmp_path: Path) -> None:
+    import shutil
+
+    from bench.agent.compare import inject, prompt
+
+    for task in TASKS:
+        workdir = tmp_path / task['id'] / 'repo'
+        shutil.copytree(FIXTURE, workdir)
+        inject(workdir, task)
+        text = prompt(task['issue'], 'smriti', workdir, 1500)
+        assert task['inject']['bug'] in text, task['id']
