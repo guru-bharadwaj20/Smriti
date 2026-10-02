@@ -496,7 +496,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P14.23 | Record demo video with real timing evidence | Four actual demos rerun;20secondVP9 WebM35106bytes; final PNG visually checked; Ruff; full timing JSON |
 | ❌ Pending | P14.24 | Write project report and benchmark findings | — |
 | ❌ Pending | P14.25 | Fill resume bullet numbers from published results | — |
-| ❌ Pending | P14.26 | Prepare interview answers with algorithm tradeoffs | — |
+| ✅ Done | P14.26 | Prepare interview answers with algorithm tradeoffs | docs/interview.md: indexing, retrieval, packing, memory and evaluation trade-offs with parameters checked against code and measured results |
 | ❌ Pending | P14.27 | Tag release after required phases are complete | — |
 
 ### P15 — Optional extensions
@@ -515,7 +515,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P15.08 | Train CPU ranking model without evaluation leakage | smriti/rank/learned.py fit_validation rejects held-out IDs; tests/test_rank_learned.py passed; strict mypy |
 | ✅ Done | P15.09 | Design signed memory-log synchronization | smriti/memory/sync.py HMAC-SHA256 bundles; docs/memory.md offline synchronization; tests/test_memory_sync.py authentication, rewind and active-branch tests passed |
 | ✅ Done | P15.10 | Test synchronization conflicts between teammates | tests/test_memory_sync.py divergent edits, tombstones, resurrection and merge-base tests passed; smriti/memory/__init__.py single-pass common base |
-| ❌ Pending | P15.11 | Create VS Code anchored-memory extension | — |
+| ✅ Done | P15.11 | Create VS Code anchored-memory extension | vscode/: CodeLens freshness + remember command over the smriti CLI; 3 node:test unit tests pass; integration test in isolated VS Code shows the anchored fact's lens; vsce package builds .vsix |
 | ✅ Done | P15.12 | Implement optional local-model summaries | smriti/memory/summaries.py (derived facts, model provenance, refuses stale sources); tests/test_memory_summaries.py 3 passed incl. real Qwen2.5-0.5B GGUF via llama-cpp-python 0.3.36; docs/memory.md |
 | ✅ Done | P15.13 | Evaluate memory compression without losing provenance | bench/codemem/results/compression.json: real replay log 379,929 -> 79,465 bytes (0.209), byte-identical, provenance and HMAC preserved; tests/test_memory_sync.py passed |
-| ❌ Pending | P15.14 | Implement optional coding-agent task-success comparison | — |
+| ✅ Done | P15.14 | Implement optional coding-agent task-success comparison | bench/agent/compare.py, 8 injected-bug tasks; harness validated by oracle 8/8 and no-op 0/8 (tests/test_agent_compare.py); Qwen2.5-0.5B run 0/8 vs 0/8, documented as uninformative in bench/agent/README.md |
