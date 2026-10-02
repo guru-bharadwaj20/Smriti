@@ -221,12 +221,20 @@ class Resolver:
         return self.children.get(class_id, {}).get(name)
 
     def class_bases(self) -> dict[str, list[str]]:
+        # Computed once. A base written as self.X/super() resolves through
+        # method_target, which re-enters here; it sees an empty map instead of
+        # recursing without bound.
+        cached: dict[str, list[str]] | None = getattr(self, '_class_bases', None)
+        if cached is not None:
+            return cached
+        self._class_bases: dict[str, list[str]] = {}
         bases: dict[str, list[str]] = {}
         for result in self.results:
             for declaration in result.inheritance:
                 target = self.resolve_name(declaration['name'], declaration['scope'])
                 if target and self.symbols[target].kind == 'class':
                     bases.setdefault(declaration['class'], []).append(target)
+        self._class_bases = bases
         return bases
 
     def method_target(self, class_id: str, name: str, skip_current: bool = False) -> str | None:

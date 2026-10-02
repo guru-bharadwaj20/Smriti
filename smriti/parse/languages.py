@@ -18,7 +18,7 @@ def extract(result: ParseResult) -> None:
     source, path = result.source, result.path
 
     def text(node: Node) -> str:
-        return source[node.start_byte : node.end_byte].decode('utf-8')
+        return source[node.start_byte : node.end_byte].decode('utf-8', 'replace')
 
     def make(
         node: Node, name: str, kind: SymbolKind, parent: Symbol | None, body: Node | None = None
@@ -26,7 +26,7 @@ def extract(result: ParseResult) -> None:
         qualname = (parent.qualname + '.' if parent else '') + name
         signature = (
             source[node.start_byte : (body.start_byte if body else node.end_byte)]
-            .decode('utf-8')
+            .decode('utf-8', 'replace')
             .rstrip()
         )
         # Overloads and duplicate declarations need distinct identities.
