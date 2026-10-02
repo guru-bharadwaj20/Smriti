@@ -5,9 +5,9 @@ from hashlib import sha256
 from pathlib import Path
 
 
-def repository_id(root: Path) -> str:
+def repository_id(root: Path, state_dir: Path | None = None) -> str:
     """Persist identity across branch switches; intentionally not across copies."""
-    directory = root.resolve() / '.smriti'
+    directory = state_dir.resolve() if state_dir is not None else root.resolve() / '.smriti'
     directory.mkdir(parents=True, exist_ok=True)
     identity = directory / 'repository-id'
     try:

@@ -29,7 +29,7 @@ class SmritiService:
         self.config = config or load_config(root)
         self.root = self.config.root
         self.config.data_dir.mkdir(parents=True, exist_ok=True)
-        self.repository = repository_id(self.root)
+        self.repository = repository_id(self.root, self.config.data_dir)
         self.store = IndexStore(self.config.data_dir / 'index.sqlite')
         self.parser = SourceParser()
         self._parsed: dict[str, ParseResult] = {}
