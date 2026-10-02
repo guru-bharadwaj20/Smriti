@@ -1,0 +1,22 @@
+{
+  "hardware": {
+    "cpu": "Intel(R) Core(TM) i3-5005U CPU @ 2.00GHz",
+    "logical_cpus": 4,
+    "os": "Windows-11-10.0.22000-SP0",
+    "python": "3.13.1",
+    "ram_bytes": 8497737728
+  },
+  "seed": 17,
+  "vectors": 120,
+  "dimensions": 384,
+  "queries": 20,
+  "python_profiled_seconds": 48.295670399998926,
+  "cumulative_profile": "         26511577 function calls (26510485 primitive calls) in 48.291 seconds\n\n   Ordered by: cumulative time\n   List reduced from 43 to 20 due to restriction <20>\n\n   ncalls  tottime  percall  cumtime  percall filename:lineno(function)\n      120    0.138    0.001   46.834    0.390 C:\\Users\\HPSMG\\Desktop\\SMRITI\\smriti\\vector\\hnsw.py:92(add)\n    66637    1.575    0.000   46.391    0.001 C:\\Users\\HPSMG\\Desktop\\SMRITI\\smriti\\vector\\math.py:24(distance)\n    66777   20.851    0.000   44.527    0.001 {built-in method builtins.sum}\n      396    0.231    0.001   33.950    0.086 C:\\Users\\HPSMG\\Desktop\\SMRITI\\smriti\\vector\\hnsw.py:78(_select)\n    16054    0.170    0.000   33.810    0.002 {built-in method builtins.all}\n    50230    0.357    0.000   33.529    0.001 C:\\Users\\HPSMG\\Desktop\\SMRITI\\smriti\\vector\\hnsw.py:84(<genexpr>)\n 25655245   23.645    0.000   23.645    0.000 C:\\Users\\HPSMG\\Desktop\\SMRITI\\smriti\\vector\\math.py:27(<genexpr>)\n      145    0.241    0.002    6.105    0.042 C:\\Users\\HPSMG\\Desktop\\SMRITI\\smriti\\vector\\hnsw.py:54(_layer_search)\n       20    0.004    0.000    1.456    0.073 C:\\Users\\HPSMG\\Desktop\\SMRITI\\smriti\\vector\\hnsw.py:137(search)\n      125    0.004    0.000    0.833    0.007 C:\\Users\\HPSMG\\Desktop\\SMRITI\\smriti\\vector\\hnsw.py:41(_greedy)\n67086/65994    0.139    0.000    0.763    0.000 {built-in method builtins.min}\n     1092    0.008    0.000    0.626    0.001 C:\\Users\\HPSMG\\Desktop\\SMRITI\\smriti\\vector\\hnsw.py:47(<lambda>)\n      140    0.115    0.001    0.472    0.003 C:\\Users\\HPSMG\\Desktop\\SMRITI\\smriti\\vector\\math.py:14(normalize)\n   177339    0.225    0.000    0.225    0.000 {built-in method builtins.len}\n    53900    0.081    0.000    0.111    0.000 C:\\Users\\HPSMG\\Desktop\\SMRITI\\smriti\\vector\\math.py:16(<genexpr>)\n    53900    0.087    0.000    0.087    0.000 C:\\Users\\HPSMG\\Desktop\\SMRITI\\smriti\\vector\\math.py:15(<genexpr>)\n     8512    0.084    0.000    0.084    0.000 {built-in method builtins.sorted}\n    66777    0.061    0.000    0.061    0.000 {built-in method builtins.max}\n    17114    0.041    0.000    0.041    0.000 {built-in method _heapq.heappush}\n    15914    0.040    0.000    0.040    0.000 {method 'append' of 'list' objects}\n\n\n",
+  "cargo": "C:\\Users\\HPSMG\\.cargo\\bin\\cargo.EXE",
+  "rustc": "C:\\Users\\HPSMG\\.cargo\\bin\\rustc.EXE",
+  "native_available": true,
+  "python_unprofiled_seconds": 18.784558999999717,
+  "native_seconds": 2.80587309999828,
+  "speedup": 6.694728639014798,
+  "graph_and_query_ids_identical": true
+}
