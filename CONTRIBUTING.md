@@ -414,7 +414,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P12.21 | Handle cancellation and worker errors | smriti/server/jobs.py IndexingError and pool replacement; tests/test_background_errors.py passed |
 | ✅ Done | P12.22 | Implement graceful shutdown and recovery | smriti/server/jobs.py idempotent close; serve exits cleanly; tests/test_shutdown_recovery.py passed |
 | ✅ Done | P12.23 | Define concurrent writer transaction policy | docs/concurrency.md; targeted verification passed |
-| ❌ Pending | P12.24 | Document coding-agent MCP connection setup | — |
+| ✅ Done | P12.24 | Document coding-agent MCP connection setup | docs/mcp-setup.md; tool list matches registered MCP tools |
 | ❌ Pending | P12.25 | Verify CLI and MCP return equivalent results | — |
 | ❌ Pending | P12.26 | Run full code retrieval and memory integration demo | — |
 
