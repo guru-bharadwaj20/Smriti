@@ -23,6 +23,7 @@ from bench.swebench.function_metrics import function_recall_at_k
 from bench.swebench.grep_baseline import grep_baseline
 from bench.swebench.ground_truth import parse_changed_files
 from bench.swebench.hardware import hardware_metadata, process_rss_bytes
+from bench.swebench.leakage import assert_no_leakage
 from bench.swebench.lexical_baseline import LexicalBaseline
 from bench.swebench.mapping import gold_base_functions
 from bench.swebench.metrics import file_recall_at_k
@@ -171,6 +172,8 @@ def run(limit=None, repo_filter=None):
                 changes = parse_changed_files(task.patch)
                 gold = gold_base_functions(changes, symbols)
                 gold_files = {change.old_path for change in changes if change.old_path}
+                stage = 'leakage'
+                leakage = assert_no_leakage(task.problem_statement, task.patch, checkout, symbols)
                 stage = 'retrieval_build'
                 print(
                     json.dumps(
@@ -245,6 +248,7 @@ def run(limit=None, repo_filter=None):
                     'edges': len(snapshot.edges),
                     'gold_functions': len(gold),
                     'gold_files': len(gold_files),
+                    'leakage_check': leakage,
                     'index': asdict(indexed),
                     'index_seconds': index_seconds,
                     'retrieval_build_seconds': build_seconds,

@@ -431,7 +431,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P13.05 | Extract patch ground truth outside indexed tree | bench/swebench/ground_truth.py; changed-context and added-file tests passed |
 | ✅ Done | P13.06 | Map changed functions to base-commit symbols | bench/swebench/mapping.py; neighboring nested and added-function cases passed |
 | ✅ Done | P13.07 | Define handling of added and deleted functions | docs/evaluation-labels.md; base-commit label policy reviewed |
-| ❌ Pending | P13.08 | Prevent patch and post-fix code leakage | — |
+| ✅ Done | P13.08 | Prevent patch and post-fix code leakage | bench/swebench/leakage.py run per task before retrieval (rejects diff in query and post-fix lines in index); tests/test_swebench_leakage.py passed; leakage_check recorded per result row |
 | ✅ Done | P13.09 | Implement issue-word grep baseline | bench/swebench/grep_baseline.py; executable semantic assertions passed |
 | ✅ Done | P13.10 | Implement lexical-only baseline | bench/swebench/lexical_baseline.py; executable semantic assertions passed |
 | ✅ Done | P13.11 | Implement embedding-only baseline | bench/swebench/embedding_baseline.py; executable semantic assertions passed |
