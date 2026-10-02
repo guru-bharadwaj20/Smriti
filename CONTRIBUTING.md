@@ -444,7 +444,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P13.18 | Measure tokens required to cover gold locations | bench/swebench/budget_metrics.py; executable semantic assertions passed |
 | ✅ Done | P13.19 | Separate validation from held-out evaluation | bench/swebench/splits.py; executable semantic assertions passed |
 | ✅ Done | P13.20 | Run component ablations | bench/swebench/results/report.json: 16 real SWE-bench tasks (requests 12, flask 4); held-out 8k packed recall full 0.567, no_vector 0.400, no_graph 0.633, greedy 0.567 |
-| ❌ Pending | P13.21 | Record retrieval failures and uncertainty | — |
+| ✅ Done | P13.21 | Record retrieval failures and uncertainty | docs/swebench-failures.md: 7 tooling failures with causes, 10 held-out ranking misses with per-task file/BM25 outcome, paired bootstrap 95% intervals (full-BM25 [-0.233, 0.067]) |
 | ✅ Done | P13.22 | Pin LongMemEval revision and usage terms | bench/longmemeval/manifest.json; HF revision 98d7416c, MIT, SHA-256 d6f21ea9 verified locally |
 | ✅ Done | P13.23 | Implement LongMemEval session ingestion adapter | bench/longmemeval/runner.py ingest; tests/test_longmemeval_adapter.py passed (labels and future sessions excluded) |
 | ✅ Done | P13.24 | Define retrieval-only memory relevance labels | docs/longmemeval.md: answer_session_ids as binary gold, answer/has_answer never ingested |
@@ -459,7 +459,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P13.33 | Measure cascade deletion correctness | bench/codemem/results/metrics.json cascade: exact diamond closure (4/4 ids), 0 resurrected across 201 memory branches, operation log verifies; bench/codemem/README.md |
 | ✅ Done | P13.34 | Publish commit-replay dataset construction scripts | bench/codemem/README.md reproduction commands; bench/codemem/manifest.py, replay.py; replay re-run from a fresh clone reproduced injection.json byte-for-byte |
 | ✅ Done | P13.35 | Measure cold indexing time and peak memory | bench/swebench/results/performance.json: psf/requests @36453b9 (98 files, 2,487 symbols) cold index 10.86s, sampled peak RSS 91.8 MB, i3-5005U |
-| ❌ Pending | P13.36 | Measure incremental update p50 and p95 | — |
+| ✅ Done | P13.36 | Measure incremental update p50 and p95 | docs/performance.md and bench/swebench/results/performance.json: one-line edit re-index on requests p50 9.64s, p95 10.12s (20 reps) vs cold 10.86s; whole-repo resolution identified as the bottleneck |
 | ❌ Pending | P13.37 | Measure query p50 and p95 latency | — |
 | ✅ Done | P13.38 | Record CPU, RAM, OS, seeds, and configs | bench/swebench/hardware.py; actual CPU, RAM and positive process RSS verified; run config/seed recorded per report |
 | ✅ Done | P13.39 | Export raw results and reproduction commands | bench/swebench/results/raw.jsonl (16 rows), failures.jsonl, run-metadata.json, report.json; IDs and metrics only, no task text or patches, local paths scrubbed; commands in docs/benchmarks.md |
@@ -483,7 +483,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P14.10 | Document architecture and storage formats | docs/architecture.md data flow and every index.sqlite/memory.sqlite table checked against CREATE TABLE statements |
 | ✅ Done | P14.11 | Document memory temporal and deletion semantics | docs/memory-semantics.md; every example executed by tests/test_memory_semantics_doc.py (4 passed) |
 | ✅ Done | P14.12 | Document limitations and prior work | docs/limitations.md (code, retrieval, memory, evaluation limits with measured figures); docs/prior-work.md evaluation boundaries |
-| ❌ Pending | P14.13 | Document benchmark reproduction | — |
+| ✅ Done | P14.13 | Document benchmark reproduction | docs/benchmarks.md: commands, outputs, runtimes and deterministic expected values for every benchmark; all entry points verified |
 | ✅ Done | P14.14 | Review third-party dependency and model licenses | docs/licenses.md from installed package metadata; model manifest pins tokenizer.json SHA-256 (verified against local artifact) |
 | ✅ Done | P14.15 | Verify package name availability before publication | docs/release.md: smriti-engine 404 on PyPI JSON and simple index (2026-10-02); smriti and smriti-mcp taken |
 | ✅ Done | P14.16 | Build and test Python package artifact | docs/release.md: wheel and sdist build, twine check PASSED, wheel contents audited (60 entries, package only) |
