@@ -3,6 +3,7 @@
 import json
 import sqlite3
 from collections.abc import Iterable, Mapping
+from contextlib import closing
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from types import MappingProxyType
@@ -26,7 +27,9 @@ class IndexStore:
     def __init__(self, path: Path) -> None:
         self.path = path
         path.parent.mkdir(parents=True, exist_ok=True)
-        with self._connect() as connection:
+        # sqlite3's context manager commits but never closes; an open handle keeps
+        # the database file locked on Windows, so close explicitly.
+        with closing(self._connect()) as connection:
             connection.executescript("""
                 PRAGMA journal_mode=WAL;
                 CREATE TABLE IF NOT EXISTS metadata (key TEXT PRIMARY KEY, value INTEGER);
