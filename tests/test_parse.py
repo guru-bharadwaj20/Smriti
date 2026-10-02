@@ -236,3 +236,9 @@ def test_decorators_are_part_of_anchored_content():
     assert original.body.startswith('@first\ndef work')
     validate_ranges(before)
     validate_ranges(after)
+
+
+def test_non_utf8_source_is_parsed_with_replacement():
+    source = '# -*- coding: latin-1 -*-\nX = "Caf\xe9"\ndef f():\n    return X\n'.encode('latin-1')
+    result = parse_file('a.py', source)
+    assert [s.name for s in result.symbols if s.kind == 'function'] == ['f']

@@ -148,7 +148,7 @@ class SourceParser:
                 max(1, len(result.source.splitlines())),
                 0,
                 len(result.source),
-                body=result.source.decode('utf-8'),
+                body=result.source.decode('utf-8', 'replace'),
                 content_hash=sha256(result.source).hexdigest(),
             )
         )
@@ -177,7 +177,9 @@ class SourceParser:
                 )
                 name_node = node.child_by_field_name('name')
                 assert name_node is not None
-                name = result.source[name_node.start_byte : name_node.end_byte].decode('utf-8')
+                name = result.source[name_node.start_byte : name_node.end_byte].decode(
+                    'utf-8', 'replace'
+                )
                 qualname = parent.qualname + '.' + name
                 source_node = (
                     node.parent
@@ -189,7 +191,7 @@ class SourceParser:
                 assert body_node is not None
                 signature = (
                     result.source[source_node.start_byte : body_node.start_byte]
-                    .decode('utf-8')
+                    .decode('utf-8', 'replace')
                     .rstrip()
                     .rstrip(':')
                 )
@@ -200,7 +202,9 @@ class SourceParser:
                     first = body_node.named_children[0]
                     try:
                         value = ast.literal_eval(
-                            result.source[first.start_byte : first.end_byte].decode('utf-8')
+                            result.source[first.start_byte : first.end_byte].decode(
+                                'utf-8', 'replace'
+                            )
                         )
                         if isinstance(value, str):
                             docstring = value
@@ -218,7 +222,7 @@ class SourceParser:
                     node.end_byte,
                     signature=signature,
                     docstring=docstring,
-                    body=body.decode('utf-8'),
+                    body=body.decode('utf-8', 'replace'),
                     content_hash=sha256(body).hexdigest(),
                     parent_id=parent.id,
                 )
@@ -232,7 +236,7 @@ class SourceParser:
                                     'class': symbol.id,
                                     'scope': parent.id,
                                     'name': result.source[base.start_byte : base.end_byte].decode(
-                                        'utf-8'
+                                        'utf-8', 'replace'
                                     ),
                                 }
                             )
@@ -241,7 +245,7 @@ class SourceParser:
                 import ast
 
                 statement = ast.parse(
-                    result.source[node.start_byte : node.end_byte].decode('utf-8')
+                    result.source[node.start_byte : node.end_byte].decode('utf-8', 'replace')
                 ).body[0]
                 assert isinstance(statement, (ast.Import, ast.ImportFrom))
                 for alias in statement.names:
@@ -270,7 +274,7 @@ class SourceParser:
                     {
                         'scope': parent.id,
                         'name': result.source[function.start_byte : function.end_byte].decode(
-                            'utf-8'
+                            'utf-8', 'replace'
                         ),
                         'line': node.start_point.row + 1,
                         'start_byte': node.start_byte,
@@ -288,7 +292,9 @@ class SourceParser:
                         'parent': parent.id,
                         'start_byte': node.start_byte,
                         'end_byte': node.end_byte,
-                        'source': result.source[node.start_byte : node.end_byte].decode('utf-8'),
+                        'source': result.source[node.start_byte : node.end_byte].decode(
+                            'utf-8', 'replace'
+                        ),
                     }
                 )
             if node.type == 'ERROR' or node.is_missing:
@@ -342,7 +348,7 @@ def split_oversized(source: bytes | str, max_bytes: int = 16384) -> list[bytes]:
     """
     if max_bytes < 4:
         raise ValueError('max_bytes must fit any UTF-8 code point')
-    text = source.decode('utf-8') if isinstance(source, bytes) else source
+    text = source.decode('utf-8', 'replace') if isinstance(source, bytes) else source
     parts, current = [], b''
     for line in text.splitlines(keepends=True):
         encoded = line.encode('utf-8')
@@ -377,7 +383,7 @@ def validate_ranges(result: ParseResult) -> None:
     for symbol in result.symbols:
         if not 0 <= symbol.start_byte <= symbol.end_byte <= len(result.source):
             raise ValueError('Symbol byte range outside source')
-        if source_slice(result, symbol).decode('utf-8') != symbol.body:
+        if source_slice(result, symbol).decode('utf-8', 'replace') != symbol.body:
             raise ValueError('Symbol body disagrees with source range')
         actual = byte_point(result.source, symbol.start_byte)[0] + 1
         if actual != symbol.start_line:
