@@ -46,7 +46,18 @@ class SmritiService:
             # the first path component to prevent it recursively indexing itself.
             ignored.append(self.config.data_dir.relative_to(self.root).parts[0])
         scanned = RepositoryScanner(tuple(ignored)).scan(self.root)
-        languages = {'.py': 'python', '.ts': 'typescript', '.java': 'java'}
+        languages = {
+            '.py': 'python',
+            '.ts': 'typescript',
+            '.java': 'java',
+            '.go': 'go',
+            '.c': 'c',
+            '.h': 'c',
+            '.cc': 'cpp',
+            '.cpp': 'cpp',
+            '.cxx': 'cpp',
+            '.hpp': 'cpp',
+        }
         paths = {
             path: digest
             for path, digest in scanned.files.items()

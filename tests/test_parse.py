@@ -1,6 +1,27 @@
 from smriti.parse import SourceParser, parse_file
 
 
+def test_repeated_real_module_parsing_preserves_incremental_equivalence():
+    import argparse
+    import inspect
+    from pathlib import Path
+
+    parser = SourceParser()
+    for cycle in range(4):
+        for module in (argparse, inspect):
+            assert module.__file__ is not None
+            source = Path(module.__file__).read_bytes()
+            source += b'\n# incremental edit\n' if cycle % 2 else b''
+            result = parser.parse(module.__name__ + '.py', source)
+            assert len(result.symbols) > 20
+            assert result.symbols[0].body.encode() == source
+            assert all(
+                0 <= item.start_byte <= item.end_byte <= len(source) for item in result.symbols
+            )
+            fresh = SourceParser().parse(module.__name__ + '.py', source)
+            assert result.symbols == fresh.symbols
+
+
 def test_tree_sitter_lifecycle():
     parser = SourceParser()
     result = parser.parse('a.py', 'def f():\n    return 1\n')
@@ -198,9 +219,9 @@ def test_staged_languages_are_explicit():
 
     from smriti.parse import LANGUAGE_SUPPORT
 
-    assert 'Deferred' in LANGUAGE_SUPPORT['go']
+    assert 'receiver' in LANGUAGE_SUPPORT['go']
     with pytest.raises(KeyError):
-        SourceParser().parse('main.go', 'package main', 'go')
+        SourceParser().parse('main.rs', 'fn main() {}', 'rust')
 
 
 def test_decorators_are_part_of_anchored_content():

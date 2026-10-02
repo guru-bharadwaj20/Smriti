@@ -416,7 +416,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P12.23 | Define concurrent writer transaction policy | docs/concurrency.md; targeted verification passed |
 | ✅ Done | P12.24 | Document coding-agent MCP connection setup | docs/mcp-setup.md; tool list matches registered MCP tools |
 | ✅ Done | P12.25 | Verify CLI and MCP return equivalent results | tests/test_cli_mcp_equivalence.py compares symbol, graph, context, recall, log outputs; passed |
-| ❌ Pending | P12.26 | Run full code retrieval and memory integration demo | — |
+| ✅ Done | P12.26 | Run full code retrieval and memory integration demo | scripts/demo_integration.py; tests/test_demo_integration.py passed (index, context, callers, anchored fact goes stale, cascade forget) |
 
 ### P13 — CPU evaluation and benchmarks
 
@@ -505,8 +505,8 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 
 | Status | ID | Subtask | Evidence |
 | --- | --- | --- | --- |
-| ❌ Pending | P15.01 | Add Go parser and resolution support | — |
-| ❌ Pending | P15.02 | Add C/C++ parser and resolution support | — |
+| ✅ Done | P15.01 | Add Go parser and resolution support | smriti/parse/languages.py; smriti/resolve/languages.py; docs/languages.md; tests/test_parse_languages.py and tests/test_parse.py passed; tree-sitter pinned <0.26 per docs/parser-compatibility.md |
+| ✅ Done | P15.02 | Add C/C++ parser and resolution support | smriti/parse/languages.py; smriti/resolve/languages.py; docs/languages.md; tests/test_parse_languages.py and tests/test_parse.py passed; tree-sitter pinned <0.26 per docs/parser-compatibility.md |
 | ❌ Pending | P15.03 | Implement cross-language API edges | — |
 | ❌ Pending | P15.04 | Profile candidate Rust hot path | — |
 | ❌ Pending | P15.05 | Implement Rust and PyO3 optimization | — |
