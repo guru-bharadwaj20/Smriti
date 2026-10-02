@@ -38,3 +38,21 @@ def test_symbol_and_graph_tools(tmp_path: Path) -> None:
     assert not found.is_error and 'm.py' in found.content[0].text
     assert not incoming.is_error and 'calls' in incoming.content[0].text
     assert not outgoing.is_error and 'calls' in outgoing.content[0].text
+
+
+def test_memory_crud_tools(tmp_path: Path) -> None:
+    remembered, recalled, forgotten, empty, invalid = run_tools(
+        tmp_path,
+        [
+            ('remember', {'fact': 'Use the cache', 'source': 'notes'}),
+            ('recall', {'query': 'cache'}),
+            ('forget', {'source': 'notes'}),
+            ('recall', {}),
+            ('forget', {}),
+        ],
+    )
+    assert not remembered.is_error and 'Use the cache' in remembered.content[0].text
+    assert 'Use the cache' in recalled.content[0].text
+    assert not forgotten.is_error
+    assert empty.content == [] or 'Use the cache' not in empty.content[0].text
+    assert invalid.is_error
