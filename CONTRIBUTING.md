@@ -481,7 +481,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P14.08 | Bind local service safely by default | 8 UI tests pass; strict mypy; Ruff; JavaScript syntax |
 | ❌ Pending | P14.09 | Expand README with verified setup commands | — |
 | ✅ Done | P14.10 | Document architecture and storage formats | docs/architecture.md data flow and every index.sqlite/memory.sqlite table checked against CREATE TABLE statements |
-| ❌ Pending | P14.11 | Document memory temporal and deletion semantics | — |
+| ✅ Done | P14.11 | Document memory temporal and deletion semantics | docs/memory-semantics.md; every example executed by tests/test_memory_semantics_doc.py (4 passed) |
 | ❌ Pending | P14.12 | Document limitations and prior work | — |
 | ❌ Pending | P14.13 | Document benchmark reproduction | — |
 | ✅ Done | P14.14 | Review third-party dependency and model licenses | docs/licenses.md from installed package metadata; model manifest pins tokenizer.json SHA-256 (verified against local artifact) |
