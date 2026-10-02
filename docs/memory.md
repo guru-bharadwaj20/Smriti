@@ -44,3 +44,19 @@ the caller's responsibility.
 Tests cover temporal corrections, merge conflicts, branch isolation, physical
 deletion, derivation diamonds, immutable metadata, transaction failure injection
 and concurrent forgetting during a derived-fact write.
+
+## Offline synchronization
+
+`smriti.memory.sync.export_bundle(store, repository_id, key)` authenticates the
+canonical operation records, payloads, active head, and irreversible tombstones
+with HMAC-SHA256. Provision a random key of at least 32 bytes out of band. This is
+shared-secret group authentication: every key holder can produce a valid bundle.
+It does not prove which teammate authored a fact. Bundles contain memory text;
+encrypt the transport or archive separately when confidentiality is required.
+
+`import_bundle(..., branch='peer/alice')` verifies authentication, repository
+scope, payload checksums and parent ordering before an atomic import. It creates
+or advances a peer branch, rejects rewinds and divergent replacements, and leaves
+merge choices explicit. Different teammate edits produce the same three-way
+conflicts as local branches. Tombstones apply globally, including locally derived
+facts, and an old authenticated bundle cannot restore purged payloads.
