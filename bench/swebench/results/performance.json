@@ -1,0 +1,248 @@
+{
+  "source": "https://github.com/psf/requests.git",
+  "base_commit": "36453b95b13079296776d11b09cab2567ea3e703",
+  "hardware": {
+    "cpu": "Intel(R) Core(TM) i3-5005U CPU @ 2.00GHz",
+    "logical_cpus": 4,
+    "os": "Windows-11-10.0.22000-SP0",
+    "python": "3.13.1",
+    "ram_bytes": 8497737728
+  },
+  "cold_index_seconds": 10.862938499998563,
+  "cold_index_memory": {
+    "sampled_peak_rss_bytes": 91803648,
+    "samples": 316,
+    "interval_seconds": 0.01
+  },
+  "cold_index": {
+    "version": 1,
+    "files": 98,
+    "symbols": 2487,
+    "changed_files": 98,
+    "diagnostics": []
+  },
+  "edited_path": "docs/_themes/flask_theme_support.py",
+  "incremental_observations": [
+    {
+      "seconds": 9.561438200002158,
+      "index": {
+        "version": 2,
+        "files": 98,
+        "symbols": 2487,
+        "changed_files": 1,
+        "diagnostics": []
+      },
+      "process_rss_bytes": 101789696
+    },
+    {
+      "seconds": 9.391119700001582,
+      "index": {
+        "version": 4,
+        "files": 98,
+        "symbols": 2487,
+        "changed_files": 1,
+        "diagnostics": []
+      },
+      "process_rss_bytes": 107724800
+    },
+    {
+      "seconds": 9.605160200000682,
+      "index": {
+        "version": 6,
+        "files": 98,
+        "symbols": 2487,
+        "changed_files": 1,
+        "diagnostics": []
+      },
+      "process_rss_bytes": 107958272
+    },
+    {
+      "seconds": 9.91151379999792,
+      "index": {
+        "version": 8,
+        "files": 98,
+        "symbols": 2487,
+        "changed_files": 1,
+        "diagnostics": []
+      },
+      "process_rss_bytes": 108019712
+    },
+    {
+      "seconds": 9.353493799997523,
+      "index": {
+        "version": 10,
+        "files": 98,
+        "symbols": 2487,
+        "changed_files": 1,
+        "diagnostics": []
+      },
+      "process_rss_bytes": 109645824
+    },
+    {
+      "seconds": 9.787141699998756,
+      "index": {
+        "version": 12,
+        "files": 98,
+        "symbols": 2487,
+        "changed_files": 1,
+        "diagnostics": []
+      },
+      "process_rss_bytes": 109502464
+    },
+    {
+      "seconds": 9.767347100001643,
+      "index": {
+        "version": 14,
+        "files": 98,
+        "symbols": 2487,
+        "changed_files": 1,
+        "diagnostics": []
+      },
+      "process_rss_bytes": 109330432
+    },
+    {
+      "seconds": 9.681607800001075,
+      "index": {
+        "version": 16,
+        "files": 98,
+        "symbols": 2487,
+        "changed_files": 1,
+        "diagnostics": []
+      },
+      "process_rss_bytes": 109453312
+    },
+    {
+      "seconds": 9.407055199997558,
+      "index": {
+        "version": 18,
+        "files": 98,
+        "symbols": 2487,
+        "changed_files": 1,
+        "diagnostics": []
+      },
+      "process_rss_bytes": 109113344
+    },
+    {
+      "seconds": 9.480010100000072,
+      "index": {
+        "version": 20,
+        "files": 98,
+        "symbols": 2487,
+        "changed_files": 1,
+        "diagnostics": []
+      },
+      "process_rss_bytes": 109625344
+    },
+    {
+      "seconds": 10.095794900000328,
+      "index": {
+        "version": 22,
+        "files": 98,
+        "symbols": 2487,
+        "changed_files": 1,
+        "diagnostics": []
+      },
+      "process_rss_bytes": 108310528
+    },
+    {
+      "seconds": 9.365582700000232,
+      "index": {
+        "version": 24,
+        "files": 98,
+        "symbols": 2487,
+        "changed_files": 1,
+        "diagnostics": []
+      },
+      "process_rss_bytes": 109121536
+    },
+    {
+      "seconds": 9.652381399999285,
+      "index": {
+        "version": 26,
+        "files": 98,
+        "symbols": 2487,
+        "changed_files": 1,
+        "diagnostics": []
+      },
+      "process_rss_bytes": 108691456
+    },
+    {
+      "seconds": 9.62707870000304,
+      "index": {
+        "version": 28,
+        "files": 98,
+        "symbols": 2487,
+        "changed_files": 1,
+        "diagnostics": []
+      },
+      "process_rss_bytes": 108642304
+    },
+    {
+      "seconds": 10.539171899999928,
+      "index": {
+        "version": 30,
+        "files": 98,
+        "symbols": 2487,
+        "changed_files": 1,
+        "diagnostics": []
+      },
+      "process_rss_bytes": 109867008
+    },
+    {
+      "seconds": 9.420657099999517,
+      "index": {
+        "version": 32,
+        "files": 98,
+        "symbols": 2487,
+        "changed_files": 1,
+        "diagnostics": []
+      },
+      "process_rss_bytes": 109453312
+    },
+    {
+      "seconds": 9.766854699999385,
+      "index": {
+        "version": 34,
+        "files": 98,
+        "symbols": 2487,
+        "changed_files": 1,
+        "diagnostics": []
+      },
+      "process_rss_bytes": 109154304
+    },
+    {
+      "seconds": 9.727456799999345,
+      "index": {
+        "version": 36,
+        "files": 98,
+        "symbols": 2487,
+        "changed_files": 1,
+        "diagnostics": []
+      },
+      "process_rss_bytes": 109215744
+    },
+    {
+      "seconds": 9.934698000000935,
+      "index": {
+        "version": 38,
+        "files": 98,
+        "symbols": 2487,
+        "changed_files": 1,
+        "diagnostics": []
+      },
+      "process_rss_bytes": 110092288
+    },
+    {
+      "seconds": 9.493363500001578,
+      "index": {
+        "version": 40,
+        "files": 98,
+        "symbols": 2487,
+        "changed_files": 1,
+        "diagnostics": []
+      },
+      "process_rss_bytes": 109805568
+    }
+  ],
+  "note": "Production end-to-end incremental index includes full resolution and snapshot persistence; this is not Merkle-only latency."
+}
