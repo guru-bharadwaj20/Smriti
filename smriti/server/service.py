@@ -137,7 +137,18 @@ class SmritiService:
             self._retrieval = Retriever(
                 snapshot, self.config.tokenizer, self.config.model_dir, self.config.data_dir
             )
-        return self._retrieval.context(request.task, request.budget)
+        preamble = ''
+        if (self.config.data_dir / 'memory.sqlite').exists():
+            from smriti.pack.tokens import TokenCounter
+            from smriti.server.memory import memory_store
+
+            counter = TokenCounter(self.config.tokenizer)
+            with memory_store(self.root, config=self.config) as memory:
+                for fact in memory.recall(request.task, include_stale=False):
+                    line = f'# Memory {fact.id} ({fact.scope}, fresh)\n{fact.text}\n'
+                    if counter.count(preamble + line) <= request.budget // 4:
+                        preamble += line
+        return self._retrieval.context(request.task, request.budget, preamble=preamble)
 
     def calls(self, name: str, *, incoming: bool) -> list[Edge]:
         """Return possible and resolved calls for matching definitions."""
