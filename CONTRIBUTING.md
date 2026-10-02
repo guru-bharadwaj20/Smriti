@@ -482,7 +482,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P14.09 | Expand README with verified setup commands | — |
 | ✅ Done | P14.10 | Document architecture and storage formats | docs/architecture.md data flow and every index.sqlite/memory.sqlite table checked against CREATE TABLE statements |
 | ✅ Done | P14.11 | Document memory temporal and deletion semantics | docs/memory-semantics.md; every example executed by tests/test_memory_semantics_doc.py (4 passed) |
-| ❌ Pending | P14.12 | Document limitations and prior work | — |
+| ✅ Done | P14.12 | Document limitations and prior work | docs/limitations.md (code, retrieval, memory, evaluation limits with measured figures); docs/prior-work.md evaluation boundaries |
 | ❌ Pending | P14.13 | Document benchmark reproduction | — |
 | ✅ Done | P14.14 | Review third-party dependency and model licenses | docs/licenses.md from installed package metadata; model manifest pins tokenizer.json SHA-256 (verified against local artifact) |
 | ✅ Done | P14.15 | Verify package name availability before publication | docs/release.md: smriti-engine 404 on PyPI JSON and simple index (2026-10-02); smriti and smriti-mcp taken |
