@@ -1,0 +1,52 @@
+{
+  "model_manifest": {
+    "model": "sentence-transformers/all-MiniLM-L6-v2",
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "license": "Apache-2.0",
+    "sha256": {
+      "onnx/model.onnx": "6fd5d72fe4589f189f8ebc006442dbb529bb7ce38f8082112682524616046452",
+      "onnx/model_quint8_avx2.onnx": "b941bf19f1f1283680f449fa6a7336bb5600bdcd5f84d10ddc5cd72218a0fd21",
+      "tokenizer.json": "be50c3628f2bf5bb5e3a7f17b1f74611b2561a3a27eeab05e5aa30f411572037"
+    },
+    "tokenizer": "tokenizer.json",
+    "max_length": 256,
+    "tokenizer_git_blob_sha1": "cb202bfe2e3c98645018a6d12f182a434c9d3e02",
+    "tokenizer_metadata_source": "https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/1110a243fdf4706b3f48f1d95db1a4f5529b4d41"
+  },
+  "configuration": {
+    "model": "1f9cacd0fbd76f3254ef5f85a6f5524f9de91b5971e4d12649ce1f02971e4a9d",
+    "budgets": [
+      4096,
+      8192,
+      16384
+    ],
+    "k": [
+      1,
+      5,
+      10,
+      20,
+      50
+    ],
+    "pipeline_version": 1,
+    "source_fingerprint": null,
+    "split": "sha256-instance-mod5",
+    "seed": 0,
+    "ANN": {
+      "m": 16,
+      "ef_construction": 100,
+      "ef_search": 50
+    }
+  },
+  "configuration_id": "559fae87120691b9b97d43522d368a6d5a0b64c8fbe39785dca87a015c0139a8",
+  "hardware": {
+    "cpu": "Intel(R) Core(TM) i3-5005U CPU @ 2.00GHz",
+    "logical_cpus": 4,
+    "os": "Windows-11-10.0.22000-SP0",
+    "python": "3.13.1",
+    "ram_bytes": 8497737728
+  },
+  "dataset_rows": 800,
+  "unique_evaluations": 707,
+  "engine_commit": "5db91ed (P15.12) plus uncommitted bench/swebench/report.py and performance.py edits",
+  "note": "Rows were produced by configuration 559fae87. Its exact source fingerprint is not recoverable because run-metadata.json was overwritten by a later aborted run; every retrieval-affecting setting recorded here (model checksums, ANN, budgets, k, seed, split, hardware) is identical. The fingerprint differences were limited to report.py and performance.py, which do not affect retrieval."
+}

@@ -462,7 +462,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P13.36 | Measure incremental update p50 and p95 | — |
 | ❌ Pending | P13.37 | Measure query p50 and p95 latency | — |
 | ✅ Done | P13.38 | Record CPU, RAM, OS, seeds, and configs | bench/swebench/hardware.py; actual CPU, RAM and positive process RSS verified; run config/seed recorded per report |
-| ❌ Pending | P13.39 | Export raw results and reproduction commands | — |
+| ✅ Done | P13.39 | Export raw results and reproduction commands | bench/swebench/results/raw.jsonl (16 rows), failures.jsonl, run-metadata.json, report.json; IDs and metrics only, no task text or patches, local paths scrubbed; commands in docs/benchmarks.md |
 | ❌ Pending | P13.40 | Fill result tables only from measured runs | — |
 
 ### P14 — UI, documentation, demo, and release

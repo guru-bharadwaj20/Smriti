@@ -17,32 +17,32 @@
     {
       "evaluation_id": "mwaskom__seaborn-2848-790f277df31ace55",
       "stage": "checkout",
-      "error": "CalledProcessError(128, ['git', 'clone', '--no-checkout', '--', 'https://github.com/mwaskom/seaborn.git', 'C:\\\\Users\\\\HPSMG\\\\Desktop\\\\SMRITI\\\\.smriti\\\\evaluation\\\\checkouts\\\\mwaskom--seaborn'])"
+      "error": "CalledProcessError(128, ['git', 'clone', '--no-checkout', '--', 'https://github.com/mwaskom/seaborn.git', '<home>\\\\.smriti\\\\evaluation\\\\checkouts\\\\mwaskom--seaborn'])"
     },
     {
       "evaluation_id": "mwaskom__seaborn-3010-a0b927f8979e83e3",
       "stage": "checkout",
-      "error": "CalledProcessError(128, ['git', 'clone', '--no-checkout', '--', 'https://github.com/mwaskom/seaborn.git', 'C:\\\\Users\\\\HPSMG\\\\Desktop\\\\SMRITI\\\\.smriti\\\\evaluation\\\\checkouts\\\\mwaskom--seaborn'])"
+      "error": "CalledProcessError(128, ['git', 'clone', '--no-checkout', '--', 'https://github.com/mwaskom/seaborn.git', '<home>\\\\.smriti\\\\evaluation\\\\checkouts\\\\mwaskom--seaborn'])"
     },
     {
       "evaluation_id": "mwaskom__seaborn-3069-cb4272390a1ed3d4",
       "stage": "checkout",
-      "error": "CalledProcessError(128, ['git', 'clone', '--no-checkout', '--', 'https://github.com/mwaskom/seaborn.git', 'C:\\\\Users\\\\HPSMG\\\\Desktop\\\\SMRITI\\\\.smriti\\\\evaluation\\\\checkouts\\\\mwaskom--seaborn'])"
+      "error": "CalledProcessError(128, ['git', 'clone', '--no-checkout', '--', 'https://github.com/mwaskom/seaborn.git', '<home>\\\\.smriti\\\\evaluation\\\\checkouts\\\\mwaskom--seaborn'])"
     },
     {
       "evaluation_id": "mwaskom__seaborn-3187-a9140022d3d20871",
       "stage": "checkout",
-      "error": "CalledProcessError(128, ['git', 'clone', '--no-checkout', '--', 'https://github.com/mwaskom/seaborn.git', 'C:\\\\Users\\\\HPSMG\\\\Desktop\\\\SMRITI\\\\.smriti\\\\evaluation\\\\checkouts\\\\mwaskom--seaborn'])"
+      "error": "CalledProcessError(128, ['git', 'clone', '--no-checkout', '--', 'https://github.com/mwaskom/seaborn.git', '<home>\\\\.smriti\\\\evaluation\\\\checkouts\\\\mwaskom--seaborn'])"
     },
     {
       "evaluation_id": "mwaskom__seaborn-3190-13f43c140b19ac2e",
       "stage": "checkout",
-      "error": "CalledProcessError(128, ['git', 'clone', '--no-checkout', '--', 'https://github.com/mwaskom/seaborn.git', 'C:\\\\Users\\\\HPSMG\\\\Desktop\\\\SMRITI\\\\.smriti\\\\evaluation\\\\checkouts\\\\mwaskom--seaborn'])"
+      "error": "CalledProcessError(128, ['git', 'clone', '--no-checkout', '--', 'https://github.com/mwaskom/seaborn.git', '<home>\\\\.smriti\\\\evaluation\\\\checkouts\\\\mwaskom--seaborn'])"
     },
     {
       "evaluation_id": "mwaskom__seaborn-3407-ad71507314b1bf54",
       "stage": "checkout",
-      "error": "CalledProcessError(128, ['git', 'clone', '--no-checkout', '--', 'https://github.com/mwaskom/seaborn.git', 'C:\\\\Users\\\\HPSMG\\\\Desktop\\\\SMRITI\\\\.smriti\\\\evaluation\\\\checkouts\\\\mwaskom--seaborn'])"
+      "error": "CalledProcessError(128, ['git', 'clone', '--no-checkout', '--', 'https://github.com/mwaskom/seaborn.git', '<home>\\\\.smriti\\\\evaluation\\\\checkouts\\\\mwaskom--seaborn'])"
     },
     {
       "evaluation_id": "psf__requests-1724-310774ff93e59729",
