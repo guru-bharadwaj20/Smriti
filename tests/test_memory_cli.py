@@ -60,3 +60,19 @@ def test_memory_revert(tmp_path: Path) -> None:
     assert invoke(tmp_path, 'recall') == []
     again = runner.invoke(app, ['memory', 'revert', log[0]['id'], '--root', str(tmp_path)])
     assert again.exit_code != 0
+
+
+def test_memory_branch_and_merge(tmp_path: Path) -> None:
+    fact = invoke(tmp_path, 'remember', 'Base')
+    assert isinstance(fact, dict)
+    created = invoke(tmp_path, 'memory', 'branch', 'feature', '--switch')
+    assert isinstance(created, dict) and created['branch'] == 'feature'
+    feature = invoke(tmp_path, 'remember', 'Feature only')
+    assert isinstance(feature, dict)
+    assert invoke(tmp_path, 'memory', 'switch', 'main')['branch'] == 'main'  # type: ignore[index]
+    merged = invoke(tmp_path, 'memory', 'merge', 'feature')
+    assert isinstance(merged, dict) and merged['merged'] is True
+    assert {item['id'] for item in invoke(tmp_path, 'recall')} == {  # type: ignore[union-attr]
+        fact['id'],
+        feature['id'],
+    }

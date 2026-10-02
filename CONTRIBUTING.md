@@ -401,7 +401,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P12.08 | Implement forget command with cascade | smriti/server/cli.py forget; cascade CLI test in tests/test_memory_cli.py passed |
 | ✅ Done | P12.09 | Implement memory log and diff commands | smriti memory log/diff; tests/test_memory_cli.py passed |
 | ✅ Done | P12.10 | Implement memory revert command | smriti memory revert; double-revert rejection test passed |
-| ❌ Pending | P12.11 | Implement memory branch and merge commands | — |
+| ✅ Done | P12.11 | Implement memory branch and merge commands | smriti memory branch/switch/merge; tests/test_memory_cli.py passed |
 | ✅ Done | P12.12 | Integrate official MCP Python SDK | official ClientSession handshake and status tool passed; strict mypy adapter passed |
 | ✅ Done | P12.13 | Define validated MCP tool schemas | smriti/server/schemas.py; invalid budgets anchors confidence and forget-target tests passed |
 | ✅ Done | P12.14 | Expose context MCP tool | real stdio client retrieved indexed code; token count and invalid budget tests passed |

@@ -205,3 +205,24 @@ class MemoryService:
 
     def revert(self, operation_id: str) -> str:
         return self.store.revert(operation_id)
+
+    def branch(self, name: str, switch: bool = False) -> dict[str, Any]:
+        self.store.branch(name)
+        if switch:
+            self.store.switch(name)
+        return {'branch': self.store.current_branch, 'branches': self.store.branches()}
+
+    def switch(self, name: str) -> dict[str, Any]:
+        self.store.switch(name)
+        return {'branch': self.store.current_branch, 'head': self.store.head}
+
+    def merge(self, source: str, resolutions: dict[str, str] | None = None) -> dict[str, Any]:
+        from smriti.memory import MergeConflict
+        from smriti.server.schemas import MergeRequest
+
+        request = MergeRequest.model_validate({'source': source, 'resolutions': resolutions or {}})
+        try:
+            operation = self.store.merge(request.source, resolutions=dict(request.resolutions))
+        except MergeConflict as conflict:
+            return {'merged': False, 'conflicts': conflict.conflicts}
+        return {'merged': True, 'operation': operation}

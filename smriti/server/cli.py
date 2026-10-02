@@ -214,3 +214,47 @@ def memory_revert(operation_id: str, root: RootOption = DEFAULT_ROOT) -> None:
         _emit({'operation': service.revert(operation_id)})
     finally:
         service.close()
+
+
+@memory_app.command('branch')
+def memory_branch(
+    name: str,
+    switch: Annotated[bool, typer.Option('--switch')] = False,
+    root: RootOption = DEFAULT_ROOT,
+) -> None:
+    """Create a memory branch at the current head."""
+    service = _memory(root)
+    try:
+        _emit(service.branch(name, switch))
+    finally:
+        service.close()
+
+
+@memory_app.command('switch')
+def memory_switch(name: str, root: RootOption = DEFAULT_ROOT) -> None:
+    """Switch the active memory branch."""
+    service = _memory(root)
+    try:
+        _emit(service.switch(name))
+    finally:
+        service.close()
+
+
+@memory_app.command('merge')
+def memory_merge(
+    source: str,
+    resolve: Annotated[
+        list[str] | None, typer.Option('--resolve', help='FACT_ID=ours|theirs|base|delete')
+    ] = None,
+    root: RootOption = DEFAULT_ROOT,
+) -> None:
+    """Merge a branch; conflicts are reported unless explicitly resolved."""
+    resolutions = dict(item.split('=', 1) for item in resolve or [] if '=' in item)
+    service = _memory(root)
+    try:
+        result = service.merge(source, resolutions)
+        _emit(result)
+        if not result['merged']:
+            raise typer.Exit(1)
+    finally:
+        service.close()
