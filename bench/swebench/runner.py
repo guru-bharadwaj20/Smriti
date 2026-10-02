@@ -14,6 +14,7 @@ import subprocess
 import time
 from dataclasses import asdict
 from functools import partial
+from pathlib import Path
 
 from bench.swebench.ablations import context, variant
 from bench.swebench.checkout import checkout_base
@@ -67,12 +68,12 @@ def append(path, record):
         os.fsync(output.fileno())
 
 
-def run(limit=None, repo_filter=None):
+def run(limit=None, repo_filter=None, workspace=None, shard=None):
     artifacts = json.loads((ROOT / 'bench/swebench/dataset_artifacts.json').read_text())
     verify_artifacts(artifacts)
     tasks = load_tasks(artifacts)
     unique = {task.evaluation_id: task for task in tasks}
-    workspace = ROOT / '.smriti/evaluation'
+    workspace = workspace or ROOT / '.smriti/evaluation'
     workspace.mkdir(parents=True, exist_ok=True)
     output = workspace / 'swebench-results.jsonl'
     failures = workspace / 'swebench-failures.jsonl'
@@ -125,14 +126,20 @@ def run(limit=None, repo_filter=None):
             row = json.loads(line)
             if row['configuration_id'] == config_id:
                 completed.add(row['evaluation_id'])
+    ordered = sorted(unique.items(), key=lambda item: (item[1].repo, item[1].base_commit, item[0]))
+    if shard is not None:
+        index, count = shard
+        # Contiguous slices keep consecutive base commits of a repository together.
+        selected = [item for item in ordered if not repo_filter or item[1].repo == repo_filter]
+        size = -(-len(selected) // count)
+        keep = {identity for identity, _ in selected[index * size : (index + 1) * size]}
+        ordered = [item for item in ordered if item[0] in keep]
     services = {}
     last_build = {}
     measured = 0
     attempted = 0
     try:
-        for identity, task in sorted(
-            unique.items(), key=lambda item: (item[1].repo, item[1].base_commit, item[0])
-        ):
+        for identity, task in ordered:
             if identity in completed or (repo_filter and task.repo != repo_filter):
                 continue
             if limit is not None and attempted >= limit:
@@ -299,5 +306,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--limit', type=int)
     parser.add_argument('--repo')
+    parser.add_argument(
+        '--workspace', type=Path, help='Separate checkout, cache and output for parallel runs'
+    )
+    parser.add_argument('--shard', help='K/N: run the K-th (0-based) of N contiguous slices')
     arguments = parser.parse_args()
-    print(json.dumps(run(arguments.limit, arguments.repo), indent=2))
+    shard = tuple(int(part) for part in arguments.shard.split('/')) if arguments.shard else None
+    print(json.dumps(run(arguments.limit, arguments.repo, arguments.workspace, shard), indent=2))
