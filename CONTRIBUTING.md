@@ -494,7 +494,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P14.21 | Script memory recall across sessions | Closed and reopened actual SQLite store; recalled same ID anchor and session; strict mypy and Ruff |
 | ✅ Done | P14.22 | Script rename, stale detection, branch, merge, revert | Real parser rename preserves identity; stale hash detected; conflict blocks; explicit merge and revert verified; strict mypy and Ruff |
 | ✅ Done | P14.23 | Record demo video with real timing evidence | Four actual demos rerun;20secondVP9 WebM35106bytes; final PNG visually checked; Ruff; full timing JSON |
-| ❌ Pending | P14.24 | Write project report and benchmark findings | — |
+| ✅ Done | P14.24 | Write project report and benchmark findings | docs/report.md: system, setup, CodeMem, LongMemEval, SWE-bench subset, performance, agent comparison, findings, limitations; every number cross-checked against committed result files; docs/limitations.md updated with measured gaps |
 | ✅ Done | P14.25 | Fill resume bullet numbers from published results | docs/resume.md: 8 bullets, every number cross-checked against committed result files with sources, plus claims-to-avoid list |
 | ✅ Done | P14.26 | Prepare interview answers with algorithm tradeoffs | docs/interview.md: indexing, retrieval, packing, memory and evaluation trade-offs with parameters checked against code and measured results |
 | ❌ Pending | P14.27 | Tag release after required phases are complete | — |
