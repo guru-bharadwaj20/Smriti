@@ -459,7 +459,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P13.33 | Measure cascade deletion correctness | bench/codemem/results/metrics.json cascade: exact diamond closure (4/4 ids), 0 resurrected across 201 memory branches, operation log verifies; bench/codemem/README.md |
 | ✅ Done | P13.34 | Publish commit-replay dataset construction scripts | bench/codemem/README.md reproduction commands; bench/codemem/manifest.py, replay.py; replay re-run from a fresh clone reproduced injection.json byte-for-byte |
 | ✅ Done | P13.35 | Measure cold indexing time and peak memory | bench/swebench/results/performance.json: psf/requests @36453b9 (98 files, 2,487 symbols) cold index 10.86s, sampled peak RSS 91.8 MB, i3-5005U |
-| ❌ Pending | P13.36 | Measure incremental update p50 and p95 | — |
+| ✅ Done | P13.36 | Measure incremental update p50 and p95 | docs/performance.md and bench/swebench/results/performance.json: one-line edit re-index on requests p50 9.64s, p95 10.12s (20 reps) vs cold 10.86s; whole-repo resolution identified as the bottleneck |
 | ❌ Pending | P13.37 | Measure query p50 and p95 latency | — |
 | ✅ Done | P13.38 | Record CPU, RAM, OS, seeds, and configs | bench/swebench/hardware.py; actual CPU, RAM and positive process RSS verified; run config/seed recorded per report |
 | ✅ Done | P13.39 | Export raw results and reproduction commands | bench/swebench/results/raw.jsonl (16 rows), failures.jsonl, run-metadata.json, report.json; IDs and metrics only, no task text or patches, local paths scrubbed; commands in docs/benchmarks.md |
