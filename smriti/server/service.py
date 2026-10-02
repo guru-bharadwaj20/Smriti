@@ -3,6 +3,7 @@
 from dataclasses import dataclass
 from hashlib import sha256
 from pathlib import Path
+from typing import Any
 
 from smriti.config import Config, load_config
 from smriti.contracts import ContextResponse
@@ -139,3 +140,49 @@ class SmritiService:
             ),
             key=lambda edge: (edge.source, edge.target, edge.kind, edge.confidence),
         )
+
+
+class MemoryService:
+    """Validated memory operations shared by the CLI and MCP adapters."""
+
+    def __init__(self, root: Path, config: Config | None = None) -> None:
+        from smriti.memory import MemoryStore
+
+        self.config = config or load_config(root)
+        self.config.data_dir.mkdir(parents=True, exist_ok=True)
+        self.store = MemoryStore(self.config.data_dir / 'memory.sqlite')
+
+    def close(self) -> None:
+        self.store.close()
+
+    def remember(
+        self,
+        fact: str,
+        *,
+        anchors: list[dict[str, str]] | None = None,
+        confidence: float = 1.0,
+        source: str | None = None,
+        session: str | None = None,
+    ) -> dict[str, Any]:
+        from smriti.memory import Anchor
+        from smriti.server.schemas import RememberRequest
+
+        request = RememberRequest.model_validate(
+            {
+                'fact': fact,
+                'anchors': anchors or [],
+                'confidence': float(confidence),
+                'source': source,
+                'session': session,
+            }
+        )
+        return self.store.remember(
+            request.fact,
+            anchors=[Anchor(a.symbol_id, a.content_hash) for a in request.anchors],
+            confidence=request.confidence,
+            source=request.source,
+            session=request.session,
+        ).to_dict()
+
+    def recall(self, query: str = '', include_stale: bool = True) -> list[dict[str, Any]]:
+        return [f.to_dict() for f in self.store.recall(query, include_stale=include_stale)]

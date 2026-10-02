@@ -102,3 +102,59 @@ def callees(
     typer.echo(
         json.dumps([asdict(edge) for edge in SmritiService(root).calls(name, incoming=False)])
     )
+
+
+RootOption = Annotated[Path, typer.Option('--root', exists=True, file_okay=False)]
+
+
+def _memory(root: Path):  # type: ignore[no-untyped-def]
+    from smriti.server.service import MemoryService
+
+    return MemoryService(root)
+
+
+def _emit(value: object) -> None:
+    typer.echo(json.dumps(value, sort_keys=True))
+
+
+@app.command('remember')
+def remember(
+    fact: str,
+    anchor: Annotated[
+        list[str] | None, typer.Option('--anchor', help='SYMBOL_ID=SHA256 content hash')
+    ] = None,
+    confidence: Annotated[float, typer.Option('--confidence', min=0, max=1)] = 1.0,
+    source: Annotated[str | None, typer.Option('--source')] = None,
+    session: Annotated[str | None, typer.Option('--session')] = None,
+    root: RootOption = DEFAULT_ROOT,
+) -> None:
+    """Record a project or symbol-anchored fact."""
+    anchors = []
+    for item in anchor or []:
+        symbol_id, separator, content_hash = item.rpartition('=')
+        if not separator:
+            raise typer.BadParameter('Anchors use SYMBOL_ID=CONTENT_HASH', param_hint='--anchor')
+        anchors.append({'symbol_id': symbol_id, 'content_hash': content_hash})
+    service = _memory(root)
+    try:
+        _emit(
+            service.remember(
+                fact, anchors=anchors, confidence=confidence, source=source, session=session
+            )
+        )
+    finally:
+        service.close()
+
+
+@app.command('recall')
+def recall(
+    query: Annotated[str, typer.Argument()] = '',
+    fresh_only: Annotated[bool, typer.Option('--fresh-only')] = False,
+    root: RootOption = DEFAULT_ROOT,
+) -> None:
+    """Recall current facts ranked against an optional query."""
+    service = _memory(root)
+    try:
+        _emit(service.recall(query, include_stale=not fresh_only))
+    finally:
+        service.close()
