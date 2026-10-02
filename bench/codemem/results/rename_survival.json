@@ -1,0 +1,852 @@
+{
+  "schema_version": 1,
+  "revision": "611c6162cbc4ac2020a2f91c7cfa4f3abf9bbb60",
+  "probes": 64,
+  "file_moves": {
+    "eligible_events": 64,
+    "survived": 64,
+    "rate": 1.0
+  },
+  "identifier_renames": {
+    "events": 64,
+    "flagged_not_fresh": 64,
+    "rate": 1.0,
+    "note": "Body text changes, so the anchor hash cannot verify the rename; not-fresh is the intended conservative outcome."
+  },
+  "move_events": [
+    {
+      "fact_id": "probe-2d80e3ab54e1b5cdb8dbc539",
+      "from": "src/requests/__init__.py",
+      "to": "src/requests/moved___init__.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-2b7d8c776004d04210b571c9",
+      "from": "src/requests/_internal_utils.py",
+      "to": "src/requests/moved__internal_utils.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-3587d54cffe6d7b6d304b1ea",
+      "from": "src/requests/_types.py",
+      "to": "src/requests/moved__types.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-0fa713b436512638e571fdf4",
+      "from": "src/requests/adapters.py",
+      "to": "src/requests/moved_adapters.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-1216fb49be6b7cc3087ea7ea",
+      "from": "src/requests/adapters.py",
+      "to": "src/requests/moved_adapters.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-1db6892b6f03a8efbfb17c4f",
+      "from": "src/requests/adapters.py",
+      "to": "src/requests/moved_adapters.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-2e91c0220f3cd22808fd1767",
+      "from": "src/requests/adapters.py",
+      "to": "src/requests/moved_adapters.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-34822776e00ba442c5ac9b1e",
+      "from": "src/requests/adapters.py",
+      "to": "src/requests/moved_adapters.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-34a29367255e5429052a59bd",
+      "from": "src/requests/adapters.py",
+      "to": "src/requests/moved_adapters.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-35bc448b1e5eba5707ffbb3e",
+      "from": "src/requests/adapters.py",
+      "to": "src/requests/moved_adapters.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-1d1f24a96fa28bc71c8e268f",
+      "from": "src/requests/api.py",
+      "to": "src/requests/moved_api.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-25090938b7f0f23407b843b9",
+      "from": "src/requests/auth.py",
+      "to": "src/requests/moved_auth.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-2ff7de17ee402ad3de450c11",
+      "from": "src/requests/auth.py",
+      "to": "src/requests/moved_auth.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-06134bd6a035c6009fc85e3a",
+      "from": "src/requests/cookies.py",
+      "to": "src/requests/moved_cookies.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-0ec5921c3b75b0297f101559",
+      "from": "src/requests/cookies.py",
+      "to": "src/requests/moved_cookies.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-1030bffde2e1d6535c7f6650",
+      "from": "src/requests/cookies.py",
+      "to": "src/requests/moved_cookies.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-16b41fad366f41f1a0be1746",
+      "from": "src/requests/cookies.py",
+      "to": "src/requests/moved_cookies.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-296a2ce46468edc638a1c617",
+      "from": "src/requests/cookies.py",
+      "to": "src/requests/moved_cookies.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-30f0ae5ad214905252706927",
+      "from": "src/requests/cookies.py",
+      "to": "src/requests/moved_cookies.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-3647e19bf7fa50fd4c7c0b90",
+      "from": "src/requests/cookies.py",
+      "to": "src/requests/moved_cookies.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-375b854e25fed0f77a242fc3",
+      "from": "src/requests/cookies.py",
+      "to": "src/requests/moved_cookies.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-3c290efebf1ab4a26e782598",
+      "from": "src/requests/cookies.py",
+      "to": "src/requests/moved_cookies.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-41200d9d82e367f153e84fbe",
+      "from": "src/requests/cookies.py",
+      "to": "src/requests/moved_cookies.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-41437a963708bccafbff59c3",
+      "from": "src/requests/help.py",
+      "to": "src/requests/moved_help.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-012f663d554587813c248f61",
+      "from": "src/requests/models.py",
+      "to": "src/requests/moved_models.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-03849495377c6283be8691e7",
+      "from": "src/requests/models.py",
+      "to": "src/requests/moved_models.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-052eb244e3dca6c7b53a150d",
+      "from": "src/requests/models.py",
+      "to": "src/requests/moved_models.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-06d705d383e38c3a3de08e34",
+      "from": "src/requests/models.py",
+      "to": "src/requests/moved_models.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-0b7e58f1296f1306e60938f5",
+      "from": "src/requests/models.py",
+      "to": "src/requests/moved_models.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-0b7f01f97ecc026434fa5b86",
+      "from": "src/requests/models.py",
+      "to": "src/requests/moved_models.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-0d1588e12d074225082ffd42",
+      "from": "src/requests/models.py",
+      "to": "src/requests/moved_models.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-17475d28652f171735e1c2a3",
+      "from": "src/requests/models.py",
+      "to": "src/requests/moved_models.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-1e6c1061be675b70695861f7",
+      "from": "src/requests/models.py",
+      "to": "src/requests/moved_models.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-1ed44702aa3f55a0cf19c4bc",
+      "from": "src/requests/models.py",
+      "to": "src/requests/moved_models.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-201fc02f29c6d66d7473a51e",
+      "from": "src/requests/models.py",
+      "to": "src/requests/moved_models.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-2334bd7b0572ede825d2d543",
+      "from": "src/requests/models.py",
+      "to": "src/requests/moved_models.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-2c968df5dceb6981ab1417cc",
+      "from": "src/requests/models.py",
+      "to": "src/requests/moved_models.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-2d397ae886b8f2bbcd4b05c2",
+      "from": "src/requests/models.py",
+      "to": "src/requests/moved_models.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-33581ef31adde7b53fa38775",
+      "from": "src/requests/models.py",
+      "to": "src/requests/moved_models.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-33f4c5accaddfada44ef5690",
+      "from": "src/requests/models.py",
+      "to": "src/requests/moved_models.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-3b4c80eefe1ab1580ef5437e",
+      "from": "src/requests/models.py",
+      "to": "src/requests/moved_models.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-03f91ec9c690f36c9b7ec313",
+      "from": "src/requests/sessions.py",
+      "to": "src/requests/moved_sessions.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-0d648ac66ac1e944d2fd0b01",
+      "from": "src/requests/sessions.py",
+      "to": "src/requests/moved_sessions.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-0dcabe9f3923fe28bc1b39f0",
+      "from": "src/requests/sessions.py",
+      "to": "src/requests/moved_sessions.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-0edfb660a97619513f28e821",
+      "from": "src/requests/sessions.py",
+      "to": "src/requests/moved_sessions.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-125333e3b070787bff715a72",
+      "from": "src/requests/sessions.py",
+      "to": "src/requests/moved_sessions.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-1b28d9e66ad3357affd6cb94",
+      "from": "src/requests/sessions.py",
+      "to": "src/requests/moved_sessions.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-21f98203b29bdf603fb007eb",
+      "from": "src/requests/sessions.py",
+      "to": "src/requests/moved_sessions.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-3c0b8f4d8d8caa4322282e9f",
+      "from": "src/requests/sessions.py",
+      "to": "src/requests/moved_sessions.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-3fd2c2dad8375d43be30fa48",
+      "from": "src/requests/sessions.py",
+      "to": "src/requests/moved_sessions.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-41142bc0338fc3c923348e0a",
+      "from": "src/requests/sessions.py",
+      "to": "src/requests/moved_sessions.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-23bb5343dca2de648bee498e",
+      "from": "src/requests/structures.py",
+      "to": "src/requests/moved_structures.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-3ee8e9f44f80e5f8c2625e7d",
+      "from": "src/requests/structures.py",
+      "to": "src/requests/moved_structures.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-002012b6a50eb43ec10d1887",
+      "from": "src/requests/utils.py",
+      "to": "src/requests/moved_utils.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-052482b2a36ba87aaf6089da",
+      "from": "src/requests/utils.py",
+      "to": "src/requests/moved_utils.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-0a1e6074f843a31cdba2aa07",
+      "from": "src/requests/utils.py",
+      "to": "src/requests/moved_utils.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-0be3486ada1b68e839d80fa4",
+      "from": "src/requests/utils.py",
+      "to": "src/requests/moved_utils.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-0ceab979add7ee4fdf528d31",
+      "from": "src/requests/utils.py",
+      "to": "src/requests/moved_utils.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-1fe1c6790c8f9c1971a4cf53",
+      "from": "src/requests/utils.py",
+      "to": "src/requests/moved_utils.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-2cf8c4a43dbaf2a28eef6a12",
+      "from": "src/requests/utils.py",
+      "to": "src/requests/moved_utils.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-2f5153c23e3a51079c589dab",
+      "from": "src/requests/utils.py",
+      "to": "src/requests/moved_utils.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-36fbb669ede84c4ef5fbdf78",
+      "from": "src/requests/utils.py",
+      "to": "src/requests/moved_utils.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-38cee511e323d14d5e45f098",
+      "from": "src/requests/utils.py",
+      "to": "src/requests/moved_utils.py",
+      "freshness": "fresh",
+      "survived": true
+    },
+    {
+      "fact_id": "probe-3ce8e0b1166a373c2b458a8c",
+      "from": "src/requests/utils.py",
+      "to": "src/requests/moved_utils.py",
+      "freshness": "fresh",
+      "survived": true
+    }
+  ],
+  "identifier_events": [
+    {
+      "fact_id": "probe-002012b6a50eb43ec10d1887",
+      "qualname": "src.requests.utils.default_headers",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-012f663d554587813c248f61",
+      "qualname": "src.requests.models.Response.__setstate__",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-03849495377c6283be8691e7",
+      "qualname": "src.requests.models.RequestHooksMixin.register_hook",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-03f91ec9c690f36c9b7ec313",
+      "qualname": "src.requests.sessions.Session.get",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-052482b2a36ba87aaf6089da",
+      "qualname": "src.requests.utils.check_header_validity",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-052eb244e3dca6c7b53a150d",
+      "qualname": "src.requests.models.Response.json",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-06134bd6a035c6009fc85e3a",
+      "qualname": "src.requests.cookies.MockRequest.get_new_headers",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-06d705d383e38c3a3de08e34",
+      "qualname": "src.requests.models.Response.__nonzero__",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-0a1e6074f843a31cdba2aa07",
+      "qualname": "src.requests.utils.set_environ",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-0b7e58f1296f1306e60938f5",
+      "qualname": "src.requests.models.Request.__repr__",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-0b7f01f97ecc026434fa5b86",
+      "qualname": "src.requests.models.PreparedRequest.prepare_cookies",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-0be3486ada1b68e839d80fa4",
+      "qualname": "src.requests.utils.is_valid_cidr",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-0ceab979add7ee4fdf528d31",
+      "qualname": "src.requests.utils.to_key_val_list",
+      "freshness": "stale",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-0d1588e12d074225082ffd42",
+      "qualname": "src.requests.models.Request.prepare",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-0d648ac66ac1e944d2fd0b01",
+      "qualname": "src.requests.sessions.Session.head",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-0dcabe9f3923fe28bc1b39f0",
+      "qualname": "src.requests.sessions.Session.prepare_request",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-0ec5921c3b75b0297f101559",
+      "qualname": "src.requests.cookies.merge_cookies",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-0edfb660a97619513f28e821",
+      "qualname": "src.requests.sessions.Session.__getstate__",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-0fa713b436512638e571fdf4",
+      "qualname": "src.requests.adapters.HTTPAdapter.get_connection",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-1030bffde2e1d6535c7f6650",
+      "qualname": "src.requests.cookies.RequestsCookieJar.itervalues",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-1216fb49be6b7cc3087ea7ea",
+      "qualname": "src.requests.adapters.HTTPAdapter.proxy_manager_for",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-125333e3b070787bff715a72",
+      "qualname": "src.requests.sessions.session",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-16b41fad366f41f1a0be1746",
+      "qualname": "src.requests.cookies.RequestsCookieJar.copy",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-17475d28652f171735e1c2a3",
+      "qualname": "src.requests.models.Response.is_redirect",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-1b28d9e66ad3357affd6cb94",
+      "qualname": "src.requests.sessions.Session.merge_environment_settings",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-1d1f24a96fa28bc71c8e268f",
+      "qualname": "src.requests.api.delete",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-1db6892b6f03a8efbfb17c4f",
+      "qualname": "src.requests.adapters.HTTPAdapter.build_response",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-1e6c1061be675b70695861f7",
+      "qualname": "src.requests.models.RequestEncodingMixin.path_url",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-1ed44702aa3f55a0cf19c4bc",
+      "qualname": "src.requests.models.Response.__getstate__",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-1fe1c6790c8f9c1971a4cf53",
+      "qualname": "src.requests.utils.parse_dict_header",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-201fc02f29c6d66d7473a51e",
+      "qualname": "src.requests.models.Response.__exit__",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-21f98203b29bdf603fb007eb",
+      "qualname": "src.requests.sessions.SessionRedirectMixin.send",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-2334bd7b0572ede825d2d543",
+      "qualname": "src.requests.models.PreparedRequest.prepare_auth",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-23bb5343dca2de648bee498e",
+      "qualname": "src.requests.structures.CaseInsensitiveDict.__setitem__",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-25090938b7f0f23407b843b9",
+      "qualname": "src.requests.auth.HTTPDigestAuth.build_digest_header.sha_utf8",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-296a2ce46468edc638a1c617",
+      "qualname": "src.requests.cookies.MockRequest.add_unredirected_header",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-2b7d8c776004d04210b571c9",
+      "qualname": "src.requests._internal_utils.to_native_string",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-2c968df5dceb6981ab1417cc",
+      "qualname": "src.requests.models.PreparedRequest.__repr__",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-2cf8c4a43dbaf2a28eef6a12",
+      "qualname": "src.requests.utils.proxy_bypass",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-2d397ae886b8f2bbcd4b05c2",
+      "qualname": "src.requests.models.Response.__repr__",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-2d80e3ab54e1b5cdb8dbc539",
+      "qualname": "src.requests.check_compatibility",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-2e91c0220f3cd22808fd1767",
+      "qualname": "src.requests.adapters.HTTPAdapter.build_connection_pool_key_attributes",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-2f5153c23e3a51079c589dab",
+      "qualname": "src.requests.utils.dotted_netmask",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-2ff7de17ee402ad3de450c11",
+      "qualname": "src.requests.auth.HTTPDigestAuth.build_digest_header.sha256_utf8",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-30f0ae5ad214905252706927",
+      "qualname": "src.requests.cookies.RequestsCookieJar.set_cookie",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-33581ef31adde7b53fa38775",
+      "qualname": "src.requests.models.Response.is_permanent_redirect",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-33f4c5accaddfada44ef5690",
+      "qualname": "src.requests.models.RequestEncodingMixin._encode_files",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-34822776e00ba442c5ac9b1e",
+      "qualname": "src.requests.adapters.HTTPAdapter.request_url",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-34a29367255e5429052a59bd",
+      "qualname": "src.requests.adapters.HTTPAdapter.__getstate__",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-3587d54cffe6d7b6d304b1ea",
+      "qualname": "src.requests._types.is_prepared",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-35bc448b1e5eba5707ffbb3e",
+      "qualname": "src.requests.adapters.HTTPAdapter.get_connection_with_tls_context",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-3647e19bf7fa50fd4c7c0b90",
+      "qualname": "src.requests.cookies.MockResponse.getheaders",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-36fbb669ede84c4ef5fbdf78",
+      "qualname": "src.requests.utils.proxy_bypass_registry",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-375b854e25fed0f77a242fc3",
+      "qualname": "src.requests.cookies.RequestsCookieJar.__getstate__",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-38cee511e323d14d5e45f098",
+      "qualname": "src.requests.utils.urldefragauth",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-3b4c80eefe1ab1580ef5437e",
+      "qualname": "src.requests.models.Response.links",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-3c0b8f4d8d8caa4322282e9f",
+      "qualname": "src.requests.sessions.SessionRedirectMixin.rebuild_auth",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-3c290efebf1ab4a26e782598",
+      "qualname": "src.requests.cookies.RequestsCookieJar.list_paths",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-3ce8e0b1166a373c2b458a8c",
+      "qualname": "src.requests.utils.guess_json_utf",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-3ee8e9f44f80e5f8c2625e7d",
+      "qualname": "src.requests.structures.LookupDict.__getattr__",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-3fd2c2dad8375d43be30fa48",
+      "qualname": "src.requests.sessions.Session.__enter__",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-41142bc0338fc3c923348e0a",
+      "qualname": "src.requests.sessions.Session.options",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-41200d9d82e367f153e84fbe",
+      "qualname": "src.requests.cookies.MockRequest.__init__",
+      "freshness": "orphaned",
+      "conservative": true
+    },
+    {
+      "fact_id": "probe-41437a963708bccafbff59c3",
+      "qualname": "src.requests.help._implementation",
+      "freshness": "orphaned",
+      "conservative": true
+    }
+  ]
+}

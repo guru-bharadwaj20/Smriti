@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "repository": "https://github.com/psf/requests.git",
+  "method": "Lossless zlib level 9 over canonical authenticated operation/payload archive",
+  "original_bytes": 379929,
+  "compressed_bytes": 79465,
+  "ratio": 0.20915750048035292,
+  "byte_identical": true,
+  "provenance_equal": true,
+  "signature_preserved": true,
+  "authenticated_after_decompression": true,
+  "operation_count": 332,
+  "payload_count": 321,
+  "purged_identity_count": 4,
+  "operation_log_verifies": true,
+  "semantic_summary_generated": false
+}

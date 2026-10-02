@@ -455,7 +455,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P13.29 | Create anchored fact injection fixtures | bench/codemem/injection.py; bench/codemem/results/injection.json; injection fixture tests pass |
 | ✅ Done | P13.30 | Label expected staleness after each commit | bench/codemem/labels.py; bench/codemem/replay.py; results/labels.jsonl 12,736 labels over 200 real requests commits; tests/test_codemem_labels.py passed |
 | ✅ Done | P13.31 | Measure stale detection precision and recall | bench/codemem/results/metrics.json: TP 87, FP 0, FN 0, TN 12649; precision 1.0, recall 1.0 on 64 probes x 199 steps; tests/test_codemem_metrics.py passed |
-| ❌ Pending | P13.32 | Measure anchor survival through renames | — |
+| ✅ Done | P13.32 | Measure anchor survival through renames | bench/codemem/renames.py; results/rename_survival.json: 64/64 anchors survive real file moves, 64/64 identifier renames conservatively flagged not fresh |
 | ✅ Done | P13.33 | Measure cascade deletion correctness | bench/codemem/results/metrics.json cascade: exact diamond closure (4/4 ids), 0 resurrected across 201 memory branches, operation log verifies; bench/codemem/README.md |
 | ✅ Done | P13.34 | Publish commit-replay dataset construction scripts | bench/codemem/README.md reproduction commands; bench/codemem/manifest.py, replay.py; replay re-run from a fresh clone reproduced injection.json byte-for-byte |
 | ❌ Pending | P13.35 | Measure cold indexing time and peak memory | — |
@@ -508,7 +508,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P15.01 | Add Go parser and resolution support | smriti/parse/languages.py; smriti/resolve/languages.py; docs/languages.md; tests/test_parse_languages.py and tests/test_parse.py passed; tree-sitter pinned <0.26 per docs/parser-compatibility.md |
 | ✅ Done | P15.02 | Add C/C++ parser and resolution support | smriti/parse/languages.py; smriti/resolve/languages.py; docs/languages.md; tests/test_parse_languages.py and tests/test_parse.py passed; tree-sitter pinned <0.26 per docs/parser-compatibility.md |
 | ✅ Done | P15.03 | Implement cross-language API edges | smriti/resolve/api.py; docs/languages.md; tests/test_resolve_api.py passed |
-| ❌ Pending | P15.04 | Profile candidate Rust hot path | — |
+| ✅ Done | P15.04 | Profile candidate Rust hot path | bench/vector/native_profile.py cProfile: vector.math.distance 46.39s of 48.30s (96%) building/querying 120x384 HNSW |
 | ❌ Pending | P15.05 | Implement Rust and PyO3 optimization | — |
 | ❌ Pending | P15.06 | Compare speedup with identical correctness checks | — |
 | ✅ Done | P15.07 | Evaluate push-based approximate PageRank | smriti/rank/push.py residual L1 bound; tests/test_rank_push.py passed against power iteration |
@@ -517,5 +517,5 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P15.10 | Test synchronization conflicts between teammates | tests/test_memory_sync.py divergent edits, tombstones, resurrection and merge-base tests passed; smriti/memory/__init__.py single-pass common base |
 | ❌ Pending | P15.11 | Create VS Code anchored-memory extension | — |
 | ❌ Pending | P15.12 | Implement optional local-model summaries | — |
-| ❌ Pending | P15.13 | Evaluate memory compression without losing provenance | — |
+| ✅ Done | P15.13 | Evaluate memory compression without losing provenance | bench/codemem/results/compression.json: real replay log 379,929 -> 79,465 bytes (0.209), byte-identical, provenance and HMAC preserved; tests/test_memory_sync.py passed |
 | ❌ Pending | P15.14 | Implement optional coding-agent task-success comparison | — |

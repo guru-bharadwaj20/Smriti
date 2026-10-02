@@ -45,7 +45,7 @@ Tests cover temporal corrections, merge conflicts, branch isolation, physical
 deletion, derivation diamonds, immutable metadata, transaction failure injection
 and concurrent forgetting during a derived-fact write.
 
-## Offline synchronization
+## Offline synchronization and compression
 
 `smriti.memory.sync.export_bundle(store, repository_id, key)` authenticates the
 canonical operation records, payloads, active head, and irreversible tombstones
@@ -60,3 +60,10 @@ or advances a peer branch, rejects rewinds and divergent replacements, and leave
 merge choices explicit. Different teammate edits produce the same three-way
 conflicts as local branches. Tombstones apply globally, including locally derived
 facts, and an old authenticated bundle cannot restore purged payloads.
+
+`compress_bundle()` uses lossless zlib compression. `decompress_bundle()` rejects
+truncated streams, trailing data, and decompression beyond its configured limit.
+Compression preserves canonical bytes, temporal metadata, anchors, provenance,
+operation identities and authentication. It produces no semantic summaries.
+`python -m bench.codemem.compression` measures these properties against the real
+commit-replay memory database and records raw and compressed byte counts.
