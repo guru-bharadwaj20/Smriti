@@ -457,7 +457,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P13.31 | Measure stale detection precision and recall | bench/codemem/results/metrics.json: TP 87, FP 0, FN 0, TN 12649; precision 1.0, recall 1.0 on 64 probes x 199 steps; tests/test_codemem_metrics.py passed |
 | ❌ Pending | P13.32 | Measure anchor survival through renames | — |
 | ✅ Done | P13.33 | Measure cascade deletion correctness | bench/codemem/results/metrics.json cascade: exact diamond closure (4/4 ids), 0 resurrected across 201 memory branches, operation log verifies; bench/codemem/README.md |
-| ❌ Pending | P13.34 | Publish commit-replay dataset construction scripts | — |
+| ✅ Done | P13.34 | Publish commit-replay dataset construction scripts | bench/codemem/README.md reproduction commands; bench/codemem/manifest.py, replay.py; replay re-run from a fresh clone reproduced injection.json byte-for-byte |
 | ❌ Pending | P13.35 | Measure cold indexing time and peak memory | — |
 | ❌ Pending | P13.36 | Measure incremental update p50 and p95 | — |
 | ❌ Pending | P13.37 | Measure query p50 and p95 latency | — |
