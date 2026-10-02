@@ -3,6 +3,7 @@
 import argparse
 import hashlib
 import json
+import re
 import time
 from collections import defaultdict
 from datetime import UTC, datetime
@@ -13,8 +14,12 @@ from smriti.memory import MemoryStore
 
 
 def timestamp(value: str) -> str:
-    normalized = value.replace(' (', '(').split('(')[0].strip()
-    date = datetime.fromisoformat(normalized.replace('Z', '+00:00'))
+    """Parse the published 'YYYY/MM/DD (Day) HH:MM' format, or ISO 8601, as UTC."""
+    match = re.fullmatch(r'(\d{4}/\d{2}/\d{2}) \(\w{3}\) (\d{2}:\d{2})', value.strip())
+    if match:
+        date = datetime.strptime(' '.join(match.groups()), '%Y/%m/%d %H:%M')
+    else:
+        date = datetime.fromisoformat(value.strip().replace('Z', '+00:00'))
     if date.tzinfo is None:
         date = date.replace(tzinfo=UTC)
     return date.isoformat()

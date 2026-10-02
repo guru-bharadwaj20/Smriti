@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from bench.longmemeval.runner import evaluate, ingest
+from bench.longmemeval.runner import evaluate, ingest, timestamp
 from smriti.memory import MemoryStore
 
 
@@ -28,3 +28,8 @@ def test_session_ingestion_excludes_labels_and_future_sessions(tmp_path: Path) -
     assert result['retrieved_session_ids'] == ['past']
     assert result['session_recall_at_5'] == 1.0
     store.close()
+
+
+def test_published_date_format_keeps_time_of_day():
+    assert timestamp('2023/05/20 (Sat) 02:21') == '2023-05-20T02:21:00+00:00'
+    assert timestamp('2025-01-02') == '2025-01-02T00:00:00+00:00'
