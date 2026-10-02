@@ -84,7 +84,7 @@ def extract(result: ParseResult) -> None:
             else None
         )
 
-    def walk(node: Node, parent: Symbol) -> None:
+    def visit(node: Node, parent: Symbol) -> Symbol:
         if node.type in {
             'type_spec',
             'class_specifier',
@@ -191,8 +191,11 @@ def extract(result: ParseResult) -> None:
                     'line': source[: node.start_byte].count(b'\n') + 1,
                 }
             )
-        for child in node.children:
-            walk(child, parent)
+        return parent
 
-    for child in result.tree.root_node.children:
-        walk(child, module)
+    # Iterative pre-order traversal; deeply nested sources exceed the recursion limit.
+    stack = [(child, module) for child in reversed(result.tree.root_node.children)]
+    while stack:
+        node, parent = stack.pop()
+        scope = visit(node, parent)
+        stack.extend((child, scope) for child in reversed(node.children))
