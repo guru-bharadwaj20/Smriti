@@ -4,8 +4,10 @@ import json
 import os
 import shutil
 import uuid
+from dataclasses import dataclass
 from hashlib import sha256
 from pathlib import Path
+from typing import Any
 
 from smriti.contracts import ContextItem, ContextResponse
 from smriti.lexical.index import BM25Index
@@ -16,6 +18,17 @@ from smriti.rank.pagerank import adjacency, personalized_pagerank
 from smriti.server.snapshots import IndexSnapshot
 from smriti.vector.embedding import BatchedEmbedder, EmbeddingCache, Encoder, ONNXEmbedder
 from smriti.vector.hnsw import HNSWIndex
+
+# Weight of personalized PageRank relative to normalized fused retrieval scores.
+GRAPH_WEIGHT = 1.0
+
+
+@dataclass(frozen=True)
+class RankComponents:
+    lexical: list[Any]
+    vector: list[Any]
+    fused: dict[str, float]
+    propagated: dict[str, float]
 
 
 class Retriever:
@@ -28,6 +41,7 @@ class Retriever:
         encoder: Encoder | None = None,
     ) -> None:
         self.snapshot = snapshot
+        self.graph_weight = GRAPH_WEIGHT
         self.symbols = {s.id: s for s in snapshot.symbols if s.path != '<external>'}
         self.counter = TokenCounter(tokenizer)
         self.encoder = encoder
@@ -94,7 +108,8 @@ class Retriever:
                     shutil.rmtree(build)
         self._reasons: dict[str, str] = {}
 
-    def rank(self, task: str) -> dict[str, float]:
+    def components(self, task: str) -> RankComponents:
+        """Candidate lists and graph scores before they are combined."""
         lexical = self.lexical.search(task, 50)
         vector = (
             self.vector.search(self.encoder.embed([task])[0], 50)
@@ -103,8 +118,7 @@ class Retriever:
         )
         fused = reciprocal_rank_fusion([lexical, vector])
         if not fused:
-            self._reasons = {}
-            return {}
+            return RankComponents(lexical, vector, {}, {})
         edges = [
             (e.source, e.target, e.kind, e.confidence)
             for e in self.snapshot.edges
@@ -120,26 +134,38 @@ class Retriever:
             ),
         ]
         propagated = personalized_pagerank(adjacency(self.symbols, ranking_edges), fused)
-        total = sum(fused.values())
+        return RankComponents(lexical, vector, fused, propagated)
+
+    def combine(self, parts: RankComponents, graph_weight: float | None = None) -> dict[str, float]:
+        weight = self.graph_weight if graph_weight is None else graph_weight
+        if not parts.fused:
+            return {}
+        total = sum(parts.fused.values())
         scores = {
-            identity: fused.get(identity, 0) / total + propagated.get(identity, 0)
+            identity: parts.fused.get(identity, 0) / total
+            + weight * parts.propagated.get(identity, 0)
             for identity in self.symbols
         }
-        lexical_ids = {hit.id for hit in lexical}
-        vector_ids = {hit.id for hit in vector}
+        return dict(sorted(scores.items(), key=lambda item: (-item[1], item[0])))
+
+    def rank(self, task: str) -> dict[str, float]:
+        parts = self.components(task)
+        scores = self.combine(parts)
+        lexical_ids = {hit.id for hit in parts.lexical}
+        vector_ids = {hit.id for hit in parts.vector}
         self._reasons = {
             identity: ', '.join(
                 reason
                 for reason, present in [
                     ('identifier match', identity in lexical_ids),
                     ('semantic match', identity in vector_ids),
-                    ('code graph', propagated.get(identity, 0) > 0),
+                    ('code graph', parts.propagated.get(identity, 0) > 0),
                 ]
                 if present
             )
             for identity in scores
         }
-        return dict(sorted(scores.items(), key=lambda item: (-item[1], item[0])))
+        return scores
 
     def context(self, task: str, budget: int, preamble: str = '') -> ContextResponse:
         scores = self.rank(task)
