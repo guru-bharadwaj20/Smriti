@@ -32,8 +32,16 @@ def ingest(store: MemoryStore, row: dict[str, Any]) -> None:
     )
     if not (len(ids) == len(dates) == len(sessions)):
         raise ValueError('Session IDs, dates and histories must align')
+    seen: dict[str, str] = {}
     for identity, date, turns in zip(ids, dates, sessions, strict=True):
         text = '\n'.join(f'{turn["role"]}: {turn["content"]}' for turn in turns)
+        # 13 published questions repeat an identical session under the same ID at a
+        # later date. Keep the first occurrence; differing content is a data error.
+        if str(identity) in seen:
+            if seen[str(identity)] != text:
+                raise ValueError(f'Session {identity} repeats with different content')
+            continue
+        seen[str(identity)] = text
         store.remember(
             text,
             fact_id=str(identity),
