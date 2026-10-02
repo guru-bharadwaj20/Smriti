@@ -31,7 +31,12 @@ from smriti.vector.embedding import BatchedEmbedder, EmbeddingCache, ONNXEmbedde
 WEIGHTS = (0.0, 0.02, 0.05, 0.1, 0.2, 0.35, 0.5, 1.0)
 
 
-def evaluate(repos: list[str], output: Path, workspace: Path | None = None) -> dict[str, object]:
+def evaluate(
+    repos: list[str],
+    output: Path,
+    workspace: Path | None = None,
+    shard: tuple[int, int] | None = None,
+) -> dict[str, object]:
     artifacts = json.loads((ROOT / 'bench/swebench/dataset_artifacts.json').read_text())
     tasks = {t.evaluation_id: t for t in load_tasks(artifacts)}
     selected = sorted(
@@ -44,6 +49,9 @@ def evaluate(repos: list[str], output: Path, workspace: Path | None = None) -> d
     )
     if any(instance_split(t.instance_id) != 'validation' for t in selected):
         raise AssertionError('Held-out task selected for tuning')
+    if shard is not None:
+        size = -(-len(selected) // shard[1])
+        selected = selected[shard[0] * size : (shard[0] + 1) * size]
     workspace = workspace or ROOT / '.smriti/evaluation'
     workspace.mkdir(parents=True, exist_ok=True)
     model = ROOT / '.smriti/models'
@@ -151,7 +159,9 @@ if __name__ == '__main__':
     parser.add_argument('--repo', action='append', required=True)
     parser.add_argument('--output', type=Path, default=ROOT / 'bench/swebench/results/tuning.jsonl')
     parser.add_argument('--workspace', type=Path, help='Separate checkout and cache directory')
+    parser.add_argument('--shard', help='K/N: tune the K-th (0-based) of N contiguous slices')
     args = parser.parse_args()
-    result = evaluate(args.repo, args.output, args.workspace)
+    shard = tuple(int(part) for part in args.shard.split('/')) if args.shard else None
+    result = evaluate(args.repo, args.output, args.workspace, shard)
     args.output.with_suffix('.summary.json').write_text(json.dumps(result, indent=2) + '\n')
     print(json.dumps({k: v for k, v in result.items() if k != 'failures'}, indent=2))
