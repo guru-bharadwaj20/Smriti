@@ -30,6 +30,16 @@ document with details.
 - **Pure-Python vectors are slow.** Distance computation dominates HNSW time; the
   optional Rust kernel gives 6.7x on one benchmark but is not the production path
   ([native-experiment.md](native-experiment.md)).
+- **Incremental indexing is not yet incremental end to end.** Only changed files
+  are re-parsed, but resolution and snapshot publication cover the whole
+  repository: a one-line edit on psf/requests takes 9.6 s (p50) against 10.9 s
+  for a cold index ([performance.md](performance.md)).
+- **Knapsack packing is slow on this hardware.** Packing an 8k-token context
+  takes 4.3 s at p50 after ranking; greedy packing takes 0.9 s and reached the
+  same coverage on the measured tasks.
+- **Ranking does not beat BM25 yet.** On 15 held-out SWE-bench tasks, function
+  recall@10 is 0.267 for the full pipeline against 0.333 for BM25 (interval
+  includes zero) ([swebench-failures.md](swebench-failures.md)).
 
 ## Memory
 
@@ -48,9 +58,10 @@ document with details.
 
 ## Evaluation
 
-- **SWE-bench numbers come from a subset.** The full 707-task run needs days of
-  CPU time on the reference laptop; published numbers cover the three smallest
-  repositories and are labelled as such.
+- **SWE-bench numbers come from a small subset.** 16 of 707 unique tasks were
+  measured (psf/requests 12, pallets/flask 4); all 6 seaborn tasks failed at
+  clone while the network was down. The full run needs days of CPU time on the
+  reference laptop.
 - **LongMemEval is retrieval-only.** No answers are generated; numbers are not
   comparable to the answer-accuracy leaderboard ([longmemeval.md](longmemeval.md)).
 - **CodeMem uses one repository.** 200 Requests commits; a single project's
@@ -61,4 +72,5 @@ document with details.
 ## Scope
 
 No hosted service, authentication or multi-user server. The UI binds to
-localhost only. There is no IDE extension yet.
+localhost only. The VS Code extension (`vscode/`) is unpublished and depends on
+the `smriti` CLI being installed.
