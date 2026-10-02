@@ -1,6 +1,7 @@
-from pathlib import Path
 import subprocess
 import sys
+from pathlib import Path
+
 from smriti.models import Symbol
 from smriti.server.snapshots import IndexStore
 

@@ -1,8 +1,8 @@
 """Read fix patches for evaluation only; never apply them to retrieval inputs."""
 
-from dataclasses import dataclass
 import json
 import re
+from dataclasses import dataclass
 
 
 @dataclass(frozen=True)

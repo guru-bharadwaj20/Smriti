@@ -1,5 +1,7 @@
 """Consistent property-test profiles."""
+
 import os
+
 from hypothesis import settings
 
 settings.register_profile('ci', max_examples=100, derandomize=True, deadline=None)
