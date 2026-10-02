@@ -512,7 +512,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ❌ Pending | P15.05 | Implement Rust and PyO3 optimization | — |
 | ❌ Pending | P15.06 | Compare speedup with identical correctness checks | — |
 | ✅ Done | P15.07 | Evaluate push-based approximate PageRank | smriti/rank/push.py residual L1 bound; tests/test_rank_push.py passed against power iteration |
-| ❌ Pending | P15.08 | Train CPU ranking model without evaluation leakage | — |
+| ✅ Done | P15.08 | Train CPU ranking model without evaluation leakage | smriti/rank/learned.py fit_validation rejects held-out IDs; tests/test_rank_learned.py passed; strict mypy |
 | ❌ Pending | P15.09 | Design signed memory-log synchronization | — |
 | ❌ Pending | P15.10 | Test synchronization conflicts between teammates | — |
 | ❌ Pending | P15.11 | Create VS Code anchored-memory extension | — |
