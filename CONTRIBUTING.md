@@ -444,7 +444,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P13.18 | Measure tokens required to cover gold locations | bench/swebench/budget_metrics.py; executable semantic assertions passed |
 | ✅ Done | P13.19 | Separate validation from held-out evaluation | bench/swebench/splits.py; executable semantic assertions passed |
 | ✅ Done | P13.20 | Run component ablations | bench/swebench/results/report.json: 16 real SWE-bench tasks (requests 12, flask 4); held-out 8k packed recall full 0.567, no_vector 0.400, no_graph 0.633, greedy 0.567 |
-| ❌ Pending | P13.21 | Record retrieval failures and uncertainty | — |
+| ✅ Done | P13.21 | Record retrieval failures and uncertainty | docs/swebench-failures.md: 7 tooling failures with causes, 10 held-out ranking misses with per-task file/BM25 outcome, paired bootstrap 95% intervals (full-BM25 [-0.233, 0.067]) |
 | ✅ Done | P13.22 | Pin LongMemEval revision and usage terms | bench/longmemeval/manifest.json; HF revision 98d7416c, MIT, SHA-256 d6f21ea9 verified locally |
 | ✅ Done | P13.23 | Implement LongMemEval session ingestion adapter | bench/longmemeval/runner.py ingest; tests/test_longmemeval_adapter.py passed (labels and future sessions excluded) |
 | ✅ Done | P13.24 | Define retrieval-only memory relevance labels | docs/longmemeval.md: answer_session_ids as binary gold, answer/has_answer never ingested |
