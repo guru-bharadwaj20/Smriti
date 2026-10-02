@@ -202,3 +202,6 @@ class MemoryService:
 
     def diff(self, left: str | None, right: str | None = None) -> dict[str, Any]:
         return self.store.diff(left, right)
+
+    def revert(self, operation_id: str) -> str:
+        return self.store.revert(operation_id)

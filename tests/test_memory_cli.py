@@ -49,3 +49,14 @@ def test_memory_log_and_diff(tmp_path: Path) -> None:
         'removed': {},
         'changed': {},
     }
+
+
+def test_memory_revert(tmp_path: Path) -> None:
+    invoke(tmp_path, 'remember', 'Temporary')
+    log = invoke(tmp_path, 'memory', 'log')
+    assert isinstance(log, list)
+    reverted = invoke(tmp_path, 'memory', 'revert', log[0]['id'])
+    assert isinstance(reverted, dict) and reverted['operation']
+    assert invoke(tmp_path, 'recall') == []
+    again = runner.invoke(app, ['memory', 'revert', log[0]['id'], '--root', str(tmp_path)])
+    assert again.exit_code != 0

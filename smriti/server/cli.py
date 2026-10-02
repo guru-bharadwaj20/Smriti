@@ -204,3 +204,13 @@ def memory_diff(
         _emit(service.diff(left, right))
     finally:
         service.close()
+
+
+@memory_app.command('revert')
+def memory_revert(operation_id: str, root: RootOption = DEFAULT_ROOT) -> None:
+    """Append an inverse operation for an earlier operation."""
+    service = _memory(root)
+    try:
+        _emit({'operation': service.revert(operation_id)})
+    finally:
+        service.close()
