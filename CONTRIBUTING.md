@@ -411,7 +411,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P12.18 | Serve immutable index snapshots to queries | smriti/server/snapshots.py; snapshot immutability and stale-writer tests passed |
 | ✅ Done | P12.19 | Move indexing to background worker process | smriti/server/jobs.py; spawned-worker persisted-snapshot integration test passed |
 | ✅ Done | P12.20 | Keep async server responsive during indexing | smriti/server/jobs.py; concurrent event-loop ticker test passed during real indexing |
-| ❌ Pending | P12.21 | Handle cancellation and worker errors | — |
+| ✅ Done | P12.21 | Handle cancellation and worker errors | smriti/server/jobs.py IndexingError and pool replacement; tests/test_background_errors.py passed |
 | ❌ Pending | P12.22 | Implement graceful shutdown and recovery | — |
 | ✅ Done | P12.23 | Define concurrent writer transaction policy | docs/concurrency.md; targeted verification passed |
 | ❌ Pending | P12.24 | Document coding-agent MCP connection setup | — |
