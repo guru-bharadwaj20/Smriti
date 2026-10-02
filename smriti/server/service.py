@@ -196,3 +196,9 @@ class MemoryService:
         if request.fact_id is not None:
             return self.store.forget(request.fact_id)
         return self.store.forget_by(session=request.session, source=request.source)
+
+    def log(self, limit: int | None = None) -> list[dict[str, Any]]:
+        return self.store.log(limit=limit)
+
+    def diff(self, left: str | None, right: str | None = None) -> dict[str, Any]:
+        return self.store.diff(left, right)

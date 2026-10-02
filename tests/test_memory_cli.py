@@ -34,3 +34,18 @@ def test_forget_cascades_by_fact_and_source(tmp_path: Path) -> None:
     assert invoke(tmp_path, 'recall') == []
     both = runner.invoke(app, ['forget', 'x', '--source', 'y', '--root', str(tmp_path)])
     assert both.exit_code != 0
+
+
+def test_memory_log_and_diff(tmp_path: Path) -> None:
+    fact = invoke(tmp_path, 'remember', 'First')
+    assert isinstance(fact, dict)
+    log = invoke(tmp_path, 'memory', 'log')
+    assert isinstance(log, list) and log[0]['kind'] == 'add'
+    assert invoke(tmp_path, 'memory', 'log', '--limit', '1') == log[:1]
+    diff = invoke(tmp_path, 'memory', 'diff')
+    assert isinstance(diff, dict) and list(diff['added']) == [fact['id']]
+    assert invoke(tmp_path, 'memory', 'diff', log[0]['id']) == {
+        'added': {},
+        'removed': {},
+        'changed': {},
+    }

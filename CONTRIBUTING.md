@@ -399,7 +399,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | ✅ Done | P12.06 | Implement callers and callees commands | resolved call graph CLI integration test passed |
 | ✅ Done | P12.07 | Implement remember and recall commands | smriti/server/cli.py, MemoryService in smriti/server/service.py; tests/test_memory_cli.py passed |
 | ✅ Done | P12.08 | Implement forget command with cascade | smriti/server/cli.py forget; cascade CLI test in tests/test_memory_cli.py passed |
-| ❌ Pending | P12.09 | Implement memory log and diff commands | — |
+| ✅ Done | P12.09 | Implement memory log and diff commands | smriti memory log/diff; tests/test_memory_cli.py passed |
 | ❌ Pending | P12.10 | Implement memory revert command | — |
 | ❌ Pending | P12.11 | Implement memory branch and merge commands | — |
 | ✅ Done | P12.12 | Integrate official MCP Python SDK | official ClientSession handshake and status tool passed; strict mypy adapter passed |

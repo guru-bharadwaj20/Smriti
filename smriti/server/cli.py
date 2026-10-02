@@ -173,3 +173,34 @@ def forget(
         _emit({'forgotten': service.forget(fact_id=fact_id, source=source, session=session)})
     finally:
         service.close()
+
+
+memory_app = typer.Typer(help='Inspect and version memory history.', no_args_is_help=True)
+app.add_typer(memory_app, name='memory')
+
+
+@memory_app.command('log')
+def memory_log(
+    limit: Annotated[int | None, typer.Option('--limit', min=1)] = None,
+    root: RootOption = DEFAULT_ROOT,
+) -> None:
+    """List operations on the active branch, newest first."""
+    service = _memory(root)
+    try:
+        _emit(service.log(limit))
+    finally:
+        service.close()
+
+
+@memory_app.command('diff')
+def memory_diff(
+    left: Annotated[str | None, typer.Argument()] = None,
+    right: Annotated[str | None, typer.Argument()] = None,
+    root: RootOption = DEFAULT_ROOT,
+) -> None:
+    """Compare memory state between two operations (default: empty vs head)."""
+    service = _memory(root)
+    try:
+        _emit(service.diff(left, right))
+    finally:
+        service.close()
