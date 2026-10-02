@@ -153,7 +153,7 @@ class SourceParser:
             )
         )
 
-        def walk(node: Node, parent: Symbol) -> None:
+        def visit(node: Node, parent: Symbol) -> Symbol:
             if (
                 node.type
                 in {
@@ -204,7 +204,7 @@ class SourceParser:
                         )
                         if isinstance(value, str):
                             docstring = value
-                    except (ValueError, SyntaxError):
+                    except (ValueError, SyntaxError, RecursionError, MemoryError):
                         pass
                 symbol = Symbol(
                     sha256((path + ':' + kind + ':' + qualname).encode()).hexdigest(),
@@ -300,10 +300,16 @@ class SourceParser:
                         'line': node.start_point.row + 1,
                     }
                 )
-            for child in node.named_children:
-                walk(child, parent)
+            return parent
 
-        walk(root, result.symbols[0])
+        # Explicit stack instead of recursion: generated or deeply nested code
+        # (e.g. astropy's parser tables) exceeds Python's recursion limit. Pushing
+        # children in reverse keeps the same pre-order visit as recursive descent.
+        stack: list[tuple[Node, Symbol]] = [(root, result.symbols[0])]
+        while stack:
+            node, parent = stack.pop()
+            scope = visit(node, parent)
+            stack.extend((child, scope) for child in reversed(node.named_children))
 
 
 def parse_file(path: str, source: bytes | str) -> ParseResult:
