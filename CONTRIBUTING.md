@@ -507,7 +507,7 @@ Each table tracks one minor deliverable per row. Evidence stays `—` until ther
 | --- | --- | --- | --- |
 | ✅ Done | P15.01 | Add Go parser and resolution support | smriti/parse/languages.py; smriti/resolve/languages.py; docs/languages.md; tests/test_parse_languages.py and tests/test_parse.py passed; tree-sitter pinned <0.26 per docs/parser-compatibility.md |
 | ✅ Done | P15.02 | Add C/C++ parser and resolution support | smriti/parse/languages.py; smriti/resolve/languages.py; docs/languages.md; tests/test_parse_languages.py and tests/test_parse.py passed; tree-sitter pinned <0.26 per docs/parser-compatibility.md |
-| ❌ Pending | P15.03 | Implement cross-language API edges | — |
+| ✅ Done | P15.03 | Implement cross-language API edges | smriti/resolve/api.py; docs/languages.md; tests/test_resolve_api.py passed |
 | ❌ Pending | P15.04 | Profile candidate Rust hot path | — |
 | ❌ Pending | P15.05 | Implement Rust and PyO3 optimization | — |
 | ❌ Pending | P15.06 | Compare speedup with identical correctness checks | — |
