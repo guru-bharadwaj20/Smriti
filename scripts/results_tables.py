@@ -132,7 +132,7 @@ def swebench() -> str:
     return (
         '## Code retrieval (SWE-bench Lite ∪ Verified subset)\n\n'
         f'{report["measured_unique"]} of {report["target_unique_evaluations"]} unique tasks measured '
-        f'({repos}); {len(report["unresolved_failures"])} failed and are listed in '
+        f'({repos}); {len(report["unresolved_failures"])} were excluded or failed and are listed in '
         '`docs/swebench-failures.md`. Held-out split: '
         f'{split["instances"]} tasks. Source: `bench/swebench/results/report.json`.\n\n'
         '### Function recall@k and file recall@10\n\n'

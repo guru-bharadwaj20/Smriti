@@ -88,6 +88,6 @@ the same order on comparable hardware.
 | `bench/codemem/results/rename_survival.json` | file moves 64/64 survived; identifier renames 64/64 flagged |
 | `bench/codemem/results/compression.json` | `byte_identical`, `provenance_equal`, `signature_preserved` all true |
 | `bench/longmemeval/results/longmemeval_s.summary.json` | 500 questions; session recall@5 0.8479 |
-| `bench/swebench/results/report.json` | 16 measured tasks; held-out function recall@10 full 0.267, BM25 0.333 |
+| `bench/swebench/results/report.json` | 698 measured tasks; held-out function recall@10 full 0.355, BM25 0.291, no graph 0.385 |
 | `bench/vector/native_profile.json` | identical seeded graph and query IDs (speedup varies by machine) |
 | `bench/agent/results.json` | depends on the model; the oracle check in `tests/test_agent_compare.py` must give 8/8 |

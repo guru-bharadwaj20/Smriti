@@ -1,1134 +1,2827 @@
 {
-  "configuration_id": "559fae87120691b9b97d43522d368a6d5a0b64c8fbe39785dca87a015c0139a8",
+  "configuration_id": "691031a032ce4e3dd8ba0022e870ddacf0223a1e32126be343432664f43c5b21",
   "target_dataset_rows": 800,
   "target_unique_evaluations": 707,
-  "measured_unique": 16,
-  "measured_dataset_rows": 17,
-  "remaining_unique": 691,
+  "measured_unique": 698,
+  "measured_dataset_rows": 790,
+  "remaining_unique": 9,
   "failures_by_stage": {
-    "checkout": 16,
-    "retrieval_build": 1
+    "leakage": 9
   },
   "measured_repositories": {
+    "astropy/astropy": 24,
+    "django/django": 297,
+    "matplotlib/matplotlib": 49,
+    "mwaskom/seaborn": 6,
     "pallets/flask": 4,
-    "psf/requests": 12
+    "psf/requests": 13,
+    "pydata/xarray": 26,
+    "pylint-dev/pylint": 15,
+    "pytest-dev/pytest": 34,
+    "scikit-learn/scikit-learn": 45,
+    "sphinx-doc/sphinx": 57,
+    "sympy/sympy": 128
   },
   "unresolved_failures": [
     {
-      "evaluation_id": "mwaskom__seaborn-2848-790f277df31ace55",
-      "stage": "checkout",
-      "error": "CalledProcessError(128, ['git', 'clone', '--no-checkout', '--', 'https://github.com/mwaskom/seaborn.git', '<home>\\\\.smriti\\\\evaluation\\\\checkouts\\\\mwaskom--seaborn'])"
+      "evaluation_id": "django__django-12113-d88161d28838811a",
+      "stage": "leakage",
+      "error": "ValueError('Retrieval query contains patch text')"
     },
     {
-      "evaluation_id": "mwaskom__seaborn-3010-a0b927f8979e83e3",
-      "stage": "checkout",
-      "error": "CalledProcessError(128, ['git', 'clone', '--no-checkout', '--', 'https://github.com/mwaskom/seaborn.git', '<home>\\\\.smriti\\\\evaluation\\\\checkouts\\\\mwaskom--seaborn'])"
+      "evaluation_id": "django__django-12453-2fc633b691dbd470",
+      "stage": "leakage",
+      "error": "ValueError('Retrieval query contains patch text')"
     },
     {
-      "evaluation_id": "mwaskom__seaborn-3069-cb4272390a1ed3d4",
-      "stage": "checkout",
-      "error": "CalledProcessError(128, ['git', 'clone', '--no-checkout', '--', 'https://github.com/mwaskom/seaborn.git', '<home>\\\\.smriti\\\\evaluation\\\\checkouts\\\\mwaskom--seaborn'])"
+      "evaluation_id": "django__django-13410-c9aed6ba69ed067a",
+      "stage": "leakage",
+      "error": "ValueError('Retrieval query contains patch text')"
     },
     {
-      "evaluation_id": "mwaskom__seaborn-3187-a9140022d3d20871",
-      "stage": "checkout",
-      "error": "CalledProcessError(128, ['git', 'clone', '--no-checkout', '--', 'https://github.com/mwaskom/seaborn.git', '<home>\\\\.smriti\\\\evaluation\\\\checkouts\\\\mwaskom--seaborn'])"
+      "evaluation_id": "django__django-15695-a884dca5abe8615f",
+      "stage": "leakage",
+      "error": "ValueError('Retrieval query contains patch text')"
     },
     {
-      "evaluation_id": "mwaskom__seaborn-3190-13f43c140b19ac2e",
-      "stage": "checkout",
-      "error": "CalledProcessError(128, ['git', 'clone', '--no-checkout', '--', 'https://github.com/mwaskom/seaborn.git', '<home>\\\\.smriti\\\\evaluation\\\\checkouts\\\\mwaskom--seaborn'])"
+      "evaluation_id": "django__django-16256-eaa5f706577421e9",
+      "stage": "leakage",
+      "error": "ValueError('Retrieval query contains patch text')"
     },
     {
-      "evaluation_id": "mwaskom__seaborn-3407-ad71507314b1bf54",
-      "stage": "checkout",
-      "error": "CalledProcessError(128, ['git', 'clone', '--no-checkout', '--', 'https://github.com/mwaskom/seaborn.git', '<home>\\\\.smriti\\\\evaluation\\\\checkouts\\\\mwaskom--seaborn'])"
+      "evaluation_id": "matplotlib__matplotlib-25287-e93adc8172b5e5b2",
+      "stage": "leakage",
+      "error": "ValueError('Retrieval query contains patch text')"
     },
     {
-      "evaluation_id": "psf__requests-1724-310774ff93e59729",
-      "stage": "retrieval_build",
-      "error": "PermissionError(13, 'Access is denied')"
+      "evaluation_id": "scikit-learn__scikit-learn-14710-4bfec5ab73570134",
+      "stage": "leakage",
+      "error": "ValueError('Retrieval query contains patch text')"
+    },
+    {
+      "evaluation_id": "sympy__sympy-15599-aa8ee6662f547682",
+      "stage": "leakage",
+      "error": "ValueError('Retrieval query contains patch text')"
+    },
+    {
+      "evaluation_id": "sympy__sympy-22005-330ddf2155054954",
+      "stage": "leakage",
+      "error": "ValueError('Retrieval query contains patch text')"
     }
   ],
-  "undefined_function_gold": 0,
+  "undefined_function_gold": 36,
   "splits": {
     "validation": {
-      "instances": 1,
+      "instances": 152,
       "methods": {
         "grep": {
-          "defined_instances": 1,
+          "defined_instances": 146,
           "mean_function_recall10": 0.0,
           "function_recall": {
             "1": {
-              "defined_instances": 1,
+              "defined_instances": 146,
               "mean": 0.0
             },
             "5": {
-              "defined_instances": 1,
+              "defined_instances": 146,
               "mean": 0.0
             },
             "10": {
-              "defined_instances": 1,
+              "defined_instances": 146,
               "mean": 0.0
             },
             "20": {
-              "defined_instances": 1,
+              "defined_instances": 146,
               "mean": 0.0
             },
             "50": {
-              "defined_instances": 1,
+              "defined_instances": 146,
               "mean": 0.0
             }
           },
           "file_recall": {
             "1": {
-              "defined_instances": 1,
-              "mean": 0.0
+              "defined_instances": 152,
+              "mean": 0.003289473684210526
             },
             "5": {
-              "defined_instances": 1,
-              "mean": 0.0
+              "defined_instances": 152,
+              "mean": 0.0625
             },
             "10": {
-              "defined_instances": 1,
-              "mean": 0.0
+              "defined_instances": 152,
+              "mean": 0.16611842105263158
             },
             "20": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 152,
+              "mean": 0.3503289473684211
             },
             "50": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 152,
+              "mean": 0.5361842105263158
             }
           }
         },
         "bm25": {
-          "defined_instances": 1,
-          "mean_function_recall10": 0.0,
+          "defined_instances": 146,
+          "mean_function_recall10": 0.23972602739726026,
           "function_recall": {
             "1": {
-              "defined_instances": 1,
-              "mean": 0.0
+              "defined_instances": 146,
+              "mean": 0.09360730593607305
             },
             "5": {
-              "defined_instances": 1,
-              "mean": 0.0
+              "defined_instances": 146,
+              "mean": 0.1815068493150685
             },
             "10": {
-              "defined_instances": 1,
-              "mean": 0.0
+              "defined_instances": 146,
+              "mean": 0.23972602739726026
             },
             "20": {
-              "defined_instances": 1,
-              "mean": 0.0
+              "defined_instances": 146,
+              "mean": 0.35589802130898024
             },
             "50": {
-              "defined_instances": 1,
-              "mean": 0.0
+              "defined_instances": 146,
+              "mean": 0.4544792346162209
             }
           },
           "file_recall": {
             "1": {
-              "defined_instances": 1,
-              "mean": 0.0
+              "defined_instances": 152,
+              "mean": 0.35657894736842105
             },
             "5": {
-              "defined_instances": 1,
-              "mean": 0.0
+              "defined_instances": 152,
+              "mean": 0.6018640350877194
             },
             "10": {
-              "defined_instances": 1,
-              "mean": 0.0
+              "defined_instances": 152,
+              "mean": 0.7169956140350877
             },
             "20": {
-              "defined_instances": 1,
-              "mean": 0.0
+              "defined_instances": 152,
+              "mean": 0.780811403508772
             },
             "50": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 152,
+              "mean": 0.8104166666666667
             }
           }
         },
         "embedding_exact": {
-          "defined_instances": 1,
-          "mean_function_recall10": 1.0,
+          "defined_instances": 146,
+          "mean_function_recall10": 0.2343226788432268,
           "function_recall": {
             "1": {
-              "defined_instances": 1,
-              "mean": 0.0
+              "defined_instances": 146,
+              "mean": 0.0958904109589041
             },
             "5": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 146,
+              "mean": 0.20034246575342465
             },
             "10": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 146,
+              "mean": 0.2343226788432268
             },
             "20": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 146,
+              "mean": 0.2893455098934551
             },
             "50": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 146,
+              "mean": 0.39454772776690583
             }
           },
           "file_recall": {
             "1": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 152,
+              "mean": 0.3042763157894737
             },
             "5": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 152,
+              "mean": 0.6235745614035088
             },
             "10": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 152,
+              "mean": 0.6841008771929824
             },
             "20": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 152,
+              "mean": 0.7383771929824562
             },
             "50": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 152,
+              "mean": 0.7449561403508772
             }
           }
         },
         "repo_map_style": {
-          "defined_instances": 1,
-          "mean_function_recall10": 1.0,
+          "defined_instances": 146,
+          "mean_function_recall10": 0.0091324200913242,
           "function_recall": {
             "1": {
-              "defined_instances": 1,
+              "defined_instances": 146,
               "mean": 0.0
             },
             "5": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 146,
+              "mean": 0.0091324200913242
             },
             "10": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 146,
+              "mean": 0.0091324200913242
             },
             "20": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 146,
+              "mean": 0.0091324200913242
             },
             "50": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 146,
+              "mean": 0.02359208523592085
             }
           },
           "file_recall": {
             "1": {
-              "defined_instances": 1,
-              "mean": 0.0
+              "defined_instances": 152,
+              "mean": 0.01644736842105263
             },
             "5": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 152,
+              "mean": 0.06907894736842106
             },
             "10": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 152,
+              "mean": 0.12828947368421054
             },
             "20": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 152,
+              "mean": 0.25
             },
             "50": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 152,
+              "mean": 0.33980263157894736
             }
           }
         },
         "full": {
-          "defined_instances": 1,
-          "mean_function_recall10": 1.0,
+          "defined_instances": 146,
+          "mean_function_recall10": 0.33564361817786476,
           "function_recall": {
             "1": {
-              "defined_instances": 1,
-              "mean": 0.0
+              "defined_instances": 146,
+              "mean": 0.030251141552511414
             },
             "5": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 146,
+              "mean": 0.22165144596651445
             },
             "10": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 146,
+              "mean": 0.33564361817786476
             },
             "20": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 146,
+              "mean": 0.4139541204609698
             },
             "50": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 146,
+              "mean": 0.5381550337029789
             }
           },
           "file_recall": {
             "1": {
-              "defined_instances": 1,
-              "mean": 0.0
+              "defined_instances": 152,
+              "mean": 0.3582236842105263
             },
             "5": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 152,
+              "mean": 0.6674342105263158
             },
             "10": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 152,
+              "mean": 0.7783991228070175
             },
             "20": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 152,
+              "mean": 0.8668859649122806
             },
             "50": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 152,
+              "mean": 0.9145833333333333
             }
           },
           "budget_coverage": {
             "4096": {
-              "defined_instances": 1,
-              "mean_recall": 1.0,
-              "mean_tokens": 3996
+              "defined_instances": 146,
+              "mean_recall": 0.3996847140682757,
+              "mean_tokens": 3962.6513157894738
             },
             "8192": {
-              "defined_instances": 1,
-              "mean_recall": 1.0,
-              "mean_tokens": 7889
+              "defined_instances": 146,
+              "mean_recall": 0.4915796912372255,
+              "mean_tokens": 7758.046052631579
             },
             "16384": {
-              "defined_instances": 1,
-              "mean_recall": 1.0,
-              "mean_tokens": 12236
+              "defined_instances": 146,
+              "mean_recall": 0.5292509241139378,
+              "mean_tokens": 14666.75
             }
           }
         },
         "no_vector": {
-          "defined_instances": 1,
-          "mean_function_recall10": 0.0,
+          "defined_instances": 146,
+          "mean_function_recall10": 0.2465753424657534,
           "function_recall": {
             "1": {
-              "defined_instances": 1,
-              "mean": 0.0
+              "defined_instances": 146,
+              "mean": 0.03767123287671233
             },
             "5": {
-              "defined_instances": 1,
-              "mean": 0.0
+              "defined_instances": 146,
+              "mean": 0.1780821917808219
             },
             "10": {
-              "defined_instances": 1,
-              "mean": 0.0
+              "defined_instances": 146,
+              "mean": 0.2465753424657534
             },
             "20": {
-              "defined_instances": 1,
-              "mean": 0.0
+              "defined_instances": 146,
+              "mean": 0.36760708849749946
             },
             "50": {
-              "defined_instances": 1,
-              "mean": 0.0
+              "defined_instances": 146,
+              "mean": 0.4544792346162209
             }
           },
           "file_recall": {
             "1": {
-              "defined_instances": 1,
-              "mean": 0.0
+              "defined_instances": 152,
+              "mean": 0.30723684210526314
             },
             "5": {
-              "defined_instances": 1,
-              "mean": 0.0
+              "defined_instances": 152,
+              "mean": 0.6018640350877194
             },
             "10": {
-              "defined_instances": 1,
-              "mean": 0.0
+              "defined_instances": 152,
+              "mean": 0.7137061403508772
             },
             "20": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 152,
+              "mean": 0.8071271929824562
             },
             "50": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 152,
+              "mean": 0.8663377192982457
             }
           },
           "budget_coverage": {
             "4096": {
-              "defined_instances": 1,
-              "mean_recall": 0.0,
-              "mean_tokens": 3973
+              "defined_instances": 146,
+              "mean_recall": 0.39911393781256793,
+              "mean_tokens": 3876
             },
             "8192": {
-              "defined_instances": 1,
-              "mean_recall": 0.0,
-              "mean_tokens": 7909
+              "defined_instances": 146,
+              "mean_recall": 0.40824635790389213,
+              "mean_tokens": 7687.4473684210525
             },
             "16384": {
-              "defined_instances": 1,
-              "mean_recall": 0.0,
-              "mean_tokens": 15235
+              "defined_instances": 146,
+              "mean_recall": 0.4407806044792346,
+              "mean_tokens": 15084.848684210527
             }
           }
         },
         "no_graph": {
-          "defined_instances": 1,
-          "mean_function_recall10": 0.0,
+          "defined_instances": 146,
+          "mean_function_recall10": 0.3398021308980213,
           "function_recall": {
             "1": {
-              "defined_instances": 1,
-              "mean": 0.0
+              "defined_instances": 146,
+              "mean": 0.0852359208523592
             },
             "5": {
-              "defined_instances": 1,
-              "mean": 0.0
+              "defined_instances": 146,
+              "mean": 0.2182267884322679
             },
             "10": {
-              "defined_instances": 1,
-              "mean": 0.0
+              "defined_instances": 146,
+              "mean": 0.3398021308980213
             },
             "20": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 146,
+              "mean": 0.40368014785823003
             },
             "50": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 146,
+              "mean": 0.5221732985431615
             }
           },
           "file_recall": {
             "1": {
-              "defined_instances": 1,
-              "mean": 0.0
+              "defined_instances": 152,
+              "mean": 0.3549342105263158
             },
             "5": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 152,
+              "mean": 0.6641447368421053
             },
             "10": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 152,
+              "mean": 0.768530701754386
             },
             "20": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 152,
+              "mean": 0.8537280701754386
             },
             "50": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 152,
+              "mean": 0.9030701754385965
             }
           },
           "budget_coverage": {
             "4096": {
-              "defined_instances": 1,
-              "mean_recall": 1.0,
-              "mean_tokens": 4070
+              "defined_instances": 146,
+              "mean_recall": 0.3686344857577734,
+              "mean_tokens": 3966.309210526316
             },
             "8192": {
-              "defined_instances": 1,
-              "mean_recall": 1.0,
-              "mean_tokens": 7913
+              "defined_instances": 146,
+              "mean_recall": 0.4833605131550337,
+              "mean_tokens": 7809.4671052631575
             },
             "16384": {
-              "defined_instances": 1,
-              "mean_recall": 1.0,
-              "mean_tokens": 14661
+              "defined_instances": 146,
+              "mean_recall": 0.5210317460317461,
+              "mean_tokens": 14749.723684210527
             }
           }
         },
         "greedy": {
-          "defined_instances": 1,
-          "mean_function_recall10": 1.0,
+          "defined_instances": 146,
+          "mean_function_recall10": 0.33564361817786476,
           "function_recall": {
             "1": {
-              "defined_instances": 1,
-              "mean": 0.0
+              "defined_instances": 146,
+              "mean": 0.030251141552511414
             },
             "5": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 146,
+              "mean": 0.22165144596651445
             },
             "10": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 146,
+              "mean": 0.33564361817786476
             },
             "20": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 146,
+              "mean": 0.4139541204609698
             },
             "50": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 146,
+              "mean": 0.5381550337029789
             }
           },
           "file_recall": {
             "1": {
-              "defined_instances": 1,
-              "mean": 0.0
+              "defined_instances": 152,
+              "mean": 0.3582236842105263
             },
             "5": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 152,
+              "mean": 0.6674342105263158
             },
             "10": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 152,
+              "mean": 0.7783991228070175
             },
             "20": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 152,
+              "mean": 0.8668859649122806
             },
             "50": {
-              "defined_instances": 1,
-              "mean": 1.0
+              "defined_instances": 152,
+              "mean": 0.9145833333333333
             }
           },
           "budget_coverage": {
             "4096": {
-              "defined_instances": 1,
-              "mean_recall": 1.0,
-              "mean_tokens": 3996
+              "defined_instances": 146,
+              "mean_recall": 0.39740160904544464,
+              "mean_tokens": 3968.0723684210525
             },
             "8192": {
-              "defined_instances": 1,
-              "mean_recall": 1.0,
-              "mean_tokens": 8174
+              "defined_instances": 146,
+              "mean_recall": 0.4915796912372255,
+              "mean_tokens": 7800.723684210527
             },
             "16384": {
-              "defined_instances": 1,
-              "mean_recall": 1.0,
-              "mean_tokens": 12781
+              "defined_instances": 146,
+              "mean_recall": 0.5224016090454446,
+              "mean_tokens": 14790.223684210527
             }
           }
         }
       },
       "full_rank_latency_seconds": {
-        "p50": 0.49393530000088504,
-        "p95": 0.49393530000088504
+        "p50": 47.83356415000162,
+        "p95": 89.23927891000167
       },
       "query_latency_seconds": {
         "grep": {
-          "n": 1,
-          "p50": 0.10488169999734964,
-          "p95": 0.10488169999734964
+          "n": 152,
+          "p50": 1.6856393000016396,
+          "p95": 4.53241810999825
         },
         "bm25": {
-          "n": 1,
-          "p50": 0.01549209999939194,
-          "p95": 0.01549209999939194
+          "n": 152,
+          "p50": 0.3639113499993982,
+          "p95": 0.8554797049975602
         },
         "embedding_exact": {
-          "n": 1,
-          "p50": 0.0037043000011180993,
-          "p95": 0.0037043000011180993
+          "n": 152,
+          "p50": 0.18164009999964037,
+          "p95": 0.8419488099985734
         },
         "repo_map_style": {
-          "n": 1,
-          "p50": 0.3514491999994789,
-          "p95": 0.3514491999994789
+          "n": 152,
+          "p50": 26.19881494999572,
+          "p95": 43.577544955000846
         },
         "full": {
-          "n": 1,
-          "p50": 0.49393530000088504,
-          "p95": 0.49393530000088504
+          "n": 152,
+          "p50": 47.83356415000162,
+          "p95": 89.23927891000167
         },
         "full_pack_8192": {
-          "n": 1,
-          "p50": 3.462562500000786,
-          "p95": 3.462562500000786
+          "n": 152,
+          "p50": 5.098830650000309,
+          "p95": 7.832330625001121
         },
         "no_vector": {
-          "n": 1,
-          "p50": 0.4799146000004839,
-          "p95": 0.4799146000004839
+          "n": 152,
+          "p50": 46.9494379500029,
+          "p95": 89.07482399999789
         },
         "no_vector_pack_8192": {
-          "n": 1,
-          "p50": 3.836291399999027,
-          "p95": 3.836291399999027
+          "n": 152,
+          "p50": 5.128244849998737,
+          "p95": 7.136359250001623
         },
         "no_graph": {
-          "n": 1,
-          "p50": 0.046268799997051246,
-          "p95": 0.046268799997051246
+          "n": 152,
+          "p50": 0.653715700002067,
+          "p95": 1.3548880350008399
         },
         "no_graph_pack_8192": {
-          "n": 1,
-          "p50": 3.300884099997347,
-          "p95": 3.300884099997347
+          "n": 152,
+          "p50": 5.474829199996748,
+          "p95": 7.759182009998766
         },
         "greedy": {
-          "n": 1,
-          "p50": 0.5045113999985915,
-          "p95": 0.5045113999985915
+          "n": 152,
+          "p50": 0.1754160500022408,
+          "p95": 0.43147887999948503
         },
         "greedy_pack_8192": {
-          "n": 1,
-          "p50": 0.7153304999992542,
-          "p95": 0.7153304999992542
+          "n": 152,
+          "p50": 0.28378705000068294,
+          "p95": 0.5399901149987272
         }
       },
       "index_seconds": {
-        "n": 1,
-        "p50": 7.520147800001723,
-        "p95": 7.520147800001723
+        "n": 152,
+        "p50": 79.48943979999603,
+        "p95": 170.67352337499938
       },
-      "retrieval_misses_full_recall10_zero": [],
+      "retrieval_misses_full_recall10_zero": [
+        {
+          "evaluation_id": "astropy__astropy-14598-e136a95c56378598",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "astropy__astropy-14508-d1db667b7f96ab0b",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "astropy__astropy-14309-c0b6a4af80a6ab69",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-12325-bb7f8493f13f58a4",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.5,
+          "bm25_function_recall10": 0.5
+        },
+        {
+          "evaluation_id": "django__django-13128-988352a85b59e02d",
+          "gold_functions": 3,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-15104-511d2fcc9b474526",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-16229-9e7c74fc5f1fb3bb",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-10554-b08acda5fb738d72",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.5,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-13710-e4a912e2ab5f0c99",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-16820-ff24ecfc09f9d0d8",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-14792-06d607d706262519",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-15037-d6df2eb58131b538",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 1.0
+        },
+        {
+          "evaluation_id": "django__django-14011-f7ea0905c5dc1e46",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.5,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-11292-0f955efef5d9d67c",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-13212-03fc61022a59e5ab",
+          "gold_functions": 10,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-7530-a0b99f0f2dd695b1",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-15252-1e668afe84b6deba",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-12908-2dc5e7ab2505299a",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-12304-eca93c53e671cb65",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-14730-72d308a998cf06fc",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-12209-ebad106f3c42a5e2",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-11630-d219de7cc665267e",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-12262-c2089856a3a778f3",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 1.0
+        },
+        {
+          "evaluation_id": "django__django-14667-d91d8a05908d6e00",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-15380-dee6c40955038239",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-13028-aaf7eb0a10841b8b",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-11087-f2a2e68138348801",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-12856-5f0826510fac2bd3",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-11999-1d949690614ce273",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-15503-afd10286ecf1de9b",
+          "gold_functions": 4,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-14915-64f8e394ede7c68e",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-12273-71a617153694f179",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-13512-6f73d6b56ebd0789",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.5,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "matplotlib__matplotlib-26342-ebcd5532a345b60d",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "matplotlib__matplotlib-23476-9fd376db7b4ff3f5",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "matplotlib__matplotlib-24177-3041748e1ce71bc0",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "matplotlib__matplotlib-25479-0bad08261e50c1a3",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "matplotlib__matplotlib-23314-a4e804e0e87e2314",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "matplotlib__matplotlib-24627-84c158fcf88cb6a4",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "matplotlib__matplotlib-21568-c984b9490cd19e5d",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "mwaskom__seaborn-3069-cb4272390a1ed3d4",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pydata__xarray-6599-bea38ca90c57cea5",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pydata__xarray-6744-43a7d0d1db016f45",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pydata__xarray-4687-d919d2b9f65b61bc",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pydata__xarray-5131-abd53c1bf0110a74",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pytest-dev__pytest-7168-3b1cd54b548c74ed",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pytest-dev__pytest-7220-ced9573001124f7f",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "scikit-learn__scikit-learn-10844-70b78759e85d0875",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 1.0
+        },
+        {
+          "evaluation_id": "scikit-learn__scikit-learn-13584-ce88f61d8d9e96a6",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "scikit-learn__scikit-learn-25570-4bef2f33c94e5738",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "scikit-learn__scikit-learn-25931-25b97d9684359c05",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "scikit-learn__scikit-learn-25102-64b25892dceab0d9",
+          "gold_functions": 3,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-9258-38ab2bee00e41cbd",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-8593-f7de7cb76611fbc2",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-7757-76cbe8d64730f0b9",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-10449-0f152473af5857f2",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-9230-33d04d425379c105",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-11510-83a62b561404949b",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-7440-24a7f1cefcf04eca",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-7454-aef0626920c7c0ac",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-8548-c816d55a0491bff6",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-8056-e9273dbf689ec01d",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-8506-d299d8d139fb462c",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-16106-f2353f3e3c293d82",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-20442-df6a0b355104d327",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-13031-3924ee62213d10ba",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-20438-b5f8e6b5c97d755a",
+          "gold_functions": 3,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.6666666666666666,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-13471-681627bd3823a1e9",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-18698-a53a05423249aff9",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-19783-b8a72e0ca7bea090",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-17630-ab35ca75de8e7b1f",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-18057-c5f8e7718f916f78",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-13437-a6a9286e1df23aa8",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-15017-8ba561e4f9af931e",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-13773-b2f6a196c0251a45",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-19346-17fad3b5e651b29f",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-20212-e69666629a84c6cf",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-21171-4018bf67ddbfe893",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-24562-8120b76616351e4f",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-18211-b8f8e24ab2f431b6",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-14711-7182999af27ac002",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-12236-a302968edb439766",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-20801-bf384b9a032b1431",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-11897-d0322e44e7cefa0e",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-14396-cdf4f02e09a6eca0",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 1.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-17655-6828526e80f88c9d",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-23191-356f670ff2c2899c",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-14308-b05430dbf6b1237c",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-14317-8a12d6483646929c",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        }
+      ],
       "paired_full_minus_bm25": {
-        "paired_instances": 1,
-        "mean_difference": 1.0,
+        "paired_instances": 146,
+        "mean_difference": 0.09591759078060447,
         "interval95": [
-          1.0,
-          1.0
+          0.036959121548162645,
+          0.15680107088497497
         ],
         "bootstrap_samples": 2000,
         "seed": 0
       },
       "paired_full_minus_embedding": {
-        "paired_instances": 1,
-        "mean_difference": 0.0,
+        "paired_instances": 146,
+        "mean_difference": 0.10132093933463795,
         "interval95": [
-          0.0,
-          0.0
+          0.04298312133072407,
+          0.16423189823874748
         ],
         "bootstrap_samples": 2000,
         "seed": 0
       }
     },
     "held_out": {
-      "instances": 15,
+      "instances": 546,
       "methods": {
         "grep": {
-          "defined_instances": 15,
+          "defined_instances": 516,
           "mean_function_recall10": 0.0,
           "function_recall": {
             "1": {
-              "defined_instances": 15,
+              "defined_instances": 516,
               "mean": 0.0
             },
             "5": {
-              "defined_instances": 15,
+              "defined_instances": 516,
               "mean": 0.0
             },
             "10": {
-              "defined_instances": 15,
+              "defined_instances": 516,
               "mean": 0.0
             },
             "20": {
-              "defined_instances": 15,
+              "defined_instances": 516,
               "mean": 0.0
             },
             "50": {
-              "defined_instances": 15,
-              "mean": 0.13333333333333333
+              "defined_instances": 516,
+              "mean": 0.005813953488372093
             }
           },
           "file_recall": {
             "1": {
-              "defined_instances": 15,
-              "mean": 0.0
+              "defined_instances": 546,
+              "mean": 0.0115995115995116
             },
             "5": {
-              "defined_instances": 15,
-              "mean": 0.9333333333333333
+              "defined_instances": 546,
+              "mean": 0.11540641897784755
             },
             "10": {
-              "defined_instances": 15,
-              "mean": 1.0
+              "defined_instances": 546,
+              "mean": 0.20911826268969125
             },
             "20": {
-              "defined_instances": 15,
-              "mean": 1.0
+              "defined_instances": 546,
+              "mean": 0.35212803069945925
             },
             "50": {
-              "defined_instances": 15,
-              "mean": 1.0
+              "defined_instances": 546,
+              "mean": 0.4698238269666841
             }
           }
         },
         "bm25": {
-          "defined_instances": 15,
-          "mean_function_recall10": 0.3333333333333333,
+          "defined_instances": 516,
+          "mean_function_recall10": 0.2912180197063918,
           "function_recall": {
             "1": {
-              "defined_instances": 15,
-              "mean": 0.16666666666666666
+              "defined_instances": 516,
+              "mean": 0.11602067183462532
             },
             "5": {
-              "defined_instances": 15,
-              "mean": 0.16666666666666666
+              "defined_instances": 516,
+              "mean": 0.22671543572706362
             },
             "10": {
-              "defined_instances": 15,
-              "mean": 0.3333333333333333
+              "defined_instances": 516,
+              "mean": 0.2912180197063918
             },
             "20": {
-              "defined_instances": 15,
-              "mean": 0.3333333333333333
+              "defined_instances": 516,
+              "mean": 0.3606922792969305
             },
             "50": {
-              "defined_instances": 15,
-              "mean": 0.43333333333333335
+              "defined_instances": 516,
+              "mean": 0.45683938154868386
             }
           },
           "file_recall": {
             "1": {
-              "defined_instances": 15,
-              "mean": 0.4666666666666667
+              "defined_instances": 546,
+              "mean": 0.33577533577533575
             },
             "5": {
-              "defined_instances": 15,
-              "mean": 0.8666666666666667
+              "defined_instances": 546,
+              "mean": 0.608451072736787
             },
             "10": {
-              "defined_instances": 15,
-              "mean": 0.8666666666666667
+              "defined_instances": 546,
+              "mean": 0.711473050758765
             },
             "20": {
-              "defined_instances": 15,
-              "mean": 1.0
+              "defined_instances": 546,
+              "mean": 0.7917538810395953
             },
             "50": {
-              "defined_instances": 15,
-              "mean": 1.0
+              "defined_instances": 546,
+              "mean": 0.8364948543519972
             }
           }
         },
         "embedding_exact": {
-          "defined_instances": 15,
-          "mean_function_recall10": 0.3333333333333333,
+          "defined_instances": 516,
+          "mean_function_recall10": 0.3316047647442996,
           "function_recall": {
             "1": {
-              "defined_instances": 15,
-              "mean": 0.26666666666666666
+              "defined_instances": 516,
+              "mean": 0.10790953232813698
             },
             "5": {
-              "defined_instances": 15,
-              "mean": 0.3333333333333333
+              "defined_instances": 516,
+              "mean": 0.24466788056904337
             },
             "10": {
-              "defined_instances": 15,
-              "mean": 0.3333333333333333
+              "defined_instances": 516,
+              "mean": 0.3316047647442996
             },
             "20": {
-              "defined_instances": 15,
-              "mean": 0.43333333333333335
+              "defined_instances": 516,
+              "mean": 0.39949882159184485
             },
             "50": {
-              "defined_instances": 15,
-              "mean": 0.4666666666666667
+              "defined_instances": 516,
+              "mean": 0.5082433554817276
             }
           },
           "file_recall": {
             "1": {
-              "defined_instances": 15,
-              "mean": 0.4
+              "defined_instances": 546,
+              "mean": 0.27267573696145125
             },
             "5": {
-              "defined_instances": 15,
-              "mean": 0.7333333333333333
+              "defined_instances": 546,
+              "mean": 0.5996860282574569
             },
             "10": {
-              "defined_instances": 15,
-              "mean": 0.8
+              "defined_instances": 546,
+              "mean": 0.7027952206523636
             },
             "20": {
-              "defined_instances": 15,
-              "mean": 0.8
+              "defined_instances": 546,
+              "mean": 0.7781484388627246
             },
             "50": {
-              "defined_instances": 15,
-              "mean": 0.8
+              "defined_instances": 546,
+              "mean": 0.8007369614512472
             }
           }
         },
         "repo_map_style": {
-          "defined_instances": 15,
-          "mean_function_recall10": 0.06666666666666667,
+          "defined_instances": 516,
+          "mean_function_recall10": 0.01065891472868217,
           "function_recall": {
             "1": {
-              "defined_instances": 15,
-              "mean": 0.0
+              "defined_instances": 516,
+              "mean": 0.001937984496124031
             },
             "5": {
-              "defined_instances": 15,
-              "mean": 0.0
+              "defined_instances": 516,
+              "mean": 0.003875968992248062
             },
             "10": {
-              "defined_instances": 15,
-              "mean": 0.06666666666666667
+              "defined_instances": 516,
+              "mean": 0.01065891472868217
             },
             "20": {
-              "defined_instances": 15,
-              "mean": 0.06666666666666667
+              "defined_instances": 516,
+              "mean": 0.01308139534883721
             },
             "50": {
-              "defined_instances": 15,
-              "mean": 0.3333333333333333
+              "defined_instances": 516,
+              "mean": 0.035771963824289404
             }
           },
           "file_recall": {
             "1": {
-              "defined_instances": 15,
-              "mean": 0.06666666666666667
+              "defined_instances": 546,
+              "mean": 0.02442002442002442
             },
             "5": {
-              "defined_instances": 15,
-              "mean": 0.3333333333333333
+              "defined_instances": 546,
+              "mean": 0.08180708180708181
             },
             "10": {
-              "defined_instances": 15,
-              "mean": 0.5333333333333333
+              "defined_instances": 546,
+              "mean": 0.15203645560788417
             },
             "20": {
-              "defined_instances": 15,
-              "mean": 0.7333333333333333
+              "defined_instances": 546,
+              "mean": 0.26613465899180183
             },
             "50": {
-              "defined_instances": 15,
-              "mean": 0.7333333333333333
+              "defined_instances": 546,
+              "mean": 0.3432975754404326
             }
           }
         },
         "full": {
-          "defined_instances": 15,
-          "mean_function_recall10": 0.26666666666666666,
+          "defined_instances": 516,
+          "mean_function_recall10": 0.35451770451770453,
           "function_recall": {
             "1": {
-              "defined_instances": 15,
-              "mean": 0.0
+              "defined_instances": 516,
+              "mean": 0.09958613737683505
             },
             "5": {
-              "defined_instances": 15,
-              "mean": 0.23333333333333334
+              "defined_instances": 516,
+              "mean": 0.28618458414970044
             },
             "10": {
-              "defined_instances": 15,
-              "mean": 0.26666666666666666
+              "defined_instances": 516,
+              "mean": 0.35451770451770453
             },
             "20": {
-              "defined_instances": 15,
-              "mean": 0.3
+              "defined_instances": 516,
+              "mean": 0.48717647017065624
             },
             "50": {
-              "defined_instances": 15,
-              "mean": 0.5666666666666667
+              "defined_instances": 516,
+              "mean": 0.5789860010790243
             }
           },
           "file_recall": {
             "1": {
-              "defined_instances": 15,
-              "mean": 0.2
+              "defined_instances": 546,
+              "mean": 0.3508198151055294
             },
             "5": {
-              "defined_instances": 15,
-              "mean": 0.8
+              "defined_instances": 546,
+              "mean": 0.7018576661433804
             },
             "10": {
-              "defined_instances": 15,
-              "mean": 0.9333333333333333
+              "defined_instances": 546,
+              "mean": 0.8009113901971044
             },
             "20": {
-              "defined_instances": 15,
-              "mean": 1.0
+              "defined_instances": 546,
+              "mean": 0.8483124018838305
             },
             "50": {
-              "defined_instances": 15,
-              "mean": 1.0
+              "defined_instances": 546,
+              "mean": 0.9211582068724926
             }
           },
           "budget_coverage": {
             "4096": {
-              "defined_instances": 15,
-              "mean_recall": 0.43333333333333335,
-              "mean_tokens": 3921.2
+              "defined_instances": 516,
+              "mean_recall": 0.4474118205222856,
+              "mean_tokens": 3972.9725274725274
             },
             "8192": {
-              "defined_instances": 15,
-              "mean_recall": 0.5666666666666667,
-              "mean_tokens": 7842.266666666666
+              "defined_instances": 516,
+              "mean_recall": 0.5461996928566696,
+              "mean_tokens": 7768.391941391941
             },
             "16384": {
-              "defined_instances": 15,
-              "mean_recall": 0.5666666666666667,
-              "mean_tokens": 14685
+              "defined_instances": 516,
+              "mean_recall": 0.5895690173306453,
+              "mean_tokens": 14644.846153846154
             }
           }
         },
         "no_vector": {
-          "defined_instances": 15,
-          "mean_function_recall10": 0.26666666666666666,
+          "defined_instances": 516,
+          "mean_function_recall10": 0.27258106880199906,
           "function_recall": {
             "1": {
-              "defined_instances": 15,
-              "mean": 0.06666666666666667
+              "defined_instances": 516,
+              "mean": 0.050132925859670045
             },
             "5": {
-              "defined_instances": 15,
-              "mean": 0.16666666666666666
+              "defined_instances": 516,
+              "mean": 0.1956331459238436
             },
             "10": {
-              "defined_instances": 15,
-              "mean": 0.26666666666666666
+              "defined_instances": 516,
+              "mean": 0.27258106880199906
             },
             "20": {
-              "defined_instances": 15,
-              "mean": 0.3333333333333333
+              "defined_instances": 516,
+              "mean": 0.3623072663770338
             },
             "50": {
-              "defined_instances": 15,
-              "mean": 0.43333333333333335
+              "defined_instances": 516,
+              "mean": 0.45683938154868386
             }
           },
           "file_recall": {
             "1": {
-              "defined_instances": 15,
-              "mean": 0.26666666666666666
+              "defined_instances": 546,
+              "mean": 0.30006105006105005
             },
             "5": {
-              "defined_instances": 15,
-              "mean": 0.8666666666666667
+              "defined_instances": 546,
+              "mean": 0.6220347113204256
             },
             "10": {
-              "defined_instances": 15,
-              "mean": 0.9333333333333333
+              "defined_instances": 546,
+              "mean": 0.7149834292691436
             },
             "20": {
-              "defined_instances": 15,
-              "mean": 1.0
+              "defined_instances": 546,
+              "mean": 0.7999956392813535
             },
             "50": {
-              "defined_instances": 15,
-              "mean": 1.0
+              "defined_instances": 546,
+              "mean": 0.8906113727542299
             }
           },
           "budget_coverage": {
             "4096": {
-              "defined_instances": 15,
-              "mean_recall": 0.26666666666666666,
-              "mean_tokens": 3904.4
+              "defined_instances": 516,
+              "mean_recall": 0.376384038011945,
+              "mean_tokens": 3869.3443223443223
             },
             "8192": {
-              "defined_instances": 15,
-              "mean_recall": 0.4,
-              "mean_tokens": 7838.133333333333
+              "defined_instances": 516,
+              "mean_recall": 0.4229478424245866,
+              "mean_tokens": 7684.128205128205
             },
             "16384": {
-              "defined_instances": 15,
-              "mean_recall": 0.43333333333333335,
-              "mean_tokens": 15321
+              "defined_instances": 516,
+              "mean_recall": 0.4641300129672223,
+              "mean_tokens": 15032.906593406593
             }
           }
         },
         "no_graph": {
-          "defined_instances": 15,
-          "mean_function_recall10": 0.26666666666666666,
+          "defined_instances": 516,
+          "mean_function_recall10": 0.3852832083936735,
           "function_recall": {
             "1": {
-              "defined_instances": 15,
-              "mean": 0.2
+              "defined_instances": 516,
+              "mean": 0.12404698015163132
             },
             "5": {
-              "defined_instances": 15,
-              "mean": 0.26666666666666666
+              "defined_instances": 516,
+              "mean": 0.3045792869920777
             },
             "10": {
-              "defined_instances": 15,
-              "mean": 0.26666666666666666
+              "defined_instances": 516,
+              "mean": 0.3852832083936735
             },
             "20": {
-              "defined_instances": 15,
-              "mean": 0.43333333333333335
+              "defined_instances": 516,
+              "mean": 0.48721799840985885
             },
             "50": {
-              "defined_instances": 15,
-              "mean": 0.5666666666666667
+              "defined_instances": 516,
+              "mean": 0.5618993786144949
             }
           },
           "file_recall": {
             "1": {
-              "defined_instances": 15,
-              "mean": 0.4
+              "defined_instances": 546,
+              "mean": 0.35707744636316063
             },
             "5": {
-              "defined_instances": 15,
-              "mean": 0.8666666666666667
+              "defined_instances": 546,
+              "mean": 0.6821690214547358
             },
             "10": {
-              "defined_instances": 15,
-              "mean": 0.9333333333333333
+              "defined_instances": 546,
+              "mean": 0.7840572126286413
             },
             "20": {
-              "defined_instances": 15,
-              "mean": 0.9333333333333333
+              "defined_instances": 546,
+              "mean": 0.8473966509680796
             },
             "50": {
-              "defined_instances": 15,
-              "mean": 1.0
+              "defined_instances": 546,
+              "mean": 0.9162742019884877
             }
           },
           "budget_coverage": {
             "4096": {
-              "defined_instances": 15,
-              "mean_recall": 0.4,
-              "mean_tokens": 3893.6666666666665
+              "defined_instances": 516,
+              "mean_recall": 0.4368797976356116,
+              "mean_tokens": 3977.7545787545787
             },
             "8192": {
-              "defined_instances": 15,
-              "mean_recall": 0.6333333333333333,
-              "mean_tokens": 7784.933333333333
+              "defined_instances": 516,
+              "mean_recall": 0.5261392461973857,
+              "mean_tokens": 7789.84249084249
             },
             "16384": {
-              "defined_instances": 15,
-              "mean_recall": 0.6333333333333333,
-              "mean_tokens": 15087.2
+              "defined_instances": 516,
+              "mean_recall": 0.5850585891283566,
+              "mean_tokens": 14723.884615384615
             }
           }
         },
         "greedy": {
-          "defined_instances": 15,
-          "mean_function_recall10": 0.26666666666666666,
+          "defined_instances": 516,
+          "mean_function_recall10": 0.35451770451770453,
           "function_recall": {
             "1": {
-              "defined_instances": 15,
-              "mean": 0.0
+              "defined_instances": 516,
+              "mean": 0.09958613737683505
             },
             "5": {
-              "defined_instances": 15,
-              "mean": 0.23333333333333334
+              "defined_instances": 516,
+              "mean": 0.28618458414970044
             },
             "10": {
-              "defined_instances": 15,
-              "mean": 0.26666666666666666
+              "defined_instances": 516,
+              "mean": 0.35451770451770453
             },
             "20": {
-              "defined_instances": 15,
-              "mean": 0.3
+              "defined_instances": 516,
+              "mean": 0.48717647017065624
             },
             "50": {
-              "defined_instances": 15,
-              "mean": 0.5666666666666667
+              "defined_instances": 516,
+              "mean": 0.5789860010790243
             }
           },
           "file_recall": {
             "1": {
-              "defined_instances": 15,
-              "mean": 0.2
+              "defined_instances": 546,
+              "mean": 0.3508198151055294
             },
             "5": {
-              "defined_instances": 15,
-              "mean": 0.8
+              "defined_instances": 546,
+              "mean": 0.7018576661433804
             },
             "10": {
-              "defined_instances": 15,
-              "mean": 0.9333333333333333
+              "defined_instances": 546,
+              "mean": 0.8009113901971044
             },
             "20": {
-              "defined_instances": 15,
-              "mean": 1.0
+              "defined_instances": 546,
+              "mean": 0.8483124018838305
             },
             "50": {
-              "defined_instances": 15,
-              "mean": 1.0
+              "defined_instances": 546,
+              "mean": 0.9211582068724926
             }
           },
           "budget_coverage": {
             "4096": {
-              "defined_instances": 15,
-              "mean_recall": 0.43333333333333335,
-              "mean_tokens": 3946.266666666667
+              "defined_instances": 516,
+              "mean_recall": 0.4516107869305544,
+              "mean_tokens": 3980.532967032967
             },
             "8192": {
-              "defined_instances": 15,
-              "mean_recall": 0.5666666666666667,
-              "mean_tokens": 7817.066666666667
+              "defined_instances": 516,
+              "mean_recall": 0.5432927161124835,
+              "mean_tokens": 7794.038461538462
             },
             "16384": {
-              "defined_instances": 15,
-              "mean_recall": 0.5666666666666667,
-              "mean_tokens": 14752.133333333333
+              "defined_instances": 516,
+              "mean_recall": 0.5915070018267693,
+              "mean_tokens": 14746.58424908425
             }
           }
         }
       },
       "full_rank_latency_seconds": {
-        "p50": 0.6424846000008984,
-        "p95": 1.9966470999992447
+        "p50": 44.74265904999993,
+        "p95": 76.0113589499997
       },
       "query_latency_seconds": {
         "grep": {
-          "n": 15,
-          "p50": 0.10547800000131247,
-          "p95": 0.24485258000022433
+          "n": 546,
+          "p50": 1.6579977500005043,
+          "p95": 5.225115149998601
         },
         "bm25": {
-          "n": 15,
-          "p50": 0.024000299999897834,
-          "p95": 0.05487761000040334
+          "n": 546,
+          "p50": 0.3545316499985347,
+          "p95": 0.873675099997854
         },
         "embedding_exact": {
-          "n": 15,
-          "p50": 0.006242700001166668,
-          "p95": 0.28714785999945847
+          "n": 546,
+          "p50": 0.19139009999707923,
+          "p95": 0.5985824750005122
         },
         "repo_map_style": {
-          "n": 15,
-          "p50": 0.5462649000000965,
-          "p95": 1.8751794500003598
+          "n": 546,
+          "p50": 23.765159100003075,
+          "p95": 40.86547002500447
         },
         "full": {
-          "n": 15,
-          "p50": 0.6424846000008984,
-          "p95": 1.9966470999992447
+          "n": 546,
+          "p50": 44.74265904999993,
+          "p95": 76.0113589499997
         },
         "full_pack_8192": {
-          "n": 15,
-          "p50": 4.276926899998216,
-          "p95": 6.887976260000866
+          "n": 546,
+          "p50": 4.997172549999959,
+          "p95": 7.425734774999
         },
         "no_vector": {
-          "n": 15,
-          "p50": 0.6384370999985549,
-          "p95": 1.7595202299984518
+          "n": 546,
+          "p50": 44.69378534999851,
+          "p95": 75.00715245000174
         },
         "no_vector_pack_8192": {
-          "n": 15,
-          "p50": 4.011757600001147,
-          "p95": 6.097748609999324
+          "n": 546,
+          "p50": 5.099211050001031,
+          "p95": 7.1748478500012425
         },
         "no_graph": {
-          "n": 15,
-          "p50": 0.0635394000019005,
-          "p95": 0.1552099399992585
+          "n": 546,
+          "p50": 0.6455760000026203,
+          "p95": 1.351840675002677
         },
         "no_graph_pack_8192": {
-          "n": 15,
-          "p50": 3.3089021000014327,
-          "p95": 7.970558440001694
+          "n": 546,
+          "p50": 4.9475162499984435,
+          "p95": 7.5339895249999245
         },
         "greedy": {
-          "n": 15,
-          "p50": 0.6665070999988529,
-          "p95": 1.7571157400008812
+          "n": 546,
+          "p50": 0.15355309999722522,
+          "p95": 0.33192362500085437
         },
         "greedy_pack_8192": {
-          "n": 15,
-          "p50": 0.8629900999985693,
-          "p95": 2.272019679999357
+          "n": 546,
+          "p50": 0.2779449499976181,
+          "p95": 0.6279705250035477
         }
       },
       "index_seconds": {
-        "n": 15,
-        "p50": 11.294726599997375,
-        "p95": 38.75072507000077
+        "n": 546,
+        "p50": 78.18250884999725,
+        "p95": 167.76714079999692
       },
       "retrieval_misses_full_recall10_zero": [
+        {
+          "evaluation_id": "astropy__astropy-13579-4ed2192eeb7cb0a8",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "astropy__astropy-13453-277529ea61625e18",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "astropy__astropy-14096-224b1d490f062435",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 1.0
+        },
+        {
+          "evaluation_id": "astropy__astropy-13033-9cb6a926ede0f372",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "astropy__astropy-13398-7ad00c8f6aa93849",
+          "gold_functions": 5,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.3333333333333333,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "astropy__astropy-13236-727aedb56782cb30",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 1.0
+        },
+        {
+          "evaluation_id": "astropy__astropy-7336-ecdcc6364572bed4",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 1.0
+        },
+        {
+          "evaluation_id": "astropy__astropy-14182-79bfbc5070cc0e21",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "astropy__astropy-8872-cf7a7f2dc0987d16",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "astropy__astropy-6938-b5d33cabf24d0fb7",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 1.0
+        },
+        {
+          "evaluation_id": "astropy__astropy-12907-bbd5228c9b438e04",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "astropy__astropy-14369-6c7ef283348e5df1",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-11740-c827f666c1b6ce6f",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-14672-6d91d86ffccee136",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-14170-e88a4de9151eeb78",
+          "gold_functions": 3,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-14034-50c059683ca97490",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-16667-50fd88be9586162c",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 1.0
+        },
+        {
+          "evaluation_id": "django__django-14351-782c5a3d42463bcb",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-13112-35e6ad2df6b17715",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-15268-d26cdd22ac04dcad",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-15278-9bcca9aa2374ed08",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-14725-2f8cc90474b79c59",
+          "gold_functions": 3,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-16400-72e1c2cbf9e13d59",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-16032-7e738d3a18ce3eaf",
+          "gold_functions": 3,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-14997-493136ad6e06a031",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-16662-6aa65016a3357ea1",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-14016-a0e8e1276366d3fe",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-12754-d3fe4623179d3c08",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-16136-2eb5856432218727",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-11265-a6ef7f718316a3db",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.5
+        },
+        {
+          "evaluation_id": "django__django-10924-874300cc96b6ccdc",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-15375-b361d479cf01c766",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-11820-61e0577ea469d28c",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 1.0
+        },
+        {
+          "evaluation_id": "django__django-13670-5139981a4e8839a3",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-15388-24b7af76d89a86cf",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-12284-6cf8eef8f1c1b6ad",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-11138-48d3dc388bdd97f1",
+          "gold_functions": 13,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.75,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-12747-8b78fca6827745ee",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-15732-7edc86e0f7905c5c",
+          "gold_functions": 5,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-14089-b2de7aec28f9fb49",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-14376-ae3d594759a700b4",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-16899-3621290030221fda",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-11039-c039870ad2e1a3ee",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 1.0
+        },
+        {
+          "evaluation_id": "django__django-16139-2187a966b53b0d74",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-16661-5e3f7f747ad682ad",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 1.0
+        },
+        {
+          "evaluation_id": "django__django-15499-6bd8b88cfbfa52db",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 1.0
+        },
+        {
+          "evaluation_id": "django__django-11422-0d281be2f7276f4d",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-15022-f5e51023cd2f8239",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-11477-5783d576030385a8",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 1.0
+        },
+        {
+          "evaluation_id": "django__django-13344-10b2f0b2eb1bbb5b",
+          "gold_functions": 5,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-13121-463c931c5e0eca51",
+          "gold_functions": 7,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-13343-b75b5a0b470617ab",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-13568-111889d922eed9d0",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 1.0
+        },
+        {
+          "evaluation_id": "django__django-16408-c5702de525b79829",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-15957-c4a0cc3ae31f9097",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-16950-9322e6ff1ec85193",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-17084-d680174ffa886821",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-12663-15d71229d46f449f",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-13109-fe674cbab702e451",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-16642-08fa92efe91bad24",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-16873-4736d5c237e3c887",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-13794-294e126508a46c38",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-11742-921c18c918e913cf",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-13012-0c6d77cff39b5a2c",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-16502-6380c96db7deafc5",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-15973-b1fd86aff2e68587",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-13449-f0e6d2e290324d30",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-12308-440ff7850f1992ee",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 1.0
+        },
+        {
+          "evaluation_id": "django__django-11905-f901613d3cc4bca4",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-14238-ab37aec5a007f272",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-11797-0148de2a4e058b2d",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-12406-0a263fe415e3629c",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-13321-e5d06395ac1b9712",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-14580-c55b5400da692d2e",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-13757-7e0afbe88230b56c",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-16910-fc9ca7498a0d8235",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-13933-b8c5d7df043c6eea",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-12965-de22988f6bfa7450",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-13401-182857225c689056",
+          "gold_functions": 3,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-17087-cb249171e2e1a72a",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-15202-77a1a0f8c43e53e7",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 1.0
+        },
+        {
+          "evaluation_id": "django__django-12143-d250cd7aae398122",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-11564-9027f364d628525c",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-16116-45832ad76ac5671f",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-12184-e822f61b7385cd71",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-15814-9fbf70dc37be326a",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-14007-cc0fbdcf2c9448cc",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-15930-3db31c14aaaacdb7",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-15315-73942d1442cd03f9",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-11299-5d6e24011de4e8d2",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-15561-1c311469e8d2f5b2",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.5,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-14539-834a695fe39ef6ea",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-15738-c1ed70d98798cd78",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-13363-c7b37233c18b142c",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-15382-4cba6516132a5c9a",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-13158-95b83078a96c9ccf",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-13448-192f2a21511d6651",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 1.0
+        },
+        {
+          "evaluation_id": "django__django-14608-8b0e7b5aad6c9668",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-9296-24170c4d9bae52e9",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-13406-c2383a2c7436432b",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-15819-929aaf685cb8864b",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-12589-58aa9d0aeb263e62",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-12125-717f01e0ce8cc3ac",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-14500-68458314033137ab",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-11555-8a381edfecbaa933",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-15731-e741887058c5d918",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-11019-513630148eb4ac9b",
+          "gold_functions": 3,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.3333333333333333
+        },
+        {
+          "evaluation_id": "django__django-15280-9fa6c82db0e8f940",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-11734-d8f6eef3977caa99",
+          "gold_functions": 3,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.3333333333333333,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-15563-ca3733a007bf440b",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.5,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-13033-c69bbd8af4ced44a",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-11490-a35869af20050131",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-14999-02f43743e5e5f806",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-13265-c4d64279d70f33d1",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.5
+        },
+        {
+          "evaluation_id": "django__django-15996-7c4df681dc47c348",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-15851-351fd63ca164498e",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-15320-e894cfefe74f878c",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-17051-928938cecf07fef1",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 1.0
+        },
+        {
+          "evaluation_id": "django__django-13516-e4540c5a01cf0c79",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "django__django-11211-b0fa95f69205310e",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "matplotlib__matplotlib-23563-afd36d5da87d0603",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "matplotlib__matplotlib-25960-57a66111da62a796",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "matplotlib__matplotlib-25775-ce5e98ceaefb0964",
+          "gold_functions": 7,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "matplotlib__matplotlib-23964-a17c0775a28f7169",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 1.0
+        },
+        {
+          "evaluation_id": "matplotlib__matplotlib-23562-01971485985979c1",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "matplotlib__matplotlib-24334-2f15721dbd9d05be",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "matplotlib__matplotlib-26466-0c3e33ed38cc4b67",
+          "gold_functions": 4,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "matplotlib__matplotlib-23299-4537f0580bc9c9e4",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "matplotlib__matplotlib-25311-a7003e340c293936",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "matplotlib__matplotlib-20859-61b91760f20ab47c",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "matplotlib__matplotlib-25332-b29f77146fe0aa11",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "matplotlib__matplotlib-25079-adfdb15c57bfaaac",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "matplotlib__matplotlib-20676-8266cc47eeb94415",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "matplotlib__matplotlib-25433-0ae12672054c83b9",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "matplotlib__matplotlib-24570-9df949d5ef0e7200",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "matplotlib__matplotlib-20826-0e4c2e5c3adffd82",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "matplotlib__matplotlib-22871-95d9f84cff027398",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "matplotlib__matplotlib-24637-a3ba52b61bf09a48",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "matplotlib__matplotlib-20488-e2f3afae63f8b955",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 1.0
+        },
+        {
+          "evaluation_id": "matplotlib__matplotlib-18869-134b66721b9dae23",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "matplotlib__matplotlib-22865-8a52cd2016cc9a8a",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "matplotlib__matplotlib-14623-82552518ac531162",
+          "gold_functions": 6,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.3333333333333333,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "matplotlib__matplotlib-23412-71d87bb60167b015",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "matplotlib__matplotlib-26208-89efaa02480d8cd1",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "matplotlib__matplotlib-26020-ade05aacd0710872",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "matplotlib__matplotlib-26291-bcee16518da3ba25",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "mwaskom__seaborn-3010-a0b927f8979e83e3",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "mwaskom__seaborn-3187-a9140022d3d20871",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "mwaskom__seaborn-3190-13f43c140b19ac2e",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 1.0
+        },
+        {
+          "evaluation_id": "mwaskom__seaborn-2848-790f277df31ace55",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
         {
           "evaluation_id": "pallets__flask-5063-b185d57040611f32",
           "gold_functions": 1,
@@ -1159,6 +2852,13 @@
         },
         {
           "evaluation_id": "psf__requests-2674-14aae37b35dd3338",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "psf__requests-1724-310774ff93e59729",
           "gold_functions": 1,
           "full_function_recall10": 0.0,
           "full_file_recall10": 1.0,
@@ -1198,24 +2898,1032 @@
           "full_function_recall10": 0.0,
           "full_file_recall10": 1.0,
           "bm25_function_recall10": 1.0
+        },
+        {
+          "evaluation_id": "pydata__xarray-3095-d81b1e924d4820d6",
+          "gold_functions": 8,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.5,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pydata__xarray-4075-220bf919bce329aa",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pydata__xarray-4966-0aeaec5c36dea018",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pydata__xarray-7229-11a3b882ce56b12b",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pydata__xarray-7393-54ebc6c9e4c03ac3",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pydata__xarray-6992-37eae6def3050c5d",
+          "gold_functions": 3,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.5,
+          "bm25_function_recall10": 0.3333333333333333
+        },
+        {
+          "evaluation_id": "pydata__xarray-4695-02fba912ff64174c",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pydata__xarray-2905-a9dc5f5ed0bbf348",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pydata__xarray-3993-609c9ac255ca6d2b",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pydata__xarray-4248-2df2925b8d06353d",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pydata__xarray-4629-859c7f19770ce3c0",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pydata__xarray-4493-f6c1943a9e421ead",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pydata__xarray-6721-a73de6505b5e4e91",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pylint-dev__pylint-6506-fc6296817ee1dcac",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 1.0
+        },
+        {
+          "evaluation_id": "pylint-dev__pylint-5859-d5fe52d6003452ac",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pylint-dev__pylint-4604-fb0b41fcda048c0f",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.5,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pylint-dev__pylint-8898-5501a20d56ce0917",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.3333333333333333,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pylint-dev__pylint-7080-a8c4cf4dc3fd126a",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pylint-dev__pylint-4970-9f745cf45a1b31d4",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pylint-dev__pylint-6386-c34d6e338ea60501",
+          "gold_functions": 5,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.2
+        },
+        {
+          "evaluation_id": "pylint-dev__pylint-4551-14bed19752e20074",
+          "gold_functions": 4,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pylint-dev__pylint-7228-8807a64552758239",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pytest-dev__pytest-5103-e4c3fc6d5035c7fd",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pytest-dev__pytest-7324-dfcfc4f07b488937",
+          "gold_functions": 3,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pytest-dev__pytest-5495-10e06f352da85772",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 1.0
+        },
+        {
+          "evaluation_id": "pytest-dev__pytest-11148-b4910882fc8cce15",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pytest-dev__pytest-6202-91a9768bb675560d",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pytest-dev__pytest-10356-e6dfbe1447de2778",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pytest-dev__pytest-7521-d5de92f569907cd2",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pytest-dev__pytest-5413-499bbadc4f8429e6",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pytest-dev__pytest-5221-50dcda8448a2bfa6",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pytest-dev__pytest-5262-f5f811613c9f0fcc",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pytest-dev__pytest-8906-0b4ba46a5bee14f7",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 1.0
+        },
+        {
+          "evaluation_id": "pytest-dev__pytest-8399-c2459f8b0c6e3ef1",
+          "gold_functions": 5,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pytest-dev__pytest-7490-065c1f12efda9e13",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pytest-dev__pytest-5787-4f3d8542d6c6062e",
+          "gold_functions": 3,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pytest-dev__pytest-5631-44d7ec0083e67cb6",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 1.0
+        },
+        {
+          "evaluation_id": "pytest-dev__pytest-9359-8de39a89e1c86336",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pytest-dev__pytest-6116-c590b743e2f13b09",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "pytest-dev__pytest-7432-96740b20211539dc",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 1.0
+        },
+        {
+          "evaluation_id": "pytest-dev__pytest-6197-6afd1bfd35011972",
+          "gold_functions": 4,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "scikit-learn__scikit-learn-12471-5db34a866061d47e",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "scikit-learn__scikit-learn-13124-fa9d18218e8a0ec9",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "scikit-learn__scikit-learn-14983-5b401b89fc2bc959",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "scikit-learn__scikit-learn-25973-9b8d41f93dd2f7ab",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "scikit-learn__scikit-learn-25747-55d19a756c57394f",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "scikit-learn__scikit-learn-13496-145ff722db4865f5",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "scikit-learn__scikit-learn-11281-2e8345e925690b36",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "scikit-learn__scikit-learn-25500-b98ada3fdd2a36f5",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "scikit-learn__scikit-learn-11310-c75963bd3934c862",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 1.0
+        },
+        {
+          "evaluation_id": "scikit-learn__scikit-learn-25638-aee85db50bb1b915",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "scikit-learn__scikit-learn-15535-0932819e97ec0891",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "scikit-learn__scikit-learn-13439-616ee572041ac547",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "scikit-learn__scikit-learn-10297-e8eb17e5fd2d9a44",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "scikit-learn__scikit-learn-10508-d6b345993a3654ce",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "scikit-learn__scikit-learn-14092-0ae3d7d6fb1941d2",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "scikit-learn__scikit-learn-13241-8fab8bcee56372c9",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-10451-60217b759843ba11",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-7910-95e3a13bf63eeded",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 1.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-8282-9b4a9e6961c48484",
+          "gold_functions": 3,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-7590-c5185bf61a37656c",
+          "gold_functions": 6,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-10323-80d430ed06ebee71",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-8627-189402320fde323a",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-8474-5a8dfb936fecba1a",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-8713-8fc263615571cbb0",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-8551-0f8df3c32880bccf",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-8435-65b17d33a739c1a8",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-9673-daa8277132623fc7",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-9367-cc4de06671e665ac",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-9602-8e1e183f5f3a5a03",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-11445-d3697dc651f8349a",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-10325-8cff9383bec04b39",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-8801-20c6ad6c9801e356",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-9229-81ae32d7b44e3dab",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-8273-86ad4aec7c498577",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-9281-801336892e9b10d0",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-9591-8392094c30176605",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-10614-33a5bb613ba1f3d6",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-8595-b5c54515abe8d005",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-7462-4bf03e9d4ed44408",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-8265-d4ab588c3d2166b2",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-7738-2b615ca73d88c804",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-10466-45a4bda2cc057660",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-7889-fe7ff319876bc296",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-9698-e579ff47fc51a3c2",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-10435-2320591236f64f3f",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sphinx-doc__sphinx-7985-48f8c4971619eb01",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-16792-b91af3658e2baa68",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-14817-3a74efa063db9a9c",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-21627-fc9ed730c5132807",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-15609-add00458c5be4d19",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-24539-905bf6cb6f1b591f",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-17139-defa8e5eeee48436",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-14531-631b588455f40775",
+          "gold_functions": 12,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-19487-b3b5cc09cc6aaf08",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-19495-0b9913d6258b6649",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-15809-b562b4e3ea3ee30b",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-22080-e30b4779c9bcc7fc",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-22714-cd3b8a5774747973",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-16281-544f22f208a1dc94",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-12419-9e4bd60e87624a00",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-13895-2e834ab1a47748bd",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-24102-86459b051479594f",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-13915-692b750efa7c03e5",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-11870-5488d434868528fb",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-21379-8a6c25eb70cb58b7",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-19954-c28913db53e0cc6f",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 1.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-16597-6a5cbc1a84748054",
+          "gold_functions": 6,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.16666666666666666,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-18763-59fee99bc18f5a01",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-13798-a456f0c9a97d874e",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-13878-1f99de9cebfcc7b5",
+          "gold_functions": 18,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-20916-f14cb55a7f61f8f7",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-13971-29436f697ed7bfb7",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-23950-797e5a91692c51ea",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-11400-d4167d4da53bcc5e",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-14774-39586c278c746c87",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 1.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-13551-11608be733e40dc8",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-14248-e71b7991586b8033",
+          "gold_functions": 5,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-14976-a4ac2075e5d89042",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-18087-099674f593c7e1c4",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-15345-cffec59f7039cc73",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-15346-6f168de4958372dd",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-24661-74b0f0c9bb7c1d8e",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-16503-4ee30424548064e1",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.5
+        },
+        {
+          "evaluation_id": "sympy__sympy-20322-1583db2bf09e7eee",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-16450-e18a5f7caac353a0",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-14024-55d5fcae69beee94",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-18621-3f7ed07bdad78c6f",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-21612-0f0eb375186b22de",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-21614-4964bc09745ada7c",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-15875-99baa10d0dc4616d",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-13146-f8c43fe83455407e",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-19040-3a820303578d88e6",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-24152-b47940aec80b1b11",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-20428-6914d5b443a3c376",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-23117-d6531d53fe6af311",
+          "gold_functions": 3,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-24909-9a5ff276e17c681b",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-12454-a2b9809431943a52",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-21930-8119dd26098d10ab",
+          "gold_functions": 3,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-16988-61d070173db6dcf3",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-20639-e5ab54b835d5036c",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-17022-4e2cc2cf15ed28cc",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 0.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-19007-38e3c5f4a5c7cefc",
+          "gold_functions": 1,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
+        },
+        {
+          "evaluation_id": "sympy__sympy-15308-36eb49e49d12b2ac",
+          "gold_functions": 2,
+          "full_function_recall10": 0.0,
+          "full_file_recall10": 1.0,
+          "bm25_function_recall10": 0.0
         }
       ],
       "paired_full_minus_bm25": {
-        "paired_instances": 15,
-        "mean_difference": -0.06666666666666667,
+        "paired_instances": 516,
+        "mean_difference": 0.06329968481131272,
         "interval95": [
-          -0.23333333333333334,
-          0.06666666666666667
+          0.029682251291989665,
+          0.09718634643779991
         ],
         "bootstrap_samples": 2000,
         "seed": 0
       },
       "paired_full_minus_embedding": {
-        "paired_instances": 15,
-        "mean_difference": -0.06666666666666667,
+        "paired_instances": 516,
+        "mean_difference": 0.02291293977340489,
         "interval95": [
-          -0.3,
-          0.1
+          -0.011356739997728372,
+          0.05664505955930374
         ],
         "bootstrap_samples": 2000,
         "seed": 0

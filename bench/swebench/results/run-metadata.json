@@ -28,7 +28,7 @@
       50
     ],
     "pipeline_version": 1,
-    "source_fingerprint": null,
+    "source_fingerprint": "88720dd95bcfdf7af09af019badc93ceb891631599780f851e724dc794653c96",
     "split": "sha256-instance-mod5",
     "seed": 0,
     "ANN": {
@@ -37,16 +37,15 @@
       "ef_search": 50
     }
   },
-  "configuration_id": "559fae87120691b9b97d43522d368a6d5a0b64c8fbe39785dca87a015c0139a8",
+  "configuration_id": "691031a032ce4e3dd8ba0022e870ddacf0223a1e32126be343432664f43c5b21",
   "hardware": {
-    "cpu": "Intel(R) Core(TM) i3-5005U CPU @ 2.00GHz",
-    "logical_cpus": 4,
-    "os": "Windows-11-10.0.22000-SP0",
-    "python": "3.13.1",
-    "ram_bytes": 8497737728
+    "cpu": "Intel(R) Core(TM) i9-14900",
+    "logical_cpus": 32,
+    "os": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.15",
+    "ram_bytes": 137110466560
   },
   "dataset_rows": 800,
   "unique_evaluations": 707,
-  "engine_commit": "5db91ed (P15.12) plus uncommitted bench/swebench/report.py and performance.py edits",
-  "note": "Rows were produced by configuration 559fae87. Its exact source fingerprint is not recoverable because run-metadata.json was overwritten by a later aborted run; every retrieval-affecting setting recorded here (model checksums, ANN, budgets, k, seed, split, hardware) is identical. The fingerprint differences were limited to report.py and performance.py, which do not affect retrieval."
+  "engine_commit": "4313e0f717d8cfa106495075ce239b5450f6e3f8"
 }

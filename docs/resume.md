@@ -14,15 +14,17 @@ Numbers below come from committed result files; each bullet cites its source.
   - Source: bench/longmemeval/results/longmemeval_s.summary.json
 - Wrote an optional Rust/PyO3 kernel for a custom HNSW index that ran 6.7x faster than the pure-Python path (18.78 s to 2.81 s, 120 vectors x 384 dims, 20 queries) with identical graph and query results.
   - Source: bench/vector/native_profile.json
-- Evaluated a hybrid retrieval pipeline (BM25F, HNSW, RRF, personalized PageRank, knapsack packing) on 15 held-out SWE-bench tasks: file recall@10 of 0.933 vs 0.867 for BM25; function recall@10 of 0.267, below BM25's 0.333.
+- Evaluated a hybrid code retrieval pipeline (BM25F, HNSW, RRF, personalized PageRank, knapsack packing) on 698 of 707 SWE-bench Lite and Verified tasks. On 516 held-out tasks it beat BM25 on function recall@10 (0.355 vs 0.291, paired 95% CI +0.030 to +0.097) and file recall@10 (0.801 vs 0.711). An ablation showed the graph term lowered recall (0.385 without it).
   - Source: bench/swebench/results/report.json, docs/swebench-failures.md
+- Cut evaluation cost on Django-sized repositories with output-identical optimizations: call resolution 326 s to 4 s, and HNSW build 384 s to 55 s through a Rust distance store.
+  - Source: git history (commits f296213, bd7477f), docs/report.md
 - Indexed psf/requests (98 files, 2,487 symbols) cold in 10.9 s at about 92 MB peak RSS on an Intel i3-5005U (4 logical CPUs); end-to-end one-line-edit re-index p50 9.64 s, p95 10.12 s. Backed by a test suite of 286 test functions.
   - Source: bench/swebench/results/performance.json, docs/performance.md, tests/
 
 ## Claims to avoid
 
-- SWE-bench-wide results. Only 16 of 707 target evaluations were measured (15 held-out instances scored); 691 remain.
-- Beating BM25 or other baselines on function-level retrieval. The full pipeline scored 0.267 function recall@10 vs 0.333 for BM25 and exact embeddings. Ablations without the vector or graph components scored the same 0.267 on function recall@10. The only measured component effect is on packed context: removing vectors lowered 8k-token coverage from 0.567 to 0.400, while removing the graph raised it to 0.633 (15 tasks).
+- Graph-based ranking gains. On held-out SWE-bench tasks, removing personalized PageRank improved function recall@10 by 0.031 (95% CI +0.009 to +0.056); the graph term currently hurts ranking.
+- Beating embedding search. The full pipeline (0.355) is not separable from exact embedding search (0.332) on function recall@10 (95% CI −0.011 to +0.057). The gain over BM25 comes mostly from vectors, and full trails BM25 on 5 of 12 repositories.
 - Answer accuracy on LongMemEval. Only session retrieval was evaluated; answer_accuracy is null.
 - Production use, users, or deployment at scale.
 - Improved agent task success or fewer agent tokens. The one agent comparison run (Qwen2.5-0.5B, 8 tasks) solved 0/8 with and without Smriti and is uninformative.

@@ -93,7 +93,8 @@ def extract(result: ParseResult) -> None:
         }:
             name = node.child_by_field_name('name')
             body = node.child_by_field_name('body') or node.child_by_field_name('type')
-            if name is not None:
+            # Error recovery can yield a zero-width MISSING name; skip it.
+            if name is not None and text(name):
                 parent = make(node, text(name), 'class', parent, body)
                 types[parent.name] = parent
         elif node.type in {'function_declaration', 'method_declaration', 'function_definition'}:
@@ -102,7 +103,7 @@ def extract(result: ParseResult) -> None:
                 declarator = node.child_by_field_name('declarator')
                 name = declarator_name(declarator) if declarator is not None else None
             body = node.child_by_field_name('body')
-            if name is not None and body is not None:
+            if name is not None and text(name) and body is not None:
                 receiver = node.child_by_field_name('receiver')
                 binding: tuple[str, str] | None = None
                 if receiver is not None and receiver.named_children:

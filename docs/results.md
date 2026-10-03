@@ -41,36 +41,36 @@ Dataset `xiaowu0162/longmemeval-cleaned` @ `98d7416c`. Answer accuracy is not me
 
 ## Code retrieval (SWE-bench Lite ∪ Verified subset)
 
-16 of 707 unique tasks measured (pallets/flask 4, psf/requests 12); 7 failed and are listed in `docs/swebench-failures.md`. Held-out split: 15 tasks. Source: `bench/swebench/results/report.json`.
+698 of 707 unique tasks measured (astropy/astropy 24, django/django 297, matplotlib/matplotlib 49, mwaskom/seaborn 6, pallets/flask 4, psf/requests 13, pydata/xarray 26, pylint-dev/pylint 15, pytest-dev/pytest 34, scikit-learn/scikit-learn 45, sphinx-doc/sphinx 57, sympy/sympy 128); 9 were excluded or failed and are listed in `docs/swebench-failures.md`. Held-out split: 546 tasks. Source: `bench/swebench/results/report.json`.
 
 ### Function recall@k and file recall@10
 
 | Method | @1 | @5 | @10 | @20 | @50 | File @10 |
 | --- | --- | --- | --- | --- | --- | --- |
-| Substring grep | 0.000 | 0.000 | 0.000 | 0.000 | 0.133 | 1.000 |
-| BM25F | 0.167 | 0.167 | 0.333 | 0.333 | 0.433 | 0.867 |
-| Exact embedding | 0.267 | 0.333 | 0.333 | 0.433 | 0.467 | 0.800 |
-| Aider-style repo map | 0.000 | 0.000 | 0.067 | 0.067 | 0.333 | 0.533 |
-| Smriti full | 0.000 | 0.233 | 0.267 | 0.300 | 0.567 | 0.933 |
-| Smriti without vectors | 0.067 | 0.167 | 0.267 | 0.333 | 0.433 | 0.933 |
-| Smriti without graph | 0.200 | 0.267 | 0.267 | 0.433 | 0.567 | 0.933 |
-| Smriti, greedy packing | 0.000 | 0.233 | 0.267 | 0.300 | 0.567 | 0.933 |
+| Substring grep | 0.000 | 0.000 | 0.000 | 0.000 | 0.006 | 0.209 |
+| BM25F | 0.116 | 0.227 | 0.291 | 0.361 | 0.457 | 0.711 |
+| Exact embedding | 0.108 | 0.245 | 0.332 | 0.399 | 0.508 | 0.703 |
+| Aider-style repo map | 0.002 | 0.004 | 0.011 | 0.013 | 0.036 | 0.152 |
+| Smriti full | 0.100 | 0.286 | 0.355 | 0.487 | 0.579 | 0.801 |
+| Smriti without vectors | 0.050 | 0.196 | 0.273 | 0.362 | 0.457 | 0.715 |
+| Smriti without graph | 0.124 | 0.305 | 0.385 | 0.487 | 0.562 | 0.784 |
+| Smriti, greedy packing | 0.100 | 0.286 | 0.355 | 0.487 | 0.579 | 0.801 |
 
 ### Gold functions covered by packed context (mean tokens)
 
 | Method | 4,096 | 8,192 | 16,384 |
 | --- | --- | --- | --- |
-| Smriti full | 0.433 (3,921) | 0.567 (7,842) | 0.567 (14,685) |
-| Smriti without vectors | 0.267 (3,904) | 0.400 (7,838) | 0.433 (15,321) |
-| Smriti without graph | 0.400 (3,894) | 0.633 (7,785) | 0.633 (15,087) |
-| Smriti, greedy packing | 0.433 (3,946) | 0.567 (7,817) | 0.567 (14,752) |
+| Smriti full | 0.447 (3,973) | 0.546 (7,768) | 0.590 (14,645) |
+| Smriti without vectors | 0.376 (3,869) | 0.423 (7,684) | 0.464 (15,033) |
+| Smriti without graph | 0.437 (3,978) | 0.526 (7,790) | 0.585 (14,724) |
+| Smriti, greedy packing | 0.452 (3,981) | 0.543 (7,794) | 0.592 (14,747) |
 
 ### Paired bootstrap, function recall@10 (2,000 resamples)
 
 | Comparison | Mean difference | 95% interval |
 | --- | --- | --- |
-| Smriti full − BM25F | -0.067 | [-0.233, 0.067] |
-| Smriti full − exact embedding | -0.067 | [-0.300, 0.100] |
+| Smriti full − BM25F | 0.063 | [0.030, 0.097] |
+| Smriti full − exact embedding | 0.023 | [-0.011, 0.057] |
 
 ## Performance
 
@@ -81,9 +81,9 @@ Intel(R) Core(TM) i3-5005U CPU @ 2.00GHz, 4 logical CPUs, 7.9 GiB RAM, Windows-1
 | Cold index, psf/requests (files / symbols) | 10.86 s (98 / 2,487) |
 | Sampled peak RSS during cold index | 91.8 MB |
 | One-line edit re-index p50 / p95 (20 runs) | 9.64 / 10.12 s |
-| Full ranking p50 / p95 | 0.642 / 1.997 s |
-| 8k knapsack packing p50 / p95 | 4.277 / 6.888 s |
-| BM25F baseline query p50 | 0.024 s |
+| Full ranking p50 / p95 | 44.743 / 76.011 s |
+| 8k knapsack packing p50 / p95 | 4.997 / 7.426 s |
+| BM25F baseline query p50 | 0.355 s |
 | Rust distance kernel speedup (identical results) | 6.69x |
 
 ## Coding-agent task success (optional)
