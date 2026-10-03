@@ -6,11 +6,11 @@ import heapq
 import json
 import math
 import random
-from collections.abc import Sequence
+from collections.abc import Callable, Sequence
 from pathlib import Path
 from typing import Any
 
-from .math import VectorHit, distance, normalize
+from .math import VectorHit, distance, native_store, normalize
 
 
 class HNSWIndex:
@@ -29,6 +29,27 @@ class HNSWIndex:
         self.graph: dict[str, dict[int, set[str]]] = {}
         self.entry: str | None = None
         self.deleted: set[str] = set()
+        self._reset_store()
+
+    def _reset_store(self) -> None:
+        # Stored nodes are compared by slot in the optional Rust store; results
+        # are bit-identical to distance() on the stored tuples.
+        self._store: Any = native_store()
+        self._slots: dict[str, int] = {}
+
+    def _pair(self, left: str, right: str) -> float:
+        if self._store is None:
+            return distance(self.vectors[left], self.vectors[right])
+        for id in (left, right):
+            if id not in self._slots:
+                self._slots[id] = self._store.push(list(self.vectors[id]))
+        return float(self._store.distance(self._slots[left], self._slots[right]))
+
+    def _to_query(self, query: Sequence[float]) -> Callable[[str], float]:
+        return lambda id: distance(query, self.vectors[id])
+
+    def _to_node(self, node: str) -> Callable[[str], float]:
+        return lambda id: self._pair(node, id)
 
     def random_level(self) -> int:
         return min(32, int(-math.log(max(self.random.random(), 1e-15)) / math.log(self.m)))
@@ -38,24 +59,24 @@ class HNSWIndex:
             min(self.levels, key=lambda id: (-self.levels[id], id)) if self.levels else None
         )
 
-    def _greedy(self, query: Sequence[float], entry: str, layer: int) -> str:
+    def _greedy(self, dist: Callable[[str], float], entry: str, layer: int) -> str:
         best = entry
-        best_dist = distance(query, self.vectors[best])
+        best_dist = dist(best)
         while True:
             candidate = min(
                 [best, *self.graph[best].get(layer, ())],
-                key=lambda id: (distance(query, self.vectors[id]), id),
+                key=lambda id: (dist(id), id),
             )
-            value = distance(query, self.vectors[candidate])
+            value = dist(candidate)
             if value >= best_dist:
                 return best
             best, best_dist = candidate, value
 
     def _layer_search(
-        self, query: Sequence[float], entries: Sequence[str], ef: int, layer: int
+        self, dist: Callable[[str], float], entries: Sequence[str], ef: int, layer: int
     ) -> list[tuple[float, str]]:
         visited = set(entries)
-        candidates = [(distance(query, self.vectors[id]), id) for id in entries]
+        candidates = [(dist(id), id) for id in entries]
         heapq.heapify(candidates)
         best = [(-d, id) for d, id in candidates]
         heapq.heapify(best)
@@ -67,7 +88,7 @@ class HNSWIndex:
                 if neighbor in visited:
                     continue
                 visited.add(neighbor)
-                nd = distance(query, self.vectors[neighbor])
+                nd = dist(neighbor)
                 if len(best) < ef or nd < -best[0][0]:
                     heapq.heappush(candidates, (nd, neighbor))
                     heapq.heappush(best, (-nd, neighbor))
@@ -75,13 +96,11 @@ class HNSWIndex:
                         heapq.heappop(best)
         return sorted([(-d, id) for d, id in best])
 
-    def _select(
-        self, query: Sequence[float], candidates: Sequence[tuple[float, str]], limit: int
-    ) -> list[str]:
+    def _select(self, candidates: Sequence[tuple[float, str]], limit: int) -> list[str]:
         selected: list[str] = []
         rejected: list[str] = []
         for d, id in sorted(candidates):
-            if all(distance(self.vectors[id], self.vectors[other]) >= d for other in selected):
+            if all(self._pair(id, other) >= d for other in selected):
                 selected.append(id)
             else:
                 rejected.append(id)
@@ -95,6 +114,7 @@ class HNSWIndex:
             raise ValueError('dimension mismatch')
         if id in self.vectors:
             self.vectors[id] = value
+            self._slots.pop(id, None)
             self.deleted.discard(id)
             self.rebuild()
             return
@@ -107,11 +127,12 @@ class HNSWIndex:
             return
         entry = self.entry
         max_level = self.levels[entry]
+        dist = self._to_node(id)
         for layer in range(max_level, level, -1):
-            entry = self._greedy(value, entry, layer)
+            entry = self._greedy(dist, entry, layer)
         for layer in range(min(level, max_level), -1, -1):
-            candidates = self._layer_search(value, [entry], self.ef_construction, layer)
-            neighbors = self._select(value, candidates, self.m)
+            candidates = self._layer_search(dist, [entry], self.ef_construction, layer)
+            neighbors = self._select(candidates, self.m)
             for other in neighbors:
                 self.graph[id][layer].add(other)
                 self.graph[other][layer].add(id)
@@ -119,13 +140,7 @@ class HNSWIndex:
                 limit = self.m * 2 if layer == 0 else self.m
                 links = self.graph[other][layer]
                 if len(links) > limit:
-                    keep = set(
-                        self._select(
-                            self.vectors[other],
-                            [(distance(self.vectors[other], self.vectors[n]), n) for n in links],
-                            limit,
-                        )
-                    )
+                    keep = set(self._select([(self._pair(other, n), n) for n in links], limit))
                     for removed in links - keep:
                         self.graph[removed][layer].discard(other)
                     self.graph[other][layer] = keep
@@ -139,11 +154,11 @@ class HNSWIndex:
             raise ValueError('k must be nonnegative')
         if not self.entry or not k:
             return []
-        query = normalize(query)
+        dist = self._to_query(normalize(query))
         entry = self.entry
         for layer in range(self.levels[entry], 0, -1):
-            entry = self._greedy(query, entry, layer)
-        candidates = self._layer_search(query, [entry], max(k, ef or self.ef_search), 0)
+            entry = self._greedy(dist, entry, layer)
+        candidates = self._layer_search(dist, [entry], max(k, ef or self.ef_search), 0)
         return [VectorHit(id, 1 - d) for d, id in candidates if id not in self.deleted][:k]
 
     def remove(self, id: str) -> None:
@@ -157,6 +172,7 @@ class HNSWIndex:
         self.graph = {}
         self.entry = None
         self.deleted = set()
+        self._reset_store()
         self.random = random.Random(self.seed)
         for id in sorted(live):
             self.add(id, live[id])

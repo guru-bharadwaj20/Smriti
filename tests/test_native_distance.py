@@ -20,7 +20,10 @@ def test_native_kernel_builds_identical_graph_and_results() -> None:
         return index.graph, [[h.id for h in index.search(v, 5)] for v in vectors[:10]]
 
     native = build()
-    with patch('smriti.vector.hnsw.distance', vmath.python_distance):
+    with (
+        patch('smriti.vector.hnsw.distance', vmath.python_distance),
+        patch('smriti.vector.hnsw.native_store', lambda: None),
+    ):
         python = build()
     assert native == python
     for left, right in zip(vectors, reversed(vectors), strict=True):
