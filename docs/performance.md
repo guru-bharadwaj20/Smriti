@@ -26,7 +26,10 @@ incremental per changed file is the main performance gap.
 
 ## Query latency (P13.37)
 
-Source: `bench/swebench/results/report.json`, held-out split, 15 real SWE-bench
+Measured on the earlier 16-task run (configuration `559fae87…`); the full
+698-task run ran about 40 processes in parallel, so its latencies in
+`bench/swebench/results/report.json` include contention and are not used here.
+Held-out split, 15 real SWE-bench
 issue queries against requests and flask (588–1,629 indexed symbols), warm
 in-process indexes. Ranking excludes index construction; packing includes
 rendering and the final tokenizer recount.

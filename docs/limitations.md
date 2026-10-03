@@ -37,9 +37,14 @@ document with details.
 - **Knapsack packing is slow on this hardware.** Packing an 8k-token context
   takes 4.3 s at p50 after ranking; greedy packing takes 0.9 s and reached the
   same coverage on the measured tasks.
-- **Ranking does not beat BM25 yet.** On 15 held-out SWE-bench tasks, function
-  recall@10 is 0.267 for the full pipeline against 0.333 for BM25 (interval
-  includes zero) ([swebench-failures.md](swebench-failures.md)).
+- **Ranking beats BM25, but not embeddings, and the graph hurts.** On 516
+  held-out SWE-bench tasks, function recall@10 is 0.355 for the full pipeline
+  against 0.291 for BM25 (difference 0.063, 95% interval 0.030 to 0.097) and
+  0.332 for exact embeddings (interval includes zero). Removing personalized
+  PageRank raises it to 0.385 (interval for the gain 0.009 to 0.056). Full is
+  behind BM25 on 5 of 12 repositories ([swebench-failures.md](swebench-failures.md)).
+- **Graph ranking is slow on large repositories.** On Django-sized graphs
+  (about 350,000 edges), pure-Python PageRank takes tens of seconds per query.
 
 ## Memory
 
@@ -58,10 +63,13 @@ document with details.
 
 ## Evaluation
 
-- **SWE-bench numbers come from a small subset.** 16 of 707 unique tasks were
-  measured (psf/requests 12, pallets/flask 4); all 6 seaborn tasks failed at
-  clone while the network was down. The full run needs days of CPU time on the
-  reference laptop.
+- **SWE-bench is one run, on one machine, dominated by Django.** 698 of 707
+  unique tasks were measured; 9 were excluded by the leakage guard because the
+  issue text contains patch lines. Django is 211 of the 516 held-out tasks.
+  Checkouts had CRLF line endings (Windows `core.autocrlf`), embeddings were
+  precomputed with a multithreaded encoder (float-rounding differences are
+  possible), and the graph weight was tuned on only 34 validation tasks, with
+  the chosen value at the edge of the grid.
 - **LongMemEval is retrieval-only.** No answers are generated; numbers are not
   comparable to the answer-accuracy leaderboard ([longmemeval.md](longmemeval.md)).
 - **CodeMem uses one repository.** 200 Requests commits; a single project's

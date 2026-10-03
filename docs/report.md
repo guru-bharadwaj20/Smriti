@@ -2,7 +2,7 @@
 
 ## Summary
 
-Smriti is a local, CPU-only memory and context engine for coding agents, exposed over MCP. It indexes a repository incrementally, parses six languages with tree-sitter, builds a scope-aware call graph, retrieves code with lexical, vector and graph signals, packs the result into a strict token budget, and keeps a code-anchored memory whose facts are marked fresh, stale or orphaned as the code changes. Replayed over 200 real psf/requests commits with 64 probe facts, the memory layer detected staleness with precision and recall of 1.0 across 12,736 observations, and cascading forget removed exactly the expected closure of facts with no resurrection across 201 history branches. On LongMemEval-S (retrieval only, no answer generation), session recall@5 was 0.848 over 500 questions. On the 15 held-out SWE-bench tasks measured so far, the full retrieval pipeline does not beat BM25 on function recall@10 (0.267 vs 0.333; the paired interval includes zero), although its file recall@10 is higher (0.933 vs 0.867). A one-line edit still costs about 9.6 s to re-index on requests because resolution and snapshot publication are whole-repository. In short: the memory freshness design holds up well under test, the ranking stack is not yet better than a plain BM25 baseline on this small subset, and incremental indexing is the main performance gap.
+Smriti is a local, CPU-only memory and context engine for coding agents, exposed over MCP. It indexes a repository incrementally, parses six languages with tree-sitter, builds a scope-aware call graph, retrieves code with lexical, vector and graph signals, packs the result into a strict token budget, and keeps a code-anchored memory whose facts are marked fresh, stale or orphaned as the code changes. Replayed over 200 real psf/requests commits with 64 probe facts, the memory layer detected staleness with precision and recall of 1.0 across 12,736 observations, and cascading forget removed exactly the expected closure of facts with no resurrection across 201 history branches. On LongMemEval-S (retrieval only, no answer generation), session recall@5 was 0.848 over 500 questions. On 516 held-out SWE-bench tasks (698 of 707 Lite and Verified tasks measured, all 12 repositories), the full retrieval pipeline beats BM25 on function recall@10 (0.355 vs 0.291; paired 95% interval for the difference 0.030 to 0.097). It does not separate from exact embedding search, and removing the graph term scores higher still (0.385). A one-line edit still costs about 9.6 s to re-index on requests because resolution and snapshot publication are whole-repository. In short: the memory freshness design holds up well under test, the ranking stack beats BM25 mainly through embeddings while the PageRank term currently costs recall, and incremental indexing is the main performance gap.
 
 Every table below is also generated mechanically from the result files in [results.md](results.md).
 
@@ -79,42 +79,45 @@ Source: `bench/longmemeval/results/longmemeval_s.summary.json`. Temporal reasoni
 
 ## Results: code retrieval on SWE-bench
 
-The target was 707 unique evaluations (800 dataset rows across Lite and Verified). Only 16 were measured: 12 from psf/requests and 4 from pallets/flask. All six seaborn tasks failed at `git clone` because the network was unavailable, and requests-1724 failed while building retrieval state with a Windows `PermissionError` on rename. Failures are recorded, never scored as zero ([swebench-failures.md](swebench-failures.md)). Before every task, a leakage check confirmed that the query contained no patch text and the index contained no post-fix lines. The validation split has one task and is not interpreted. The numbers below are the held-out split, 15 tasks; retrieval input is the problem statement, and gold functions and files come from the patch.
+The target was 707 unique evaluations (800 dataset rows across Lite and Verified), across all 12 repositories. 698 were measured (790 dataset rows). The other 9 were excluded before scoring by the leakage guard, because their issue text already contains lines of the gold patch (django 5, sympy 2, matplotlib 1, scikit-learn 1). No task failed for tooling reasons. Failures are recorded, never scored as zero ([swebench-failures.md](swebench-failures.md)). Retrieval input is the problem statement; gold functions and files come from the patch. Splits follow `sha256(instance_id)` modulo 5: 152 validation tasks and 546 held-out tasks, 516 of which have at least one gold function. The graph weight was tuned on 34 validation tasks only (`bench/swebench/results/tuning.summary.json`); held-out tasks were never used for tuning. Django supplies 211 of the 516 held-out tasks, so it dominates the means.
+
+Held-out split, 516 tasks with function gold:
 
 | Method | Fn R@1 | Fn R@5 | Fn R@10 | Fn R@20 | Fn R@50 | File R@1 | File R@5 | File R@10 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| grep | 0.000 | 0.000 | 0.000 | 0.000 | 0.133 | 0.000 | 0.933 | 1.000 |
-| BM25 | 0.167 | 0.167 | 0.333 | 0.333 | 0.433 | 0.467 | 0.867 | 0.867 |
-| embedding (exact) | 0.267 | 0.333 | 0.333 | 0.433 | 0.467 | 0.400 | 0.733 | 0.800 |
-| repo-map style | 0.000 | 0.000 | 0.067 | 0.067 | 0.333 | 0.067 | 0.333 | 0.533 |
-| Smriti full | 0.000 | 0.233 | 0.267 | 0.300 | 0.567 | 0.200 | 0.800 | 0.933 |
-| full, no vector | 0.067 | 0.167 | 0.267 | 0.333 | 0.433 | 0.267 | 0.867 | 0.933 |
-| full, no graph | 0.200 | 0.267 | 0.267 | 0.433 | 0.567 | 0.400 | 0.867 | 0.933 |
-| full, greedy packing | 0.000 | 0.233 | 0.267 | 0.300 | 0.567 | 0.200 | 0.800 | 0.933 |
+| grep | 0.000 | 0.000 | 0.000 | 0.000 | 0.006 | 0.012 | 0.115 | 0.209 |
+| BM25 | 0.116 | 0.227 | 0.291 | 0.361 | 0.457 | 0.336 | 0.608 | 0.711 |
+| embedding (exact) | 0.108 | 0.245 | 0.332 | 0.399 | 0.508 | 0.273 | 0.600 | 0.703 |
+| repo-map style | 0.002 | 0.004 | 0.011 | 0.013 | 0.036 | 0.024 | 0.082 | 0.152 |
+| Smriti full | 0.100 | 0.286 | 0.355 | 0.487 | 0.579 | 0.351 | 0.702 | 0.801 |
+| full, no vector | 0.050 | 0.196 | 0.273 | 0.362 | 0.457 | 0.300 | 0.622 | 0.715 |
+| full, no graph | 0.124 | 0.305 | 0.385 | 0.487 | 0.562 | 0.357 | 0.682 | 0.784 |
+| full, greedy packing | 0.100 | 0.286 | 0.355 | 0.487 | 0.579 | 0.351 | 0.702 | 0.801 |
 
 Source: `bench/swebench/results/report.json`, `splits.held_out.methods`.
 
-Packed-budget coverage is the mean fraction of gold functions included in the packed context.
+Packed-budget coverage is the mean fraction of gold functions included in the packed context (held-out, 516 tasks).
 
 | Method | 4k tokens | 8k tokens | 16k tokens |
 | --- | --- | --- | --- |
-| full | 0.433 | 0.567 | 0.567 |
-| no vector | 0.267 | 0.400 | 0.433 |
-| no graph | 0.400 | 0.633 | 0.633 |
-| greedy | 0.433 | 0.567 | 0.567 |
+| full | 0.447 | 0.546 | 0.590 |
+| no vector | 0.376 | 0.423 | 0.464 |
+| no graph | 0.437 | 0.526 | 0.585 |
+| greedy | 0.452 | 0.543 | 0.592 |
 
-Source: `bench/swebench/results/report.json`, `budget_coverage`.
+Source: `bench/swebench/results/report.json`, `splits.held_out.methods.*.budget_coverage`.
 
 | Paired bootstrap, function recall@10 (2,000 samples, seed 0) | Mean difference | 95% interval |
 | --- | --- | --- |
-| full minus BM25 | −0.067 | [−0.233, 0.067] |
-| full minus exact embedding | −0.067 | [−0.300, 0.100] |
+| full minus BM25 | +0.063 | [+0.030, +0.097] |
+| full minus exact embedding | +0.023 | [−0.011, +0.057] |
+| no graph minus full | +0.031 | [+0.009, +0.056] |
 
-Source: `bench/swebench/results/report.json`, `paired_full_minus_*`.
+Source: `bench/swebench/results/report.json`, `paired_full_minus_*`; the no-graph row was computed with the same bootstrap from `bench/swebench/results/raw.jsonl`.
 
-The full pipeline does not beat BM25 on function recall@10 on this subset (0.267 vs 0.333), and the interval includes zero, so 15 tasks cannot separate the two in either direction. Full does have higher file recall@10 (0.933 vs 0.867) and higher function recall@50 (0.567 vs 0.433): it finds the right file but ranks the exact function too low. In 10 of 15 tasks full had zero function recall@10, and in 9 of those the right file was in its top 10.
+On the full run, the full pipeline beats BM25 on function recall@10 (0.355 vs 0.291), and the interval excludes zero. It also leads on file recall@10 (0.801 vs 0.711) and function recall@50 (0.579 vs 0.457). It is not separable from exact embedding search at function recall@10. The gain is uneven by repository: full is behind BM25 on astropy, requests, seaborn, pylint and pytest (see [swebench-failures.md](swebench-failures.md)).
 
-The ablations point in different directions. Removing vectors lowers 8k coverage from 0.567 to 0.400, so the embedding signal contributes. Removing the graph raises 8k coverage to 0.633 and improves early function recall (R@1 0.200 vs 0.000): on these tasks, personalized PageRank expansion pushes gold functions down. Exact knapsack and greedy packing give identical coverage here. With 15 tasks from two repositories, none of these differences is statistically established.
+The ablations give two clear results. Vectors carry most of the gain: removing them drops function recall@10 to 0.273 and 8k coverage from 0.546 to 0.423. The graph, as configured, hurts ranking: removing personalized PageRank raises function recall@10 from 0.355 to 0.385, an interval that excludes zero. That held-out ablation contradicts the validation tuning, which chose graph weight 1.0 on only 34 tasks, with 1.0 at the edge of the grid. On packed context the graph helps a little (8k coverage 0.546 vs 0.526). Exact knapsack and greedy packing give the same ranking and coverage within 0.005.
 
 ## Performance
 
@@ -127,20 +130,22 @@ The ablations point in different directions. Removing vectors lowers 8k coverage
 
 Source: `bench/swebench/results/performance.json`, [performance.md](performance.md). Each incremental run changes exactly one file and only that file is reparsed, but resolution and snapshot publication still process the whole repository, so an incremental update costs about 90% of a cold index.
 
-Query latency on the 15 held-out tasks:
+Query latency on the 546 held-out tasks. The full run executed about 40 runner processes at once on one machine, so these timings include heavy CPU contention. They are indicative only and are not comparable with the single-process numbers above.
 
 | Method | p50 (s) | p95 (s) |
 | --- | --- | --- |
-| grep | 0.105 | 0.245 |
-| BM25 | 0.024 | 0.055 |
-| embedding (exact) | 0.006 | 0.287 |
-| repo-map style | 0.546 | 1.875 |
-| full (rank only) | 0.642 | 1.997 |
-| full + knapsack pack at 8k | 4.277 | 6.888 |
-| no graph (rank only) | 0.064 | 0.155 |
-| greedy + pack at 8k | 0.863 | 2.272 |
+| grep | 1.66 | 5.23 |
+| BM25 | 0.35 | 0.87 |
+| embedding (exact) | 0.19 | 0.60 |
+| repo-map style | 23.77 | 40.87 |
+| full (rank only) | 44.74 | 76.01 |
+| full + knapsack pack at 8k | 5.00 | 7.43 |
+| no graph (rank only) | 0.65 | 1.35 |
+| greedy + pack at 8k | 0.28 | 0.63 |
 
-Source: `bench/swebench/results/report.json`, `splits.held_out.query_latency_seconds`. PageRank accounts for most of the ranking time (no-graph is about ten times faster), and the exact knapsack dominates end-to-end latency. Per-task index time, including first-time indexing at each base commit, had p50 11.29 s and p95 38.75 s.
+Source: `bench/swebench/results/report.json`, `splits.held_out.query_latency_seconds`. On repositories of this size (Django has about 33,000 symbols and 350,000 edges), personalized PageRank dominates ranking time; the no-graph variant is about 70 times faster. Per-task index time, including first-time indexing at each base commit, had p50 78 s and p95 168 s.
+
+Run conditions. The run used Windows with `core.autocrlf=true`, so checkouts have CRLF line endings, which changes symbol text and token counts. Embeddings for each repository's base commits were computed ahead of time into the same cache the runner reads, using a multithreaded encoder. Cached vectors can differ from single-threaded ones at float-rounding level. To finish in a day, several performance fixes went into the resolver, the HNSW build (through the Rust kernel) and retrieval memoization. Each was checked to give identical edges, graphs or rankings on Django before use (commits `f296213`, `bd7477f`, `c205275`). Two crash fixes made non-UTF-8 sources and unnamed C++ template definitions parse (`59aecd3`, `4313e0f`). All results share one configuration ID, `691031a0…5b21`.
 
 An optional Rust kernel for HNSW distance computation was profiled on 120 vectors of 384 dimensions with 20 queries: pure Python took 18.78 s and native 2.81 s, a 6.69x speedup with identical graphs and query results (`bench/vector/native_profile.json`, [native-experiment.md](native-experiment.md)).
 
@@ -162,7 +167,7 @@ A small end-to-end check gave a local model eight injected-bug repair tasks, wit
 
 - **Memory freshness is strongly validated.** Perfect staleness precision and recall over 12,736 observations of real history, exact cascade closure and conservative rename handling are the clearest results in the project. The caveats are scope (one repository) and nature: freshness is structural, so it detects changed code, not changed truth.
 - **Long-term memory retrieval is reasonable but lexical.** 0.848 recall@5 overall, with temporal reasoning (0.655) the obvious weak spot.
-- **Code retrieval ranking is not yet better than BM25.** On 15 held-out tasks the full fusion-plus-graph pipeline is level with or behind BM25 and exact embeddings at function level, and slightly ahead at file level and deep cutoffs. The graph-removal ablation suggests PageRank expansion dilutes precise lexical and vector hits. The sample is too small for firm conclusions, and two repositories do not represent SWE-bench.
+- **Code retrieval beats BM25, but the graph hurts.** On 516 held-out SWE-bench tasks from 12 repositories, the full pipeline improves function recall@10 over BM25 by 0.063 (95% interval 0.030 to 0.097). Almost all of that comes from embeddings: full is not separable from exact embedding search. Removing personalized PageRank improves recall@10 by a further 0.031 (interval 0.009 to 0.056) and makes ranking about 70 times faster. The graph weight chosen on 34 validation tasks does not hold up on the held-out set.
 - **Incremental indexing is the main bottleneck.** The Merkle and parser layers are incremental, but resolution and publication are not, so fast incremental updates are not yet achieved even on a 98-file repository.
 
 ## Limitations
@@ -174,7 +179,7 @@ The full list is in [limitations.md](limitations.md). The most important:
 - Vector search requires a pinned ONNX model that is not bundled, and pure-Python vector distance is slow without the Rust kernel.
 - Freshness is structural, identifier renames orphan anchors, and fact recall is lexical.
 - Forget covers `memory.sqlite` only, not backups or exported bundles.
-- SWE-bench results cover 16 of 707 tasks; LongMemEval is retrieval-only; CodeMem uses one repository; all timings come from one laptop and one run.
+- SWE-bench results cover 698 of 707 tasks from one run on one machine; LongMemEval is retrieval-only; CodeMem uses one repository; all timings come from one laptop and one run.
 
 ## Reproduction
 
@@ -183,8 +188,8 @@ Commands, dataset downloads, pinned revisions and expected values are in [benchm
 ## Future work
 
 - Make resolution and snapshot publication incremental per changed file, to bring one-line re-index time well below the current 9.6 s.
-- Revisit graph expansion: weight or gate PageRank so it reranks rather than displaces strong lexical and vector hits, tuned on validation only.
-- Complete the SWE-bench run on more repositories (retrying seaborn and making the cache rename robust on Windows) so method differences can be tested properly.
+- Revisit graph expansion: the held-out ablation shows PageRank lowering function recall@10. Weight or gate it so it reranks rather than displaces strong lexical and vector hits, tuned on validation only.
+- Retune or remove the graph term on the 152-task validation split, and make the retrieval cache rename robust to transient Windows `PermissionError`s.
 - Speed up the exact knapsack, or fall back to greedy where it matches, since packing dominates query latency.
 - Add date-aware retrieval for temporal questions and evaluate answer accuracy on LongMemEval.
 - Repeat the agent comparison with a model large enough to solve some tasks.
