@@ -107,9 +107,23 @@ class Retriever:
                         raise ValueError('Cache cleanup escaped its state directory') from None
                     shutil.rmtree(build)
         self._reasons: dict[str, str] = {}
+        # Repeated rank/context calls for one query reuse its components. Shallow
+        # copies share this list; entries match only the identical edges and
+        # vector objects, so ablated copies never see another variant's result.
+        self._components_memo: list[tuple[str, object, object, RankComponents]] = []
 
     def components(self, task: str) -> RankComponents:
         """Candidate lists and graph scores before they are combined."""
+        for memo_task, edges, vector, parts in self._components_memo:
+            if memo_task == task and edges is self.snapshot.edges and vector is self.vector:
+                return parts
+        parts = self._components(task)
+        if any(memo_task != task for memo_task, *_ in self._components_memo):
+            self._components_memo.clear()
+        self._components_memo.append((task, self.snapshot.edges, self.vector, parts))
+        return parts
+
+    def _components(self, task: str) -> RankComponents:
         lexical = self.lexical.search(task, 50)
         vector = (
             self.vector.search(self.encoder.embed([task])[0], 50)
