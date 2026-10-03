@@ -101,3 +101,14 @@ def test_go_function_parameter_shadows_package_function():
     invoke = next(symbol for symbol in result.symbols if symbol.name == 'invoke')
     edges = Resolver([result]).resolve()
     assert any(edge.source == invoke.id and edge.target == 'external:go:total' for edge in edges)
+
+
+def test_cpp_template_in_c_header_skips_missing_names():
+    source = (
+        b'class glyph {\n'
+        b'    template<class CharT> double width(const CharT* str) const\r\n'
+        b'    {\r\n        unsigned start = m_font[2];\r\n        return 0;\r\n    }\n'
+        b'};\n'
+    )
+    result = SourceParser().parse('agg.h', source, 'c')
+    assert all(symbol.name for symbol in result.symbols)
