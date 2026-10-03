@@ -1,6 +1,6 @@
 """Tune fusion weights only on explicitly partitioned synthetic validation ranks."""
 from pathlib import Path
-import itertools,json,subprocess,sys
+import itertools,json,sys
 sys.path.insert(0,str(Path.cwd()))
 
 FIXTURE={
@@ -30,4 +30,3 @@ if __name__=='__main__':
     output={'fixture':FIXTURE,'selected_weights':weights,'validation_mrr':mrr(FIXTURE['validation'],weights),'held_out_mrr':mrr(FIXTURE['held_out'],weights),'limitation':'Synthetic fusion implementation check; do not adopt these weights for real retrieval without representative validation.'}
     Path('bench/fusion').mkdir(parents=True,exist_ok=True)
     Path('bench/fusion/validation.json').write_text(json.dumps(output,indent=2)+'\n')
-    subprocess.run([sys.executable,'scripts/task_commit.py','P07.17','tune fusion weights on isolated validation fixtures','--evidence','scripts/fusion_tuning.py; bench/fusion/validation.json; validation-only grid search, separate held-out IDs','--files','scripts/fusion_tuning.py','bench/fusion/validation.json'],check=True)
