@@ -161,7 +161,7 @@ Sources: `bench/lexical/results.json`, `bench/vector/results.json`, `bench/packi
 
 ## Agent comparison
 
-A small end-to-end check gave a local model eight injected-bug repair tasks, with and without Smriti context. With qwen2.5-0.5b-instruct (Q4_K_M) at temperature 0, one attempt per task and a 1,500-token context, both conditions solved 0 of 8 and edited no function (`bench/agent/results.json`, [bench/agent/README.md](../bench/agent/README.md)). The model invented new function names instead of editing the named one, so this result says nothing about whether Smriti helps an agent. The harness itself is validated: an oracle agent solves 8/8 and a no-op agent 0/8.
+A small end-to-end check gives a local model eight injected-bug repair tasks in a small fixture repository, at a 1,500-token context. There are three conditions: the file list only, the whole repository packed to the same budget, and Smriti's context. With Qwen2.5-Coder-7B-Instruct (Q4_K_M, CPU, temperature 0, one attempt per task), the file-list condition solved 0 of 8. The whole-repo and Smriti conditions each solved 8 of 8 (`bench/agent/results.json`, [bench/agent/README.md](../bench/agent/README.md)). The fixture fits within the budget, so this shows that Smriti's context is sufficient for the fix. It does not show an advantage over including the whole repository. An earlier run with a 0.5B model solved nothing in any condition and is uninformative. The harness itself is validated: an oracle agent solves 8/8 and a no-op agent 0/8.
 
 ## Findings and what they mean
 
