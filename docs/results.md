@@ -88,8 +88,8 @@ Intel(R) Core(TM) i3-5005U CPU @ 2.00GHz, 4 logical CPUs, 7.9 GiB RAM, Windows-1
 
 ## Coding-agent task success (optional)
 
-Uninformative: the model never edited the named function in either condition (see `bench/agent/README.md`). Source: `bench/agent/results.json`.
+Eight injected bugs, 1,500-token context. The fixture fits within the budget, so whole-repo and Smriti context are expected to tie (see `bench/agent/README.md`). Source: `bench/agent/results.json`.
 
-| Model | Issue only | Issue + Smriti context |
-| --- | --- | --- |
-| qwen2.5-0.5b-instruct-q4_k_m.gguf | 0/8 | 0/8 |
+| Model | File list only | Whole repo | Smriti context |
+| --- | --- | --- | --- |
+| qwen2.5-coder-7b-instruct-q4_k_m.gguf | 0/8 | 8/8 | 8/8 |

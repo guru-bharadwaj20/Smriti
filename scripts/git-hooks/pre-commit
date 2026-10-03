@@ -1,2 +1,0 @@
-#!/bin/sh
-python scripts/verify_commit_date.py

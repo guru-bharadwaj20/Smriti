@@ -31,7 +31,7 @@ smriti = ["py.typed", "ui/static/*", "vector/model_manifest.json"]
 [tool.ruff]
 target-version = "py312"
 line-length = 100
-include = ["smriti/**/*.py", "tests/**/*.py", "bench/**/*.py", "scripts/task_commit.py"]
+include = ["smriti/**/*.py", "tests/**/*.py", "bench/**/*.py"]
 
 [tool.ruff.lint]
 select = ["E4", "E7", "E9", "F", "I", "UP", "B"]

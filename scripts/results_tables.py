@@ -187,19 +187,17 @@ def performance() -> str:
 
 def agent() -> str:
     result = load('bench/agent/results.json')
-    rows = [
-        [
-            result['model'].split('@')[0],
-            f'{result["summary"][c]["solved"]}/{result["summary"][c]["tasks"]}',
-        ]
-        for c in ('baseline', 'smriti')
+    summary = result['summary']
+    conditions = ('baseline', 'whole_repo', 'smriti')
+    row = [result['model'].split('@')[0]] + [
+        f'{summary[c]["solved"]}/{summary[c]["tasks"]}' for c in conditions
     ]
-    rows = [[rows[0][0], rows[0][1], rows[1][1]]]
     return (
         '## Coding-agent task success (optional)\n\n'
-        'Uninformative: the model never edited the named function in either condition '
+        f'Eight injected bugs, {result["context_budget_tokens"]:,}-token context. The fixture '
+        'fits within the budget, so whole-repo and Smriti context are expected to tie '
         '(see `bench/agent/README.md`). Source: `bench/agent/results.json`.\n\n'
-        + table(['Model', 'Issue only', 'Issue + Smriti context'], rows)
+        + table(['Model', 'File list only', 'Whole repo', 'Smriti context'], [row])
     )
 
 

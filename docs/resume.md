@@ -27,7 +27,7 @@ Numbers below come from committed result files; each bullet cites its source.
 - Beating embedding search. The full pipeline (0.355) is not separable from exact embedding search (0.332) on function recall@10 (95% CI −0.011 to +0.057). The gain over BM25 comes mostly from vectors, and full trails BM25 on 5 of 12 repositories.
 - Answer accuracy on LongMemEval. Only session retrieval was evaluated; answer_accuracy is null.
 - Production use, users, or deployment at scale.
-- Improved agent task success or fewer agent tokens. The one agent comparison run (Qwen2.5-0.5B, 8 tasks) solved 0/8 with and without Smriti and is uninformative.
+- Improved agent task success over including the whole repository. With Qwen2.5-Coder-7B, Smriti context solved 8/8 injected bugs against 0/8 with the file list only, but whole-repo context also solved 8/8 because the fixture fits the 1,500-token budget.
 - Fast incremental indexing. The re-index is about 9.6 s at p50, close to the 10.9 s cold index, because it includes full resolution and snapshot persistence.
 - Rename-proof memory. Identifier renames are flagged not-fresh rather than tracked.
 

@@ -97,23 +97,4 @@ if __name__ == '__main__':
     result = run()
     path = Path(__file__).with_name('hnsw_reference.json')
     path.write_text(json.dumps(result, indent=2) + '\n')
-    if '--commit' in sys.argv:
-        import subprocess
-
-        subprocess.run(
-            [
-                sys.executable,
-                'scripts/task_commit.py',
-                'P06.25',
-                'compare custom HNSW against hnswlib on CPU',
-                '--evidence',
-                'bench/vector/hnsw_reference.py; bench/vector/hnsw_reference.json; real exact-oracle recall and throughput',
-                '--files',
-                'bench/vector/hnsw_reference.py',
-                'bench/vector/hnsw_reference.json',
-                'bench/vector/build_reference.py',
-            ],
-            check=True,
-        )
-    else:
-        print(json.dumps(result, indent=2))
+    print(json.dumps(result, indent=2))

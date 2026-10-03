@@ -1,10 +1,7 @@
 """Measure component performance on deterministic synthetic fixtures."""
 from pathlib import Path
-import json,platform,random,subprocess,sys,time,tracemalloc,tempfile
+import json,platform,random,sys,time,tracemalloc,tempfile
 sys.path.insert(0,str(Path.cwd()))
-
-def commit(task,message,files):
-    subprocess.run([sys.executable,'scripts/task_commit.py',task,message,'--evidence','; '.join(files)+'; measured CPU synthetic run','--files',*files],check=True)
 
 def environment():
     return {'python':platform.python_version(),'os':platform.platform(),'cpu':platform.processor(),'seed':81,'dataset':'synthetic-v1','note':'Component smoke benchmark; not SWE-bench or semantic retrieval quality.'}
@@ -48,11 +45,10 @@ def packing():
 
 if __name__=='__main__':
     command=sys.argv[1]
-    if command=='lexical': result=lexical(); task='P05.21'; destination='bench/lexical/results.json'
-    elif command=='vector': result=vector(); task='P06.26'; destination='bench/vector/results.json'
-    elif command=='packing': result=packing(); task='P08.21'; destination='bench/packing/results.json'
+    if command=='lexical': result=lexical(); destination='bench/lexical/results.json'
+    elif command=='vector': result=vector(); destination='bench/vector/results.json'
+    elif command=='packing': result=packing(); destination='bench/packing/results.json'
     else: raise SystemExit('choose lexical, vector, or packing')
     path=Path(destination); path.parent.mkdir(parents=True,exist_ok=True); path.write_text(json.dumps(result,indent=2)+'\n')
     runner=Path(destination).with_name('run.py')
     runner.write_text('"""Reproduce the recorded deterministic component benchmark."""\nimport runpy,sys\nfrom pathlib import Path\nsys.path.insert(0,str(Path(__file__).resolve().parents[2]))\nnamespace=runpy.run_path(str(Path(__file__).resolve().parents[2]/"scripts/search_benchmarks.py"))\nimport json\nprint(json.dumps(namespace["'+command+'"](),indent=2))\n')
-    commit(task,'measure '+command+' CPU synthetic performance',[destination,str(runner).replace('\\','/'),'scripts/search_benchmarks.py'])

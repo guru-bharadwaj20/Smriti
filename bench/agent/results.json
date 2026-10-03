@@ -1,56 +1,79 @@
 {
   "schema_version": 1,
-  "model": "qwen2.5-0.5b-instruct-q4_k_m.gguf@74a4da8c9fdb",
+  "model": "qwen2.5-coder-7b-instruct-q4_k_m.gguf@1664fccab734",
   "decoding": "temperature 0, seed 0, single attempt per task and condition",
   "context_budget_tokens": 1500,
   "summary": {
     "baseline": {
       "tasks": 8,
       "solved": 0,
-      "edited_some_function": 0
+      "edited_some_function": 1
+    },
+    "whole_repo": {
+      "tasks": 8,
+      "solved": 8,
+      "edited_some_function": 8
     },
     "smriti": {
       "tasks": 8,
-      "solved": 0,
-      "edited_some_function": 0
+      "solved": 8,
+      "edited_some_function": 8
     }
   },
   "rows": [
     {
       "task": "cents",
       "condition": "baseline",
-      "function": "adjust_price",
-      "edited_path": null,
+      "function": "format_price",
+      "edited_path": "shop/money.py",
       "success": false,
       "prompt_chars": 408,
-      "generation_seconds": 8.740996100001212
+      "generation_seconds": 3.5790947999921627
+    },
+    {
+      "task": "cents",
+      "condition": "whole_repo",
+      "function": "to_cents",
+      "edited_path": "shop/money.py",
+      "success": true,
+      "prompt_chars": 2087,
+      "generation_seconds": 7.575797199999215
     },
     {
       "task": "cents",
       "condition": "smriti",
-      "function": "calculate_price",
-      "edited_path": null,
-      "success": false,
-      "prompt_chars": 313,
-      "generation_seconds": 6.119960500000161
+      "function": "to_cents",
+      "edited_path": "shop/money.py",
+      "success": true,
+      "prompt_chars": 2151,
+      "generation_seconds": 8.44856869999785
     },
     {
       "task": "format",
       "condition": "baseline",
-      "function": "update_receipts",
+      "function": "format_currency",
       "edited_path": null,
       "success": false,
       "prompt_chars": 397,
-      "generation_seconds": 5.211521099998208
+      "generation_seconds": 2.611967499993625
+    },
+    {
+      "task": "format",
+      "condition": "whole_repo",
+      "function": "format_price",
+      "edited_path": "shop/money.py",
+      "success": true,
+      "prompt_chars": 2075,
+      "generation_seconds": 10.890288099995814
     },
     {
       "task": "format",
       "condition": "smriti",
-      "function": "fix_receipts",
-      "edited_path": null,
-      "success": false,
-      "prompt_chars": 302,
-      "generation_seconds": 31.417292299996916
+      "function": "format_price",
+      "edited_path": "shop/money.py",
+      "success": true,
+      "prompt_chars": 1603,
+      "generation_seconds": 9.566927499996382
     },
     {
       "task": "quantity",
@@ -59,88 +82,133 @@
       "edited_path": null,
       "success": false,
       "prompt_chars": 392,
-      "generation_seconds": 31.130521700000827
+      "generation_seconds": 6.760446499989484
+    },
+    {
+      "task": "quantity",
+      "condition": "whole_repo",
+      "function": "subtotal",
+      "edited_path": "shop/cart.py",
+      "success": true,
+      "prompt_chars": 2048,
+      "generation_seconds": 9.364748100008
     },
     {
       "task": "quantity",
       "condition": "smriti",
-      "function": "calculate_subtotal",
-      "edited_path": null,
-      "success": false,
-      "prompt_chars": 297,
-      "generation_seconds": 16.303062000002683
+      "function": "subtotal",
+      "edited_path": "shop/cart.py",
+      "success": true,
+      "prompt_chars": 2094,
+      "generation_seconds": 10.055522399998154
     },
     {
       "task": "total",
       "condition": "baseline",
-      "function": "checkout",
+      "function": "calculate_total",
       "edited_path": null,
       "success": false,
       "prompt_chars": 404,
-      "generation_seconds": 4.753231300001062
+      "generation_seconds": 7.026668899998185
+    },
+    {
+      "task": "total",
+      "condition": "whole_repo",
+      "function": "total",
+      "edited_path": "shop/cart.py",
+      "success": true,
+      "prompt_chars": 2086,
+      "generation_seconds": 10.297512000004645
     },
     {
       "task": "total",
       "condition": "smriti",
-      "function": "checkout",
-      "edited_path": null,
-      "success": false,
-      "prompt_chars": 309,
-      "generation_seconds": 4.598019900000509
+      "function": "total",
+      "edited_path": "shop/cart.py",
+      "success": true,
+      "prompt_chars": 2150,
+      "generation_seconds": 10.643731399992248
     },
     {
       "task": "unknown_code",
       "condition": "baseline",
-      "function": "handle_coupon_error",
+      "function": "apply_coupon",
       "edited_path": null,
       "success": false,
       "prompt_chars": 439,
-      "generation_seconds": 6.803929999998218
+      "generation_seconds": 4.929373000006308
+    },
+    {
+      "task": "unknown_code",
+      "condition": "whole_repo",
+      "function": "apply_discount",
+      "edited_path": "shop/discounts.py",
+      "success": true,
+      "prompt_chars": 2114,
+      "generation_seconds": 12.468338299993775
     },
     {
       "task": "unknown_code",
       "condition": "smriti",
-      "function": "handle_coupon_error",
-      "edited_path": null,
-      "success": false,
-      "prompt_chars": 344,
-      "generation_seconds": 8.618949800002156
+      "function": "apply_discount",
+      "edited_path": "shop/discounts.py",
+      "success": true,
+      "prompt_chars": 2160,
+      "generation_seconds": 11.695463299998664
     },
     {
       "task": "last_unit",
       "condition": "baseline",
-      "function": "handle_stock_out_of_stock",
+      "function": "sell_product",
       "edited_path": null,
       "success": false,
       "prompt_chars": 417,
-      "generation_seconds": 12.367644400001154
+      "generation_seconds": 13.203651300005731
+    },
+    {
+      "task": "last_unit",
+      "condition": "whole_repo",
+      "function": "in_stock",
+      "edited_path": "shop/inventory.py",
+      "success": true,
+      "prompt_chars": 2098,
+      "generation_seconds": 9.613530999995419
     },
     {
       "task": "last_unit",
       "condition": "smriti",
-      "function": "check_stock",
-      "edited_path": null,
-      "success": false,
-      "prompt_chars": 322,
-      "generation_seconds": 21.071770099999412
+      "function": "in_stock",
+      "edited_path": "shop/inventory.py",
+      "success": true,
+      "prompt_chars": 2408,
+      "generation_seconds": 10.424402500008
     },
     {
       "task": "reserve",
       "condition": "baseline",
-      "function": "adjust_stock",
+      "function": "reserve_units",
       "edited_path": null,
       "success": false,
       "prompt_chars": 397,
-      "generation_seconds": 8.727274900000339
+      "generation_seconds": 4.378916099987691
+    },
+    {
+      "task": "reserve",
+      "condition": "whole_repo",
+      "function": "reserve",
+      "edited_path": "shop/inventory.py",
+      "success": true,
+      "prompt_chars": 2079,
+      "generation_seconds": 11.657638600008795
     },
     {
       "task": "reserve",
       "condition": "smriti",
-      "function": "reserve_units",
-      "edited_path": null,
-      "success": false,
-      "prompt_chars": 302,
-      "generation_seconds": 7.24229700000069
+      "function": "reserve",
+      "edited_path": "shop/inventory.py",
+      "success": true,
+      "prompt_chars": 2107,
+      "generation_seconds": 11.829163700007484
     },
     {
       "task": "slug",
@@ -149,16 +217,25 @@
       "edited_path": null,
       "success": false,
       "prompt_chars": 402,
-      "generation_seconds": 12.127202800002124
+      "generation_seconds": 2.390342900005635
+    },
+    {
+      "task": "slug",
+      "condition": "whole_repo",
+      "function": "slugify",
+      "edited_path": "shop/text.py",
+      "success": true,
+      "prompt_chars": 2084,
+      "generation_seconds": 8.272600099997362
     },
     {
       "task": "slug",
       "condition": "smriti",
-      "function": "fix_product_urls",
-      "edited_path": null,
-      "success": false,
-      "prompt_chars": 307,
-      "generation_seconds": 10.581274100000883
+      "function": "slugify",
+      "edited_path": "shop/text.py",
+      "success": true,
+      "prompt_chars": 2358,
+      "generation_seconds": 9.058219700003974
     }
   ]
 }
