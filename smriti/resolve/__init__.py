@@ -16,6 +16,18 @@ class Resolver:
             if symbol.parent_id:
                 self.children.setdefault(symbol.parent_id, {})[symbol.name] = symbol.id
         self.edges: list[Edge] = []
+        # Lookup tables built once; per-call scans were quadratic on large repositories.
+        self._last_by_qualname = {s.qualname: s.id for s in self.symbols.values()}
+        self._first_by_qualname: dict[str, str] = {}
+        self._first_module_by_qualname: dict[str, Symbol] = {}
+        callables: dict[str, list[str]] = {}
+        for symbol in self.symbols.values():
+            self._first_by_qualname.setdefault(symbol.qualname, symbol.id)
+            if symbol.kind == 'module':
+                self._first_module_by_qualname.setdefault(symbol.qualname, symbol)
+            if symbol.kind in {'function', 'method'}:
+                callables.setdefault(symbol.name, []).append(symbol.id)
+        self._callables_by_name = {name: sorted(ids) for name, ids in callables.items()}
         self.imports = {
             (item['scope'], item['alias']): item
             for result in self.results
@@ -60,8 +72,7 @@ class Resolver:
             parent = self.parents.get(parent)
         if parent:
             return self.resolve_name(name, parent, visited)
-        qualified = {s.qualname: s.id for s in self.symbols.values()}
-        return qualified.get(name)
+        return self._last_by_qualname.get(name)
 
     def resolve(self) -> list[Edge]:
         edges = []
@@ -179,17 +190,9 @@ class Resolver:
             module = '.'.join([*prefix, module] if module else prefix)
         imported = declaration['name']
         qualified = '.'.join(part for part in [module, imported, *tail] if part)
-        for symbol in self.symbols.values():
-            if symbol.qualname == qualified:
-                return symbol.id
-        module_owner = next(
-            (
-                symbol
-                for symbol in self.symbols.values()
-                if symbol.kind == 'module' and symbol.qualname == module
-            ),
-            None,
-        )
+        if qualified in self._first_by_qualname:
+            return self._first_by_qualname[qualified]
+        module_owner = self._first_module_by_qualname.get(module)
         if module_owner and imported:
             target = self.resolve_import('.'.join([imported, *tail]), module_owner.id, visited)
             if target:
@@ -255,11 +258,7 @@ class Resolver:
     def dynamic_candidates(self, name: str) -> list[str]:
         """Potential same-name targets remain explicitly uncertain, never exact calls."""
         leaf = name.rsplit('.', 1)[-1]
-        return sorted(
-            symbol.id
-            for symbol in self.symbols.values()
-            if symbol.name == leaf and symbol.kind in {'function', 'method'}
-        )
+        return list(self._callables_by_name.get(leaf, ()))
 
     def edge_confidence(self, name: str, target: str) -> float:
         # Local lexical binding is exact; method dispatch remains runtime-dependent.

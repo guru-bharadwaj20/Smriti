@@ -48,6 +48,16 @@ distance = _select_distance()
 NATIVE = distance is not python_distance
 
 
+def native_store() -> object | None:
+    """A Rust-side vector store with the same accumulation, or None without it."""
+    if not NATIVE:
+        return None
+    import smriti_native  # type: ignore[import-not-found, import-untyped, unused-ignore]
+
+    factory = getattr(smriti_native, 'VectorStore', None)
+    return factory() if factory is not None else None
+
+
 def exact_search(
     vectors: Mapping[str, Sequence[float]],
     query: Sequence[float],
