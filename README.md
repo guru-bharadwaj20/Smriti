@@ -1,5 +1,13 @@
 # Smriti
 
+<p align="center">
+  <a href="Smriti%20Demo.mp4">
+    <img src="docs/demo/Smriti%20Demo%20thumbnail.png" alt="Watch the Smriti demo video" width="720">
+  </a>
+  <br>
+  <sub>▶ <b><a href="Smriti%20Demo.mp4">Watch the Smriti demo</a></b> (74 s): phase plan, commits, CI and a live run on its own code</sub>
+</p>
+
 **A local, CPU-only memory and context engine for coding agents: it finds the code a task needs, packs it into a token budget, and remembers facts that go stale when the code they describe changes.**
 
 [![CI](https://img.shields.io/badge/CI-GitHub_Actions-2ea44f?logo=githubactions&logoColor=white)](.github/workflows/ci.yml)
@@ -35,6 +43,7 @@ the next session.
 | [Design decisions](#design-decisions) | The tradeoffs, and why |
 | [Repository layout](#repository-layout) | Where things live |
 | [Documentation](#documentation) | Which file answers which question |
+| [Team](#team) | Who built it |
 
 ---
 
@@ -263,6 +272,14 @@ docs, including where Smriti loses to a baseline.
 | *How do I reproduce them?* | [docs/benchmarks.md](docs/benchmarks.md), [docs/swebench-reproduction.md](docs/swebench-reproduction.md) |
 | *What does it not do?* | [docs/limitations.md](docs/limitations.md) |
 | *How do I develop on it?* | [docs/development.md](docs/development.md) |
+
+---
+
+## Team
+
+| Member | Focus |
+|---|---|
+| **Guru R Bharadwaj** | Design, indexing and retrieval, the MCP server, the VS Code extension, benchmarks and docs |
 
 ---
 
